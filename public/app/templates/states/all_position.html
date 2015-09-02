@@ -1,0 +1,295 @@
+<style>
+.Color {
+	color: green
+}
+
+.redColor {
+	color: red
+}
+
+.btn-success-custom {
+	color: white;
+	background-color: #21205f;
+}
+
+.btn-success-custom:hover {
+	color: white;
+	background-color: #999999;
+}
+</style>
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="portlet box" style="min-height: 500px;">
+			<div class="portlet-header">
+				<div class="caption">All Positions</div>
+			</div>
+			<div class="portlet-body" ng-init="init();">
+				<div class="row mbm">
+					<div class="col-lg-12">
+						<!-- {{jobs}} -->
+						<div ng-init="getAllPosition()" class="table-responsive">
+							<div class="page-header">
+								<!-- <h3>
+									Edit/ Delete /Add Positions <i class="icon-chevron-right"></i>
+								</h3> -->
+								<div class="pull-left">
+									<button type="button" ng-click="addPosition()"
+										data-toggle="modal" class="btn btn-success-custom"
+										data-toggle="tooltip" data-placement="bottom"
+										title="Add new Position">Add</button>
+									</td>
+								</div>
+								<br /> <br />
+								<table id="table_id"
+									class="table table-hover table-striped table-bordered table-advanced tablesorter display">
+									<tbody>
+										<tr>
+											<th>Position Name (&#36;)</th>
+											<th>Developmental   (&#36;)</th>
+											<th>Expert (&#36;)</th>
+											<th>Full Performance(&#36;)</th>
+											<th>Management (&#36;)</th>
+											<th>Senior (&#36;) </th>
+											<th>SME (&#36;)</th>
+											 <th style="width:10%;">Edit  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th> 
+											<th>Delete</th>
+										</tr>
+										<tr data-ng-repeat="pos in allPosition"
+											style="background-color: #fff !important; left: -900">
+											<td >{{pos.position}}</td>
+											<td data-ng-repeat="p in pos.positionVM"><span
+												data-ng-hide="editMode" style="float: left;">{{p.rate}}</span> <input type="text"
+												data-ng-show="editMode" style="width: 70%; float: left;" data-ng-model="p.rate"
+												data-ng-required />
+												<!-- <div>
+													<span type="submit" data-ng-hide="editMode"
+														data-ng-click="editMode = true; editAppKey(entry)"
+														class="btn btn-default" style=" float: right;background-color: #21205f;"  data-toggle="tooltip" title="edit rate"><i class="glyphicon glyphicon-pencil"></i></span>
+													<span type="submit" data-ng-show="editMode"
+														data-ng-click="editMode = false; editPosname(p);"
+														class="btn btn-default" style="float: right;background-color: #21205f;" data-toggle="tooltip" title="save new  rate"><i class="glyphicon glyphicon-floppy-save"></i></span>
+													<span type="submit" data-ng-show="editMode"
+														data-ng-click="editMode = false; cancel()"
+														class="btn btn-default" style="float: right;background-color: #21205f;" data-toggle="tooltip" title=" cancel  rate"><i class="glyphicon glyphicon-remove"></i></span>
+												</div> -->
+												</td>
+												<td >
+												<div>
+													<span type="submit" data-ng-hide="editMode"
+														data-ng-click="editMode = true; editAppKey(entry)"
+														class="btn btn-default" style=" float: right;background-color: #21205f;"  data-toggle="tooltip" title="edit rate"><i class="glyphicon glyphicon-pencil"></i></span>
+													<span type="submit" data-ng-show="editMode"
+														data-ng-click="editMode = false; editPosname(pos.positionVM);"
+														class="btn btn-default" style="float: right;background-color: #21205f;" data-toggle="tooltip" title="save new  rate"><i class="glyphicon glyphicon-floppy-save"></i></span>
+													<span type="submit" data-ng-show="editMode"
+														data-ng-click="editMode = false; cancel()"
+														class="btn btn-default" style="float: right;background-color: #21205f;" data-toggle="tooltip" title=" cancel  rate"><i class="glyphicon glyphicon-remove"></i></span>
+												</div>
+												</td>
+												<td>
+												<div><button type="submit" 
+														class="btn btn-default" style="background-color: #21205f;" ng-click="deletePos(pos.position);">Delete</button>
+									        	</div>
+												</td>
+												
+
+										</tr>
+									</tbody>
+								</table>
+								<!-- <button id="pre" type="button" ng-click="clickPre()"
+									class="btn btn-primary">
+									<i class="glyphicon glyphicon-arrow-left"></i>
+								</button>
+								&nbsp;
+								<button id="next" type="button" ng-click="clickNext()"
+									class="btn btn-green">
+									<i class="glyphicon glyphicon-arrow-right"></i>
+								</button> -->
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<!-- Modal -->
+	<div class="modal fade" id="viewresume" tabindex="-1" role="dialog"
+		aria-labelledby="myModalLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+					<h4 class="modal-title" id="myModalLabel">Resume Preview</h4>
+				</div>
+				<div class="modal-body">
+					<div id="iframeContainer"
+						style="overflow: auto; padding: 10px 0 0 0">
+						<iframe id="fred" src=" " height="520" width="100%"> </iframe>
+					</div>
+
+				</div>
+				<!-- <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div> -->
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<!-- Add Position Module -->
+<div class="modal fade" id="addposition" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true" ng-click="emptyPositionList();">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">Add New Position</h4>
+			</div>
+			<div class="modal-body" style="min-height: 330px;">
+			
+					<div class="col-md-12">
+						<span ng-show="error" style="color: red; min-height: 100px;">Please
+							enter Position Name</span>
+						<div class="col-md-6">
+							<span
+								ng-model="positionname" name="positionname"
+								placeholder="Position Name" style="font-size: 12px;border: aliceblue;""
+								class="form-control">Position Name</span>
+						</div>
+						
+						<div class="col-md-6">
+							<input id="inputName" type="text" id="positionname"
+								ng-model="positionname" name="positionname"
+								placeholder="Position Name" style="font-size: 12px;"
+								class="form-control">
+						</div>
+						
+					</div>
+					<div class=" col-md-12" data-ng-repeat=" p in positionRateList" style="margin-top:2%;">
+						<div class="col-md-6">
+								<span id="positionlevel"
+									ng-model="p.level" name="positionlevel"
+									placeholder="Position Name" style="font-size: 12px;  border: aliceblue;"
+									class="form-control" >{{p.level}} (&#36;)</span>
+						 </div>
+							<div class="col-md-6" >
+										<input id="inputName" type="text" id="positionrate"
+										ng-model="p.rate" name="positionrate"
+										placeholder="Position rate" style="font-size: 12px;"
+										class="form-control">
+							 </div>
+					</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success-custom"
+					data-ng-click="addNewPosition();">Add</button>
+				<button type="button" class="btn btn-success-custom"
+					data-dismiss="modal" ng-click="emptyPositionList();">Cancel</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- Edit Position Module -->
+<!-- <div class="modal fade" id="editPositionModal" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">Edit Position</h4>
+			</div>
+			<div class="modal-body"  style="min-height:100px;">
+				<div class="form-group">
+
+					<div class="col-md-12">
+						<span ng-show="editposerror" style="color:red;min-height:100px;">Please enter Position Name</span>
+						<div class="col-md-6">
+						 <input
+								id="inputName" type="text" id="positionname"
+								ng-model="editPositionNew" name="positionname"
+								placeholder="Position Name" style="font-size: 12px;"
+								class="form-control">
+						</div>
+						
+					</div>
+				</div>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success-custom"
+					data-ng-click="editPositionName();">Update</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+			</div>
+		</div>
+	</div>
+</div> -->
+
+<div class="modal fade" id="editPositionModal" tabindex="-1"
+	role="dialog" aria-labelledby="myModalLabel" aria-hidden="true"
+	data-backdrop="false">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">Edit Position</h4>
+			</div>
+			<div class="modal-body" style="min-height: 100px;">
+				<div class="form-group">
+					{{editPositionOld}}
+					<div class="col-md-12">
+						<span ng-show="editposerror"
+							style="color: red; min-height: 100px;">Please enter
+							Position Name</span>
+						<div class="col-md-6">
+							<input id="inputName" type="text" id="positionname"
+								ng-model="editPositionNew" name="positionname"
+								placeholder="Position Name" style="font-size: 12px;"
+								class="form-control">
+						</div>
+
+					</div>
+				</div>
+
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success-custom"
+					data-ng-click="editPositionName();">Update</button>
+				<button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Delete Position Module -->
+<div class="modal fade" id="deletePosition" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true" data-backdrop="false">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-hidden="true">&times;</button>
+				<h4 class="modal-title" id="myModalLabel">Delete Position</h4>
+			</div>
+			<div class="modal-body" id="deleteArticleBody">Are you sure
+				want to delete this position?</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-success-custom"
+					data-ng-click="deletePosition();">Delete</button>
+				<button type="button" class="btn btn-success-custom"
+					data-dismiss="modal">Cancel</button>
+			</div>
+		</div>
+	</div>
+</div>
+

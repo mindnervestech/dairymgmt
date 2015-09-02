@@ -1,0 +1,929 @@
+package com.mnt.dairymgnt.controllers;
+
+import java.io.IOException;
+import java.util.ArrayList;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+
+
+
+import play.data.DynamicForm;
+import play.data.Form;
+import play.libs.Json;
+import play.mvc.Controller;
+import play.mvc.Result;
+import views.html.index;
+import views.html.register;
+import views.html.registrationredirect;
+import views.html.sharejobdetails;
+import views.html.signin;
+
+
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.SqlRow;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
+import com.mnt.dairymgnt.VM.CattleFeedMasterVM;
+import com.mnt.dairymgnt.VM.CattleHealthVM;
+import com.mnt.dairymgnt.VM.CattleIntakeVM;
+import com.mnt.dairymgnt.VM.CattleMasterVM;
+import com.mnt.dairymgnt.VM.CattleOutputVM;
+import com.mnt.dairymgnt.VM.OrgnizationVM;
+import com.mnt.dairymgnt.VM.UserVM;
+import com.mnt.dairymgnt.models.CattleFeedMaster;
+import com.mnt.dairymgnt.models.CattleHealth;
+import com.mnt.dairymgnt.models.CattleIntake;
+import com.mnt.dairymgnt.models.CattleMaster;
+import com.mnt.dairymgnt.models.CattleOutput;
+import com.mnt.dairymgnt.models.Entities;
+import com.mnt.dairymgnt.models.Oraganization;
+import com.mnt.dairymgnt.models.Permissions;
+//import com.itextpdf.text.List;;
+import com.mnt.dairymgnt.models.Users;
+
+
+public class Application extends Controller {
+	public static Result index() {
+		return ok();
+	}
+
+	public static Result login() {
+		return ok(signin.render());
+	}
+
+	public static Result signup() {
+		return ok(register.render());
+	}
+	
+	public static Result registrationRedirect() {
+		return ok(registrationredirect.render());
+	}
+
+	public static Result shareJobDetails(){
+		return ok(sharejobdetails.render());
+		
+	}
+	
+	public static Result dashBoard() {
+		return ok(index.render());
+	}
+
+	public static Result getAllOrgs(){
+		
+		List<OrgnizationVM> orgs = new ArrayList<>();
+		
+		List<Oraganization> os = Oraganization.getAllOrgs();
+		
+		for(Oraganization or:os){
+			
+			OrgnizationVM o = new OrgnizationVM();
+			o.name = or.name;
+			o.orgId = or.orgId;
+			o.city =  or.city;
+			o.addressLine1 = or.addressLine1;
+			o.addressLine2 = or.addressLine2;
+			o.state  = or.state;
+			o.pincode = or.pincode;
+			o.lastUpdatedtime = or.lastUpdatedtime;
+		     	
+			orgs.add(o);
+		}
+		
+		HashMap  <String ,Object> hm = new HashMap();
+		hm.put("orgs", orgs);
+		return ok(Json.toJson(hm));
+		
+	}
+
+	public static Result getAllUsers(){
+		List<Users> users = Users.getAllUsers();
+        ArrayList<UserVM> uvm = new ArrayList<>();
+		
+		for(Users u : users){
+			UserVM uv = new UserVM();
+			uv.firstname = u.firstname;
+			uv.lastname = u.lastname;
+			uv.password = u.password;
+			uv.userId = u.userId;
+			uv.permissions  = u.permissions;
+			uv.lastUpdatedatetime = u.lastUpdatedatetime;
+			uv.oraganization = u.oraganization;
+			uvm.add(uv);
+		}
+
+		HashMap  <String ,Object> hm = new HashMap();
+		hm.put("users", uvm);
+		return ok(Json.toJson(hm));
+	}
+	
+	public static Result getAllCattleMaster(){
+		List<CattleMaster> cattleMasters = CattleMaster.getAllCattleMaster();
+        ArrayList<CattleMasterVM> cmvm = new ArrayList<>();
+		
+		for(CattleMaster u : cattleMasters){
+			CattleMasterVM cvm = new CattleMasterVM();
+			cvm.breed = u.breed;
+			cvm.cattleId = u.cattleId;
+			cvm.cattleIdentificationMark =    u.cattleIdentificationMark;
+			cvm.dateofBirth = u.dateofBirth;
+			cvm.gender  = u.gender;
+			cvm.name = u.name;
+			cvm.users = u.users;
+			cvm.oraganization = u.oraganization;
+			
+			cmvm.add(cvm);
+		}
+
+		HashMap  <String ,Object> hm = new HashMap();
+		hm.put("caters",cmvm);
+		return ok(Json.toJson(hm));
+	}
+	
+	public static Result getAllFeedCattleMaster(){
+		List<CattleFeedMaster> cattleFeedMasters = CattleFeedMaster.getAllFeedCattleMaster();
+        ArrayList<CattleFeedMasterVM> cmvm = new ArrayList<>();
+		
+		for(CattleFeedMaster u : cattleFeedMasters){
+			CattleFeedMasterVM cfvm = new CattleFeedMasterVM();
+			cfvm.feedFiber = u.feedFiber;
+			cfvm.feedId = u.feedId;
+			cfvm.feedprotine =    u.feedprotine;
+			cfvm.feedType = u.feedType;
+			cfvm.feedVitamins = u.feedVitamins;
+			cfvm.feedWaterContent = u.feedWaterContent;
+			cfvm.lastUpdateDateTime =  u.lastUpdateDateTime;
+			cfvm.users = u.users;
+			cfvm.oraganization = u.oraganization;
+			cmvm.add(cfvm);
+		}
+
+		HashMap  <String ,Object> hm = new HashMap();
+		hm.put("feedcaters",cmvm);
+		return ok(Json.toJson(hm));
+	}
+		
+
+	
+	public static Result getAllCattleIntake(){
+		List<CattleIntake> cattleIntake = CattleIntake.getAllCattleIntake();
+        ArrayList<CattleIntakeVM> cmvm = new ArrayList<>();
+		
+		for(CattleIntake u : cattleIntake){
+			CattleIntakeVM cfvm = new CattleIntakeVM();
+			cfvm.date = u.date;
+			cfvm.deviceID = u.deviceID;
+			cfvm.quantity = u.quantity;
+			
+			cfvm.lastUpdateDateTime =  u.lastUpdateDateTime;
+			cfvm.users = u.users;
+			cfvm.oraganization = u.oraganization;
+			cfvm.cattleFeedMaster = u.CattleFeedMaster;
+			cfvm.cattleId = u.cattleId;
+			cmvm.add(cfvm);
+		}
+
+		HashMap  <String ,Object> hm = new HashMap();
+		hm.put("catersintake",cmvm);
+		return ok(Json.toJson(hm));
+	}
+		
+	public static Result getAllCattleOutput(){
+		List<CattleOutput> cattleOutput = CattleOutput.getAllCattleOutput();
+        ArrayList<CattleOutputVM> cmvm = new ArrayList<>();
+		
+		for(CattleOutput u : cattleOutput){
+			CattleOutputVM cfvm = new CattleOutputVM();
+			cfvm.date = u.date;
+			cfvm.deviceID = u.deviceID;
+			cfvm.quantity = u.quantity;
+			cfvm.lastUpdateDateTime =  u.LastUpdateDateTime;
+			cfvm.users = u.users;
+			cfvm.oraganization = u.oraganization;
+			cfvm.cattleId = u.cattleId;
+			cfvm.SNFContent = u.SNFContent;
+			cfvm.fatContent = u.fatContent;
+			cmvm.add(cfvm);
+		}
+
+		HashMap  <String ,Object> hm = new HashMap();
+		hm.put("catersoutput",cmvm);
+		return ok(Json.toJson(hm));
+	}
+	
+	public static Result getAllCattleHealth(){
+		List<CattleHealth> cattleHealth = CattleHealth.getAllCattleOutput();
+        ArrayList<CattleHealthVM> cmvm = new ArrayList<>();
+		
+		for(CattleHealth u : cattleHealth){
+			CattleHealthVM cfvm = new CattleHealthVM();
+			cfvm.duedate = u.duedate;
+			cfvm.lastDelivaerydate = u.lastDelivaerydate;
+			cfvm.medicationEnddate = u.medicationEnddate;
+			cfvm.medicationStartDate  = u.medicationStartDate;
+			cfvm.medicationName = u.medicationName;
+			cfvm.medicationType = u.medicationType;
+			cfvm.pregnancyDate = u.pregnancyDate;
+			cfvm.pregnant = u.pregnant;
+			cfvm.lastUpdateDateTime =  u.lastUpdateDateTime;
+			cfvm.users = u.users;
+			cfvm.oraganization = u.oraganization;
+			cfvm.cattleId = u.cattleId;
+			cmvm.add(cfvm);
+		}
+
+		HashMap  <String ,Object> hm = new HashMap();
+		hm.put("catershealth",cmvm);
+		return ok(Json.toJson(hm));
+	}
+	
+	
+	public static Result SignIn() {
+		DynamicForm dynamicForm = Form.form().bindFromRequest();
+		String uname = dynamicForm.get("username");
+		String pass = dynamicForm.get("password");
+			
+		Users ud = Users.isUser(uname, pass);
+			if (ud != null) {
+				session().clear();
+				session().put("email", ud.userId);
+			    ud.lastlogin = new Date();
+			    ud.update();
+			    return redirect("/dashboard#/allOrg");
+			}
+
+			else {
+				flash().put("error", "Login Failed");
+				return ok(signin.render());
+			}
+
+	}
+	
+	public static Result updateUserProfileByAdmin(){
+		JsonNode json = request().body().asJson();
+		JsonNode userJson = json.get("user");
+		System.out.println(json);
+		
+		//JsonNode userDet = json.path("userInfo");
+		ObjectMapper userinfoMapper = new ObjectMapper();
+        
+		try {
+			UserVM uvm = userinfoMapper.readValue(userJson.traverse(),UserVM.class);
+			Users u = Users.getUserByEmail(uvm.userId);
+			if(u !=  null){
+				List<Permissions> permissionsList = Permissions
+						.getPermissionsByUserEmail(uvm.userId);
+				if (permissionsList != null) {
+					for(Permissions pdtails : permissionsList){
+						pdtails.delete();
+					}
+				}
+				
+				JsonNode permissionJson = json.path("permList");
+				JsonNode org = json.path("org");
+				System.out.println(org);
+				if(org.toString() != ""){
+					Oraganization    orgni = Oraganization.getOrgById(Integer.parseInt(org.toString().replace("\"", "")));
+					if(orgni != null){
+						u.setOraganization(orgni);
+					}
+					
+				}
+				
+				if(permissionJson != null){
+					ArrayNode perms = (ArrayNode) permissionJson;
+					for (int j = 0; j < perms.size(); j++) {
+						String position = perms.get(j).asText();
+					    Permissions p = new Permissions();
+					    p.access = "W";
+					    p.permissionName = position;
+					    p.users = Users.getUserByEmail(uvm.userId);
+					    p.save();
+					    u.permissions.add(p);
+					}
+				}
+
+				u.setFirstname(uvm.firstname);
+				u.lastname =   uvm.lastname;
+				u.setUserId(uvm.userId);
+				u.setPassword(uvm.password);
+				
+				u.setLastUpdatedatetime(new Date());
+				u.update();
+			}else{
+				
+				u  = new Users();
+				u.firstname = uvm.firstname;
+				u.lastname = uvm.lastname;
+				u.userId = uvm.userId;
+			
+				//u.oraganization = (uvm.oraganization) ;
+				u.setLastUpdatedatetime(new Date());
+				u.save();
+				
+				JsonNode org = json.path("org");
+				System.out.println(org);
+				if(org.toString() != ""){
+					Oraganization    orgni = Oraganization.getOrgById(Integer.parseInt(org.toString().replace("\"", "")));
+					if(orgni != null){
+						u.setOraganization(orgni);
+					}
+				}
+				//u.oraganization.update(org);
+				
+				JsonNode permissionJson = json.path("permList");
+				if(permissionJson != null){
+					ArrayNode perms = (ArrayNode) permissionJson;
+					for (int j = 0; j < perms.size(); j++) {
+						String position = perms.get(j).asText();
+					    Permissions p = new Permissions();
+					    p.access = "W";
+					    p.permissionName = position;
+					    p.users = Users.getUserByEmail(uvm.userId);
+					    p.save();
+					    u.permissions.add(p);
+					}
+				}
+				u.update();
+			}
+		} catch (JsonParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (JsonMappingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		return ok("");
+	}
+	
+	
+	public static Result updateCattleProfileByAdmin(){
+		JsonNode json = request().body().asJson();
+		JsonNode catJson = json.get("cat");
+		System.out.println(json);
+		ObjectMapper userinfoMapper = new ObjectMapper();
+		try {
+			CattleMasterVM uvm = userinfoMapper.readValue(catJson.traverse(),CattleMasterVM.class);
+			CattleMaster u = CattleMaster.getUserByCattleId(uvm.cattleId);
+			if(u !=  null){
+				JsonNode org = json.path("org");
+				System.out.println(org);
+				if(org.toString() != ""){
+					Oraganization    orgni = Oraganization.getOrgById(Integer.parseInt(org.toString().replace("\"", "")));
+					if(orgni != null){
+						u.setOraganization(orgni);
+					}
+				}
+				JsonNode userId = json.path("userId");
+				System.out.println(userId);
+				if(userId.toString() != ""){
+					Users    uId = null;	
+					uId = Users.getUserByEmail(userId.toString().replace("\"", ""));
+					if(uId != null){
+						u.setUsers(uId);
+					}
+					
+				}
+				
+				u.setBreed(uvm.breed);
+				u.setCattleIdentificationMark(uvm.cattleIdentificationMark);
+				u.setGender(uvm.gender);
+				u.setLastUpdateDateTime(new Date());
+				u.setName(uvm.name);
+				u.update(u);
+
+			}else{
+				
+				u  = new CattleMaster();
+
+				u.setBreed(uvm.breed);
+				u.setCattleIdentificationMark(uvm.cattleIdentificationMark);
+				u.setGender(uvm.gender);
+				u.setLastUpdateDateTime(new Date());
+				u.setName(uvm.name);
+				u.save();
+
+				JsonNode org = json.path("org");
+				System.out.println(org);
+				if(org.toString() != ""){
+					Oraganization    orgni = Oraganization.getOrgById(Integer.parseInt(org.toString().replace("\"", "")));
+					if(orgni != null){
+						u.setOraganization(orgni);
+					}
+					
+				}
+				
+				JsonNode userId = json.path("userId");
+				System.out.println(userId);
+				if(userId.toString() != ""){
+					Users    uId = null;
+				    uId = Users.getUserByEmail(userId.toString().replace("\"", ""));
+					if(uId != null){
+						u.setUsers(uId);
+					}
+					
+				}
+			u.update(u);
+
+			}
+		} catch (JsonParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (JsonMappingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		return ok("");
+	}
+	
+	public static Result updateCattleHealthProfileByAdmin(){
+		JsonNode json = request().body().asJson();
+		System.out.println("com.mnt.dairymgnt.controllers.Application.");
+		
+		JsonNode catJson = json.get("cat");
+		System.out.println(json);
+		ObjectMapper userinfoMapper = new ObjectMapper();
+		try {
+			CattleHealthVM uvm = userinfoMapper.readValue(catJson.traverse(),CattleHealthVM.class);
+			CattleHealth u = CattleHealth.getUserByCattleId(uvm.cattleId);
+			if(u !=  null){
+				JsonNode org = json.path("org");
+				System.out.println(org);
+				if(org.toString() != ""){
+					Oraganization    orgni = Oraganization.getOrgById(Integer.parseInt(org.toString().replace("\"", "")));
+					if(orgni != null){
+						u.setOraganization(orgni);
+					}
+				}
+				JsonNode userId = json.path("userId");
+				System.out.println(userId);
+				if(userId.toString() != ""){
+					Users    uId = null;	
+					uId = Users.getUserByEmail(userId.toString().replace("\"", ""));
+					if(uId != null){
+						u.setUsers(uId);
+					}
+					
+				}
+			
+				
+				u.setDuedate(uvm.duedate);
+				u.setLastDelivaerydate(uvm.lastDelivaerydate);
+				u.setMedicationEnddate(uvm.medicationEnddate);
+				u.setMedicationName(uvm.medicationName);
+				u.setMedicationStartDate(uvm.medicationStartDate);
+				u.setMedicationType(uvm.medicationType);
+				u.setPregnancyDate(uvm.pregnancyDate);
+				u.setPregnant(uvm.pregnant);
+				
+				u.setLastUpdateDateTime(new Date());
+				
+				u.update(u);
+
+			}else{
+				
+				u  = new CattleHealth();
+				u.setDuedate(uvm.duedate);
+				u.setLastDelivaerydate(uvm.lastDelivaerydate);
+				u.setMedicationEnddate(uvm.medicationEnddate);
+				u.setMedicationName(uvm.medicationName);
+				u.setMedicationStartDate(uvm.medicationStartDate);
+				u.setMedicationType(uvm.medicationType);
+				u.setPregnancyDate(uvm.pregnancyDate);
+				u.setPregnant(uvm.pregnant);
+				
+				u.setLastUpdateDateTime(new Date());
+				u.save();
+
+				JsonNode org = json.path("org");
+				System.out.println(org);
+				if(org.toString() != ""){
+					Oraganization    orgni = Oraganization.getOrgById(Integer.parseInt(org.toString().replace("\"", "")));
+					if(orgni != null){
+						u.setOraganization(orgni);
+					}
+					
+				}
+				
+				JsonNode userId = json.path("userId");
+				System.out.println(userId);
+				if(userId.toString() != ""){
+					Users    uId = null;
+				    uId = Users.getUserByEmail(userId.toString().replace("\"", ""));
+					if(uId != null){
+						u.setUsers(uId);
+					}
+				}
+			u.update(u);
+			}
+		} catch (JsonParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (JsonMappingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		return ok("");
+	}
+	
+	
+	
+	public static Result updateCattleOutputProfileByAdmin(){
+		JsonNode json = request().body().asJson();
+		System.out.println("com.mnt.dairymgnt.controllers.Application.");
+		
+		JsonNode catJson = json.get("cat");
+		System.out.println(json);
+		ObjectMapper userinfoMapper = new ObjectMapper();
+		try {
+			CattleOutputVM uvm = userinfoMapper.readValue(catJson.traverse(),CattleOutputVM.class);
+			CattleOutput u = CattleOutput.getUserByCattleId(uvm.cattleId);
+			if(u !=  null){
+				JsonNode org = json.path("org");
+				System.out.println(org);
+				if(org.toString() != ""){
+					Oraganization    orgni = Oraganization.getOrgById(Integer.parseInt(org.toString().replace("\"", "")));
+					if(orgni != null){
+						u.setOraganization(orgni);
+					}
+				}
+				JsonNode userId = json.path("userId");
+				System.out.println(userId);
+				if(userId.toString() != ""){
+					Users    uId = null;	
+					uId = Users.getUserByEmail(userId.toString().replace("\"", ""));
+					if(uId != null){
+						u.setUsers(uId);
+					}
+					
+				}
+			
+				
+				
+				u.setDate(new Date());
+				u.setFatContent(uvm.fatContent);
+				u.setSNFContent(uvm.SNFContent);
+				u.setDeviceID(uvm.deviceID);
+				u.setLastUpdateDateTime(new Date());
+				u.setQuantity(uvm.quantity);
+				
+				u.update(u);
+
+			}else{
+				
+				u  = new CattleOutput();
+
+				u.setDate(new Date());
+				u.setFatContent(uvm.fatContent);
+				u.setSNFContent(uvm.SNFContent);
+				u.setDeviceID(uvm.deviceID);
+				u.setLastUpdateDateTime(new Date());
+				u.setQuantity(uvm.quantity);
+				
+				u.save();
+
+				JsonNode org = json.path("org");
+				System.out.println(org);
+				if(org.toString() != ""){
+					Oraganization    orgni = Oraganization.getOrgById(Integer.parseInt(org.toString().replace("\"", "")));
+					if(orgni != null){
+						u.setOraganization(orgni);
+					}
+					
+				}
+				
+				JsonNode userId = json.path("userId");
+				System.out.println(userId);
+				if(userId.toString() != ""){
+					Users    uId = null;
+				    uId = Users.getUserByEmail(userId.toString().replace("\"", ""));
+					if(uId != null){
+						u.setUsers(uId);
+					}
+					
+				}
+				
+			
+			u.update(u);
+
+			}
+		} catch (JsonParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (JsonMappingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		return ok("");
+	}
+	
+	
+	
+	
+	
+	public static Result updatefeedCattleProfileByAdmin(){
+		JsonNode json = request().body().asJson();
+		System.out.println("com.mnt.dairymgnt.controllers.Application.");
+		
+		JsonNode catJson = json.get("cat");
+		System.out.println(json);
+		ObjectMapper userinfoMapper = new ObjectMapper();
+		try {
+			CattleFeedMasterVM uvm = userinfoMapper.readValue(catJson.traverse(),CattleFeedMasterVM.class);
+			CattleFeedMaster u = CattleFeedMaster.getUserByfeedId(uvm.feedId);
+			if(u !=  null){
+				JsonNode org = json.path("org");
+				System.out.println(org);
+				if(org.toString() != ""){
+					Oraganization    orgni = Oraganization.getOrgById(Integer.parseInt(org.toString().replace("\"", "")));
+					if(orgni != null){
+						u.setOraganization(orgni);
+					}
+				}
+				JsonNode userId = json.path("userId");
+				System.out.println(userId);
+				if(userId.toString() != ""){
+					Users    uId = null;	
+					uId = Users.getUserByEmail(userId.toString().replace("\"", ""));
+					if(uId != null){
+						u.setUsers(uId);
+					}
+					
+				}
+				
+				u.setFeedFiber(uvm.feedFiber);
+				u.setFeedprotine(uvm.feedprotine);
+				u.setFeedType(uvm.feedType);
+				u.setFeedVitamins(uvm.feedVitamins);
+				u.setFeedWaterContent(uvm.feedWaterContent);
+				u.setLastUpdateDateTime(new Date());
+				u.update(u);
+
+			}else{
+				
+				u  = new CattleFeedMaster();
+
+				u.setFeedFiber(uvm.feedFiber);
+				u.setFeedprotine(uvm.feedprotine);
+				u.setFeedType(uvm.feedType);
+				u.setFeedVitamins(uvm.feedVitamins);
+				u.setFeedWaterContent(uvm.feedWaterContent);
+				u.setLastUpdateDateTime(new Date());
+				u.save();
+
+				JsonNode org = json.path("org");
+				System.out.println(org);
+				if(org.toString() != ""){
+					Oraganization    orgni = Oraganization.getOrgById(Integer.parseInt(org.toString().replace("\"", "")));
+					if(orgni != null){
+						u.setOraganization(orgni);
+					}
+					
+				}
+				
+				JsonNode userId = json.path("userId");
+				System.out.println(userId);
+				if(userId.toString() != ""){
+					Users    uId = null;
+				    uId = Users.getUserByEmail(userId.toString().replace("\"", ""));
+					if(uId != null){
+						u.setUsers(uId);
+					}
+					
+				}
+			u.update(u);
+
+			}
+		} catch (JsonParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (JsonMappingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		return ok("");
+	}
+	
+	
+	
+	
+	public static Result updateCattleIntakeProfileByAdmin(){
+		JsonNode json = request().body().asJson();
+		System.out.println("com.mnt.dairymgnt.controllers.Application.");
+		
+		JsonNode catJson = json.get("cat");
+		System.out.println(json);
+		ObjectMapper userinfoMapper = new ObjectMapper();
+		try {
+			CattleIntakeVM uvm = userinfoMapper.readValue(catJson.traverse(),CattleIntakeVM.class);
+			CattleIntake u = CattleIntake.getUserByCattleId(uvm.cattleId);
+			if(u !=  null){
+				JsonNode org = json.path("org");
+				System.out.println(org);
+				if(org.toString() != ""){
+					Oraganization    orgni = Oraganization.getOrgById(Integer.parseInt(org.toString().replace("\"", "")));
+					if(orgni != null){
+						u.setOraganization(orgni);
+					}
+				}
+				JsonNode userId = json.path("userId");
+				System.out.println(userId);
+				if(userId.toString() != ""){
+					Users    uId = null;	
+					uId = Users.getUserByEmail(userId.toString().replace("\"", ""));
+					if(uId != null){
+						u.setUsers(uId);
+					}
+					
+				}
+			
+				JsonNode feedId = json.path("feedId");
+				System.out.println(feedId);
+				if(feedId.toString() != ""){
+					CattleFeedMaster    uId = null;
+				    uId = CattleFeedMaster.getUserByfeedId(Integer.parseInt(feedId.toString().replace("\"", "")));
+					if(uId != null){
+						u.setCattleFeedMaster(uId);
+					}
+				}
+				
+				u.setDate(new Date());
+				u.setDeviceID(uvm.deviceID);
+				u.setLastUpdateDateTime(new Date());
+				u.setQuantity(uvm.quantity);
+				
+			
+				u.update(u);
+
+			}else{
+				
+				u  = new CattleIntake();
+
+				u.setDate(new Date());
+				u.setDeviceID(uvm.deviceID);
+				u.setLastUpdateDateTime(new Date());
+				u.setQuantity(uvm.quantity);
+				
+				u.save();
+
+				JsonNode org = json.path("org");
+				System.out.println(org);
+				if(org.toString() != ""){
+					Oraganization    orgni = Oraganization.getOrgById(Integer.parseInt(org.toString().replace("\"", "")));
+					if(orgni != null){
+						u.setOraganization(orgni);
+					}
+					
+				}
+				
+				JsonNode userId = json.path("userId");
+				System.out.println(userId);
+				if(userId.toString() != ""){
+					Users    uId = null;
+				    uId = Users.getUserByEmail(userId.toString().replace("\"", ""));
+					if(uId != null){
+						u.setUsers(uId);
+					}
+					
+				}
+				
+				
+				JsonNode feedId = json.path("feedId");
+				System.out.println(feedId);
+				if(feedId.toString() != ""){
+					CattleFeedMaster    uId = null;
+				    uId = CattleFeedMaster.getUserByfeedId(Integer.parseInt(feedId.toString().replace("\"", "")));
+					if(uId != null){
+						u.setCattleFeedMaster(uId);
+					}
+				}
+			u.update(u);
+
+			}
+		} catch (JsonParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (JsonMappingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		return ok("");
+	}
+	
+	
+	public static Result updateOrgByAdmin(){
+		JsonNode json = request().body().asJson();
+		JsonNode orgJson = json.get("org");
+		System.out.println(json);
+		
+		//JsonNode userDet = json.path("userInfo");
+		ObjectMapper userinfoMapper = new ObjectMapper();
+        
+		try {
+			OrgnizationVM ovm = userinfoMapper.readValue(orgJson.traverse(),OrgnizationVM.class);
+			Oraganization org = Oraganization.getOrgById(ovm.orgId);		
+			
+			if(org != null){
+				
+				System.out.println("object ");
+				org.setName(ovm.name);
+				org.setAddressLine1(ovm.addressLine1);
+				org.setAddressLine2(ovm.addressLine2);
+				org.setCity(ovm.city);
+				org.setPincode(ovm.pincode);
+				org.setState(ovm.state);
+				org.setLastUpdatedtime(new Date());
+				org.update();
+				
+			}else{
+				
+				org = new Oraganization();
+				org.setName(ovm.name);
+				org.setAddressLine1(ovm.addressLine1);
+				org.setAddressLine2(ovm.addressLine2);
+				org.setCity(ovm.city);
+				org.setPincode(ovm.pincode);
+				org.setState(ovm.state);
+				org.setLastUpdatedtime(new Date());
+				org.save();
+			}
+			
+		} catch (JsonParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (JsonMappingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		return ok("");
+	}
+	
+	
+	public static Result  getAllEntities(){
+		List<Entities> entities = Entities.getAllEntities();
+		HashMap< String, Object> hm = new HashMap<>();
+		hm.put("entities", entities);
+		return ok(Json.toJson(hm));
+	}
+	
+	public static Result checkUserExits(String userId){
+		Users u  = Users.getUserByEmail(userId);
+		if(u == null){
+			return ok("available");
+		}else{
+			return ok("");
+		}
+	}
+	
+	public static Result getUserPermissions(){
+		HashMap<String,Object>  map  = new HashMap<>(); 
+		String  email = 	session().get("email");
+	    Users u = Users.getUserByEmail(email);
+	    UserVM uv = new UserVM();
+		uv.firstname = u.firstname;
+		uv.lastname = u.lastname;
+		uv.password = u.password;
+		uv.userId = u.userId;
+		uv.permissions  = u.permissions;
+		uv.lastUpdatedatetime = u.lastUpdatedatetime;
+		uv.oraganization = u.oraganization;
+	    
+		map.put("user", uv);
+		return ok(Json.toJson(map));
+	}
+}
+	
+

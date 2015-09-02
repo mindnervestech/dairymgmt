@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+<title>AP Jobs Portal </title>
+<meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="" />
+<link rel="stylesheet" href="@routes.Assets.at("app/vendors/bootstrap/css/bootstrap.min.css")"/>
+<link rel="stylesheet" href="@routes.Assets.at("app/vendors/intro.js/introjs.css")"/>
+<link rel="stylesheet" href="@routes.Assets.at("app/vendors/animate.css/animate.css")"/>
+<link rel="stylesheet" href="@routes.Assets.at("app/vendors/iCheck/skins/all.css")"/>
+<link rel="stylesheet" href="@routes.Assets.at("app/vendors/jquery-notific8/jquery.notific8.min.css")"/>
+<link rel="stylesheet" href="@routes.Assets.at("app/vendors/lightbox/css/lightbox.css")"/>
+<link rel="stylesheet" href="@routes.Assets.at("app/vendors/DataTables/media/css/dataTables.bootstrap.css")"/>
+<link rel="stylesheet" href="@routes.Assets.at("app/vendors/jquery-tablesorter/themes/blue/style-custom.css")"/>
+<link rel="stylesheet" href="@routes.Assets.at("app/vendors/DataTables/media/css/dataTables.bootstrap.css")"/>
+<link rel="stylesheet" href="@routes.Assets.at("app/vendors/jquery-file-upload/css/jquery.fileupload-ui.css")"/>
+<link rel="stylesheet" href="@routes.Assets.at("app/vendors/jquery-file-upload/css/blueimp-gallery.min.css")"/>
+<link rel="stylesheet" href="@routes.Assets.at("app/vendors/jquery-steps/css/jquery.steps.css")"/>
+<link rel="stylesheet" href="@routes.Assets.at("app/vendors/bootstrap-colorpicker/css/colorpicker.css")"/>
+<link rel="stylesheet" href="@routes.Assets.at("app/vendors/bootstrap-daterangepicker/daterangepicker-bs3.css")"/>
+<!-- <link rel="stylesheet" href="@routes.Assets.at("app/vendors/bootstrap-datetimepicker/build/css/bootstrap-datetimepicker.min.css")"/>
+ --><link rel="stylesheet" href="@routes.Assets.at("app/vendors/bootstrap-timepicker/css/bootstrap-timepicker.min.css")"/>
+<link rel="stylesheet" href="@routes.Assets.at("app/vendors/bootstrap-clockface/css/clockface.css")"/>
+<link rel="stylesheet" href="@routes.Assets.at("app/vendors/bootstrap-switch/css/bootstrap-switch.css")"/>
+<link rel="stylesheet" href="@routes.Assets.at("app/css/style.css")"/>
+<link rel="stylesheet" href="@routes.Assets.at("app/vendors/jplist/html/css/jplist-custom.css")"/>
+<link rel="stylesheet" href="@routes.Assets.at("app/vendors/select2/select2-madmin.css")"/>
+<link rel="stylesheet" href="@routes.Assets.at("app/vendors/bootstrap-select/bootstrap-select.min.css")"/>
+<link rel="stylesheet" href="@routes.Assets.at("app/vendors/multi-select/css/multi-select-madmin.css")"/>
+<link rel="stylesheet" href="@routes.Assets.at("app/vendors/x-editable/select2/lib/select2-madmin.css")"/>
+<link rel="stylesheet" href="@routes.Assets.at("app/vendors/x-editable/bootstrap3-editable/css/bootstrap-editable.css")"/>
+ <link rel="stylesheet" href="@routes.Assets.at("app/css/themes/style1/pink-blue.css")"/>
+
+			<!-- <script src="@routes.Assets.at("app/vendors/ckeditor/ckeditor.js")"></script> -->
+			<!-- <script src="@routes.Assets.at("app/js/lib.js")"></script> -->
+			<script src="@routes.Assets.at("app/bower_components/angular/jquery.min.js")"></script>
+    	    <script src="@routes.Assets.at("app/bower_components/angular/angular.min.js")"></script>
+            <script src="@routes.Assets.at("app/bower_components/angular/angular-route.min.js")"></script>
+			<script src="@routes.Assets.at("app/vendors/iCheck/icheck.min.js")"></script>
+			<script src="@routes.Assets.at("app/vendors/iCheck/custom.min.js")"></script>
+ 			<!--   <script src="@routes.Assets.at("app/bower_components/angular/jquery.min.js")"></script> -->
+            <script src="@routes.Assets.at("app/bower_components/angular-bootstrap/ui-bootstrap.min.js")"></script>
+            <script src="@routes.Assets.at("app/vendors/jquery-migrate-1.2.1.min.js")"></script>
+            <script src="@routes.Assets.at("app/vendors/jquery-ui.js")"></script>
+            <script src="@routes.Assets.at("app/vendors/bootstrap/js/bootstrap.min.js")"></script>
+            <script src="@routes.Assets.at("app/vendors/jquery-bootstrap-wizard/jquery.bootstrap.wizard.min.js")"></script>
+            <script src="@routes.Assets.at("app/vendors/lightbox/js/lightbox.min.js")"></script>
+            <script src="@routes.Assets.at("app/vendors/moment/moment.js")"></script>
+             <script src="@routes.Assets.at("app/vendors/bootstrap/js/bootstrap.min.js")"></script>
+            <script src="@routes.Assets.at("app/vendors/bootstrap-popover/bootstrap-modal-popover.js")"></script>
+            <script src="@routes.Assets.at("app/vendors/bootstrap-popover/prettify.js")"></script>
+            <script src="@routes.Assets.at("app/vendors/jquery-bootstrap-wizard/jquery.bootstrap.wizard.min.js")"></script>
+          <!--   <script src="@routes.Assets.at("app/vendors/lightbox/js/lightbox.min.js")"></script> -->
+            <script src="@routes.Assets.at("app/bower_components/angular-validator/dist/angular-validator.js")"></script>
+            <script src="@routes.Assets.at("app/bower_components/angular-validator/dist/angular-validator-rules.js")"></script>
+           
+           <!--  <script src="@routes.Assets.at("app/vendors/bootstrap-clockface/js/clockface.js")"></script>
+          -->   <script src="@routes.Assets.at("app/vendors/bootstrap-colorpicker/js/bootstrap-colorpicker.js")"></script>
+            <script src="@routes.Assets.at("app/vendors/bootstrap-switch/js/bootstrap-switch.min.js")"></script>
+           <!--  <script src="@routes.Assets.at("app/vendors/jquery-maskedinput/jquery-maskedinput.js")"></script>
+ -->     <!--        <script src="@routes.Assets.at("app/vendors/dropzone/js/dropzone.js")"></script> -->
+            <script src="@routes.Assets.at("app/vendors/jquery-file-upload/js/vendor/jquery.ui.widget.js")"></script>
+        <script src="@routes.Assets.at("app/vendors/bootstrap-select/bootstrap-select.min.js")"></script>
+            <script src="@routes.Assets.at("app/vendors/x-editable/demo-mock.js")"></script>
+     <script src="@routes.Assets.at("app/js/main.js")"></script>
+      <script src="@routes.Assets.at("app/js/loginmain.js")"></script>
+            </head>
+<body  ng-app ="Ardent"  ng-controller ="ShareJobDetailsController" class="[header.menu_style, header.header_topbar, header.effect]"
+	class="animated" >
+	<div id="signin-page" ng-init = "init();"> 
+		<div class="page-form-wrapper"></div>
+		<div class="col-md-12">
+		<div class="col-md-8" style="margin-top: 2%;">
+	
+		<div class="header-content">	
+			<!-- <span class="logo-text" style="font-size:30px;">Ardent Job Portal</span> -->
+					<!-- <h3>Search</h3> -->
+				</div>
+		<div class="modal-body" style="width:100%">
+          
+    <img src="@routes.Assets.at("app/vendors/images/login/ap-jobs-portal-banner-.png")">
+    <div  style="  width: 20%;
+  margin-left: 130%">New user? <br /> <button id="login" ><a href = "/?jobId={{jobSearchID}}"> Login  </button>   <button id="login"><a href = "/signup"> Sign Up </button>	</div>	
+  </div>
+		
+     
+      </div>
+      
+		
+		</div>
+		
+	
+		</div>
+	
+	
+	
+	
+<div class="modal-body">
+					<div class="col-md-4">
+						<div class="">
+							<label class="" data-toggle="tooltip" data-placement="bottom"
+								title="Request Type indicates whether the position is new, backfilled, reissued, etc.">Request
+								Type&nbsp;&nbsp;<i class="glyphicon glyphicon-question-sign"></i>
+							</label>
+						</div>
+						<div class="form-group">
+							<input type="text" id="requestType" name="requestType"
+								ng-model="jobDetails.requestType" style="font-size: 12px;"
+								class="form-control" readonly>
+						</div>
+					</div>
+
+
+					<div class="col-md-4">
+						<div class="">
+							<label class="">Labor Category</label>
+						</div>
+						<div class="form-group">
+							<input type="text" id="labourCategory" name="labourCategory"
+								ng-model="jobDetails.labourCategory" style="font-size: 12px;"
+								class="form-control" readonly>
+						</div>
+					</div>
+
+					<div class="col-md-4">
+						<div class="">
+							<label class="">Performance Level</label>
+						</div>
+						<div class="form-group">
+							<input type="text" id="performanceLevel" name="performanceLevel"
+								ng-model="jobDetails.performanceLevel" style="font-size: 12px;"
+								class="form-control" readonly>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="">
+							<label class="">Position Type</label>
+						</div>
+						<div class="form-group">
+							<input type="text" id="positionType" name="positionType"
+								ng-model="jobDetails.positionType" style="font-size: 12px;"
+								class="form-control" readonly>
+						</div>
+					</div>
+					<!-- <div class="col-md-4">
+						<div class="">
+							<label class="">Clearance Required</label>
+						</div>
+						<div class="form-group">
+							<input type="text" id="clearanceRequired"
+								name="clearanceRequired" ng-model="jobDetails.clearanceRequired"
+								style="font-size: 12px;" class="form-control" readonly>
+						</div>
+					</div> -->
+					<div class="col-md-4">
+						<div class="">
+							<label class="">Work Location</label>
+						</div>
+						<div class="form-group">
+							<input type="text" id="workLocation" name="workLocation"
+								ng-model="jobDetails.workLocation" style="font-size: 12px;"
+								class="form-control" readonly>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="">
+							<label class="">Work Description</label>
+						</div>
+						<div class="form-group">
+							<textarea rows="9" cols="9" id="workDescription"
+								name="workDescription" ng-model="jobDetails.workDescription"
+								placeholder="NA" style="font-size: 12px;" class="form-control"
+								readonly></textarea>
+
+							<!-- <input type="text" id="workDescription" name="workDescription"
+								ng-model="jobDetails.workDescription" placeholder="Work Description"
+								style="font-size: 12px;" class="form-control" required> -->
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="">
+							<label class="">Manadatory Skills</label>
+						</div>
+						<div class="form-group">
+							<textarea rows="9" cols="9" id="manadatorySkills"
+								name="manadatorySkills" ng-model="jobDetails.manadatorySkills"
+								placeholder="NA" style="font-size: 12px;" class="form-control"
+								readonly></textarea>
+							<!-- <input type="text" id="manadatorySkills" name="manadatorySkills"
+								ng-model="jobDetails.manadatorySkills" placeholder="Manadatory Skills"
+								style="font-size: 12px;" class="form-control" required> -->
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="">
+							<label class="">Desired Skill</label>
+						</div>
+						<div class="form-group">
+							<textarea rows="9" cols="9" id="desiredSkill" name="desiredSkill"
+								ng-model="jobDetails.desiredSkill" placeholder="NA"
+								style="font-size: 12px;" class="form-control" readonly></textarea>
+
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="">
+							<label class="">Certification Required</label>
+						</div>
+						<div class="form-group">
+							<input type="text" id="certificationRequired"
+								name="certificationRequired"
+								ng-model="jobDetails.certificationRequired" placeholder="NA"
+								style="font-size: 12px;" class="form-control" readonly>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="">
+							<label class="" data-toggle="tooltip" data-placement="bottom"
+								title="Indicates travel within the continental U.S.">
+								Conus Travel&nbsp;&nbsp;<i
+								class="glyphicon glyphicon-question-sign"></i>
+							</label>
+						</div>
+						<div class="form-group">
+							<input type="text" id="conusTravel" name="conusTravel"
+								ng-model="jobDetails.conusTravel" placeholder="NA"
+								style="font-size: 12px;" class="form-control" readonly>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="">
+							<label class="" data-toggle="tooltip" data-placement="bottom"
+								title="Indicates travel outside of the continental U.S.">Oconus
+								Travel&nbsp;&nbsp;<i class="glyphicon glyphicon-question-sign"></i>
+							</label>
+						</div>
+						<div class="form-group">
+							<input type="text" id="oconusTravel" name="oconusTravel"
+								ng-model="jobDetails.oconusTravel" placeholder="NA"
+								style="font-size: 12px;" class="form-control" readonly>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="">
+							<label class="">Regular hours per year</label>
+						</div>
+						<div class="form-group">
+							<input type="text" id="reghrperYear" name="reghrperYear"
+								ng-model="jobDetails.reghrperYear" placeholder="NA"
+								style="font-size: 12px;" class="form-control" readonly>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="">
+							<label class="" data-toggle="tooltip" data-placement="bottom"
+								title="Client comments on the anticipated position work schedule">Schedule
+								Comments&nbsp;&nbsp;<i class="glyphicon glyphicon-question-sign"></i>
+							</label>
+						</div>
+						<div class="form-group">
+							<input type="text" id="scheduleComments" name="scheduleComments"
+								ng-model="jobDetails.scheduleComments" placeholder="NA"
+								style="font-size: 12px;" class="form-control" readonly>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="">
+							<label class="" data-toggle="tooltip" data-placement="bottom"
+								title="Language to be determined">Non pub
+								comments&nbsp;&nbsp;<i class="glyphicon glyphicon-question-sign"></i>
+							</label>
+						</div>
+						<div class="form-group">
+							<input type="text" id="nonpubComments" name="nonpubComments"
+								ng-model="jobDetails.nonpubComments" style="font-size: 12px;"
+								class="form-control" readonly>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="">
+							<label class="">Mission Critical</label>
+						</div>
+						<div class="form-group">
+							<input type="text" id="missionCritical" name="missionCritical"
+								ng-model="jobDetails.missionCritical" placeholder="NA"
+								style="font-size: 12px;" class="form-control" readonly>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="">
+							<label class="">Night Work</label>
+						</div>
+						<div class="form-group">
+							<input type="text" id="nightWork" name="nightWork"
+								ng-model="jobDetails.nightWork" placeholder="NA"
+								style="font-size: 12px;" class="form-control" readonly>
+						</div>
+					</div>
+
+
+
+					<div class="col-md-4">
+						<div class="">
+							<label class="" data-toggle="tooltip" data-placement="bottom"
+								title="Indicates local travel using a privately owned vehicle">Local
+								travel using pov&nbsp;&nbsp;<i
+								class="glyphicon glyphicon-question-sign"></i>
+							</label>
+						</div>
+						<div class="form-group">
+							<input type="text" id="localTravalusingpub"
+								name="localTravalusingpub"
+								ng-model="jobDetails.localTravalusingpub" placeholder="NA"
+								style="font-size: 12px;" class="form-control" readonly>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="">
+							<label class="">Pager Duty</label>
+						</div>
+						<div class="form-group">
+							<input type="text" id="pagerDuty" name="pagerDuty"
+								ng-model="jobDetails.pagerDuty" placeholder="NA"
+								style="font-size: 12px;" class="form-control" readonly>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="">
+							<label class="">Pager Duty Comments</label>
+						</div>
+						<div class="form-group">
+							<input type="text" id="pagerdutyComments"
+								name="pagerdutyComments" ng-model="jobDetails.pagerdutyComments"
+								placeholder="NA" style="font-size: 12px;" class="form-control"
+								readonly>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="">
+							<label class="">Work on Holiday</label>
+						</div>
+						<div class="form-group">
+							<input type="text" id="workonHoliday" name="workonHoliday"
+								ng-model="jobDetails.workonHoliday" placeholder="NA"
+								style="font-size: 12px;" class="form-control" readonly>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="">
+							<label class="">Work on Weekends</label>
+						</div>
+						<div class="form-group">
+							<input type="text" id="workonWeekends" name="workonWeekends"
+								ng-model="jobDetails.workonWeekends" placeholder="NA"
+								style="font-size: 12px;" class="form-control" readonly>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="">
+							<label class="">Shift Work</label>
+						</div>
+						<div class="form-group">
+							<input type="text" id="shiftWork" name="shiftWork"
+								ng-model="jobDetails.shiftWork" placeholder="NA"
+								style="font-size: 12px;" class="form-control" readonly>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="">
+							<label class="">War zone</label>
+						</div>
+						<div class="form-group">
+							<input type="text" id="warzone" name="warzone"
+								ng-model="jobDetails.warzone" placeholder="NA"
+								style="font-size: 12px;" class="form-control" readonly>
+						</div>
+					</div>
+					<div class="col-md-4">
+						<div class="">
+							<label class="" data-toggle="tooltip" data-placement="bottom"
+								title="Language to be determined">Coop&nbsp;&nbsp;<i
+								class="glyphicon glyphicon-question-sign"></i></label>
+						</div>
+						<div class="form-group">
+							<input type="text" id="coop" name="coop" ng-model="jobDetails.coop"
+								placeholder="NA" style="font-size: 12px;" class="form-control"
+								readonly>
+						</div>
+					</div>
+					<!-- <div class="col-md-4">
+						<div class="">
+							<label class="">Scheduled Close Date</label>
+						</div>
+						<div class="form-group">
+							<input type="text" id="duetoPmo" name="duetoPmo"
+								ng-model="jobDetails.scheduledCloseDate" placeholder="NA"
+								style="font-size: 12px;" class="form-control" readonly>
+						</div>
+					</div> -->
+					<!-- <div class="col-md-4">
+						<div class="">
+							<label class="">Update Date</label>
+						</div>
+						<div class="form-group">
+							<input type="text" id="updateDate" name="updateDate"
+								ng-model="jobDetails.updateDate" style="font-size: 12px;"
+								class="form-control" readonly>
+						</div>
+					</div> -->
+					<!-- <div class="col-md-4">
+						<div class="">
+							<label class="">Date of Status</label>
+						</div>
+						<div class="form-group">
+							<input type="text" id="duetoGovt" name="duetoGovt"
+								ng-model="jobDetails.dateofStatus" placeholder="Due to Govt"
+								style="font-size: 12px;" class="form-control" readonly>
+						</div>
+					</div> -->
+				</div>
+	
+
+
+</body>
+
+ <style type="text/css">
+.popover {
+	max-width: 600px;
+}
+
+.the-legend {
+	border-style: none;
+	border-width: 0;
+	font-size: 14px;
+	line-height: 20px;
+	margin-bottom: 0;
+}
+.modal .modal-dialog {
+	width: 90%;
+}
+
+.modal .modal-body {
+	max-height: 620px;
+	overflow-y: auto;
+}
+
+.btn-success-custom {
+color: white;
+background-color: #21205f;
+}
+
+.btn-success-custom:hover {
+color: white;
+background-color: #999999;
+}
+
+.btn-success-customapply {
+color: white;
+background-color: #2120f5;
+}
+
+.btn-success-customapply:hover {
+color: white;
+background-color: #999999;
+}
+
+</style>
+<style>
+.datepicker{z-index:1151 !important;}
+</style>
+</html>

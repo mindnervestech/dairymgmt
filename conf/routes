@@ -1,0 +1,33 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# Home page
+#GET     /                           					com.mnt.dairymgnt.controllers.Application.index()
+GET		 /											    com.mnt.dairymgnt.controllers.Application.login()
+GET		/signup											com.mnt.dairymgnt.controllers.Application.signup()
+POST	/SignIn                     					com.mnt.dairymgnt.controllers.Application.SignIn()
+GET     /dashboard										com.mnt.dairymgnt.controllers.Application.dashBoard()
+#GET     /registrationredirect                          com.mnt.dairymgnt.controllers.Application.registrationRedirect()
+#GET     /shareJobDetails                               com.mnt.dairymgnt.controllers.Application.shareJobDetails()                     
+
+#Org Management 
+GET    /getAllOrgs/                                     com.mnt.dairymgnt.controllers.Application.getAllOrgs()
+GET    /getAllUsers/                                    com.mnt.dairymgnt.controllers.Application.getAllUsers()
+POST   /updateUserProfileByAdmin                        com.mnt.dairymgnt.controllers.Application.updateUserProfileByAdmin()  
+GET    /getAllEntities                                  com.mnt.dairymgnt.controllers.Application.getAllEntities()
+GET    /checkUserExits/:userId                          com.mnt.dairymgnt.controllers.Application.checkUserExits(userId : String)
+POST   /updateOrgByAdmin                                com.mnt.dairymgnt.controllers.Application.updateOrgByAdmin()
+GET    /getAllCattleMaster/                             com.mnt.dairymgnt.controllers.Application.getAllCattleMaster()
+POST   /updateCattleProfileByAdmin               		com.mnt.dairymgnt.controllers.Application.updateCattleProfileByAdmin()
+GET    /getAllFeedCattleMaster/                         com.mnt.dairymgnt.controllers.Application.getAllFeedCattleMaster()
+POST   /updatefeedCattleProfileByAdmin                 com.mnt.dairymgnt.controllers.Application.updatefeedCattleProfileByAdmin()
+GET    /getAllCattleIntake/                            com.mnt.dairymgnt.controllers.Application.getAllCattleIntake()
+POST   /updateCattleIntakeProfileByAdmin               com.mnt.dairymgnt.controllers.Application.updateCattleIntakeProfileByAdmin()
+GET    /getUserPermissions                             com.mnt.dairymgnt.controllers.Application.getUserPermissions()
+POST   /updateCattleOutputProfileByAdmin               com.mnt.dairymgnt.controllers.Application.updateCattleOutputProfileByAdmin()  
+GET    /getAllCattleOutput/                            com.mnt.dairymgnt.controllers.Application.getAllCattleOutput()
+GET    /getAllCattleHealth/                            com.mnt.dairymgnt.controllers.Application.getAllCattleHealth()
+POST   /updateCattleHealthProfileByAdmin    			com.mnt.dairymgnt.controllers.Application.updateCattleHealthProfileByAdmin()
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               					controllers.Assets.at(path="/public", file)

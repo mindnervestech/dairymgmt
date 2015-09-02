@@ -1,0 +1,300 @@
+<style>
+.Color {
+	color: green
+}
+
+.redColor {
+	color: red
+}
+
+.btn-success-custom {
+	color: white;
+	background-color: #21205f;
+}
+
+.btn-success-custom:hover {
+	color: white;
+	background-color: #999999;
+}
+</style>
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="portlet box" style="min-height: 500px;">
+			<div class="portlet-header">
+				<div class="caption">All Org</div>
+			</div>
+			<div class="portlet-body" ng-init="init();" style="overflow-x: auto;">
+				<div class="row mbm">
+					<div class="col-lg-12">
+						<!-- {{jobs}} -->
+						<div>
+							 <div class="pull-left">
+								<span>
+									<button class="btn btn-success-custom" data-toggle="tooltip"
+										data-placement="bottom" title="Add new org."
+										ng-click="openAddnewOrgPopup();" ng-if = "Orgnization == true">Add</button>
+								</span>
+
+							</div> 
+							<!-- <div class="pull-right">
+								<label>Active Users:</label>&nbsp;&nbsp; <small><strong>{{activeusercount}}</strong></small>
+							</div> -->
+						</div>
+						<div class="pull-right"></div>
+						<div ng-init="getAllOrg()" class="table-responsive">
+							<div class="page-header">
+								<!-- <h3>
+									All users <i class="icon-chevron-right"></i>
+								</h3> -->
+
+								<table id="table_id"
+									class="table table-hover table-striped table-bordered table-advanced tablesorter display">
+									<tbody>
+										<tr>
+											<th>Id</th>
+											<th>Name</th>
+											<th>addressLine1</th>
+											<th>city</th>
+											<th>pin code</th>
+											<th>state</th>
+											<th>Last Updated Time</th>
+											<th>View</th>
+										</tr>
+										
+										
+										<tr data-ng-repeat="org in orgs"
+											style="background-color: #fff !important; left: -900">
+											<td >{{org.orgId}}</td>
+											<td ng-click="">{{org.name}}</td>
+											<td ng-click="">{{org.addressLine1}}</td>
+											
+											<td ng-click="">{{org.city}}</td>
+											<td ng-click="">{{org.pincode}}</td>
+											<td ng-click="">{{org.state}}</td>
+											
+											<td>{{org.lastUpdatedtime | date:'yyyy-MM-dd HH:mm:ss '}}</td>
+										
+										<td><button class="btn btn-success-custom"
+													ng-click="editOrgDetails(org);" data-toggle="tooltip"
+													data-placement="bottom" title="View user details">
+													<i data-toggle="modal" class="glyphicon glyphicon-eye-open"></i>
+												</button></td>
+										</tr>
+									</tbody>
+								</table>
+
+							</div>
+							<div class="pull-right">
+								<button id="pre" type="button" ng-click="clickPre()"
+									class="btn btn-success-custom">
+									<i class="glyphicon glyphicon-arrow-left"></i>
+								</button>
+								&nbsp;
+								<button id="next" type="button" ng-click="clickNext()"
+									class="btn btn-success-custom">
+									<i class="glyphicon glyphicon-arrow-right"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+	
+<!-- Modal Edit user details-->
+<div class="modal fade" id="editOrgDetails" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Edit Org</h4>
+			</div>
+			<div class="modal-body">
+				<div class="portlet-body">
+					<div class="col-md-6">
+							<label class="col-md-6 control-label">Name</label> <input
+								id="inputName" type="text" id="name"
+								ng-model="org.name" name="name" placeholder="Name"
+								style="font-size: 12px;" class="form-control">
+						</div>
+						
+						<div class="col-md-6">
+							<label class="col-md-6 control-label">Address Line 1</label> <input
+								id="inputName" type="text" id="addressline1"
+								ng-model="org.addressLine1" name="addressline1" placeholder="Address Line 1"
+								style="font-size: 12px;" class="form-control">
+						</div>
+						
+						<div class="col-md-6">
+							<label class="col-md-6 control-label">Address Line 2</label> <input
+								id="inputName" type="text" id="addressline2"
+								ng-model="org.addressLine2" name="addressline1" placeholder="Address Line 2"
+								style="font-size: 12px;" class="form-control">
+						</div>
+						
+						<div class="col-md-6">
+							<label class="col-md-6 control-label">City</label> <input
+								id="inputName" type="text" id="city"
+								ng-model="org.city" name="city" placeholder="City"
+								style="font-size: 12px;" class="form-control">
+						</div>
+						
+						<div class="col-md-6">
+							<label class="col-md-6 control-label">Pincode</label> <input
+								id="pincode" type="text" id="pincode"
+								ng-model="org.pincode" name="pincode" placeholder="Pincode"
+								style="font-size: 12px;" class="form-control">
+						</div>
+						
+						<div class="col-md-6">
+							<label class="col-md-6 control-label">State</label> <input
+								id="state" type="text" id="state"
+								ng-model="org.state" name="state" placeholder="state"
+								style="font-size: 12px;" class="form-control">
+						</div>
+						
+						
+						<div class="form-actions" style="margin-top:4%;">
+							<div class="pull-right">
+								<button type="submit" ng-click="updateOrgByAdmin(org);"
+									class="btn btn-success-custom" ng-if ="Orgnization == true">Update</button>
+								&nbsp;
+								<button type="button" class="btn btn-success-custom"
+									data-dismiss="modal">Close</button>
+								&nbsp;
+								<!-- <button type="button" class="btn btn-default">Cancel</button> -->
+							</div>
+						</div>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
+<!-- Modal Edit user details-->
+<div class="modal fade" id="openAddnewOrgPopup" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Add Org</h4>
+			</div>
+			<div class="modal-body">
+				<div class="portlet-body">
+					<div class="col-md-6">
+							<label class="col-md-6 control-label">Name</label> <input
+								id="inputName" type="text" id="name"
+								ng-model="org.name" name="name" placeholder="Name"
+								style="font-size: 12px;" class="form-control">
+						</div>
+						
+						<div class="col-md-6">
+							<label class="col-md-6 control-label">Address Line 1</label> <input
+								id="inputName" type="text" id="addressline1"
+								ng-model="org.addressLine1" name="addressline1" placeholder="Address Line 1"
+								style="font-size: 12px;" class="form-control">
+						</div>
+						
+						<div class="col-md-6">
+							<label class="col-md-6 control-label">Address Line 2</label> <input
+								id="inputName" type="text" id="addressline2"
+								ng-model="org.addressLine2" name="addressline1" placeholder="Address Line 2"
+								style="font-size: 12px;" class="form-control">
+						</div>
+						
+						<div class="col-md-6">
+							<label class="col-md-6 control-label">City</label> <input
+								id="inputName" type="text" id="city"
+								ng-model="org.city" name="city" placeholder="City"
+								style="font-size: 12px;" class="form-control">
+						</div>
+						
+						<div class="col-md-6">
+							<label class="col-md-6 control-label">Pincode</label> <input
+								id="pincode" type="text" id="pincode"
+								ng-model="org.pincode" name="pincode" placeholder="Pincode"
+								style="font-size: 12px;" class="form-control">
+						</div>
+						
+						<div class="col-md-6">
+							<label class="col-md-6 control-label">State</label> <input
+								id="state" type="text" id="state"
+								ng-model="org.state" name="state" placeholder="state"
+								style="font-size: 12px;" class="form-control">
+						</div>
+						
+						
+						<div class="form-actions" style="margin-top:4%;">
+						<br />
+						<br />
+							<div class="pull-right">
+								<button type="submit" ng-click="addOrgByAdmin(org);"
+									class="btn btn-success-custom" ng-if = "Orgnization == true">Add</button>
+								&nbsp;
+								<button type="button" class="btn btn-success-custom"
+									data-dismiss="modal">Close</button>
+								&nbsp;
+								<!-- <button type="button" class="btn btn-default">Cancel</button> -->
+							</div>
+						</div>
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<style type="text/css">
+.modal .modal-dialog {
+	width: 90%;
+}
+
+.modal .modal-body {
+	max-height: 620px;
+	overflow-y: auto;
+}
+
+fieldset.scheduler-border {
+	border: 1px groove !important;
+	padding: 0 1.4em 1.4em 1.4em !important;
+	margin: 0 0 1.5em 0 !important;
+	-webkit-box-shadow: 0px 0px 0px 0px #000;
+	box-shadow: 0px 0px 0px 0px #000;
+	border-color: #darkgrey;
+}
+
+legend.scheduler-border {
+	font-size: 1.0em !important;
+	text-align: left !important;
+	width: inherit;
+	padding: 0 10px;
+	border-bottom: none;
+	color: darkgray;
+}
+
+.clsDatePicker {
+	z-index: 100000;
+}
+</style>
+
+<style>
+.datepicker {
+	z-index: 1151 !important;
+}
+</style>

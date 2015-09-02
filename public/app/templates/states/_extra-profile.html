@@ -1,0 +1,836 @@
+<script
+	src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.9/jquery.validate.min.js"></script>
+
+
+<style>
+.Color {
+	color: green
+}
+
+.redColor {
+	color: red
+}
+
+.state-success .form-control {
+	border-color: rgb(221, 216, 216) !important;
+}
+
+.state-success input,.state-success select,.state-success textarea {
+	background: none !important;
+}
+
+fieldset.scheduler-border {
+	border: 1px groove !important;
+	padding: 0 1.4em 1.4em 1.4em !important;
+	margin: 0 0 1.5em 0 !important;
+	-webkit-box-shadow: 0px 0px 0px 0px #000;
+	box-shadow: 0px 0px 0px 0px #000;
+	border-color: #darkgrey;
+}
+
+legend.scheduler-border {
+	font-size: 1.0em !important;
+	text-align: left !important;
+	width: inherit;
+	padding: 0 10px;
+	border-bottom: none;
+	color: darkgray;
+}
+
+.btn-success-custom {
+	color: white;
+	background-color: #21205f;
+}
+
+.btn-success-custom:hover {
+	color: white;
+	background-color: #999999;
+}
+</style>
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="portlet box">
+			<div class="portlet-header">
+				<div class="caption">My Profile</div>
+				<div class="col-md-12">
+					<small><strong>Please fill out the following
+							information to complete your user profile for the Ardent
+							Principles Jobs Portal. Your information will be used to present
+							potential job opportunities to you that align with your profile
+							selections as well as expedite the resume building process.</strong> </small>
+				</div>
+			</div>
+			<div class="portlet-body">
+				<div class="row mbm">
+					<div class="col-lg-12">
+
+
+
+						<div id="page-user-profile" class="row" ng-init="init();">
+
+							<div class="row ng-scope">
+								<div class="col-lg-12">
+									<div class="portlet box portlet-blue">
+										<!-- <div class="portlet-header">
+					<div class="caption">My Profile</div>
+					<div class="tools">
+						<i class="fa fa-chevron-up"></i><i data-toggle="modal"
+							data-target="#modal-config" class="fa fa-cog"></i><i
+							class="fa fa-refresh"></i><i class="fa fa-times"></i>
+					</div>
+				</div> -->
+										<div class="portlet-body">
+											<form name="userProfileform" id="userProfileform"
+												class="form-horizontal ng-pristine ng-valid">
+												<div class="row">
+
+
+													<div class="col-md-12">
+														<div class="">
+															<label class="col-md-4">First Name <code>*</code></label>
+															<label class="col-md-4">&nbsp;Middle Initial <code>*</code>
+															</label> <label class="col-md-4">&nbsp;Last Name <code>*</code></label>
+														</div>
+														<div class="form-group">
+															<div class="col-md-4">
+
+																<input type="text" id="firstname" name="firstname"
+																	ng-model="userDetails.firstname"
+																	placeholder="Enter First Name" style="font-size: 12px;"
+																	class="form-control" required>
+															</div>
+															<div class="col-md-4">
+																<input type="text" id="middlename" name="middlename"
+																	ng-model="userDetails.middlename"
+																	placeholder="Enter Mid Name" style="font-size: 12px;"
+																	class="form-control" maxlength="2">
+															</div>
+															<div class="col-md-4">
+																<input type="text" id="lastname" name="lastname"
+																	ng-model="userDetails.lastname"
+																	placeholder="Enter Last Name" style="font-size: 12px;"
+																	class="form-control" required>
+															</div>
+														</div>
+
+													</div>
+
+
+													<div class="col-md-12">
+														<div class="">
+															<label class="col-md-4">Email Addess <code>*</code></label>
+															<label class="col-md-4">Alternate Email Address </label>
+															<label class="col-md-4">&nbsp;&nbsp;Phone Number
+																<code>*</code>
+															</label>
+
+														</div>
+														<div class="form-group">
+															<div class="col-md-4">
+																<div class="input-group">
+																	<span class="input-group-addon"><i
+																		class="fa fa-envelope"></i></span> <input type="email"
+																		placeholder="Email Address" name="email"
+																		ng-model="userDetails.email" id="email"
+																		class="form-control" style="font-size: 12px;" required>
+																</div>
+															</div>
+															<div class="col-md-4">
+																<div class="input-group">
+																	<span class="input-group-addon"><i
+																		class="fa fa-envelope"></i></span> <input type="text"
+																		id="altemail" name="altemail"
+																		ng-model="userDetails.altemail"
+																		placeholder="Enter Alternate Email"
+																		style="font-size: 12px;" class="form-control">
+																</div>
+															</div>
+															<div class="col-md-4">
+																<!-- <span ng-if="phnumberError =true"> <code>Please enter phone number</code></span> -->
+																<input type="text" id="phnumber" name="phnumber"
+																	ng-model="userDetails.phnumber"
+																	placeholder="Enter phone Number"
+																	style="font-size: 12px;" class="form-control" min="7"
+																	maxlength="10" required>
+															</div>
+														</div>
+
+													</div>
+
+													<div class="col-md-12">
+														<div class="">
+															<label class="col-md-4">Alternate Phone Number </label> <label
+																class="col-md-4">Job Search Status <code>*</code>
+																<span ng-if="jobsearchstatusError == true"><code>(please
+																		fill)</code></span></label> <label class="col-md-4">&nbsp;&nbsp;Current
+																Job Title <code>*</code>
+															</label>
+
+														</div>
+														<div class="form-group">
+															<div class="col-md-4">
+																<input type="text" id="altphnumber" name="altphnumber"
+																	ng-model="userDetails.altphnumber"
+																	placeholder="Enter alternate  phone Number "
+																	style="font-size: 12px;" class="form-control" min="7"
+																	maxlength="10">
+															</div>
+															<div class="col-md-4">
+																<!-- <input type="text" id="jobsearchstatus" name="jobsearchstatus"
+																	ng-model="userDetails.jobsearchstatus"
+																	placeholder="Job Search Status" style="font-size: 12px;"
+																	class="form-control" required> -->
+
+																<select ng-model="userDetails.jobsearchstatus"
+																	ng-change="onJobSearchStatusChange()"
+																	class="form-control" id="jobsearchstatus" ng-required>
+																	<option
+																		ng-selected="clr.statusName == userDetails.jobsearchstatus"
+																		ng-repeat="clr in allJobSearchStatus">{{clr.statusName}}</option>
+																</select>
+															</div>
+															<div class="col-md-4">
+																<!-- <span ng-if="currentjobtitleError == true">	<code>please  enter current job title</code> </span> -->
+																<input type="text" id="currentjobtitle"
+																	name="currentjobtitle"
+																	ng-model="userDetails.currentjobtitle"
+																	placeholder="Current Job Title"
+																	style="font-size: 12px;" class="form-control" required>
+															</div>
+														</div>
+
+													</div>
+
+													<div class="col-md-12">
+														<div class="">
+															<label class="col-md-4">Resident City <code>*</code></label>
+															<label class="col-md-4">Resident State <code>*</code>
+																&nbsp;&nbsp;<span ng-if="residentStateError == true"><code>(Please
+																		fill)</code></span></label> <label class="col-md-4">&nbsp;&nbsp;Resident
+																Zip Code <code>*</code>
+															</label>
+
+														</div>
+														<div class="form-group">
+															<div class="col-md-4">
+																<!-- 	<span ng-if="residentcityError == true"><code>Please  enter  resident city</code></span> -->
+																<input type="text" id="residentcity" name="residentcity"
+																	ng-model="userDetails.residentcity"
+																	placeholder="Resident City " style="font-size: 12px;"
+																	class="form-control" required>
+
+
+															</div>
+															<div class="col-md-4">
+																<!-- <input type="text" id="residentState" name="residentState"
+																	ng-model="userDetails.residentState"
+																	placeholder="Resident State" style="font-size: 12px;"
+																	class="form-control" required> -->
+
+
+																<select id="residentState"
+																	ng-model="userDetails.residentState"
+																	ng-change="onStatesChange()" class="form-control"
+																	ng-required>
+																	<option
+																		ng-selected="clr.stateName == userDetails.residentState"
+																		ng-repeat="clr in allStates">{{clr.stateName}}</option>
+																</select>
+															</div>
+															<div class="col-md-4">
+																<!-- <span ng-if="zipcodeError == true"><code>Please  Enter zipcode</code> </span> -->
+																<input type="text" id="zipcode" name="zipcode"
+																	ng-model="userDetails.zipcode"
+																	placeholder="Enter zipcode " style="font-size: 12px;"
+																	class="form-control" maxlength="6" required>
+															</div>
+														</div>
+
+													</div>
+
+													<div class="col-md-12">
+														<div class="">
+															<label class="col-md-4">Date Of Birth <code>*</code></label>
+															<label class="col-md-4">Desired Salary <code>*
+																</code></label> <label class="col-md-4">&nbsp;&nbsp;Willing to
+																Relocate <code>*</code>&nbsp;&nbsp;<span
+																ng-if="willingtorelocateError == true"> <code>(Please
+																		fill)</code></span>
+															</label>
+														</div>
+														<div class="form-group">
+															<div class="col-md-4">
+																<div class="">
+																	<div class="">
+																		<div class="input-group">
+																			<input type="text" ng-model="userDetails.dob"
+																				name="dob" class="form-control " id="dob"
+																				ng-click="initempDatepicker();"
+																				style="font-size: 12px;" required>
+																			<div class="input-group-addon">
+																				<i class="fa fa-calendar"></i>
+																			</div>
+																		</div>
+																	</div>
+																</div>
+															</div>
+															<div class="col-md-4">
+																<input type="text" id="desiredsalary"
+																	name="desiredsalary"
+																	ng-model="userDetails.desiredsalary"
+																	placeholder="Desired Salary " style="font-size: 12px;"
+																	class="form-control" required>
+															</div>
+															<div class="col-md-4">
+																<!-- <input type="text" id="willingtorelocate" name="willingtorelocate"
+																	ng-model="userDetails.willingtorelocate"
+																	placeholder="Willing to Relocate" style="font-size: 12px;"
+																	class="form-control" required> -->
+
+																<select ng-model="userDetails.willingtorelocate"
+																	class="form-control" id="willingtorelocate" required>
+																	<option
+																		ng-selected="'Yes' == userDetails.willingtorelocate">Yes</option>
+																	<option
+																		ng-selected="'No' == userDetails.willingtorelocate">No</option>
+																</select>
+															</div>
+														</div>
+
+													</div>
+
+													<div class="col-md-6">
+														<!-- <div class="">
+															<label class="">Email Address *</label>
+														</div>
+														<div class="form-group">
+															<div class="col-md-9">
+																<div class="input-group">
+																	<span class="input-group-addon"><i
+																		class="fa fa-envelope"></i></span> <input type="email"
+																		placeholder="Email Address" name="email"
+																		ng-model="userDetails.email" id="email"
+																		class="form-control" style="font-size: 12px;" required>
+																</div>
+															</div>
+														</div> -->
+
+														<div class="">
+															<label class="">User Security Clearance Level <code>*</code>
+																&nbsp;&nbsp;<span class=""
+																ng-if="cleranceUError == true"><small><code>(Please
+																			fill)</code></small></span></label><br />
+															<!-- <label class=""><small><strong>You
+																		can select multiple security Clearance(use Ctrl)</strong></small></label>
+ -->
+														</div>
+														<div class="form-group">
+															<!-- <label class="col-md-3 control-label"></label> -->
+															<div class="col-md-9">
+																<select name="userClearance" ng-model="userClearance"
+																	class="form-control">
+																	<option ng-repeat="clear in allCleanrance.clearance"
+																		value="{{clear.clearance}}"
+																		ng-selected="clear.isSelect  == true"
+																		style="font-size: 12px;" required>{{clear.clearance}}</option>
+																</select>
+															</div>
+
+
+
+														</div>
+														<div class="">
+															<label class="">Select Experience Level <code>*</code>
+																&nbsp;&nbsp; <span class="" ng-if="expUError == true"><small><code>(Please
+																			fill)</code></small></span> &nbsp;&nbsp;<i
+																class="glyphicon glyphicon-question-sign"
+																data-toggle="tooltip" data-placement="bottom"
+																title="Click to view Skill level Instruction"
+																ng-click="showKeyInstruction();"></i>
+															</label><br /> <label class=""><small><strong>Click
+																		on the tool tip to see the experience level key</strong></small> </label>
+
+														</div>
+														<div class="form-group">
+															<!-- <label class="col-md-3 control-label"></label> -->
+															<div class="col-md-9">
+																<select name="userExperience" ng-model="userExperience"
+																	class="form-control">
+																	<option ng-repeat="exp in allExperiance.experiance"
+																		value="{{exp.experianceLevel}}"
+																		ng-selected="exp.isSelect  == true"
+																		style="font-size: 12px;" required>{{exp.experianceLevel}}
+																	</option>
+																</select>
+															</div>
+
+
+														</div>
+
+													</div>
+													<div class="col-md-6">
+
+														<div class="">
+															<label class="">Position(s)/Title(s) of interest
+																<code>*</code> &nbsp;&nbsp; <span class=""
+																ng-if="positionUError == true"><small><code>(Please
+																			fill) </code></small></span>
+															</label><br /> <label class=""><small><strong>You
+																		can select multiple Position(use Ctrl) </strong></small></label>
+
+														</div>
+														<div class="form-group">
+															<!-- <label class="col-md-3 control-label">User
+																Position/Title *</label> -->
+															<div class="col-md-9">
+
+																<select multiple="multiple" name="userposition"
+																	ng-model="userPosition" class="form-control">
+																	<option ng-repeat="posi in allPosition.position"
+																		value="{{posi.position}}"
+																		ng-selected="posi.isSelected  == true"
+																		style="font-size: 12px;" required>{{posi.position}}</option>
+																</select>
+															</div>
+
+
+
+														</div>
+													</div>
+
+													<div class="col-md-12">
+														<fieldset class="scheduler-border">
+															<legend class="scheduler-border">
+																<i class="glyphicon glyphicon-screenshot"></i>
+																&nbsp;&nbsp;Attach Resume
+															</legend>
+															<div class="form-group">
+																<div class="manageGenButton">
+																	<!-- <label class="col-md-3 control-label"> File:</label> -->
+																	<div class="col-md-12">
+																		<div class="col-md-2">
+																			<input style="margin-top: 5px;"
+																				ng-file-select="onFileSelect($files)" name=""
+																				type="file" />
+																		</div>
+																		<div class="col-md-2"></div>
+																		<button type="submit" ng-click="fileUpload()"
+																			class="btn btn-success-custom">Upload</button>
+																	</div>
+																</div>
+															</div>
+															<div class="form-group">
+																<div class="col-md-10" ng-if="succUpload == true">
+																	<span style="color: green;">Resume uploaded
+																		successfully</span>
+																</div>
+																<div class="col-md-10" ng-if="pleasWait == true">
+																	<span style="">Please Wait uploading
+																		resume......... </span>
+																</div>
+
+
+																<div class="col-md-12">
+																	<span><strong>Resume</strong></span>
+																</div>
+																<div class="col-md-12">
+																	<span
+																		ng-if="resumefilepath != null || resumefilepath != '' "><a
+																		target="_blank" href="/getuserresume">{{resumefilepath}}</a></span>
+																	<span
+																		ng-if="resumefilepath == null || resumefilepath == '' ">No
+																		resume uploaded</span>
+																</div>
+															</div>
+														</fieldset>
+
+
+
+													</div>
+													<div class="col-sm-12">
+
+														<input type="checkbox" name="emailalert"
+															ng-model="emailalert"
+															ng-checked="userDetails.emailalert == 'Yes'"
+															ng-click="ubSubribeFormEmailAlert(userDetails.emailalert);">
+														Subscribe for the Job Alert.
+													</div>
+													<div class='col-sm-12'>
+														<!-- 	<div ng-show="userPoserror" ><code>
+														Please fill at least one Position/Security/Experience
+														level.</code></div> -->
+														<label class="col-md-6 control-label"
+															ng-show="manaFieldError == true"><code>Please
+																field all Mandatory Details(*)</code> </label> <label
+															class="col-md-6 control-label" ng-show="updateSuccess"
+															style="font-size: 12px; color: green;">Profile
+															Updated Successfully! </label>
+													</div>
+
+													<div class="form-actions">
+														<div class="pull-right">
+															<button type="submit" ng-click="submitUserProfile();"
+																class="btn btn-success-custom">Save</button>
+															&nbsp;
+															<!-- <button type="button" class="btn btn-default">Cancel</button> -->
+														</div>
+													</div>
+											</form>
+										</div>
+
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<!-- Modal -->
+						<div class="modal fade" id="keySkillInstruction" tabindex="-1"
+							role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+										<h4 class="modal-title" id="myModalLabel">Skill level
+											Instructions</h4>
+									</div>
+									<div class="modal-body" style="font-size: 11px;">
+										<strong> Skill Levels:</strong>
+										<table border="1">
+											<tbody>
+												<tr>
+													<td><strong>Performance Level</strong></td>
+													<td><strong>Required Years Specialized
+															Experience </strong></td>
+												</tr>
+												<tr>
+													<td>Subject Matter Expert</td>
+													<td>16+</td>
+
+												</tr>
+												<tr>
+													<td>Expert</td>
+													<td>11+</td>
+												</tr>
+												<tr>
+													<td>Senior</td>
+													<td>6+</td>
+												</tr>
+												<tr>
+													<td>Full Performance</td>
+													<td>3+</td>
+												</tr>
+												<tr>
+													<td>Developmental</td>
+													<td><3</td>
+												</tr>
+											</tbody>
+										</table>
+										You may also add credit to your years of specific experience
+										per the following guidelines:
+										<ul>
+											<li>Technical Certification (industry recognized) = +3
+												months experience</li>
+											<li>Associate degree in CS, IS, Engineering, Business
+												or related technical discipline = +18 months experience</li>
+											<li>Bachelor’s degree in CS, IS, Engineering, Business
+												or related technical discipline = +3 years experience</li>
+											<li>Master’s degree in CS, IS, Engineering, Business
+												or related technical discipline = +2 years experience plus
+												credit for BS</li>
+											<li>Doctorate in CS, IS, Engineering, Business or
+												related technical discipline = +2 years experience plus
+												credit for BS and MS</li>
+											<li>General years of experience may be added to specific
+												years of experience at a ratio of 3 years general to 1 year
+												specific</li>
+											<li>Specific experience is work experience related to
+												the position</li>
+											<li>Internships do not count towards specific or general
+												work experience</li>
+										</ul>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+
+
+						<!-- Modal -->
+						<div class="modal fade" id="empExpInstructions" tabindex="-1"
+							role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+										<h4 class="modal-title" id="myModalLabel">Experience
+											Instructions</h4>
+									</div>
+									<div class="modal-body" style="font-size: 11px;">
+										1]Companies/positions/date ranges correspond between
+										Employment History and Experience<br /> 2]Work experience
+										should have no gaps longer than 1 month. If you were not
+										employed for a period of time, please note that. Ensure that
+										any periods of unemployment longer than 1month are accounted
+										for (e.g., “Student,” “Leave of Absence,” “Personal,” etc.)<br />
+										3]Please only bullet individual project roles.<br /> 4]Date
+										ranges (mm/yyyy) for project roles fall within tenure at
+										company.<br /> 5]No gaps exist between project roles.<br />​
+										6]Role descriptions are unclassified (no sensitive/classified
+										program names/organizations are used).
+									</div>
+									
+								</div>
+							</div>
+						</div>
+
+
+						<div class="modal fade" id="eduInstructions" tabindex="-1"
+							role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+										<h4 class="modal-title" id="myModalLabel">Instructions</h4>
+									</div>
+									<div class="modal-body" style="font-size: 11px;">
+										<strong>The Education table should include:</strong>
+										<ul>
+											<li>All degrees are entered along with year of
+												completion</li>
+
+											<li>College degrees and Graduate certificates only
+												(AA/AS and above).</li>
+
+											<li>NOT HS diploma, college coursework, etc.</li>
+										</ul>
+									</div>
+									
+								</div>
+							</div>
+						</div>
+
+
+
+
+						<div class="modal fade" id="certInstructions" tabindex="-1"
+							role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+										<h4 class="modal-title" id="myModalLabel">Instructions</h4>
+									</div>
+									<div class="modal-body" style="font-size: 11px;">
+										<strong>The certifications table should include:</strong>
+										<ul>
+											<li>Certifications that are position relevant and
+												industry recognized, such as PMP or CISSP.</li>
+
+											<li>Certifications are NOT in­house training.</li>
+
+											<li>Abbreviated certifications are spelled out, e.g.,
+												"Project Management Professional (PMP)".</li>
+										</ul>
+
+									</div>
+								
+								</div>
+							</div>
+						</div>
+
+						<div class="modal fade" id="empworkExperienceInstrcution"
+							tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+							aria-hidden="true">
+							<div class="modal-dialog">
+								<div class="modal-content">
+									<div class="modal-header">
+										<button type="button" class="close" data-dismiss="modal"
+											aria-label="Close">
+											<span aria-hidden="true">&times;</span>
+										</button>
+										<h4 class="modal-title" id="myModalLabel">Instructions</h4>
+									</div>
+									<div class="modal-body" style="font-size: 11px;">
+										<strong>In this section, list detailed descriptions
+											for each individual project role you have held.</strong> When
+										completing this section, it is essential to keep the following
+										points in mind:
+										<ul>
+											<li>Follow the format exactly as shown.</li>
+
+											<li>Any lapses in employment of more than 1 month should
+												be addresses (e.g., "Student," "Unemployed," "Leave of
+												Absence," etc.)</li>
+
+											<li>Use the most recent job title for each company.</li>
+
+											<li>Use separate bullet points for each assignment or
+												project. Include: date range, project role or job title, and
+												descriptions of responsibilities that are thorough, yet
+												concise.</li>
+
+											<li>Ensure no gaps exist between project roles. Address
+												gaps between projects, such as awaiting clearance, proposal
+												support, etc.</li>
+
+											<li>Ensure patterns of short­term employment are
+												addressed (i.e., held job for fewer than 18 months or held 3
+												or more jobs in a five year period). This only applies to
+												positions held within the past 15 years.</li>
+
+											<li>Written consistently in the first or third person.</li>
+
+											<li>Appropriate verb tense is used­ present tense for
+												you current assignment, past tense for previous assignments.</li>
+
+											<li>Spell out the first instance of all abbreviations.</li>
+										</ul>
+									</div>
+								
+								</div>
+							</div>
+						</div>
+
+
+
+
+
+						<script type="text/javascript">
+							$(document)
+									.ready(
+											function() {
+												jQuery.validator
+														.addMethod(
+																"lettersonly",
+																function(value,
+																		element) {
+																	return this
+																			.optional(element)
+																			|| /^[a-z," "]+$/i
+																					.test(value);
+																},
+																"Letters and spaces only please");
+
+												$("#userProfileform")
+														.validate(
+																{
+
+																	rules : {
+
+																		firstname : {
+																			lettersonly : true,
+																			required : true
+																		},
+																		middlename : {
+																			lettersonly : true,
+																			required : true
+																		},
+																		lastname : {
+																			lettersonly : true,
+																			required : true
+																		},
+																		companyName : {
+																			lettersonly : true,
+																			required : true
+																		},
+
+																		position : {
+																			lettersonly : true,
+																			required : true
+																		},
+																		residentcity : {
+																			lettersonly : true,
+																			required : true
+																		},
+																		currentjobtitle : {
+																			lettersonly : true,
+																			required : true
+																		},
+
+																		instituteName : {
+																			lettersonly : true,
+																			required : true
+																		},
+
+																		degree : {
+																			lettersonly : true,
+																			required : true
+																		},
+
+																		phnumber : {
+																			digits : true,
+																			required : true
+																		},
+																		altphnumber : {
+																			digits : true,
+																		},
+																		zipcode : {
+																			digits : true,
+																			required : true
+																		},
+
+																		desiredsalary : {
+																			digits : true,
+																			required : true
+																		},
+
+																		willingtorelocate : {
+																			required : true
+																		},
+
+																		residentState : {
+																			required : true
+																		},
+
+																		jobsearchstatus : {
+																			required : true
+																		}
+																	},
+																	messages : {
+																		firstname : "Please enter name properly",
+																		lastname : "Please enter name properly",
+																		middletname : "Please enter name properly",
+																		companyName : "Please enter Company Name properly",
+																		position : "Please enter Position name properly",
+																		email : "Please enter email  properly",
+																		instituteName : "Please enter institute name   properly",
+																		degree : "Please enter degree   name properly",
+																		altemail : "Please enter valid Email Id",
+																		phnumber : "Please enter valid Phone  number  ",
+																		altphnumber : "Please enter valid Phone  number",
+																		residentcity : "Please enter  City name properly",
+																		currentjobtitle : "Please Current Job Title properly",
+																		zipcode : "Please enter ZipCode properly",
+																		desiredsalary : "Please enter desired Salary properly",
+																		willingtorelocate : "Please select Willing to relocate ",
+																		residentState : "Please select Resident State",
+																		jobsearchstatus : "Please select Job Search  Status"
+
+																	}
+																});
+
+											});
+						</script>
+
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+

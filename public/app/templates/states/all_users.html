@@ -1,0 +1,287 @@
+<style>
+.Color {
+	color: green
+}
+
+.redColor {
+	color: red
+}
+
+.btn-success-custom {
+	color: white;
+	background-color: #21205f;
+}
+
+.btn-success-custom:hover {
+	color: white;
+	background-color: #999999;
+}
+</style>
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="portlet box" style="min-height: 500px;">
+			<div class="portlet-header">
+				<div class="caption">All users</div>
+			</div>
+			<div class="portlet-body" ng-init="init();" style="overflow-x: auto;">
+				<div class="row mbm">
+					<div class="col-lg-12">
+						<!-- {{jobs}} -->
+						<div>
+							 <div class="pull-left">
+								<span>
+									<button class="btn btn-success-custom" data-toggle="tooltip"
+										data-placement="bottom" title="Add new user"
+										ng-click="addnewUser();" ng-if = "Users == true">Add </button>
+								</span>
+
+							</div>
+							<!-- <div class="pull-right">
+								<label>Active Users:</label>&nbsp;&nbsp; <small><strong>{{activeusercount}}</strong></small>
+							</div> -->
+						</div>
+						<div class="pull-right"></div>
+						
+						<div ng-init="getAllUsers()" class="table-responsive">
+							<div class="page-header">
+								<table id="table_id"
+									class="table table-hover table-striped table-bordered table-advanced tablesorter display">
+									<tbody>
+										<tr>
+											<th>Email</th>
+											<th>First Name</th>
+											<th>Last Name</th>
+											<th>Last Logged In</th>
+											<th>View</th>
+										</tr>
+										<tr data-ng-repeat="user in users"
+											style="background-color: #fff !important; left: -900">
+											<td ng-click="" data-toggle="tooltip" data-placement="bottom"
+												title="Send to mail to user"><a
+												href="mailto:{{user.email}}">{{user.userId}}</a></td>
+											<td ng-click="">{{user.firstname}}</td>
+											<td ng-click="">{{user.lastname}}</td>
+											<td>{{user.lastUpdatedatetime | date:'yyyy-MM-dd HH:mm:ss '}}</td>
+											<td><button class="btn btn-success-custom"
+													ng-click="editUserDetails(user);" data-toggle="tooltip"
+													data-placement="bottom" title="View user details">
+													<i data-toggle="modal" class="glyphicon glyphicon-eye-open"></i>
+											    </button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+
+							</div>
+							<div class="pull-right">
+								<button id="pre" type="button" ng-click="clickPre()"
+									class="btn btn-success-custom">
+									<i class="glyphicon glyphicon-arrow-left"></i>
+								</button>
+								&nbsp;
+								<button id="next" type="button" ng-click="clickNext()"
+									class="btn btn-success-custom">
+									<i class="glyphicon glyphicon-arrow-right"></i>
+								</button>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>
+
+<!-- Modal Edit user details-->
+<div class="modal fade" id="editUserDetails" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Edit User</h4>
+			</div>
+			<div class="modal-body">
+				<div class = "col-md-12">
+				<div class = "col-md-6">
+						<div class="col-md-12">
+  								<label for="username">UserName:</label>
+  								<input type="text" ng-model = "user.userId" class="form-control"  readonly id="usr">
+						</div>
+
+						<div class="col-md-12">
+  								<label for="username">Password:</label>
+  								<input type="text" ng-model = "user.password" class="form-control"   id="password">
+						</div>
+
+						<div class="col-md-12">
+  							<label for="usr">First Name</label>
+  							<input type="text" ng-model = "user.firstname" class="form-control" id="firstname">
+						</div>
+						
+						<div class="col-md-12" style="margin-top:1%;">
+		              <label class="control-label col-md-3">Select Orgnization</label>
+		              <div class="col-md-12"> 
+			                <select id = "org"  data-ng-model="org">
+			                 <option ng-repeat="o in orgs" value="{{o.orgId}}"   ng-selected="o.isSelect  == true">{{o.name}}</option>
+			                </select>
+	            		</div>   
+	            	</div>
+						</div>
+						<div class = "col-md-6	">
+						<div class="col-md-12">
+  							<label for="usr">Last  Name</label>
+  							<input type="text" ng-model = "user.lastname" class="form-control" id="firstname">
+						</div>
+						<div class="col-md-12" id="product-list">
+		              <label class="control-label col-md-3">Select Permission</label>
+		              <div class="col-md-12"> 
+			                <select id="pre-selected-options" multiple="multiple" data-ng-model="permList">
+			                 <option ng-repeat="u in entities" value="{{u.entityName}}"   ng-selected="u.isSelect  == true">{{u.entityName}}</option>
+			                </select>
+	            		</div>   
+
+	            	</div>
+	            	</div>
+
+					
+	            	</div>
+						<div class="form-actions">
+							<div class="pull-right">
+								<button type="submit" ng-click="updateUserProfileByAdmin(user);"
+									class="btn btn-success-custom" ng-if = "Users == true">Update</button>
+								&nbsp;
+								<button type="button" class="btn btn-success-custom"
+									data-dismiss="modal">Close</button>
+								&nbsp;
+								<!-- <button type="button" class="btn btn-default">Cancel</button> -->
+							</div>
+						
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<!-- Add new user model  -->
+<div class="modal fade" id="addnewUserpopup" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Add User</h4>
+			</div>
+			<div class="modal-body">
+					<div class = "col-md-12">
+
+						<div class = "col-md-6">
+						<div class="col-md-12">
+						<span ng-if="userIdExit == true"><code >UserId already exit, Please choose another one</code></span>
+  								<label for="username">UserName:</label>
+  								<input type="text" ng-model = "user.userId" ng-mouseout ="checkUserExits()" class="form-control"   id="usr">
+						</div>
+						<div class="col-md-12">
+  								<label for="usr">Password:</label>
+  								<input type="text" ng-model = "user.password" class="form-control"   id="password">
+						</div>
+						<div class="col-md-12">
+  							<label for="usr">First Name</label>
+  							<input type="text" ng-model = "user.firstname" class="form-control" id="firstname">
+						</div>
+						
+						<div class="col-md-12" >
+		              <label class="control-label col-md-3">Select Orgnization</label>
+		              <div class="col-md-12"> 
+			                <select   data-ng-model="org">
+			                 <option ng-repeat="o in orgs" value="{{o.orgId}}"   ng-selected="o.isSelect  == true">{{o.name}}</option>
+			                </select>
+	            		</div>   
+	            	</div>
+						</div>
+						<div class = "col-md-6">
+						<div class="col-md-12">
+  							<label for="usr">Last  Name</label>
+  							<input type="text" ng-model = "user.lastname" class="form-control" id="lastname">
+						</div>
+						<div class="col-md-12" id="product-list">
+		              <label class="control-label col-md-3">Select Permission</label>
+		              <div class="col-md-12"> 
+			                <select id="pre-selected-options1" multiple="multiple" data-ng-model="permList">
+			                 <option ng-repeat="u in entities" value="{{u.entityName}}"   ng-selected="u.isSelect  == true">{{u.entityName}}</option>
+			                </select>
+	            		</div>   
+	            	</div>
+	            	
+	            	</div>
+	            	
+	            	</div>
+						<div class="form-actions">
+							<div class="pull-right">
+								<button type="submit" ng-click="addUserProfileByAdmin(user);"
+									class="btn btn-success-custom" ng-if = "Users == true">Add</button>
+								&nbsp;
+								<button type="button" class="btn btn-success-custom"
+									data-dismiss="modal">Close</button>
+								&nbsp;
+								<!-- <button type="button" class="btn btn-default">Cancel</button> -->
+				</div>
+
+			</div>
+		</div>
+
+	</div>
+</div>
+
+</div>
+
+
+<style type="text/css">
+.modal .modal-dialog {
+	width: 90%;
+}
+
+.modal .modal-body {
+	max-height: 620px;
+	overflow-y: auto;
+}
+
+fieldset.scheduler-border {
+	border: 1px groove !important;
+	padding: 0 1.4em 1.4em 1.4em !important;
+	margin: 0 0 1.5em 0 !important;
+	-webkit-box-shadow: 0px 0px 0px 0px #000;
+	box-shadow: 0px 0px 0px 0px #000;
+	border-color: #darkgrey;
+}
+
+legend.scheduler-border {
+	font-size: 1.0em !important;
+	text-align: left !important;
+	width: inherit;
+	padding: 0 10px;
+	border-bottom: none;
+	color: darkgray;
+}
+
+.clsDatePicker {
+	z-index: 100000;
+}
+</style>
+
+<style>
+.datepicker {
+	z-index: 1151 !important;
+}
+</style>
