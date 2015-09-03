@@ -4,7 +4,7 @@
 
 # Home page
 #GET     /                           					com.mnt.dairymgnt.controllers.Application.index()
-GET		 /											    com.mnt.dairymgnt.controllers.Application.login()
+GET	/											    com.mnt.dairymgnt.controllers.Application.login()
 GET		/signup											com.mnt.dairymgnt.controllers.Application.signup()
 POST	/SignIn                     					com.mnt.dairymgnt.controllers.Application.SignIn()
 GET     /dashboard										com.mnt.dairymgnt.controllers.Application.dashBoard()
