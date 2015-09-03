@@ -74,7 +74,7 @@
 									</tbody>
 								</table>
 							</div>
-							<div class="pull-right">
+							<!-- <div class="pull-right">
 								<button id="pre" type="button" ng-click="clickPre()"
 									class="btn btn-success-custom">
 									<i class="glyphicon glyphicon-arrow-left"></i>
@@ -84,7 +84,7 @@
 									class="btn btn-success-custom">
 									<i class="glyphicon glyphicon-arrow-right"></i>
 								</button>
-							</div>
+							</div> -->
 						</div>
 					</div>
 
@@ -123,9 +123,9 @@
 						
 						
 					 <div class="col-md-12" style="margin-top:1%;">
-		              <label class="control-label col-md-3">Select Feed Cattle Master </label>
+		              <label class="control-label col-md-10">Select Feed Cattle Master </label>
 		              <div class="col-md-12"> 
-			                <select id = "feed"  data-ng-model="feedId" >
+			                <select id = "feed"  data-ng-model="feedId"  class = "col-md-5">
 			                 <option ng-repeat="f in feedcaters" value="{{f.feedId}}"   ng-selected="f.isSelect  == true">{{f.feedType}}</option>
 			                </select>
 	            		</div>   
@@ -133,9 +133,9 @@
 						</div>
 						<div class = "col-md-6	">
 						<div class="col-md-12" style="margin-top:1%;">
-		              <label class="control-label col-md-3">Select Orgnization</label>
+		              <label class="control-label col-md-8">Select Orgnization</label>
 		              <div class="col-md-12"> 
-			                <select id = "org"  data-ng-model="org">
+			                <select id = "org"  data-ng-model="org" class = "col-md-5">
 			                 <option ng-repeat="o in orgs" value="{{o.orgId}}"   ng-selected="o.isSelect  == true">{{o.name}}</option>
 			                </select>
 	            		</div>   
@@ -151,7 +151,7 @@
 	            	</div>
 	            	</div>
 						<div class="form-actions">
-							<div class="pull-right">
+							<div class="pull-right" style="margin-top:2%;">
 								<button type="submit" ng-click="updateCattleIntakeProfileByAdmin(cat);"
 									class="btn btn-success-custom" ng-if = "cattleIntake == true">Update</button>
 								&nbsp;
@@ -196,9 +196,9 @@
 						
 				
 					 <div class="col-md-12" style="margin-top:1%;">
-		              <label class="control-label col-md-3">Select Feed Cattle Master </label>
+		              <label class="control-label col-md-10">Select Feed Cattle Master </label>
 		              <div class="col-md-12"> 
-			                <select id = "feed"  data-ng-model="feedId" >
+			                <select id = "feed"  data-ng-model="feedId" class = "col-md-5" >
 			                 <option ng-repeat="f in feedcaters" value="{{f.feedId}}"   ng-selected="f.isSelect  == true">{{f.feedType}}</option>
 			                </select>
 	            		</div>   
@@ -206,17 +206,17 @@
 						</div>
 						<div class = "col-md-6	">
 						<div class="col-md-12" style="margin-top:1%;">
-		              <label class="control-label col-md-3">Select Orgnization</label>
+		              <label class="control-label col-md-8">Select Orgnization</label>
 		              <div class="col-md-12"> 
-			                <select id = "org"  data-ng-model="org">
+			                <select id = "org"  data-ng-model="org" class = "col-md-5">
 			                 <option ng-repeat="o in orgs" value="{{o.orgId}}"   ng-selected="o.isSelect  == true">{{o.name}}</option>
 			                </select>
 	            		</div>   
 	            	</div>
 						<div class="col-md-12" style="margin-top:1%;">
-		              <label class="control-label col-md-3">Select User Id</label>
+		              <label class="control-label col-md-8">Select User Id</label>
 		              <div class="col-md-12">
-			                <select id = "use"  data-ng-model="userId">
+			                <select id = "use"  data-ng-model="userId" class = "col-md-5">
 			                 <option ng-repeat="u in users" value="{{u.userId}}"   ng-selected="u.isSelect  == true">{{u.userId}}</option>
 			                </select>
 	            		</div>   
@@ -224,7 +224,7 @@
 	            	</div>
 	            	</div>
 						<div class="form-actions">
-							<div class="pull-right">
+							<div class="pull-right" style="margin-top:2%;">
 								<button type="submit" ng-click="addCattleIntakeProfileByAdmin(cat);"
 									class="btn btn-success-custom" ng-if = "cattleIntake == true">Add</button>
 								&nbsp;

@@ -10,6 +10,7 @@ POST	/SignIn                     					com.mnt.dairymgnt.controllers.Application.
 GET     /dashboard										com.mnt.dairymgnt.controllers.Application.dashBoard()
 #GET     /registrationredirect                          com.mnt.dairymgnt.controllers.Application.registrationRedirect()
 #GET     /shareJobDetails                               com.mnt.dairymgnt.controllers.Application.shareJobDetails()                     
+GET		/Logout   										com.mnt.dairymgnt.controllers.Application.logOut()
 
 #Org Management 
 GET    /getAllOrgs/                                     com.mnt.dairymgnt.controllers.Application.getAllOrgs()

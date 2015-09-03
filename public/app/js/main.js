@@ -6463,7 +6463,7 @@ App.controller('ViewAllOrgController', function ($scope, $rootScope, $routeParam
 
 	
 	
-	// get all users applied jobs to admin
+	// get all  Org  to admin
 	
 	 $scope.pageno = 0;
 	 $scope.activeusercount = 0;
@@ -6573,44 +6573,53 @@ App.controller('ViewAllOrgController', function ($scope, $rootScope, $routeParam
 	$http.get('/getUserPermissions?d='+Math.random())
 	.success(function(data) {
 	// $scope.userData = data;
+		$rootScope.cattleFeedMaster = false;
+		$rootScope.cattleIntake = false;
+		$rootScope.Users = false;
+		$rootScope.cattleMaster = false;
+		$rootScope.Orgnization = false;
+		$rootScope.CattleOutput = false;
+		$rootScope.CattleHealth = false;
+		
 		$rootScope.username = data.user.userId;
-		console.log(data.user.permissions);
+		console.log("per: "+JSON.stringify(data.user.permissions));
 		for(var i = 0; i < data.user.permissions.length ; i++){
 			if(data.user.permissions[i].permissionName == "Catle_feed_master"){
 				console.log("Catle_feed_master");
 				$rootScope.cattleFeedMaster = true;
-				}else{
-					$rootScope.cattleFeedMaster = false;
 				}
 			
 			if(data.user.permissions[i].permissionName == "Cattle_intake"){
 				$rootScope.cattleIntake = true;
 				
-				}else{
-					$rootScope.cattleIntake = false;
 				}
 			
 			if(data.user.permissions[i].permissionName == "Users"){
 				$rootScope.Users = true;
 				
-				}else{
-					$rootScope.Users = false;
 				}
 			
 			if(data.user.permissions[i].permissionName == "Cattle_Master"){
+				console.log("Catle_master");
 				$rootScope.cattleMaster = true;
 				
-				}else{
-					$rootScope.cattleMaster = false;
 				}
 			
 			if(data.user.permissions[i].permissionName == "Orgnization"){
 				$rootScope.Orgnization = true;
 				
-				}else{
-					$rootScope.Orgnization = false;
+				}
+
+			if(data.user.permissions[i].permissionName == "Cattle_Output"){
+				$rootScope.CattleOutput = true;
+				
+				}
+			if(data.user.permissions[i].permissionName == "Cattle_Health"){
+				$rootScope.CattleHealth = true;
+				
 				}
 		}
+		
 	
 		
 	});
@@ -6786,44 +6795,53 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 		$http.get('/getUserPermissions?d='+Math.random())
 		.success(function(data) {
 		// $scope.userData = data;
+			$rootScope.cattleFeedMaster = false;
+			$rootScope.cattleIntake = false;
+			$rootScope.Users = false;
+			$rootScope.cattleMaster = false;
+			$rootScope.Orgnization = false;
+			$rootScope.CattleOutput = false;
+			$rootScope.CattleHealth = false;
+			
 			$rootScope.username = data.user.userId;
-			console.log(data.user.permissions);
+			console.log("per: "+JSON.stringify(data.user.permissions));
 			for(var i = 0; i < data.user.permissions.length ; i++){
 				if(data.user.permissions[i].permissionName == "Catle_feed_master"){
 					console.log("Catle_feed_master");
 					$rootScope.cattleFeedMaster = true;
-					}else{
-						$rootScope.cattleFeedMaster = false;
 					}
 				
 				if(data.user.permissions[i].permissionName == "Cattle_intake"){
 					$rootScope.cattleIntake = true;
 					
-					}else{
-						$rootScope.cattleIntake = false;
 					}
 				
 				if(data.user.permissions[i].permissionName == "Users"){
 					$rootScope.Users = true;
 					
-					}else{
-						$rootScope.Users = false;
 					}
 				
 				if(data.user.permissions[i].permissionName == "Cattle_Master"){
+					console.log("Catle_master");
 					$rootScope.cattleMaster = true;
 					
-					}else{
-						$rootScope.cattleMaster = false;
 					}
 				
 				if(data.user.permissions[i].permissionName == "Orgnization"){
 					$rootScope.Orgnization = true;
 					
-					}else{
-						$rootScope.Orgnization = false;
+					}
+
+				if(data.user.permissions[i].permissionName == "Cattle_Output"){
+					$rootScope.CattleOutput = true;
+					
+					}
+				if(data.user.permissions[i].permissionName == "Cattle_Health"){
+					$rootScope.CattleHealth = true;
+					
 					}
 			}
+			
 		
 			
 		});
@@ -7068,45 +7086,52 @@ App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope
 		$http.get('/getUserPermissions?d='+Math.random())
 		.success(function(data) {
 		// $scope.userData = data;
+			$rootScope.cattleFeedMaster = false;
+			$rootScope.cattleIntake = false;
+			$rootScope.Users = false;
+			$rootScope.cattleMaster = false;
+			$rootScope.Orgnization = false;
+			$rootScope.CattleOutput = false;
+			$rootScope.CattleHealth = false;
+			
 			$rootScope.username = data.user.userId;
-			console.log(data.user.permissions);
+			console.log("per: "+JSON.stringify(data.user.permissions));
 			for(var i = 0; i < data.user.permissions.length ; i++){
 				if(data.user.permissions[i].permissionName == "Catle_feed_master"){
 					console.log("Catle_feed_master");
 					$rootScope.cattleFeedMaster = true;
-					}else{
-						$rootScope.cattleFeedMaster = false;
 					}
 				
 				if(data.user.permissions[i].permissionName == "Cattle_intake"){
 					$rootScope.cattleIntake = true;
 					
-					}else{
-						$rootScope.cattleIntake = false;
 					}
 				
 				if(data.user.permissions[i].permissionName == "Users"){
 					$rootScope.Users = true;
 					
-					}else{
-						$rootScope.Users = false;
 					}
 				
 				if(data.user.permissions[i].permissionName == "Cattle_Master"){
+					console.log("Catle_master");
 					$rootScope.cattleMaster = true;
 					
-					}else{
-						$rootScope.cattleMaster = false;
 					}
 				
 				if(data.user.permissions[i].permissionName == "Orgnization"){
 					$rootScope.Orgnization = true;
 					
-					}else{
-						$rootScope.Orgnization = false;
+					}
+
+				if(data.user.permissions[i].permissionName == "Cattle_Output"){
+					$rootScope.CattleOutput = true;
+					
+					}
+				if(data.user.permissions[i].permissionName == "Cattle_Health"){
+					$rootScope.CattleHealth = true;
+					
 					}
 			}
-		
 			
 		});
 	
@@ -7325,42 +7350,50 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 		$http.get('/getUserPermissions?d='+Math.random())
 		.success(function(data) {
 		// $scope.userData = data;
+			$rootScope.cattleFeedMaster = false;
+			$rootScope.cattleIntake = false;
+			$rootScope.Users = false;
+			$rootScope.cattleMaster = false;
+			$rootScope.Orgnization = false;
+			$rootScope.CattleOutput = false;
+			$rootScope.CattleHealth = false;
+			
 			$rootScope.username = data.user.userId;
-			console.log(data.user.permissions);
+			console.log("per: "+JSON.stringify(data.user.permissions));
 			for(var i = 0; i < data.user.permissions.length ; i++){
 				if(data.user.permissions[i].permissionName == "Catle_feed_master"){
 					console.log("Catle_feed_master");
 					$rootScope.cattleFeedMaster = true;
-					}else{
-						$rootScope.cattleFeedMaster = false;
 					}
 				
 				if(data.user.permissions[i].permissionName == "Cattle_intake"){
 					$rootScope.cattleIntake = true;
 					
-					}else{
-						$rootScope.cattleIntake = false;
 					}
 				
 				if(data.user.permissions[i].permissionName == "Users"){
 					$rootScope.Users = true;
 					
-					}else{
-						$rootScope.Users = false;
 					}
 				
 				if(data.user.permissions[i].permissionName == "Cattle_Master"){
+					console.log("Catle_master");
 					$rootScope.cattleMaster = true;
 					
-					}else{
-						$rootScope.cattleMaster = false;
 					}
 				
 				if(data.user.permissions[i].permissionName == "Orgnization"){
 					$rootScope.Orgnization = true;
 					
-					}else{
-						$rootScope.Orgnization = false;
+					}
+
+				if(data.user.permissions[i].permissionName == "Cattle_Output"){
+					$rootScope.CattleOutput = true;
+					
+					}
+				if(data.user.permissions[i].permissionName == "Cattle_Health"){
+					$rootScope.CattleHealth = true;
+					
 					}
 			}
 		
@@ -7578,45 +7611,52 @@ App.controller('ViewAllCattleOutputController', function ($scope, $rootScope, $r
 		$http.get('/getUserPermissions?d='+Math.random())
 		.success(function(data) {
 		// $scope.userData = data;
+			$rootScope.cattleFeedMaster = false;
+			$rootScope.cattleIntake = false;
+			$rootScope.Users = false;
+			$rootScope.cattleMaster = false;
+			$rootScope.Orgnization = false;
+			$rootScope.CattleOutput = false;
+			$rootScope.CattleHealth = false;
+			
 			$rootScope.username = data.user.userId;
-			console.log(data.user.permissions);
+			console.log("per: "+JSON.stringify(data.user.permissions));
 			for(var i = 0; i < data.user.permissions.length ; i++){
 				if(data.user.permissions[i].permissionName == "Catle_feed_master"){
 					console.log("Catle_feed_master");
 					$rootScope.cattleFeedMaster = true;
-					}else{
-						$rootScope.cattleFeedMaster = false;
 					}
 				
 				if(data.user.permissions[i].permissionName == "Cattle_intake"){
 					$rootScope.cattleIntake = true;
 					
-					}else{
-						$rootScope.cattleIntake = false;
 					}
 				
 				if(data.user.permissions[i].permissionName == "Users"){
 					$rootScope.Users = true;
 					
-					}else{
-						$rootScope.Users = false;
 					}
 				
 				if(data.user.permissions[i].permissionName == "Cattle_Master"){
+					console.log("Catle_master");
 					$rootScope.cattleMaster = true;
 					
-					}else{
-						$rootScope.cattleMaster = false;
 					}
 				
 				if(data.user.permissions[i].permissionName == "Orgnization"){
 					$rootScope.Orgnization = true;
 					
-					}else{
-						$rootScope.Orgnization = false;
+					}
+
+				if(data.user.permissions[i].permissionName == "Cattle_Output"){
+					$rootScope.CattleOutput = true;
+					
+					}
+				if(data.user.permissions[i].permissionName == "Cattle_Health"){
+					$rootScope.CattleHealth = true;
+					
 					}
 			}
-		
 			
 		});
 	
@@ -7829,42 +7869,51 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope, $r
 		$http.get('/getUserPermissions?d='+Math.random())
 		.success(function(data) {
 		// $scope.userData = data;
+			$rootScope.cattleFeedMaster = false;
+			$rootScope.cattleIntake = false;
+			$rootScope.Users = false;
+			$rootScope.cattleMaster = false;
+			$rootScope.Orgnization = false;
+			$rootScope.CattleOutput = false;
+			$rootScope.CattleHealth = false;
+			
+			
 			$rootScope.username = data.user.userId;
-			console.log(data.user.permissions);
+			console.log("per: "+JSON.stringify(data.user.permissions));
 			for(var i = 0; i < data.user.permissions.length ; i++){
 				if(data.user.permissions[i].permissionName == "Catle_feed_master"){
 					console.log("Catle_feed_master");
 					$rootScope.cattleFeedMaster = true;
-					}else{
-						$rootScope.cattleFeedMaster = false;
 					}
 				
 				if(data.user.permissions[i].permissionName == "Cattle_intake"){
 					$rootScope.cattleIntake = true;
 					
-					}else{
-						$rootScope.cattleIntake = false;
 					}
 				
 				if(data.user.permissions[i].permissionName == "Users"){
 					$rootScope.Users = true;
 					
-					}else{
-						$rootScope.Users = false;
 					}
 				
 				if(data.user.permissions[i].permissionName == "Cattle_Master"){
+					console.log("Catle_master");
 					$rootScope.cattleMaster = true;
 					
-					}else{
-						$rootScope.cattleMaster = false;
 					}
 				
 				if(data.user.permissions[i].permissionName == "Orgnization"){
 					$rootScope.Orgnization = true;
 					
-					}else{
-						$rootScope.Orgnization = false;
+					}
+
+				if(data.user.permissions[i].permissionName == "Cattle_Output"){
+					$rootScope.CattleOutput = true;
+					
+					}
+				if(data.user.permissions[i].permissionName == "Cattle_Health"){
+					$rootScope.CattleHealth = true;
+					
 					}
 			}
 		
@@ -8122,42 +8171,49 @@ App.controller('ViewAllUsersController', function ($scope, $rootScope, $routePar
 		$http.get('/getUserPermissions?d='+Math.random())
 		.success(function(data) {
 		// $scope.userData = data;
+			$rootScope.cattleFeedMaster = false;
+			$rootScope.cattleIntake = false;
+			$rootScope.Users = false;
+			$rootScope.cattleMaster = false;
+			$rootScope.Orgnization = false;
+			
+			
 			$rootScope.username = data.user.userId;
-			console.log(data.user.permissions);
+			console.log("per: "+JSON.stringify(data.user.permissions));
 			for(var i = 0; i < data.user.permissions.length ; i++){
 				if(data.user.permissions[i].permissionName == "Catle_feed_master"){
 					console.log("Catle_feed_master");
 					$rootScope.cattleFeedMaster = true;
-					}else{
-						$rootScope.cattleFeedMaster = false;
 					}
 				
 				if(data.user.permissions[i].permissionName == "Cattle_intake"){
 					$rootScope.cattleIntake = true;
 					
-					}else{
-						$rootScope.cattleIntake = false;
 					}
 				
 				if(data.user.permissions[i].permissionName == "Users"){
 					$rootScope.Users = true;
 					
-					}else{
-						$rootScope.Users = false;
 					}
 				
 				if(data.user.permissions[i].permissionName == "Cattle_Master"){
+					console.log("Catle_master");
 					$rootScope.cattleMaster = true;
 					
-					}else{
-						$rootScope.cattleMaster = false;
 					}
 				
 				if(data.user.permissions[i].permissionName == "Orgnization"){
 					$rootScope.Orgnization = true;
 					
-					}else{
-						$rootScope.Orgnization = false;
+					}
+
+				if(data.user.permissions[i].permissionName == "Cattle_Output"){
+					$rootScope.CattleOutput = true;
+					
+					}
+				if(data.user.permissions[i].permissionName == "Cattle_Health"){
+					$rootScope.CattleHealth = true;
+					
 					}
 			}
 		

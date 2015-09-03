@@ -1,6 +1,7 @@
 package com.mnt.dairymgnt.controllers;
 
 import java.io.IOException;
+
 import java.util.ArrayList;
 
 import java.util.Date;
@@ -74,6 +75,26 @@ public class Application extends Controller {
 		return ok(index.render());
 	}
 
+	public static Result logOut() {
+
+		try {
+			String email = session().get("email");
+		    
+			Users u = Users.getUserByEmail(email);
+			u.setLastLogout(new Date());
+			u.setLastUpdatedatetime(new Date());
+			u.update();
+			
+			session().clear();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			session().clear();
+		}
+		return ok(signin.render());
+	}
+
+	
 	public static Result getAllOrgs(){
 		
 		List<OrgnizationVM> orgs = new ArrayList<>();
@@ -312,6 +333,7 @@ public class Application extends Controller {
 				u.lastname =   uvm.lastname;
 				u.setUserId(uvm.userId);
 				u.setPassword(uvm.password);
+				u.userType = "";
 				
 				u.setLastUpdatedatetime(new Date());
 				u.update();
@@ -321,7 +343,7 @@ public class Application extends Controller {
 				u.firstname = uvm.firstname;
 				u.lastname = uvm.lastname;
 				u.userId = uvm.userId;
-			
+				u.userType = "";
 				//u.oraganization = (uvm.oraganization) ;
 				u.setLastUpdatedatetime(new Date());
 				u.save();
@@ -478,7 +500,6 @@ public class Application extends Controller {
 					}
 					
 				}
-			
 				
 				u.setDuedate(uvm.duedate);
 				u.setLastDelivaerydate(uvm.lastDelivaerydate);
@@ -912,14 +933,39 @@ public class Application extends Controller {
 		HashMap<String,Object>  map  = new HashMap<>(); 
 		String  email = 	session().get("email");
 	    Users u = Users.getUserByEmail(email);
-	    UserVM uv = new UserVM();
-		uv.firstname = u.firstname;
-		uv.lastname = u.lastname;
-		uv.password = u.password;
-		uv.userId = u.userId;
-		uv.permissions  = u.permissions;
-		uv.lastUpdatedatetime = u.lastUpdatedatetime;
-		uv.oraganization = u.oraganization;
+    	UserVM uv = new UserVM();
+    	if(!u.userType.trim().equals("admin")){
+
+	  		uv.firstname = u.firstname;
+	  		uv.lastname = u.lastname;
+	  		uv.password = u.password;
+	  		uv.userId = u.userId;
+	  		uv.permissions  = u.permissions;
+	  		uv.lastUpdatedatetime = u.lastUpdatedatetime;
+	  		uv.oraganization = u.oraganization;
+	    }else{
+	    	
+	    	List<Permissions> permissions = new ArrayList<>();
+	  		uv.firstname = u.firstname;
+	  		uv.lastname = u.lastname;
+	  		uv.password = u.password;
+	  		uv.userId = u.userId;
+	  		uv.lastUpdatedatetime = u.lastUpdatedatetime;
+	  		List<Entities> e = Entities.getAllEntities();
+	  		for(int i = 0;i<e.size(); i++){
+	  			Permissions p  = new Permissions();
+	  			p.id = i;
+	  			p.permissionName = e.get(i).entityName;
+	  			p.access  = "W";
+	  			permissions.add(p);
+	  		}
+	  		u.permissions = permissions;
+	  		
+	  		uv.permissions  = u.permissions;
+	  		uv.oraganization = u.oraganization;
+	    	
+	    }
+	  
 	    
 		map.put("user", uv);
 		return ok(Json.toJson(map));

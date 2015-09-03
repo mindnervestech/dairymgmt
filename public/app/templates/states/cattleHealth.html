@@ -98,7 +98,7 @@
 									</tbody>
 								</table>
 							</div>
-							<div class="pull-right">
+							<!-- <div class="pull-right">
 								<button id="pre" type="button" ng-click="clickPre()"
 									class="btn btn-success-custom">
 									<i class="glyphicon glyphicon-arrow-left"></i>
@@ -108,7 +108,7 @@
 									class="btn btn-success-custom">
 									<i class="glyphicon glyphicon-arrow-right"></i>
 								</button>
-							</div>
+							</div> -->
 						</div>
 					</div>
 
@@ -190,17 +190,17 @@
 						</div>	
 						
 						<div class="col-md-12" style="margin-top:1%;">
-		              <label class="control-label col-md-3">Select Orgnization</label>
+		              <label class="control-label col-md-8">Select Orgnization</label>
 		              <div class="col-md-12"> 
-			                <select id = "org"  data-ng-model="org">
+			                <select id = "org"  data-ng-model="org" class="col-md-5">
 			                 <option ng-repeat="o in orgs" value="{{o.orgId}}"   ng-selected="o.isSelect  == true">{{o.name}}</option>
 			                </select>
 	            		</div>   
 	            	</div>
 						<div class="col-md-12" style="margin-top:1%;">
-		              <label class="control-label col-md-3">Select User Id</label>
+		              <label class="control-label col-md-8">Select User Id</label>
 		              <div class="col-md-12">
-			                <select id = "use"  data-ng-model="userId">
+			                <select id = "use"  data-ng-model="userId" class="col-md-5">
 			                 <option ng-repeat="u in users" value="{{u.userId}}"   ng-selected="u.isSelect  == true">{{u.userId}}</option>
 			                </select>
 	            		</div>   
@@ -210,7 +210,7 @@
 						<div class="form-actions">
 							<div class="pull-right">
 								<button type="submit" ng-click="updateCattleHealthProfileByAdmin(cat);"
-									class="btn btn-success-custom" ng-if = "cattleIntake == true">Update</button>
+									class="btn btn-success-custom" ng-if = "CattleHealth == true">Update</button>
 								&nbsp;
 								<button type="button" class="btn btn-success-custom"
 									data-dismiss="modal">Close</button>
@@ -301,17 +301,17 @@
 						</div>	
 						
 						<div class="col-md-12" style="margin-top:1%;">
-		              <label class="control-label col-md-3">Select Orgnization</label>
+		              <label class="control-label col-md-8">Select Orgnization</label>
 		              <div class="col-md-12"> 
-			                <select id = "org"  data-ng-model="org">
+			                <select id = "org"  data-ng-model="org" class = "col-md-5">
 			                 <option ng-repeat="o in orgs" value="{{o.orgId}}"   ng-selected="o.isSelect  == true">{{o.name}}</option>
 			                </select>
 	            		</div>   
 	            	</div>
 						<div class="col-md-12" style="margin-top:1%;">
-		              <label class="control-label col-md-3">Select User Id</label>
+		              <label class="control-label col-md-8">Select User Id</label>
 		              <div class="col-md-12">
-			                <select id = "use"  data-ng-model="userId">
+			                <select id = "use"  data-ng-model="userId" class = "col-md-5">
 			                 <option ng-repeat="u in users" value="{{u.userId}}"   ng-selected="u.isSelect  == true">{{u.userId}}</option>
 			                </select>
 	            		</div>   
@@ -319,9 +319,9 @@
 	            	</div>
 	            	</div>
 						<div class="form-actions">
-							<div class="pull-right">
+							<div class="pull-right" style="margin-top:2%;">
 								<button type="submit" ng-click="addCattleHealthProfileByAdmin(cat);"
-									class="btn btn-success-custom" ng-if = "cattleIntake == true">Save</button>
+									class="btn btn-success-custom" ng-if = "CattleHealth == true">Save</button>
 								&nbsp;
 								<button type="button" class="btn btn-success-custom"
 									data-dismiss="modal">Close</button>
@@ -333,9 +333,7 @@
 		</div>
 	</div>
 	
-	
 </div>
-
 
 <style type="text/css">
 .modal .modal-dialog {

@@ -74,7 +74,7 @@
 								</table>
 
 							</div>
-							<div class="pull-right">
+							<!-- <div class="pull-right">
 								<button id="pre" type="button" ng-click="clickPre()"
 									class="btn btn-success-custom">
 									<i class="glyphicon glyphicon-arrow-left"></i>
@@ -84,7 +84,7 @@
 									class="btn btn-success-custom">
 									<i class="glyphicon glyphicon-arrow-right"></i>
 								</button>
-							</div>
+							</div> -->
 						</div>
 					</div>
 
@@ -126,9 +126,9 @@
 						</div>
 						
 						<div class="col-md-12" style="margin-top:1%;">
-		              <label class="control-label col-md-3">Select Orgnization</label>
+		              <label class="control-label col-md-8">Select Orgnization</label>
 		              <div class="col-md-12"> 
-			                <select id = "org"  data-ng-model="org">
+			                <select id = "org"  data-ng-model="org" class = "col-md-5">
 			                 <option ng-repeat="o in orgs" value="{{o.orgId}}"   ng-selected="o.isSelect  == true">{{o.name}}</option>
 			                </select>
 	            		</div>   
@@ -140,9 +140,9 @@
   							<input type="text" ng-model = "user.lastname" class="form-control" id="firstname">
 						</div>
 						<div class="col-md-12" id="product-list">
-		              <label class="control-label col-md-3">Select Permission</label>
+		              <label class="control-label col-md-8">Select Permission</label>
 		              <div class="col-md-12"> 
-			                <select id="pre-selected-options" multiple="multiple" data-ng-model="permList">
+			                <select id="pre-selected-options" multiple="multiple" data-ng-model="permList" class="col-md-5">
 			                 <option ng-repeat="u in entities" value="{{u.entityName}}"   ng-selected="u.isSelect  == true">{{u.entityName}}</option>
 			                </select>
 	            		</div>   
@@ -152,8 +152,8 @@
 
 					
 	            	</div>
-						<div class="form-actions">
-							<div class="pull-right">
+						<div class="form-actions" >
+							<div class="pull-right" style="margin-top:2%;">
 								<button type="submit" ng-click="updateUserProfileByAdmin(user);"
 									class="btn btn-success-custom" ng-if = "Users == true">Update</button>
 								&nbsp;
@@ -202,9 +202,9 @@
 						</div>
 						
 						<div class="col-md-12" >
-		              <label class="control-label col-md-3">Select Orgnization</label>
+		              <label class="control-label col-md-8">Select Orgnization</label>
 		              <div class="col-md-12"> 
-			                <select   data-ng-model="org">
+			                <select   data-ng-model="org" class="col-md-5">
 			                 <option ng-repeat="o in orgs" value="{{o.orgId}}"   ng-selected="o.isSelect  == true">{{o.name}}</option>
 			                </select>
 	            		</div>   
@@ -216,9 +216,9 @@
   							<input type="text" ng-model = "user.lastname" class="form-control" id="lastname">
 						</div>
 						<div class="col-md-12" id="product-list">
-		              <label class="control-label col-md-3">Select Permission</label>
+		              <label class="control-label col-md-8" >Select Permission</label>
 		              <div class="col-md-12"> 
-			                <select id="pre-selected-options1" multiple="multiple" data-ng-model="permList">
+			                <select id="pre-selected-options1" multiple="multiple" data-ng-model="permList" class="col-md-5">
 			                 <option ng-repeat="u in entities" value="{{u.entityName}}"   ng-selected="u.isSelect  == true">{{u.entityName}}</option>
 			                </select>
 	            		</div>   
@@ -228,7 +228,7 @@
 	            	
 	            	</div>
 						<div class="form-actions">
-							<div class="pull-right">
+							<div class="pull-right"  style="margin-top:2%;">
 								<button type="submit" ng-click="addUserProfileByAdmin(user);"
 									class="btn btn-success-custom" ng-if = "Users == true">Add</button>
 								&nbsp;

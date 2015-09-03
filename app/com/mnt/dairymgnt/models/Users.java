@@ -36,7 +36,7 @@ public class Users extends Model {
 	public Date lastlogin;
 	public  Date lastLogout;
 	public Date lastUpdatedatetime;	
-	
+	public String userType;
 	public Users() {
 
 	}
