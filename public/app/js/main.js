@@ -8236,22 +8236,35 @@ App.controller('ViewAllUsersController', function ($scope, $rootScope, $routePar
 	
 	$scope.user;
 	$scope.permList;
+	$scope.entities = [];
 	$scope.editUserDetails = function(user){
-		$scope.permList;
+		$scope.permList = [];
+		$scope.entities = "";
 		$scope.user;
 		$scope.user = user;
 		console.log($scope.user.permissions);
+		
 		$http.get('/getAllEntities?d='+Math.random()).success(function(data) {
+
 	    	$scope.entities = data.entities;
-			angular.forEach($scope.entities, function(obj, index){
-				angular.forEach($scope.user.permissions, function(obj1, index){
-					if ((obj.id == obj1.permissionName)) {
-						obj.isSelect = true;
+	    	console.log(data.entities);
+	    	angular.forEach($scope.entities, function(obj, index){
+						obj.isSelect = false;
 						console.log(" entities in true");
-						//$scope.userExperience = obj.experianceLevel;
-						};
+			});
+
+	    	console.log($scope.entities);
+	    	angular.forEach($scope.entities, function(obj, index){
+				angular.forEach($scope.user.permissions, function(obj1, index){
+					if ((obj.entityName == obj1.permissionName)) {
+							obj.isSelect = true;
+							console.log(" entities in true");
+							$scope.permList.push(obj1.permissionName);
+							console.log($scope.permList);
+						} 
 					});
 				});
+	    		console.log($scope.entities);
 			});
 		
 		$http.get('/getAllOrgs/?d='+Math.random()).success(function(data) {
@@ -8313,7 +8326,7 @@ App.controller('ViewAllUsersController', function ($scope, $rootScope, $routePar
 }
 	
 	$scope.addnewUser = function(){
-		$scope.user;
+		$scope.user = "";
 		$http.get('/getAllEntities?d='+Math.random()).success(function(data) {
 	    	$scope.entities = data.entities;
 			angular.forEach($scope.entities, function(obj, index){
@@ -8321,6 +8334,7 @@ App.controller('ViewAllUsersController', function ($scope, $rootScope, $routePar
 					if ((obj.id == obj1.permissionName)) {
 						obj.isSelect = true;
 						console.log("in true");
+						
 						//$scope.userExperience = obj.experianceLevel;
 						};
 					});

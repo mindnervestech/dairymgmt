@@ -184,11 +184,12 @@
 				<h4 class="modal-title" id="myModalLabel">Add User</h4>
 			</div>
 			<div class="modal-body">
+			<span ng-if="userIdExit == true"><code >UserId already exit, Please choose another one</code></span>
 					<div class = "col-md-12">
 
 						<div class = "col-md-6">
 						<div class="col-md-12">
-						<span ng-if="userIdExit == true"><code >UserId already exit, Please choose another one</code></span>
+						
   								<label for="username">UserName:</label>
   								<input type="text" ng-model = "user.userId" ng-mouseout ="checkUserExits()" class="form-control"   id="usr">
 						</div>

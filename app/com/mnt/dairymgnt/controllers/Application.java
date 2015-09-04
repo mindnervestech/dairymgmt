@@ -279,7 +279,7 @@ public class Application extends Controller {
 			}
 
 			else {
-				flash().put("error", "Login Failed");
+				flash().put("error", "Invalid  credentials ");
 				return ok(signin.render());
 			}
 
@@ -343,6 +343,7 @@ public class Application extends Controller {
 				u.firstname = uvm.firstname;
 				u.lastname = uvm.lastname;
 				u.userId = uvm.userId;
+				u.setPassword(uvm.password);
 				u.userType = "";
 				//u.oraganization = (uvm.oraganization) ;
 				u.setLastUpdatedatetime(new Date());
