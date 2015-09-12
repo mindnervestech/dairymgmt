@@ -6,14 +6,16 @@ import javax.persistence.CascadeType;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mnt.dairymgnt.models.CattleMaster;
 import com.mnt.dairymgnt.models.Oraganization;
+import com.mnt.dairymgnt.models.PregnantCattle;
 import com.mnt.dairymgnt.models.Users;
 
 public class CattleOutputVM {
 
 	public int cattleId;	
    	public Date lastUpdateDateTime;
-	public Date date;
+	public String date;
 	public int quantity;
 	public int fatContent;
 	public int SNFContent;
@@ -23,8 +25,11 @@ public class CattleOutputVM {
 	public String attrib3;
 	public String attrib4;
 	public String attrib5;
-	
+	public String expectedMilkQuantity; 
 	public Oraganization oraganization;
 	public Users users;
+	public CattleMaster cattleMaster;
+	public PregnantCattle pregnantCattle;
+	
 	
 }

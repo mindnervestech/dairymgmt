@@ -114,6 +114,11 @@ public class Users extends Model {
 	public static Users getUserByEmail(String uname) {
 		return find.where().eq("userId", uname).findUnique();
 	}
+	
+	@JsonIgnore
+	public static Users checkForAdminByEmail(String uname) {
+		return find.where().eq("userId", uname).eq("userType", "admin".trim()).findUnique();
+	}
 
 	public static void update(Users ud) {
 		Ebean.update(ud);

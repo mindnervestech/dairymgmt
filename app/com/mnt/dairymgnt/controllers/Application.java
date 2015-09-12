@@ -35,16 +35,20 @@ import com.mnt.dairymgnt.VM.CattleHealthVM;
 import com.mnt.dairymgnt.VM.CattleIntakeVM;
 import com.mnt.dairymgnt.VM.CattleMasterVM;
 import com.mnt.dairymgnt.VM.CattleOutputVM;
+import com.mnt.dairymgnt.VM.ChildCattleVM;
 import com.mnt.dairymgnt.VM.OrgnizationVM;
+import com.mnt.dairymgnt.VM.PregnancyCattleVM;
 import com.mnt.dairymgnt.VM.UserVM;
 import com.mnt.dairymgnt.models.CattleFeedMaster;
 import com.mnt.dairymgnt.models.CattleHealth;
 import com.mnt.dairymgnt.models.CattleIntake;
 import com.mnt.dairymgnt.models.CattleMaster;
 import com.mnt.dairymgnt.models.CattleOutput;
+import com.mnt.dairymgnt.models.ChildCattle;
 import com.mnt.dairymgnt.models.Entities;
 import com.mnt.dairymgnt.models.Oraganization;
 import com.mnt.dairymgnt.models.Permissions;
+import com.mnt.dairymgnt.models.PregnantCattle;
 //import com.itextpdf.text.List;;
 import com.mnt.dairymgnt.models.Users;
 
@@ -157,8 +161,49 @@ public class Application extends Controller {
 			cvm.name = u.name;
 			cvm.users = u.users;
 			cvm.oraganization = u.oraganization;
+			cvm.RFID = u.RFID;
+			cvm.parentId  =u.parentId; 
 			
+			cvm.lastUpdateDateTime = u.lastUpdateDateTime;
 			cmvm.add(cvm);
+		}
+
+		HashMap  <String ,Object> hm = new HashMap();
+		hm.put("caters",cmvm);
+		return ok(Json.toJson(hm));
+	}
+	
+	public static Result getAllChildCattleMaster(int parentId){
+		List<CattleMaster> cattleMasters = CattleMaster.getAllCattleMasterByParentId(parentId);
+        ArrayList<CattleMasterVM> cmvm = new ArrayList<>();
+		
+		for(CattleMaster u : cattleMasters){
+			CattleMasterVM cvm = new CattleMasterVM();
+			/*cvm.breed = u.breed;
+			cvm.cattlechildId = u.cattlechildId;
+			cvm.RFID = u.RFID;
+			cvm.cattleIdentificationMark =    u.cattleIdentificationMark;
+			cvm.dateofBirth = u.dateofBirth;
+			cvm.gender  = u.gender;
+			cvm.name = u.name;
+			cvm.users = u.users;
+			cvm.oraganization = u.oraganization;
+			cvm.cattleMaster = u.cattleMaster;
+			*/
+			
+			cvm.breed = u.breed;
+			cvm.cattleId = u.cattleId;
+			cvm.cattleIdentificationMark =    u.cattleIdentificationMark;
+			cvm.dateofBirth = u.dateofBirth;
+			cvm.gender  = u.gender;
+			cvm.name = u.name;
+			cvm.users = u.users;
+			cvm.oraganization = u.oraganization;
+			cvm.RFID = u.RFID;
+			cvm.parentId  =u.parentId; 
+			cvm.lastUpdateDateTime = u.lastUpdateDateTime;
+			cmvm.add(cvm);
+			
 		}
 
 		HashMap  <String ,Object> hm = new HashMap();
@@ -189,6 +234,38 @@ public class Application extends Controller {
 		return ok(Json.toJson(hm));
 	}
 		
+	
+	public static Result getAllPregnantCattle(int pregnant){
+		List<PregnantCattle> pregnantCattle = PregnantCattle.getAllPregnantCattle(pregnant);
+        ArrayList<PregnancyCattleVM> cmvm = new ArrayList<>();
+        CattleMaster cm = new CattleMaster();
+		for(PregnantCattle u : pregnantCattle){
+			PregnancyCattleVM cfvm = new PregnancyCattleVM();
+			
+			cfvm.pregnancyId =  u.pregnancyId;
+			if(u.cattleId != 0 ){
+		     CattleMaster c = cm.getUserByCattleId(u.cattleId);;
+		     cfvm.cattleId = c.cattleId;
+		     cfvm.dateofBirth = c.dateofBirth;
+		     cfvm.name = c.name;
+			}
+			
+			cfvm.lastDeliveryDate =u.lastDeliveryDate ;
+			cfvm.expectedPregnancyDate = u.expectedPregnancyDate;
+			cfvm.firstInseminationDate = u.firstInseminationDate;
+			cfvm.secondInseminationDate = u.secondInseminationDate;
+			cfvm.thirdInseminationDate= u.thirdInseminationDate ;
+			cfvm.actualPregnancyDate = u.actualPregnancyDate;
+			cfvm.expectedDeliveryDate  = u.expectedDeliveryDate;
+			cfvm.milkingStoppingDate = u.milkingStoppingDate;
+			cmvm.add(cfvm);
+		}
+
+		HashMap  <String ,Object> hm = new HashMap();
+		hm.put("caters",cmvm);
+		return ok(Json.toJson(hm));
+	}
+		
 
 	
 	public static Result getAllCattleIntake(){
@@ -200,12 +277,19 @@ public class Application extends Controller {
 			cfvm.date = u.date;
 			cfvm.deviceID = u.deviceID;
 			cfvm.quantity = u.quantity;
-			
 			cfvm.lastUpdateDateTime =  u.lastUpdateDateTime;
 			cfvm.users = u.users;
 			cfvm.oraganization = u.oraganization;
 			cfvm.cattleFeedMaster = u.CattleFeedMaster;
 			cfvm.cattleId = u.cattleId;
+			cfvm.cattleMaster = u.CattleMaster;
+			cfvm.date = u.date;
+			cfvm.pregnantCattle = u.pregnantCattle;
+			cfvm.actualFeedType =  u.actualFeedType;
+			cfvm.actualFeedName  =  u.actualFeedName;
+			cfvm.expectedFeedType = u.expectedFeedType;
+			cfvm.expectedFeedName = u.expectedFeedName;
+			cfvm.expectedFeedQuantity = u.expectedFeedQuantity;
 			cmvm.add(cfvm);
 		}
 
@@ -229,6 +313,9 @@ public class Application extends Controller {
 			cfvm.cattleId = u.cattleId;
 			cfvm.SNFContent = u.SNFContent;
 			cfvm.fatContent = u.fatContent;
+			cfvm.cattleMaster = u.CattleMaster;
+			cfvm.pregnantCattle = u.pregnantCattle;
+			cfvm.expectedMilkQuantity = u.expectedMilkQuantity; 
 			cmvm.add(cfvm);
 		}
 
@@ -275,7 +362,7 @@ public class Application extends Controller {
 				session().put("email", ud.userId);
 			    ud.lastlogin = new Date();
 			    ud.update();
-			    return redirect("/dashboard#/allOrg");
+			    return redirect("/dashboard#/allUsers");
 			}
 
 			else {
@@ -416,7 +503,18 @@ public class Application extends Controller {
 					}
 					
 				}
-				
+				if(json.path("parentId") != null){
+					JsonNode parentId = json.path("parentId");
+					System.out.println(parentId);
+					if(parentId.toString() != ""){
+						CattleMaster    uId = null;	
+						uId = CattleMaster.getUserByCattleId(Integer.parseInt(parentId.toString().replace("\"", "")));
+						if(uId != null){
+							u.setParentId(uId.cattleId);
+						}
+					}
+				}
+
 				u.setBreed(uvm.breed);
 				u.setCattleIdentificationMark(uvm.cattleIdentificationMark);
 				u.setGender(uvm.gender);
@@ -427,6 +525,171 @@ public class Application extends Controller {
 			}else{
 				
 				u  = new CattleMaster();
+
+				u.setBreed(uvm.breed);
+				u.setCattleIdentificationMark(uvm.cattleIdentificationMark);
+				u.setGender(uvm.gender);
+				u.setLastUpdateDateTime(new Date());
+				u.setName(uvm.name);
+				
+				u.save();
+
+
+				
+				JsonNode org = json.path("org");
+				System.out.println(org);
+				if(org.toString() != ""){
+					Oraganization    orgni = Oraganization.getOrgById(Integer.parseInt(org.toString().replace("\"", "")));
+					if(orgni != null){
+						u.setOraganization(orgni);
+					}
+					
+				}
+				
+				JsonNode userId = json.path("userId");
+				System.out.println(userId);
+				if(userId.toString() != ""){
+					Users    uId = null;
+				    uId = Users.getUserByEmail(userId.toString().replace("\"", ""));
+					if(uId != null){
+						u.setUsers(uId);
+					}
+					
+				}
+				
+				if(json.path("parentId") != null){
+					JsonNode parentId = json.path("parentId");
+					System.out.println(parentId);
+					if(parentId.toString() != ""){
+						CattleMaster    uId = null;	
+						uId = CattleMaster.getUserByCattleId(Integer.parseInt(parentId.toString().replace("\"", "")));
+						if(uId != null){
+							u.setParentId(uId.cattleId);
+						}
+					}
+				}
+				
+				u.update(u);
+			}
+		} catch (JsonParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (JsonMappingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		return ok("");
+	}
+	
+	public static Result updateCattlePregnancyProfileByAdmin(){
+		JsonNode json = request().body().asJson();
+		JsonNode catJson = json.get("cat");
+		System.out.println(json);
+		ObjectMapper userinfoMapper = new ObjectMapper();
+		try {
+			PregnancyCattleVM uvm = userinfoMapper.readValue(catJson.traverse(),PregnancyCattleVM.class);
+			PregnantCattle u = PregnantCattle.getPregnantCattleByCattleId(uvm.pregnancyId);
+			if(u !=  null){
+
+				u.setActualPregnancyDate(uvm.actualPregnancyDate);
+				u.setCattleId(uvm.cattleId);
+				u.setExpectedDeliveryDate(uvm.expectedDeliveryDate);
+				u.setFirstInseminationDate(uvm.firstInseminationDate);
+				u.setSecondInseminationDate(uvm.secondInseminationDate);
+				u.setLastDeliveryDate(uvm.lastDeliveryDate);
+				u.setMilkingStoppingDate(uvm.milkingStoppingDate);
+				u.setPregnancyId(uvm.pregnancyId);
+				u.setSecondInseminationDate(uvm.secondInseminationDate);
+				u.setThirdInseminationDate(uvm.thirdInseminationDate);
+				
+				u.update(u);
+
+			}else{
+				
+				u  = new PregnantCattle();
+				u.setActualPregnancyDate(uvm.actualPregnancyDate);
+				u.setCattleId(uvm.cattleId);
+				u.setExpectedDeliveryDate(uvm.expectedDeliveryDate);
+				u.setFirstInseminationDate(uvm.firstInseminationDate);
+				u.setSecondInseminationDate(uvm.secondInseminationDate);
+				u.setLastDeliveryDate(uvm.lastDeliveryDate);
+				u.setMilkingStoppingDate(uvm.milkingStoppingDate);
+				u.setSecondInseminationDate(uvm.secondInseminationDate);
+				u.setThirdInseminationDate(uvm.thirdInseminationDate);
+				u.save();
+
+				
+			}
+		} catch (JsonParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (JsonMappingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		return ok("");
+	}
+	
+	
+	
+	public static Result updateCattleChildProfileByAdmin(){
+		JsonNode json = request().body().asJson();
+		JsonNode catJson = json.get("cat");
+		System.out.println(json);
+		ObjectMapper userinfoMapper = new ObjectMapper();
+		try {
+			ChildCattleVM uvm = userinfoMapper.readValue(catJson.traverse(),ChildCattleVM.class);
+			ChildCattle u = ChildCattle.getUserByCattleId(uvm.cattlechildId);
+			if(u !=  null){
+				JsonNode org = json.path("org");
+				System.out.println(org);
+				if(org.toString() != ""){
+					Oraganization    orgni = Oraganization.getOrgById(Integer.parseInt(org.toString().replace("\"", "")));
+					if(orgni != null){
+						u.setOraganization(orgni);
+					}
+				}
+				
+				JsonNode userId = json.path("userId");
+				System.out.println(userId);
+				if(userId.toString() != ""){
+					Users    uId = null;	
+					uId = Users.getUserByEmail(userId.toString().replace("\"", ""));
+					if(uId != null){
+						u.setUsers(uId);
+					}
+					
+				}
+				
+				JsonNode parentId = json.path("parentId");
+				System.out.println(parentId);
+				if(parentId.toString() != ""){
+					CattleMaster    uId = null;	
+					uId = CattleMaster.getUserByCattleId(Integer.parseInt(parentId.toString().replace("\"", "")));
+					if(uId != null){
+						u.setCattleMaster(uId);
+					}
+				}
+				
+				u.setBreed(uvm.breed);
+				u.setCattleIdentificationMark(uvm.cattleIdentificationMark);
+				u.setGender(uvm.gender);
+				u.setLastUpdateDateTime(new Date());
+				u.setName(uvm.name);
+				u.setDateofBirth(uvm.dateofBirth);
+				u.update(u);
+
+			}else{
+				
+				u  = new ChildCattle();
 
 				u.setBreed(uvm.breed);
 				u.setCattleIdentificationMark(uvm.cattleIdentificationMark);
@@ -455,8 +718,20 @@ public class Application extends Controller {
 					}
 					
 				}
-			u.update(u);
+				
+				JsonNode parentId = json.path("parentId");
+				System.out.println(parentId);
+				if(parentId.toString() != ""){
+					CattleMaster    uId = null;	
+					uId = CattleMaster.getUserByCattleId(Integer.parseInt(parentId.toString().replace("\"", "")));
+					if(uId != null){
+						u.setCattleMaster(uId);
+					}
+				}
 
+				u.setDateofBirth(uvm.dateofBirth);
+
+				u.update(u);
 			}
 		} catch (JsonParseException e1) {
 			// TODO Auto-generated catch block
@@ -474,17 +749,14 @@ public class Application extends Controller {
 	
 	public static Result updateCattleHealthProfileByAdmin(){
 		JsonNode json = request().body().asJson();
-		System.out.println("com.mnt.dairymgnt.controllers.Application.");
 		
 		JsonNode catJson = json.get("cat");
-		System.out.println(json);
 		ObjectMapper userinfoMapper = new ObjectMapper();
 		try {
 			CattleHealthVM uvm = userinfoMapper.readValue(catJson.traverse(),CattleHealthVM.class);
 			CattleHealth u = CattleHealth.getUserByCattleId(uvm.cattleId);
 			if(u !=  null){
 				JsonNode org = json.path("org");
-				System.out.println(org);
 				if(org.toString() != ""){
 					Oraganization    orgni = Oraganization.getOrgById(Integer.parseInt(org.toString().replace("\"", "")));
 					if(orgni != null){
@@ -597,30 +869,58 @@ public class Application extends Controller {
 					
 				}
 			
+				JsonNode catersIds = json.path("catersIds");
+				System.out.println(catersIds);
+				if(catersIds.toString() != ""){
+					CattleMaster    uId = null;
+				    uId = CattleMaster.getUserByCattleId(Integer.parseInt(catersIds.toString().replace("\"", "")));
+					if(uId != null){
+						u.setCattleMaster(uId);
+					}
+				}
+
+				JsonNode pregIds = json.path("pregIds");
+				System.out.println(pregIds);
+				if(pregIds.toString() != ""){
+					PregnantCattle    uId = null;
+				    uId = PregnantCattle.getPregnantCattleByCattleId((Integer.parseInt(pregIds.toString().replace("\"", ""))));
+					if(uId != null){
+						u.setPregnantCattle(uId);
+					}
+				}
 				
-				
-				u.setDate(new Date());
+				u.setDate(uvm.date);
 				u.setFatContent(uvm.fatContent);
 				u.setSNFContent(uvm.SNFContent);
 				u.setDeviceID(uvm.deviceID);
 				u.setLastUpdateDateTime(new Date());
 				u.setQuantity(uvm.quantity);
+				u.setExpectedMilkQuantity(uvm.expectedMilkQuantity);
 				
 				u.update(u);
 
 			}else{
 				
 				u  = new CattleOutput();
-
-				u.setDate(new Date());
+				u.setDate(uvm.date);
 				u.setFatContent(uvm.fatContent);
 				u.setSNFContent(uvm.SNFContent);
 				u.setDeviceID(uvm.deviceID);
 				u.setLastUpdateDateTime(new Date());
 				u.setQuantity(uvm.quantity);
-				
+				u.setExpectedMilkQuantity(uvm.expectedMilkQuantity);
 				u.save();
 
+				JsonNode pregIds = json.path("pregIds");
+				System.out.println(pregIds);
+				if(pregIds.toString() != ""){
+					PregnantCattle    uId = null;
+				    uId = PregnantCattle.getPregnantCattleByCattleId((Integer.parseInt(pregIds.toString().replace("\"", ""))));
+					if(uId != null){
+						u.setPregnantCattle(uId);
+					}
+				}
+				
 				JsonNode org = json.path("org");
 				System.out.println(org);
 				if(org.toString() != ""){
@@ -642,7 +942,15 @@ public class Application extends Controller {
 					
 				}
 				
-			
+				JsonNode catersIds = json.path("catersIds");
+				System.out.println(catersIds);
+				if(catersIds.toString() != ""){
+					CattleMaster    uId = null;
+				    uId = CattleMaster.getUserByCattleId(Integer.parseInt(catersIds.toString().replace("\"", "")));
+					if(uId != null){
+						u.setCattleMaster(uId);
+					}
+				}
 			u.update(u);
 
 			}
@@ -752,7 +1060,17 @@ public class Application extends Controller {
 	}
 	
 	
-	
+	// called to check the usertype and also when page is refreshed
+		public static Result checkForadmin() {
+			String email = session().get("email");
+
+			Users ad = Users.checkForAdminByEmail(email);
+			if (ad == null) {
+				return ok("notAdmin");
+			} else {
+				return ok((Json.stringify(Json.toJson(ad))));
+			}
+		}
 	
 	public static Result updateCattleIntakeProfileByAdmin(){
 		JsonNode json = request().body().asJson();
@@ -794,23 +1112,51 @@ public class Application extends Controller {
 					}
 				}
 				
-				u.setDate(new Date());
+				JsonNode catersIds = json.path("catersIds");
+				System.out.println("catersIds: "+catersIds);
+				if(catersIds.toString() != ""){
+					CattleMaster    uId = null;
+				    uId = CattleMaster.getUserByCattleId(Integer.parseInt(catersIds.toString().replace("\"", "")));
+					if(uId != null){
+						u.setCattleMaster(uId);
+					}
+				}
+				
+				JsonNode pregIds = json.path("pregIds");
+				System.out.println(pregIds);
+				if(pregIds.toString() != ""){
+					PregnantCattle    uId = null;
+				    uId = PregnantCattle.getPregnantCattleByCattleId((Integer.parseInt(pregIds.toString().replace("\"", ""))));
+					if(uId != null){
+						u.setPregnantCattle(uId);
+					}
+				}
+				
+				u.setDate(uvm.date);
 				u.setDeviceID(uvm.deviceID);
 				u.setLastUpdateDateTime(new Date());
 				u.setQuantity(uvm.quantity);
+				u.setActualFeedName(uvm.actualFeedName);
+				u.setActualFeedType(uvm.actualFeedType);
+				u.setExpectedFeedName(uvm.expectedFeedName);
+				u.setExpectedFeedQuantity(uvm.expectedFeedQuantity);
+				u.setExpectedFeedType(uvm.expectedFeedType);
 				
-			
 				u.update(u);
 
 			}else{
 				
 				u  = new CattleIntake();
 
-				u.setDate(new Date());
+				u.setDate(uvm.date);
 				u.setDeviceID(uvm.deviceID);
 				u.setLastUpdateDateTime(new Date());
 				u.setQuantity(uvm.quantity);
-				
+				u.setActualFeedName(uvm.actualFeedName);
+				u.setActualFeedType(uvm.actualFeedType);
+				u.setExpectedFeedName(uvm.expectedFeedName);
+				u.setExpectedFeedQuantity(uvm.expectedFeedQuantity);
+				u.setExpectedFeedType(uvm.expectedFeedType);
 				u.save();
 
 				JsonNode org = json.path("org");
@@ -834,7 +1180,16 @@ public class Application extends Controller {
 					
 				}
 				
-				
+				JsonNode pregIds = json.path("pregIds");
+				System.out.println(pregIds);
+				if(pregIds.toString() != ""){
+					PregnantCattle    uId = null;
+				    uId = PregnantCattle.getPregnantCattleByCattleId((Integer.parseInt(pregIds.toString().replace("\"", ""))));
+					if(uId != null){
+						u.setPregnantCattle(uId);
+					}
+				}
+					
 				JsonNode feedId = json.path("feedId");
 				System.out.println(feedId);
 				if(feedId.toString() != ""){
@@ -844,6 +1199,17 @@ public class Application extends Controller {
 						u.setCattleFeedMaster(uId);
 					}
 				}
+				
+				JsonNode catersIds = json.path("catersIds");
+				System.out.println(catersIds);
+				if(catersIds.toString() != ""){
+					CattleMaster    uId = null;
+				    uId = CattleMaster.getUserByCattleId(Integer.parseInt(catersIds.toString().replace("\"", "")));
+					if(uId != null){
+						u.setCattleMaster(uId);
+					}
+				}
+				
 			u.update(u);
 
 			}

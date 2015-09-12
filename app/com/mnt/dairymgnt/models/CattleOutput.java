@@ -28,7 +28,7 @@ public class CattleOutput extends Model {
 	public int cattleId;	
 	
    	public Date LastUpdateDateTime;
-	public Date date;
+	public String date;
 	
 	public int quantity;
 	public int fatContent;
@@ -39,8 +39,17 @@ public class CattleOutput extends Model {
 	public String attrib3;
 	public String attrib4;
 	public String attrib5;
+	public String expectedMilkQuantity; 
 	
 	
+	public String getExpectedMilkQuantity() {
+		return expectedMilkQuantity;
+	}
+
+	public void setExpectedMilkQuantity(String expectedMilkQuantity) {
+		this.expectedMilkQuantity = expectedMilkQuantity;
+	}
+
 	public Date getLastUpdateDateTime() {
 		return LastUpdateDateTime;
 	}
@@ -49,11 +58,11 @@ public class CattleOutput extends Model {
 		LastUpdateDateTime = lastUpdateDateTime;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
@@ -140,6 +149,31 @@ public class CattleOutput extends Model {
 	public Users users;
 	
 	
+	@JsonIgnore
+	@OneToOne(cascade = CascadeType.ALL)
+	public CattleMaster CattleMaster;
+	
+	@JsonIgnore
+	@OneToOne(cascade = CascadeType.ALL)
+	public PregnantCattle pregnantCattle;
+	
+	
+	public PregnantCattle getPregnantCattle() {
+		return pregnantCattle;
+	}
+
+	public void setPregnantCattle(PregnantCattle pregnantCattle) {
+		this.pregnantCattle = pregnantCattle;
+	}
+
+	public CattleMaster getCattleMaster() {
+		return CattleMaster;
+	}
+
+	public void setCattleMaster(CattleMaster cattleMaster) {
+		CattleMaster = cattleMaster;
+	}
+
 	public Oraganization getOraganization() {
 		return oraganization;
 	}

@@ -4,7 +4,7 @@
 
 # Home page
 #GET     /                           					com.mnt.dairymgnt.controllers.Application.index()
-GET	/											    com.mnt.dairymgnt.controllers.Application.login()
+GET		 /											    com.mnt.dairymgnt.controllers.Application.login()
 GET		/signup											com.mnt.dairymgnt.controllers.Application.signup()
 POST	/SignIn                     					com.mnt.dairymgnt.controllers.Application.SignIn()
 GET     /dashboard										com.mnt.dairymgnt.controllers.Application.dashBoard()
@@ -22,13 +22,20 @@ POST   /updateOrgByAdmin                                com.mnt.dairymgnt.contro
 GET    /getAllCattleMaster/                             com.mnt.dairymgnt.controllers.Application.getAllCattleMaster()
 POST   /updateCattleProfileByAdmin               		com.mnt.dairymgnt.controllers.Application.updateCattleProfileByAdmin()
 GET    /getAllFeedCattleMaster/                         com.mnt.dairymgnt.controllers.Application.getAllFeedCattleMaster()
-POST   /updatefeedCattleProfileByAdmin                 com.mnt.dairymgnt.controllers.Application.updatefeedCattleProfileByAdmin()
-GET    /getAllCattleIntake/                            com.mnt.dairymgnt.controllers.Application.getAllCattleIntake()
-POST   /updateCattleIntakeProfileByAdmin               com.mnt.dairymgnt.controllers.Application.updateCattleIntakeProfileByAdmin()
-GET    /getUserPermissions                             com.mnt.dairymgnt.controllers.Application.getUserPermissions()
-POST   /updateCattleOutputProfileByAdmin               com.mnt.dairymgnt.controllers.Application.updateCattleOutputProfileByAdmin()  
-GET    /getAllCattleOutput/                            com.mnt.dairymgnt.controllers.Application.getAllCattleOutput()
-GET    /getAllCattleHealth/                            com.mnt.dairymgnt.controllers.Application.getAllCattleHealth()
+POST   /updatefeedCattleProfileByAdmin                  com.mnt.dairymgnt.controllers.Application.updatefeedCattleProfileByAdmin()
+GET    /getAllCattleIntake/                             com.mnt.dairymgnt.controllers.Application.getAllCattleIntake()
+POST   /updateCattleIntakeProfileByAdmin                com.mnt.dairymgnt.controllers.Application.updateCattleIntakeProfileByAdmin()
+GET    /getUserPermissions                              com.mnt.dairymgnt.controllers.Application.getUserPermissions()
+POST   /updateCattleOutputProfileByAdmin                com.mnt.dairymgnt.controllers.Application.updateCattleOutputProfileByAdmin()  
+GET    /getAllCattleOutput/                             com.mnt.dairymgnt.controllers.Application.getAllCattleOutput()
+GET    /getAllCattleHealth/                             com.mnt.dairymgnt.controllers.Application.getAllCattleHealth()
 POST   /updateCattleHealthProfileByAdmin    			com.mnt.dairymgnt.controllers.Application.updateCattleHealthProfileByAdmin()
+GET      /checkForadmin                                 com.mnt.dairymgnt.controllers.Application.checkForadmin()
+POST     /updateCattleChildProfileByAdmin               com.mnt.dairymgnt.controllers.Application.updateCattleChildProfileByAdmin()
+GET      /getAllChildCattleMaster/:parentId             com.mnt.dairymgnt.controllers.Application.getAllChildCattleMaster(parentId : Integer)
+GET      /getAllPregnantCattle/:pregnantCattleId        com.mnt.dairymgnt.controllers.Application.getAllPregnantCattle(pregnantCattleId:Integer)
+POST     /updateCattlePregnancyProfileByAdmin            com.mnt.dairymgnt.controllers.Application.updateCattlePregnancyProfileByAdmin()               
+
+
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               					controllers.Assets.at(path="/public", file)

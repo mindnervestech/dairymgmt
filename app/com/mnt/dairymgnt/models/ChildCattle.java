@@ -9,7 +9,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 
@@ -21,7 +20,7 @@ import play.db.ebean.Model;
 import play.db.ebean.Model.Finder;
 
 @Entity
-public class CattleMaster extends Model {
+public class ChildCattle extends Model {
 
 	/**
 	 * 
@@ -29,12 +28,12 @@ public class CattleMaster extends Model {
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	public int cattleId;
-	public int RFID;
+	public int cattlechildId;
+	//public int RFID;
 	public Date lastUpdateDateTime;
 	public  String name;
 	public String breed;
-	public String dateofBirth;
+	public String  dateofBirth;
 	public String  gender;
 	public String cattleIdentificationMark;
 	public String attrib1;
@@ -42,18 +41,9 @@ public class CattleMaster extends Model {
 	public String attrib3;
 	public String attrib4;
 	public String attrib5;
-	public int parentId;
 	
 	
-	public int getParentId() {
-		return parentId;
-	}
-
-	public void setParentId(int parentId) {
-		this.parentId = parentId;
-	}
-
-	public CattleMaster() {
+	public ChildCattle() {
 
 	}
 	
@@ -72,6 +62,19 @@ public class CattleMaster extends Model {
 	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)
 	public Users users;
+	
+	@JsonIgnore
+	@ManyToOne(cascade = CascadeType.ALL)
+	public CattleMaster cattleMaster;
+	
+	
+	public CattleMaster getCattleMaster() {
+		return cattleMaster;
+	}
+
+	public void setCattleMaster(CattleMaster cattleMaster) {
+		this.cattleMaster = cattleMaster;
+	}
 
 	public Users getUsers() {
 		return users;
@@ -81,15 +84,16 @@ public class CattleMaster extends Model {
 		this.users = users;
 	}
 
-	public int getCattleId() {
-		return cattleId;
+	
+	public int getCattlechildId() {
+		return cattlechildId;
 	}
 
-	public void setCattleId(int cattleId) {
-		this.cattleId = cattleId;
+	public void setCattlechildId(int cattlechildId) {
+		this.cattlechildId = cattlechildId;
 	}
-
-/*	public int getRFID() {
+	
+	/*public int getRFID() {
 		return RFID;
 	}
 
@@ -185,33 +189,23 @@ public class CattleMaster extends Model {
 		this.attrib5 = attrib5;
 	}
 
-	public static Finder<Long, CattleMaster> find = new Finder<Long, CattleMaster>(
-			Long.class, CattleMaster.class);
+	public static Finder<Long, ChildCattle> find = new Finder<Long, ChildCattle>(
+			Long.class, ChildCattle.class);
 	
-	public static List<CattleMaster> getAllCattleMaster(){
+	public static List<ChildCattle> getAllCattleMaster(){
 		return find.all();
 	}
 
-	public static CattleMaster getUserByCattleId(int cattleId){
-		return find.where().eq("cattleId", cattleId).findUnique();
+	public static ChildCattle getUserByCattleId(int cattleId){
+		return find.where().eq("cattlechildId", cattleId).findUnique();
 	}
-
-	public static void update(CattleMaster ud) {
+	
+	public static void update(ChildCattle ud) {
 		Ebean.update(ud);
 	}
 	
-	public static CattleMaster getRecoredByPermissionsName(String permissionName){
+	public static ChildCattle getRecoredByPermissionsName(String permissionName){
 		return find.where().eq("permissionName",permissionName.trim()).findUnique();
-	}
-
-	public static List<CattleMaster> getAllCattleMasterByParentId(int parentId) {
-		// TODO Auto-generated method stub
-		if(parentId == 0){
-			return find.all();
-		}else{
-			return find.where().eq("parentId", parentId).findList();	
-		}
-		
 	}
 	
 }

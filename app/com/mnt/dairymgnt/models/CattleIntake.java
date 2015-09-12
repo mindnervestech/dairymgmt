@@ -24,11 +24,69 @@ public class CattleIntake  extends Model{
 	public int cattleId;	
 	
 	public Date lastUpdateDateTime;
-	public Date date;
+	public String date;
 	public int quantity; 
 	public String  deviceID;
+	public String actualFeedType;
+	public String actualFeedName;
+	public String expectedFeedType;
+	public String expectedFeedName;
+	public String expectedFeedQuantity;
+	
+	//public Date  dob;
+	
+	public String getActualFeedType() {
+		return actualFeedType;
+	}
+
+	public void setActualFeedType(String actualFeedType) {
+		this.actualFeedType = actualFeedType;
+	}
+
+	public String getActualFeedName() {
+		return actualFeedName;
+	}
+
+	public void setActualFeedName(String actualFeedName) {
+		this.actualFeedName = actualFeedName;
+	}
+
+	public String getExpectedFeedType() {
+		return expectedFeedType;
+	}
+
+	public void setExpectedFeedType(String expectedFeedType) {
+		this.expectedFeedType = expectedFeedType;
+	}
+
+	public String getExpectedFeedName() {
+		return expectedFeedName;
+	}
+
+	public void setExpectedFeedName(String expectedFeedName) {
+		this.expectedFeedName = expectedFeedName;
+	}
+
+	public String getExpectedFeedQuantity() {
+		return expectedFeedQuantity;
+	}
+
+	public void setExpectedFeedQuantity(String expectedFeedQuantity) {
+		this.expectedFeedQuantity = expectedFeedQuantity;
+	}
+
+	@JsonIgnore
+	@OneToOne(cascade = CascadeType.ALL)
+	public PregnantCattle pregnantCattle;
 	
 	
+	public PregnantCattle getPregnantCattle() {
+		return pregnantCattle;
+	}
+
+	public void setPregnantCattle(PregnantCattle pregnantCattle) {
+		this.pregnantCattle = pregnantCattle;
+	}
 	
 	public int getCattleId() {
 		return cattleId;
@@ -46,11 +104,11 @@ public class CattleIntake  extends Model{
 		this.lastUpdateDateTime = lastUpdateDateTime;
 	}
 
-	public Date getDate() {
+	public String getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(String date) {
 		this.date = date;
 	}
 
@@ -91,6 +149,18 @@ public class CattleIntake  extends Model{
 	@OneToOne(cascade = CascadeType.ALL)
 	public CattleFeedMaster CattleFeedMaster;
 	
+	@JsonIgnore
+	@OneToOne(cascade = CascadeType.ALL)
+	public CattleMaster CattleMaster;
+	
+	public CattleMaster getCattleMaster() {
+		return CattleMaster;
+	}
+
+	public void setCattleMaster(CattleMaster cattleMaster) {
+		CattleMaster = cattleMaster;
+	}
+
 	public CattleFeedMaster getCattleFeedMaster() {
 		return CattleFeedMaster;
 	}

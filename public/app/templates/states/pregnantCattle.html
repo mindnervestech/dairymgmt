@@ -1,0 +1,449 @@
+<style>
+.Color {
+	color: green
+}
+
+.redColor {
+	color: red
+}
+
+.btn-success-custom {
+	color: white;
+	background-color: #21205f;
+}
+
+.btn-success-custom:hover {
+	color: white;
+	background-color: #999999;
+}
+</style>
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="portlet box" style="min-height: 500px;">
+			<div class="portlet-header">
+				<div class="caption">All Pregnant Cattle </div>
+			</div>
+			<div class="portlet-body" ng-init="init();" style="overflow-x: auto;">
+					<span ng-if="add == true" style="color:green;">Record Added Successfully.</span>
+					<span ng-if="update == true" style="color:green;">Record Updated  Successfully.</span>
+				<div class="row mbm">
+					<div class="col-lg-12">
+						<!-- {{jobs}} -->
+						<div>
+							 <div class="pull-left">
+								<span>
+								 	<button class="btn btn-success-custom" data-toggle="tooltip"
+										data-placement="bottom" title="Add new pregnant Cattle"
+										ng-click="addnewCattle();" ng-if="Pregnant_Cattle == true">Add </button>
+								
+								</span> 
+
+							</div>
+							<!-- <div class="pull-right">
+								<label>Active Users:</label>&nbsp;&nbsp; <small><strong>{{activeusercount}}</strong></small>
+							</div> -->
+						</div>
+						<div class="pull-left">
+						<div class="col-md-12" style="margin-top:-3%;margin-bottom:2%;; margin-left:24%;">
+		              				<label class="control-label col-md-8">Select Cattle Name</label>
+		              					<div class="col-md-12"> 
+			                				<select id = "use"  data-ng-model="parentId" class= "col-md-5"  style="    width: 110%;" ng-change = "getCattlePregnancyRecords();">
+			                					<option  value="0"  >All</option>
+			                 					<option ng-repeat="u in caters" value="{{u.cattleId}}"   ng-selected="u.isSelect  == true">{{u.cattleId}}/{{u.name}}</option>
+			                				</select>
+	            						</div>   
+	            		   </div>	
+						</div>
+						
+						<div ng-init="getAllPregnantCattle()" class="table-responsive">
+							<div class="page-header">
+								
+								<table id="table_id"
+									class="table table-hover table-striped table-bordered table-advanced tablesorter display">
+									<tbody>
+										<tr>
+											<th>Pregnant Id</th>
+											<th>Cattle name</th>
+											<!-- <th>Parent Name </th> -->
+											<th>Last Delivery Date</th>
+											<th>Expected Pregnancy Date</th>
+											<th>First Insemination Date</th>
+											<th>Second Insemination Date</th>
+											<th>Third Insemination Date</th>
+											<th>Actual Pregnancy Date</th>
+											<th>Expected Delivery Date</th>
+											<th>Milking Stopping Date</th>
+											<!-- <th>View</th>
+												 -->
+										</tr>
+										<tr data-ng-repeat="cat in caters"
+											style="background-color: #fff !important; left: -900">
+											<td ng-click="" data-toggle="tooltip" data-placement="bottom"
+												title="Send to mail to user"><a
+												href="mailto:{{user.email}}">{{cat.pregnancyId}}</a></td>
+											<td ng-click="">{{cat.cattleId}}/{{cat.name}}</td>
+											<td ng-click="">{{cat.lastDeliveryDate}}</td>
+												<!-- <td ng-click="" >{{cat.cattleMaster.cattleId}}/ ({{cat.cattleMaster.name}})</td> -->
+											<td ng-click="">{{cat.expectedPregnancyDate}}</td>
+											<td ng-click="">{{cat.firstInseminationDate}}</td>
+											<!-- <td>{{cat.dateofBirth | date:'yyyy-MM-dd HH:mm:ss '}}</td>
+											 --><td ng-click="">{{cat.secondInseminationDate}}</td>
+											<td ng-click="">{{cat.thirdInseminationDate}}</td>
+												<td ng-click="">{{cat.actualPregnancyDate}}</td>
+													<td ng-click="">{{cat.expectedDeliveryDate}}</td>
+														<td ng-click="">{{cat.milkingStoppingDate}}</td>
+														
+											<!-- <td><button class="btn btn-success-custom"
+													ng-click="editCatdersDetails(cat);" data-toggle="tooltip"
+													data-placement="bottom" title="View Caters  details">
+													<i data-toggle="modal" class="glyphicon glyphicon-eye-open"></i>
+											    </button>
+											</td> -->
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							<!-- <div class="pull-right">
+								<button id="pre" type="button" ng-click="clickPre()"
+									class="btn btn-success-custom">
+									<i class="glyphicon glyphicon-arrow-left"></i>
+								</button>
+								&nbsp;
+								<button id="next" type="button" ng-click="clickNext()"
+									class="btn btn-success-custom">
+									<i class="glyphicon glyphicon-arrow-right"></i>
+								</button>
+							</div> -->
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- <!-- Modal Edit user details
+<div class="modal fade" id="editCatdersDetails" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Edit Child Cattle</h4>
+			</div>
+			<div class="modal-body">
+				<div class = "col-md-12">
+				<div class = "col-md-6">
+						<div class="col-md-12">
+  								<label for="username">Cattle Id:</label>
+  								<input type="text" ng-model = "user.userId" class="form-control"  readonly id="usr">
+						</div>
+
+						<div class="col-md-12">
+  								<label for="username">RFID :</label>
+  								<input type="text" ng-model = "user.password" class="form-control"   id="password">
+						</div>
+
+						<div class="col-md-12">
+  							<label for="usr">Name</label>
+  							<input type="text" ng-model = "cat.name" class="form-control" maxlength="80"   id="firstname">
+						</div>
+
+
+						<div class="col-md-12">
+  							<label for="usr">Breed </label>
+  							<input type="text" ng-model = "cat.breed" class="form-control" maxlength="80" id="firstname">
+						</div>		
+						
+		       	        <div class="col-md-12">
+										<div class="">
+											<div class="">
+												<div class="input-group">
+												<span>Date of Birth</span>
+													 <input type="text" ng-model="cat.dateofBirth"
+														name="dob" class="form-control " id="dob"
+														 ng-click="initempDatepicker();"
+														style="font-size: 12px;" required>
+														<div class="input-group-addon">
+														<i class="fa fa-calendar"></i>
+														</div>
+												</div>
+											</div>
+									</div>
+					</div>
+						
+					<div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
+		              <label class="control-label col-md-8">Select parent name</label>
+		              <div class="col-md-12"> 
+			                <select id = "use"  data-ng-model="parentId" class= "col-md-5"  style="    width: 110%;">
+			                 <option ng-repeat="u in cattle" value="{{u.cattleId}}"   ng-selected="u.isSelect  == true">{{u.cattleId}}/{{u.name}}</option>
+			                </select>
+	            		</div>   
+	            	</div>	
+						</div>
+						<div class = "col-md-6	">
+						<div class="col-md-12">
+  							<label for="usr">Gender </label>
+							<select ng-model = "cat.gender"  id="gender" ng-selected="cat.gender" class="form-control">
+  								<option value="Male">Male</option>
+  								<option value="Female">Female</option>
+							</select>
+						</div>	
+						<div class="col-md-12">
+  							<label for="usr">Cattle Identification Mark </label>
+  							<input type="text" ng-model = "cat.cattleIdentificationMark" maxlength="80" class="form-control" id="firstname">
+						</div>	
+						
+						<div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
+		              <label class="control-label col-md-8">Select User Id</label>
+		              <div class="col-md-12">
+			                <select id = "use"  data-ng-model="userId" class = "col-md-5" style="    width: 110%;">
+			                 <option ng-repeat="u in users" value="{{u.userId}}"   ng-selected="u.isSelect  == true">{{u.userId}}</option>
+			                </select>
+	            		</div>   
+	            	</div>
+	            	</div>
+	            	</div>
+						<div class="form-actions">
+							<div class="pull-right" style="margin-top:4%;">
+								<button type="submit" ng-click="updateCattleProfileByAdmin(cat);"
+									class="btn btn-success-custom" ng-if="cattleMaster == true">Update</button>
+								&nbsp;
+								<button type="button" class="btn btn-success-custom"
+									data-dismiss="modal">Close</button>
+								&nbsp;
+							</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div> -->
+
+<!-- Add new user model  -->
+<!-- Modal Edit user details-->
+<div class="modal fade" id="addnewCattle" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Add Pregnancy  Details </h4>
+			</div>
+			<div class="modal-body">
+				<div class = "col-md-12">
+				<div class = "col-md-6">
+						<div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
+		              <label class="control-label col-md-8">Select Cattle to add pregnancy</label>
+		              <div class="col-md-12">
+			                <select id = "use"  data-ng-model="cat.cattleId" class = "col-md-5" style="    width: 110%;">
+			                 <option ng-repeat="u in cattle" value="{{u.cattleId}}"   >{{u.name}}</option>
+			                </select>
+	            		</div>   
+	            	</div>	
+						<!-- <div class="col-md-12">
+  							<label for="usr">Catttle Name</label>
+  							<input type="text" ng-model = "cat.name" class="form-control" maxlength="80" id="firstname">
+						</div>
+ 						-->
+					 <div class="col-md-12">
+										<div class="">
+											<div class="">
+												<div class="input-group">
+												<span>Date of Birth</span>
+													 <input type="text" ng-model="cat.dateofBirth"
+														name="dob" class="form-control " id="dob"
+														 ng-click="initempDatepicker();"
+														style="font-size: 12px;" required>
+														
+												</div>
+											</div>
+									</div>
+					</div>	
+						
+					 <div class="col-md-12">
+										<div class="">
+											<div class="">
+												<div class="input-group">
+												<span>Last Delivery Date</span>
+													 <input type="text" ng-model="cat.lastDeliveryDate"
+														name="dob" class="form-control " id="lastDeliveryDate"
+														 ng-click="lastDeliveryDatepicker();"
+														style="font-size: 12px;" required>
+														
+												</div>
+											</div>
+									</div>
+					</div>
+					  <div class="col-md-12">
+										<div class="">
+											<div class="">
+												<div class="input-group">
+												<span>Expected Pregnancy Date</span>
+													 <input type="text" ng-model="cat.expectedPregnancyDate"
+														name="dob" class="form-control " id="expectedPregnancyDate"
+														 ng-click="expectedPregnancyDatepicker();"
+														style="font-size: 12px;" required>
+														
+												</div>
+											</div>
+									</div>
+					</div>
+					
+					 <div class="col-md-12">
+										<div class="">
+											<div class="">
+												<div class="input-group">
+												<span>First Insemination Date</span>
+													 <input type="text" ng-model="cat.firstInseminationDate"
+														name="dob" class="form-control " id="firstInseminationDate"
+														 ng-click="firstInseminationDatepicker();"
+														style="font-size: 12px;" required>
+														
+												</div>
+											</div>
+									</div>
+					</div>
+					
+						</div>
+						<div class = "col-md-6	">
+						
+		       	       
+						 <div class="col-md-12">
+										<div class="">
+											<div class="">
+												<div class="input-group">
+												<span>Second Insemination Date</span>
+													 <input type="text" ng-model="cat.secondInseminationDate"
+														name="dob" class="form-control " id="secondInseminationDate"
+														 ng-click="secondInseminationDatepicker();"
+														style="font-size: 12px;" required>
+														
+												</div>
+											</div>
+									</div>
+					</div>
+						
+						 <div class="col-md-12">
+										<div class="">
+											<div class="">
+												<div class="input-group">
+												<span>Third Insemination Date</span>
+													 <input type="text" ng-model="cat.thirdInseminationDate"
+														name="dob" class="form-control " id="thirdInseminationDate"
+														 ng-click="thirdInseminationDatepicker();"
+														style="font-size: 12px;" required>
+														
+												</div>
+											</div>
+									</div>
+					</div>	
+						
+						 <div class="col-md-12">
+										<div class="">
+											<div class="">
+												<div class="input-group">
+												<span>Actual Pregnancy Date</span>
+													 <input type="text" ng-model="cat.actualPregnancyDate"
+														name="dob" class="form-control " id="actualPregnancyDate"
+														 ng-click="actualPregnancyDatepicker();"
+														style="font-size: 12px;" required>
+														
+												</div>
+											</div>
+									</div>
+					</div>
+					
+					 <div class="col-md-12">
+										<div class="">
+											<div class="">
+												<div class="input-group">
+												<span>Expected Delivery Date</span>
+													 <input type="text" ng-model="cat.expectedDeliveryDate"
+														name="dob" class="form-control " id="expectedDeliveryDate"
+														 ng-click="expectedDeliveryDatepicker();"
+														style="font-size: 12px;" required>
+														
+												</div>
+											</div>
+									</div>
+					</div>
+					<div class="col-md-12">
+										<div class="">
+											<div class="">
+												<div class="input-group">
+												<span>Milking Stopping Date</span>
+													 <input type="text" ng-model="cat.milkingStoppingDate"
+														name="dob" class="form-control " id="milkingStoppingDate"
+														 ng-click="milkingStoppingDatepicker();"
+														style="font-size: 12px;" required>
+														
+												</div>
+											</div>
+									</div>
+					</div>
+	            	</div>
+	            	</div>
+						<div class="form-actions">
+							<div class="pull-right" style="margin-top:4%;">
+								<button type="submit" ng-click="addCattlePregnancy(cat);"
+									class="btn btn-success-custom" ng-if="Pregnant_Cattle == true">Add</button>
+								&nbsp;
+								<button type="button" class="btn btn-success-custom"
+									data-dismiss="modal">Close</button>
+								&nbsp;
+								<!-- <button type="button" class="btn btn-default">Cancel</button> -->
+							</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+
+<style type="text/css">
+.modal .modal-dialog {
+	width: 70%;
+}
+
+.modal .modal-body {
+	max-height: 500px;
+	overflow-y: auto;
+}
+
+fieldset.scheduler-border {
+	border: 1px groove !important;
+	padding: 0 1.4em 1.4em 1.4em !important;
+	margin: 0 0 1.5em 0 !important;
+	-webkit-box-shadow: 0px 0px 0px 0px #000;
+	box-shadow: 0px 0px 0px 0px #000;
+	border-color: #darkgrey;
+}
+
+legend.scheduler-border {
+	font-size: 1.0em !important;
+	text-align: left !important;
+	width: inherit;
+	padding: 0 10px;
+	border-bottom: none;
+	color: darkgray;
+}
+
+.clsDatePicker {
+	z-index: 100000;
+}
+</style>
+
+<style>
+.datepicker {
+	z-index: 1151 !important;
+}
+</style>
