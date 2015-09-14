@@ -152,7 +152,7 @@
 
 						<div class="col-md-12">
   							<label for="usr">Expected Feed Quantity </label>
-  							<input type="text" ng-model = "cat.expectedFeedQuantity" class="form-control" id="expectedFeedQuantity">
+  							<input type="text" ng-model = "cat.expectedFeedQuantity" onkeypress="return isNumber(event)" class="form-control" id="expectedFeedQuantity">
 						</div>
 
 						
@@ -172,7 +172,7 @@
 	            	
 						<div class="col-md-12">
   							<label for="usr">Quantity </label>
-  							<input type="text" ng-model = "cat.quantity" class="form-control" id="firstname">
+  							<input type="text" ng-model = "cat.quantity" onkeypress="return isNumber(event)" class="form-control" id="firstname">
 						</div>		
 						
 	            	<div class="col-md-12">
@@ -283,12 +283,12 @@
 
 						<div class="col-md-12">
   							<label for="usr">Expected Feed Name </label>
-  							<input type="text" ng-model = "cat.expectedFeedName" class="form-control" id="expectedFeedName">
+  							<input type="text" ng-model = "cat.expectedFeedName"  class="form-control" id="expectedFeedName">
 						</div>
 
 						<div class="col-md-12">
   							<label for="usr">Expected Feed Quantity </label>
-  							<input type="text" ng-model = "cat.expectedFeedQuantity" class="form-control" id="expectedFeedQuantity">
+  							<input type="text" ng-model = "cat.expectedFeedQuantity" onkeypress="return isNumber(event)" class="form-control" id="expectedFeedQuantity">
 						</div>
 
 							
@@ -306,7 +306,7 @@
 	            	</div> -->
 	            	<div class="col-md-12">
   							<label for="usr">Quantity </label>
-  							<input type="text" ng-model = "cat.quantity" class="form-control" id="firstname">
+  							<input type="text" ng-model = "cat.quantity" onkeypress="return isNumber(event)" class="form-control" id="firstname">
 						</div>	
 	            		<div class="col-md-12">
 										<div class="">
@@ -376,7 +376,17 @@
 
 	</div>
 </div>
+<script>
 
+function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
+</script>
 
 <style type="text/css">
 .modal .modal-dialog {

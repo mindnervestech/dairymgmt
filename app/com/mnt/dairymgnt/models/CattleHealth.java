@@ -29,12 +29,12 @@ public class CattleHealth  extends Model{
 	public Date lastUpdateDateTime;
     public String medicationType;
     public String medicationName;
-    public Date medicationStartDate;
-    public Date medicationEnddate;
+    public String medicationStartDate;
+    public String medicationEnddate;
     public boolean  pregnant;
-    public Date pregnancyDate;
-    public Date   lastDelivaerydate;
-	public Date duedate;
+    public String pregnancyDate;
+    public String   lastDelivaerydate;
+	public String duedate;
 	public String attrib1;
 	public String attrib2;
 	public String attrib3;
@@ -76,19 +76,19 @@ public class CattleHealth  extends Model{
 		this.medicationName = medicationName;
 	}
 
-	public Date getMedicationStartDate() {
+	public String getMedicationStartDate() {
 		return medicationStartDate;
 	}
 
-	public void setMedicationStartDate(Date medicationStartDate) {
+	public void setMedicationStartDate(String medicationStartDate) {
 		this.medicationStartDate = medicationStartDate;
 	}
 
-	public Date getMedicationEnddate() {
+	public String getMedicationEnddate() {
 		return medicationEnddate;
 	}
 
-	public void setMedicationEnddate(Date medicationEnddate) {
+	public void setMedicationEnddate(String medicationEnddate) {
 		this.medicationEnddate = medicationEnddate;
 	}
 
@@ -100,27 +100,27 @@ public class CattleHealth  extends Model{
 		this.pregnant = pregnant;
 	}
 
-	public Date getPregnancyDate() {
+	public String getPregnancyDate() {
 		return pregnancyDate;
 	}
 
-	public void setPregnancyDate(Date pregnancyDate) {
+	public void setPregnancyDate(String pregnancyDate) {
 		this.pregnancyDate = pregnancyDate;
 	}
 
-	public Date getLastDelivaerydate() {
+	public String getLastDelivaerydate() {
 		return lastDelivaerydate;
 	}
 
-	public void setLastDelivaerydate(Date lastDelivaerydate) {
+	public void setLastDelivaerydate(String lastDelivaerydate) {
 		this.lastDelivaerydate = lastDelivaerydate;
 	}
 
-	public Date getDuedate() {
+	public String getDuedate() {
 		return duedate;
 	}
 
-	public void setDuedate(Date duedate) {
+	public void setDuedate(String duedate) {
 		this.duedate = duedate;
 	}
 
@@ -204,7 +204,7 @@ public class CattleHealth  extends Model{
 		
 	}
 
-	public static void update(CattleOutput ud) {
+	public static void update(CattleHealth ud) {
 		Ebean.update(ud);
 	}
 	

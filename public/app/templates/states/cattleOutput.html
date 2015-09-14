@@ -122,21 +122,21 @@
 				
 					<div class="col-md-12">
   							<label for="usr">Fat Content </label>
-  							<input type="text" ng-model = "cat.fatContent" class="form-control" id="fatContent">
+  							<input type="text" ng-model = "cat.fatContent" class="form-control" onkeypress="return isNumber(event)"  id="fatContent">
 						</div>	
 				
 				<div class="col-md-12">
   							<label for="usr">SNF Content</label>
-  							<input type="text" ng-model = "cat.SNFContent" class="form-control" id="SNFContent">
+  							<input type="text" ng-model = "cat.SNFContent" onkeypress="return isNumber(event)" class="form-control" id="SNFContent">
 						</div>
 				
 						<div class="col-md-12">
   							<label for="usr">Device Id </label>
-  							<input type="text" ng-model = "cat.deviceID" class="form-control" id="firstname">
+  							<input type="text" ng-model = "cat.deviceID"  class="form-control" id="firstname">
 						</div>
 							<div class="col-md-12">
   							<label for="usr">Actual Milk Quantity </label>
-  							<input type="text" ng-model = "cat.quantity" class="form-control" id="firstname">
+  							<input type="text" ng-model = "cat.quantity" onkeypress="return isNumber(event)"  class="form-control" id="firstname">
 						</div>	
 						
 							<div class="col-md-12">
@@ -163,7 +163,7 @@
 					
 						<div class="col-md-12">
   							<label for="usr">Expected Milk Quantity </label>
-  							<input type="text" ng-model = "cat.expectedMilkQuantity" class="form-control" id="expectedMilkQuantity">
+  							<input type="text" ng-model = "cat.expectedMilkQuantity" onkeypress="return isNumber(event)"  class="form-control" id="expectedMilkQuantity">
 						</div>	
 						
 						<!-- <div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
@@ -238,12 +238,12 @@
 				
 					<div class="col-md-12">
   							<label for="usr">Fat quantity </label>
-  							<input type="text" ng-model = "cat.fatContent" class="form-control" id="fatContent">
+  							<input type="text" ng-model = "cat.fatContent"  onkeypress="return isNumber(event)" class="form-control" id="fatContent">
 						</div>	
 				
 					<div class="col-md-12">
   							<label for="usr">SNF quantity</label>
-  							<input type="text" ng-model = "cat.SNFContent" class="form-control" id="SNFContent">
+  							<input type="text" ng-model = "cat.SNFContent" onkeypress="return isNumber(event)" class="form-control" id="SNFContent">
 						</div>
 				
 						<div class="col-md-12">
@@ -253,7 +253,7 @@
 						
 						<div class="col-md-12">
   							<label for="usr">Actual Milk Quantity </label>
-  							<input type="text" ng-model = "cat.quantity" class="form-control" id="firstname">
+  							<input type="text" ng-model = "cat.quantity" onkeypress="return isNumber(event)" class="form-control" id="firstname">
 						</div>
 						
 				<div class="col-md-12">
@@ -272,15 +272,13 @@
 											</div>
 									</div>
 					</div>
-				
-			
 
 						</div>
 						<div class = "col-md-6	">
 						
 						<div class="col-md-12">
   							<label for="usr">Expected Milk Quantity </label>
-  							<input type="text" ng-model = "cat.expectedMilkQuantity" class="form-control" id="expectedMilkQuantity">
+  							<input type="text" ng-model = "cat.expectedMilkQuantity" onkeypress="return isNumber(event)" class="form-control" id="expectedMilkQuantity">
 						</div>
 								
 					
@@ -336,6 +334,17 @@
 
 	</div>
 </div>
+<script>
+
+function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
+</script>
 
 
 <style type="text/css">

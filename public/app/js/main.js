@@ -8110,11 +8110,77 @@ App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope
 
 
 App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $routeParams, $http, $upload){
-	// get all Cattle master to admin
-	$scope.email;
+	
+	 
+	 $scope.medicationEnddatepicker = function(){
+
+		$('#medicationEnddate').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+	 }
+	 
+	 $scope.medicationStartDatepicker = function(){
+		 $('#medicationStartDate').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+	 }
+	 
+	 $scope.duedatepicker = function(){
+		 $('#duedate').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+	 }
+	 
+	 $scope.pregnancyDatepicker = function(){
+		 $('#pregnancyDate').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+	 }
+	 
+	 $scope.lastDelivaerydatepicker = function(){
+		 $('#lastDelivaerydate').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+	 }
+	 
+	 
+	 
+	 $scope.medicationEnddatepickernew = function(){
+
+			$('#medicationEnddatenew').datepicker({
+				    format: 'dd-MM-yyyy'
+			});
+		 }
+		 
+		 $scope.medicationStartDatepickernew = function(){
+			 $('#medicationStartDatenew').datepicker({
+				    format: 'dd-MM-yyyy'
+			});
+		 }
+		 
+		 $scope.duedatepickernew = function(){
+			 $('#duedatenew').datepicker({
+				    format: 'dd-MM-yyyy'
+			});
+		 }
+		 
+		 $scope.pregnancyDatepickernew = function(){
+			 $('#pregnancyDatenew').datepicker({
+				    format: 'dd-MM-yyyy'
+			});
+		 }
+		 
+		 $scope.lastDelivaerydatepickernew = function(){
+			 $('#lastDelivaerydatenew').datepicker({
+				    format: 'dd-MM-yyyy'
+			});
+		 }
+	 
+	//Get all Cattle master to admin
+	 $scope.email;
 	 $scope.pageno = 0;
 	 $scope.activeusercount = 0;
-	$scope.getAllCattleHealth = function(){
+     $scope.getAllCattleHealth = function(){
 
 		$scope.update =  false;
 		$scope.add =  false;
@@ -8123,8 +8189,6 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 		.success(function(data){
 			if(data) {
 				$scope.catershealth = data.catershealth;
-				console.log(data.catershealth);
-				
 				$scope.activeusercount = data.activeusercount;
 				if(data.userCount <= 10){
 					$('#next1').hide();

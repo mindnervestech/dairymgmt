@@ -144,50 +144,131 @@
 				<div class = "col-md-12">
 				<div class = "col-md-6">
 					
-					<div class="col-md-12">
+						<div class="col-md-12">
   							<label for="usr">Medication Type </label>
   							<input type="text" ng-model = "cat.medicationType" class="form-control" id="medicationType">
 						</div>	
 				
-				<div class="col-md-12">
+						<div class="col-md-12">
   							<label for="usr">Medication Name</label>
   							<input type="text" ng-model = "cat.medicationName" class="form-control" id="medicationName">
 						</div>
 				
-						<div class="col-md-12">
+					<div class="col-md-12">
+										<div class="">
+											<div class="">
+												<div class="input-group">
+												<span>Medication Start Date </span>
+													 <input type="text" ng-model="cat.medicationStartDate"
+														name="dob" class="form-control " id="medicationStartDate"
+														 ng-click="medicationStartDatepicker();"
+														style="font-size: 12px;" required>
+												</div>
+											</div>
+									</div>
+					</div>
+						<!-- <div class="col-md-12">
   							<label for="usr">Medication Start Date </label>
   							<input type="text" ng-model = "cat.medicationStartDate" class="form-control" id="medicationStartDate">
 						</div>
-
-
-						<div class="col-md-12">
-  							<label for="usr">Medication End Date </label>
-  							<input type="text" ng-model = "cat.medicationEnddate" class="form-control" id="medicationEnddate">
-						</div>	
+						 -->
 						
 						<div class="col-md-12">
+										<div class="">
+											<div class="">
+												<div class="input-group">
+												<span>Medication End Date </span>
+													 <input type="text" ng-model="cat.medicationEnddate"
+														name="dob" class="form-control " id="medicationEnddate"
+														 ng-click="medicationEnddatepicker();"
+														style="font-size: 12px;" required>
+												</div>
+											</div>
+									</div>
+					</div>
+					<!-- 	<div class="col-md-12">
+  							<label for="usr">Medication End Date </label>
+  							<input type="text" ng-model = "cat.medicationEnddate" class="form-control" id="medicationEnddate">
+						</div>	 -->
+						
+						<!-- <div class="col-md-12">
   							<label for="usr">Pregnant </label>
   							<input type="text" ng-model = "cat.pregnant" class="form-control" id="pregnant">
 						</div>	
+						 -->
+						
+						<div class="col-md-12" style="margin-top:1%;margin-left: -4%;">
+		              <label class="control-label col-md-8">Pregnant</label>
+		              <div class="col-md-12">
+			                <select id = "use"  data-ng-model="cat.pregnant" class = "col-md-5"  style="    width: 110%;">
+			                 <option value="true"  ng-selected = "cat.pregnant == true">Y</option>
+			                  <option value="false"  ng-selected = "cat.pregnant == false">N</option>
+			                </select>
+	            		</div>   
+	            	</div>
 						
 						</div>
 						<div class = "col-md-6	">
 						
-						<div class="col-md-12">
+						<!-- <div class="col-md-12">
   							<label for="usr">Pregnancy Date </label>
   							<input type="text" ng-model = "cat.pregnancyDate" class="form-control" id="pregnancyDate">
 						</div>	
-						
+						 -->
 						<div class="col-md-12">
+										<div class="">
+											<div class="">
+												<div class="input-group">
+												<span>Pregnancy Date </span>
+													 <input type="text" ng-model="cat.pregnancyDate"
+														name="dob" class="form-control " id="pregnancyDate"
+														 ng-click="pregnancyDatepicker();"
+														style="font-size: 12px;" required>
+												</div>
+											</div>
+									</div>
+					</div>
+						
+						
+						<!-- <div class="col-md-12">
   							<label for="usr">Last Delivaery date </label>
-  							<input type="text" ng-model = "cat.medicationEnddate" class="form-control" id="lastDelivaerydate">
-						</div>		
+  							<input type="text" ng-model = "cat.lastDelivaerydate" class="form-control" id="lastDelivaerydate">
+						</div>	 -->	
 					
 					<div class="col-md-12">
+										<div class="">
+											<div class="">
+												<div class="input-group">
+												<span>Last Delivaery date </span>
+													 <input type="text" ng-model="cat.lastDelivaerydate"
+														name="dob" class="form-control " id="lastDelivaerydate"
+														 ng-click="lastDelivaerydatepicker();"
+														style="font-size: 12px;" required>
+												</div>
+											</div>
+									</div>
+					</div>
+					
+					
+				<!-- 	
+					<div class="col-md-12">
   							<label for="usr">Due Date </label>
-  							<input type="text" ng-model = "cat.duedate" class="form-control" id="lastDelivaerydate">
-						</div>	
+  							<input type="text" ng-model = "cat.duedate" class="form-control" id="duedate">
+						</div>	 -->
 						
+					<div class="col-md-12">
+										<div class="">
+											<div class="">
+												<div class="input-group">
+												<span>Due date </span>
+													 <input type="text" ng-model="cat.duedate"
+														name="dob" class="form-control " id="duedate"
+														 ng-click="duedatepicker();"
+														style="font-size: 12px;" required>
+												</div>
+											</div>
+									</div>
+					</div>
 						<!-- <div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
 		              <label class="control-label col-md-8">Select Orgnization</label>
 		              <div class="col-md-12"> 
@@ -240,69 +321,133 @@
 				<div class = "col-md-12">
 				<div class = "col-md-6">
 					
-					<div class="col-md-12">
+						<div class="col-md-12">
   							<label for="usr">Medication Type </label>
   							<input type="text" ng-model = "cat.medicationType" class="form-control" id="medicationType">
 						</div>	
 				
-				<div class="col-md-12">
+						<div class="col-md-12">
   							<label for="usr">Medication Name</label>
   							<input type="text" ng-model = "cat.medicationName" class="form-control" id="medicationName">
 						</div>
 				
-						<div class="col-md-12">
+					<div class="col-md-12">
+										<div class="">
+											<div class="">
+												<div class="input-group">
+												<span>Medication Start Date </span>
+													 <input type="text" ng-model="cat.medicationStartDate"
+														name="dob" class="form-control " id="medicationStartDatenew"
+														 ng-focus="medicationStartDatepickernew();"
+														style="font-size: 12px;" required>
+												</div>
+											</div>
+									</div>
+					</div>
+						<!-- <div class="col-md-12">
   							<label for="usr">Medication Start Date </label>
   							<input type="text" ng-model = "cat.medicationStartDate" class="form-control" id="medicationStartDate">
 						</div>
-
-
+						 -->
+						
 						<div class="col-md-12">
+										<div class="">
+											<div class="">
+												<div class="input-group">
+												<span>Medication End Date </span>
+													 <input type="text" ng-model="cat.medicationEnddate"
+														name="dob" class="form-control " id="medicationEnddatenew"
+														 ng-focus="medicationEnddatepickernew();"
+														style="font-size: 12px;" required>
+												</div>
+											</div>
+									</div>
+					</div>
+					<!-- 	<div class="col-md-12">
   							<label for="usr">Medication End Date </label>
   							<input type="text" ng-model = "cat.medicationEnddate" class="form-control" id="medicationEnddate">
-						</div>	
+						</div>	 -->
 						
-						<div class="col-md-12">
+						<!-- <div class="col-md-12">
   							<label for="usr">Pregnant </label>
   							<input type="text" ng-model = "cat.pregnant" class="form-control" id="pregnant">
-						</div>	
+						</div> -->
 						
-					<!-- 	<div class="col-md-12">
-  							<label for="usr">Pregnancy Date </label>
-  							<input type="text" ng-model = "cat.pregnancyDate" class="form-control" id="pregnancyDate">
-						</div>	
+						<div class="col-md-12" style="margin-top:1%;margin-left: -4%;">
+		              <label class="control-label col-md-8">Pregnant</label>
+		              <div class="col-md-12">
+			                <select id = "use"  data-ng-model="cat.pregnant" class = "col-md-5"  style="    width: 110%;">
+			                 <option value="true"  ng-selected = "cat.pregnant == true">Y</option>
+			                  <option value="false"  ng-selected = "cat.pregnant == false">N</option>
+			                </select>
+	            		</div>   
+	            	</div>	
 						
-						<div class="col-md-12">
-  							<label for="usr">Last Delivaery date </label>
-  							<input type="text" ng-model = "cat.medicationEnddate" class="form-control" id="lastDelivaerydate">
-						</div>		
-					
-					<div class="col-md-12">
-  							<label for="usr">Due Date </label>
-  							<input type="text" ng-model = "cat.duedate" class="form-control" id="lastDelivaerydate">
-						</div>	 -->	
-					
-					
 						</div>
 						<div class = "col-md-6	">
-						<div class="col-md-12">
+						
+						<!-- <div class="col-md-12">
   							<label for="usr">Pregnancy Date </label>
   							<input type="text" ng-model = "cat.pregnancyDate" class="form-control" id="pregnancyDate">
 						</div>	
-						
+						 -->
 						<div class="col-md-12">
+										<div class="">
+											<div class="">
+												<div class="input-group">
+												<span>Pregnancy Date </span>
+													 <input type="text" ng-model="cat.pregnancyDate"
+														name="dob" class="form-control " id="pregnancyDatenew"
+														 ng-focus="pregnancyDatepickernew();"
+														style="font-size: 12px;" required>
+												</div>
+											</div>
+									</div>
+					</div>
+						
+						
+						<!-- <div class="col-md-12">
   							<label for="usr">Last Delivaery date </label>
-  							<input type="text" ng-model = "cat.medicationEnddate" class="form-control" id="lastDelivaerydate">
-						</div>		
+  							<input type="text" ng-model = "cat.lastDelivaerydate" class="form-control" id="lastDelivaerydate">
+						</div>	 -->	
 					
 					<div class="col-md-12">
+										<div class="">
+											<div class="">
+												<div class="input-group">
+												<span>Last Delivaery date </span>
+													 <input type="text" ng-model="cat.lastDelivaerydate"
+														name="dob" class="form-control " id="lastDelivaerydatenew"
+														 ng-focus="lastDelivaerydatepickernew();"
+														style="font-size: 12px;" required>
+												</div>
+											</div>
+									</div>
+					</div>
+					
+				<!-- 	
+					<div class="col-md-12">
   							<label for="usr">Due Date </label>
-  							<input type="text" ng-model = "cat.duedate" class="form-control" id="lastDelivaerydate">
-						</div>	
+  							<input type="text" ng-model = "cat.duedate" class="form-control" id="duedate">
+						</div>	 -->
 						
+					<div class="col-md-12">
+										<div class="">
+											<div class="">
+												<div class="input-group">
+												<span>Due date </span>
+													 <input type="text" ng-model="cat.duedate"
+														name="dob" class="form-control " id="duedatenew"
+														 ng-focus="duedatepickernew();"
+														style="font-size: 12px;" required>
+												</div>
+											</div>
+									</div>
+					</div>
 						<!-- <div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
 		              <label class="control-label col-md-8">Select Orgnization</label>
 		              <div class="col-md-12"> 
-			                <select id = "org"  data-ng-model="org" class = "col-md-5" style="width:110%;">
+			                <select id = "org"  data-ng-model="org" class="col-md-5" style="width:110%;">
 			                 <option ng-repeat="o in orgs" value="{{o.orgId}}"   ng-selected="o.isSelect  == true">{{o.name}}</option>
 			                </select>
 	            		</div>   
@@ -310,7 +455,7 @@
 						<div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
 		              <label class="control-label col-md-8">Select User Id</label>
 		              <div class="col-md-12">
-			                <select id = "use"  data-ng-model="userId" class = "col-md-5" style="width:110%;">
+			                <select id = "use"  data-ng-model="userId" class="col-md-5" style="width:110%;">
 			                 <option ng-repeat="u in users" value="{{u.userId}}"   ng-selected="u.isSelect  == true">{{u.userId}}</option>
 			                </select>
 	            		</div>   
@@ -329,6 +474,8 @@
 							</div>
 				</div>
 			</div>
+			
+			
 		</div>
 	</div>
 	

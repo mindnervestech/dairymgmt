@@ -12,12 +12,12 @@ public class CattleHealthVM {
 	public Date lastUpdateDateTime;
     public String medicationType;
     public String medicationName;
-    public Date medicationStartDate;
-    public Date medicationEnddate;
+    public String medicationStartDate;
+    public String medicationEnddate;
     public boolean  pregnant;
-    public Date pregnancyDate;
-    public Date   lastDelivaerydate;
-	public Date duedate;
+    public String pregnancyDate;
+    public String   lastDelivaerydate;
+	public String duedate;
 	public String attrib1;
 	public String attrib2;
 	public String attrib3;
