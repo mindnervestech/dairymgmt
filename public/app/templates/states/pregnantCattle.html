@@ -50,7 +50,7 @@
 		              					<div class="col-md-12"> 
 			                				<select id = "use"  data-ng-model="parentId" class= "col-md-5"  style="    width: 110%;" ng-change = "getCattlePregnancyRecords();">
 			                					<option  value="0"  >All</option>
-			                 					<option ng-repeat="u in caters" value="{{u.cattleId}}"   ng-selected="u.isSelect  == true">{{u.cattleId}}/{{u.name}}</option>
+			                 					<option ng-repeat="u in catersPregIds" value="{{u.cattleId}}"   >{{u.cattleId}}/{{u.name}}</option>
 			                				</select>
 	            						</div>   
 	            		   </div>	
@@ -240,7 +240,7 @@
 			<div class="modal-body">
 				<div class = "col-md-12">
 				<div class = "col-md-6">
-						<div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
+						<div class="col-md-10" style="margin-top:1%;margin-left:-4%;">
 		              <label class="control-label col-md-8">Select Cattle to add pregnancy</label>
 		              <div class="col-md-12">
 			                <select id = "use"  data-ng-model="cat.cattleId" class = "col-md-5" style="    width: 110%;">
@@ -253,10 +253,10 @@
   							<input type="text" ng-model = "cat.name" class="form-control" maxlength="80" id="firstname">
 						</div>
  						-->
-					 <div class="col-md-12">
+					 <div class="col-md-10">
 										<div class="">
 											<div class="">
-												<div class="input-group">
+												<div class="input-group"  style="    width: 100%;">
 												<span>Date of Birth</span>
 													 <input type="text" ng-model="cat.dateofBirth"
 														name="dob" class="form-control " id="dob"
@@ -268,10 +268,10 @@
 									</div>
 					</div>	
 						
-					 <div class="col-md-12">
+					 <div class="col-md-10">
 										<div class="">
 											<div class="">
-												<div class="input-group">
+												<div class="input-group" style="    width: 100%;">
 												<span>Last Delivery Date</span>
 													 <input type="text" ng-model="cat.lastDeliveryDate"
 														name="dob" class="form-control " id="lastDeliveryDate"
@@ -282,7 +282,7 @@
 											</div>
 									</div>
 					</div>
-					  <div class="col-md-12">
+					  <div class="col-md-10">
 										<div class="">
 											<div class="">
 												<div class="input-group">
@@ -297,7 +297,7 @@
 									</div>
 					</div>
 					
-					 <div class="col-md-12">
+					 <div class="col-md-10">
 										<div class="">
 											<div class="">
 												<div class="input-group">
@@ -316,7 +316,7 @@
 						<div class = "col-md-6	">
 						
 		       	       
-						 <div class="col-md-12">
+						 <div class="col-md-10">
 										<div class="">
 											<div class="">
 												<div class="input-group">
@@ -331,7 +331,7 @@
 									</div>
 					</div>
 						
-						 <div class="col-md-12">
+						 <div class="col-md-10">
 										<div class="">
 											<div class="">
 												<div class="input-group">
@@ -346,7 +346,7 @@
 									</div>
 					</div>	
 						
-						 <div class="col-md-12">
+						 <div class="col-md-10">
 										<div class="">
 											<div class="">
 												<div class="input-group">
@@ -361,7 +361,7 @@
 									</div>
 					</div>
 					
-					 <div class="col-md-12">
+					 <div class="col-md-10">
 										<div class="">
 											<div class="">
 												<div class="input-group">
@@ -375,7 +375,7 @@
 											</div>
 									</div>
 					</div>
-					<div class="col-md-12">
+					<div class="col-md-10">
 										<div class="">
 											<div class="">
 												<div class="input-group">

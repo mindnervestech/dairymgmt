@@ -6746,6 +6746,7 @@ App.controller('ViewAllPregnantCattleController', function ($scope, $rootScope, 
 				if(data) {
 					$scope.caters = data.caters;
 					$scope.activeusercount = data.activeusercount;
+				
 					if(data.userCount <= 10){
 						$('#next1').hide();
 						$('#next').hide();
@@ -6768,7 +6769,7 @@ App.controller('ViewAllPregnantCattleController', function ($scope, $rootScope, 
 			if(data) {
 				$scope.caters = data.caters;
 				//$scope.cattle = data.caters;
-				
+				$scope.catersPregIds = data.caters;
 				$scope.activeusercount = data.activeusercount;
 				if(data.userCount <= 10){
 					$('#next1').hide();
@@ -6920,11 +6921,7 @@ App.controller('ViewAllPregnantCattleController', function ($scope, $rootScope, 
 					$rootScope.Pregnant_Cattle = true;
 					
 					}
-				
 			}
-			
-		
-			
 		});
 	
 	// check for gthe admin when page refresh
@@ -6987,7 +6984,6 @@ App.controller('ViewAllPregnantCattleController', function ($scope, $rootScope, 
 						};
 				});
 			});
-		
 		
 		$('#editCatdersDetails').modal();
 		
