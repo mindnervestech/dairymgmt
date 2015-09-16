@@ -62,7 +62,7 @@
 											<th>Expected Feed Name</th>
 											<th>Expected Feed Quantity</th>
 											<th>Last Update Date Time</th>
-											<th>View</th>
+											<th>Details</th>
 										</tr>
 										<tr data-ng-repeat="cat in catersintake"
 											style="background-color: #fff !important; left: -900">
@@ -87,7 +87,7 @@
 									</tbody>
 								</table>
 							</div>
-							<!-- <div class="pull-right">
+							 <div class="pull-right">
 								<button id="pre" type="button" ng-click="clickPre()"
 									class="btn btn-success-custom">
 									<i class="glyphicon glyphicon-arrow-left"></i>
@@ -97,7 +97,7 @@
 									class="btn btn-success-custom">
 									<i class="glyphicon glyphicon-arrow-right"></i>
 								</button>
-							</div> -->
+							</div> 
 						</div>
 					</div>
 
@@ -123,42 +123,7 @@
 			</div>
 			<div class="modal-body">
 				<div class = "col-md-12">
-				<div class = "col-md-6">
-						<div class="col-md-12">
-  							<label for="usr">Device Id </label>
-  							<input type="text" ng-model = "cat.deviceID" class="form-control" id="firstname">
-						</div>
-
-
-						<div class="col-md-12">
-  							<label for="usr">Actual FeedType</label>
-  							<input type="text" ng-model = "cat.actualFeedType" class="form-control" id="actualFeedType">
-						</div>
-
-						<div class="col-md-12">
-  							<label for="usr">Actual Feed Name </label>
-  							<input type="text" ng-model = "cat.actualFeedName" class="form-control" id="actualFeedName">
-						</div>
-
-						<div class="col-md-12">
-  							<label for="usr">Expected Feed Type </label>
-  							<input type="text" ng-model = "cat.expectedFeedType" class="form-control" id="expectedFeedType">
-						</div>
-
-						<div class="col-md-12">
-  							<label for="usr">Expected Feed Name </label>
-  							<input type="text" ng-model = "cat.expectedFeedName" class="form-control" id="expectedFeedName">
-						</div>
-
-						<div class="col-md-12">
-  							<label for="usr">Expected Feed Quantity </label>
-  							<input type="text" ng-model = "cat.expectedFeedQuantity" onkeypress="return isNumber(event)" class="form-control" id="expectedFeedQuantity">
-						</div>
-
-						
-					
-	            	
-						</div>
+				
 						<div class = "col-md-6	">
 						<!-- <div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
 		              <label class="control-label col-md-8">Select Orgnization</label>
@@ -226,7 +191,45 @@
 			                </select>
 	            		</div>   
 	            	</div>
+	            	<div class="col-md-12">
+  							<label for="usr">Device Id </label>
+  							<input type="text" ng-model = "cat.deviceID" class="form-control" id="firstname">
+						</div>
 	            	</div>
+	            	
+	            	<div class = "col-md-6">
+						
+
+
+						<div class="col-md-12">
+  							<label for="usr">Actual FeedType</label>
+  							<input type="text" ng-model = "cat.actualFeedType" class="form-control" id="actualFeedType">
+						</div>
+
+						<div class="col-md-12">
+  							<label for="usr">Actual Feed Name </label>
+  							<input type="text" ng-model = "cat.actualFeedName" class="form-control" id="actualFeedName">
+						</div>
+
+						<div class="col-md-12">
+  							<label for="usr">Expected Feed Type </label>
+  							<input type="text" ng-model = "cat.expectedFeedType" class="form-control" id="expectedFeedType">
+						</div>
+
+						<div class="col-md-12">
+  							<label for="usr">Expected Feed Name </label>
+  							<input type="text" ng-model = "cat.expectedFeedName" class="form-control" id="expectedFeedName">
+						</div>
+
+						<div class="col-md-12">
+  							<label for="usr">Expected Feed Quantity </label>
+  							<input type="text" ng-model = "cat.expectedFeedQuantity" onkeypress="return isNumber(event)" class="form-control" id="expectedFeedQuantity">
+						</div>
+
+						
+					
+	            	
+						</div>
 	            	</div>
 						<div class="form-actions">
 							<div class="pull-right" style="margin-top:2%;">
@@ -260,41 +263,7 @@
 			</div>
 			<div class="modal-body">
 				<div class = "col-md-12">
-				<div class = "col-md-6">
-						<div class="col-md-12">
-  							<label for="usr">Device Id </label>
-  							<input type="text" ng-model = "cat.deviceID" class="form-control" id="firstname">
-						</div>
-
-						<div class="col-md-12">
-  							<label for="usr">Actual FeedType</label>
-  							<input type="text" ng-model = "cat.actualFeedType" class="form-control" id="actualFeedType">
-						</div>
-
-						<div class="col-md-12">
-  							<label for="usr">Actual Feed Name </label>
-  							<input type="text" ng-model = "cat.actualFeedName" class="form-control" id="actualFeedName">
-						</div>
-
-						<div class="col-md-12">
-  							<label for="usr">Expected Feed Type </label>
-  							<input type="text" ng-model = "cat.expectedFeedType" class="form-control" id="expectedFeedType">
-						</div>
-
-						<div class="col-md-12">
-  							<label for="usr">Expected Feed Name </label>
-  							<input type="text" ng-model = "cat.expectedFeedName"  class="form-control" id="expectedFeedName">
-						</div>
-
-						<div class="col-md-12">
-  							<label for="usr">Expected Feed Quantity </label>
-  							<input type="text" ng-model = "cat.expectedFeedQuantity" onkeypress="return isNumber(event)" class="form-control" id="expectedFeedQuantity">
-						</div>
-
-							
-								
 				
-						</div>
 						<div class = "col-md-6	">
 						<!-- <div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
 		              <label class="control-label col-md-8">Select Orgnization</label>
@@ -358,7 +327,44 @@
 			                </select>
 	            		</div>   
 	            	</div>
+	            	<div class="col-md-12">
+  							<label for="usr">Device Id </label>
+  							<input type="text" ng-model = "cat.deviceID" class="form-control" id="firstname">
+						</div>
+	            	
 	            	</div>
+	            	
+	            	<div class = "col-md-6">
+						
+						<div class="col-md-12">
+  							<label for="usr">Actual FeedType</label>
+  							<input type="text" ng-model = "cat.actualFeedType" class="form-control" id="actualFeedType">
+						</div>
+
+						<div class="col-md-12">
+  							<label for="usr">Actual Feed Name </label>
+  							<input type="text" ng-model = "cat.actualFeedName" class="form-control" id="actualFeedName">
+						</div>
+
+						<div class="col-md-12">
+  							<label for="usr">Expected Feed Type </label>
+  							<input type="text" ng-model = "cat.expectedFeedType" class="form-control" id="expectedFeedType">
+						</div>
+
+						<div class="col-md-12">
+  							<label for="usr">Expected Feed Name </label>
+  							<input type="text" ng-model = "cat.expectedFeedName"  class="form-control" id="expectedFeedName">
+						</div>
+
+						<div class="col-md-12">
+  							<label for="usr">Expected Feed Quantity </label>
+  							<input type="text" ng-model = "cat.expectedFeedQuantity" onkeypress="return isNumber(event)" class="form-control" id="expectedFeedQuantity">
+						</div>
+
+							
+								
+				
+						</div>
 	            	</div>
 						<div class="form-actions">
 							<div class="pull-right" style="margin-top:2%;">

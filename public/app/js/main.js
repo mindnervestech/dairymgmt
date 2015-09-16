@@ -6469,11 +6469,10 @@ App.controller('ViewAllOrgController', function ($scope, $rootScope, $routeParam
 	 $scope.add =  false;
 	 
 	$scope.getAllOrg = function(){
-		$http.get('/getAllOrgs/')
+		$http.get('/getAllOrgs/'+$scope.pageno)
 		.success(function(data){
 			if(data) {
 				$scope.orgs = data.orgs;
-				$scope.activeusercount = data.activeusercount;
 				if(data.userCount <= 10){
 					$('#next1').hide();
 					$('#next').hide();
@@ -6498,19 +6497,15 @@ App.controller('ViewAllOrgController', function ($scope, $rootScope, $routeParam
 
 	$scope.clickNext = function() {
 			  $scope.pageno++;
-			  $http.get('/getAllUsers/'+$scope.pageno)
+			  $http.get('/getAllOrgs/'+$scope.pageno)
 				.success(function(data) {
-					
-					$scope.users = data.users
-					$scope.activeusercount = data.activeusercount;
-			
+					$scope.orgs = data.orgs;
 					if(data.userCount <= 10){
 						$('#next1').hide();
 						$('#next').hide();
 					}else{
 						$('#next1').show();
 						$('#next').show();
-						
 					}
 				});
 			  
@@ -6529,16 +6524,9 @@ App.controller('ViewAllOrgController', function ($scope, $rootScope, $routeParam
 	      $scope.pageno--;
 	     // var count = 0;
 	      
-		  $http.get('/getAllUsers/'+$scope.pageno)
+		  $http.get('/getAllOrgs/'+$scope.pageno)
 			.success(function(data) {
-				$scope.users = data.users;
-				$scope.activeusercount = data.activeusercount;
-				
-				
-			//	$scope.count = parseInt(data.jobsCount);
-				//console.log("count"+count);
-				//$scope.JobPre = count - 10;
-				
+				$scope.orgs = data.orgs;
 				if(data.userCount <= 10){
 					$('#next').hide();
 					$('#next1').hide();
@@ -6589,7 +6577,6 @@ App.controller('ViewAllOrgController', function ($scope, $rootScope, $routeParam
 			
 			if(data.user.permissions[i].permissionName == "Users"){
 				$rootScope.Users = true;
-				
 				}
 			
 			if(data.user.permissions[i].permissionName == "Cattle_Master"){
@@ -6647,7 +6634,7 @@ App.controller('ViewAllOrgController', function ($scope, $rootScope, $routeParam
 			//console.log("success");
 			$scope.updateSuccess = true;
 			$('#editOrgDetails').modal('hide');
-			$http.get('/getAllOrgs/')
+			$http.get('/getAllOrg/'+$scope.pageno)
 				.success(function(data) {
 					$scope.orgs = data.orgs;
 					$scope.update =  true;
@@ -6670,7 +6657,7 @@ App.controller('ViewAllOrgController', function ($scope, $rootScope, $routeParam
 			//console.log("success");
 			$scope.updateSuccess = true;
 			$('#openAddnewOrgPopup').modal('hide');
-			$http.get('/getAllOrgs/')
+			$http.get('/getAllOrg/'+$scope.pageno)
 				.success(function(data) {
 					$scope.orgs = data.orgs;
 					$scope.org = [];
@@ -6696,6 +6683,7 @@ App.controller('ViewAllPregnantCattleController', function ($scope, $rootScope, 
 		 $('#dob').datepicker({
 			    format: 'dd-MM-yyyy'
 		});
+		
 	 }
 	 
 	 $scope.lastDeliveryDatepicker = function(){
@@ -6741,7 +6729,7 @@ App.controller('ViewAllPregnantCattleController', function ($scope, $rootScope, 
 	 
 	 $scope.parentId = 0;
 	 $scope.getCattlePregnancyRecords = function(){
-		 $http.get('/getAllPregnantCattle/'+$scope.parentId)
+		 $http.get('/getAllPregnantCattle/'+$scope.parentId+'/'+$scope.pageno)
 			.success(function(data){
 				if(data) {
 					$scope.caters = data.caters;
@@ -6764,21 +6752,18 @@ App.controller('ViewAllPregnantCattleController', function ($scope, $rootScope, 
 	 
 	 $scope.getAllPregnantCattle = function(){
 
-		$http.get('/getAllPregnantCattle/'+$scope.parentId)
+		$http.get('/getAllPregnantCattle/'+$scope.parentId+'/'+$scope.pageno)
 		.success(function(data){
 			if(data) {
 				$scope.caters = data.caters;
-				//$scope.cattle = data.caters;
 				$scope.catersPregIds = data.caters;
-				$scope.activeusercount = data.activeusercount;
+
 				if(data.userCount <= 10){
 					$('#next1').hide();
 					$('#next').hide();
-					//$scope.JobPre  = parseInt($scope.totalJobs);
 				}else{
 					$('#next1').show();
 					$('#next').show();
-				//	$scope.JobPre= 10;
 					
 				}
 			} 
@@ -6794,27 +6779,16 @@ App.controller('ViewAllPregnantCattleController', function ($scope, $rootScope, 
 	}
 
 	$scope.clickNext = function() {
-		//console.log("nexdt");
 			  $scope.pageno++;
-			 // $scope.nextCount = parseInt( $scope.nextCount) + 10;
-			 // var count= 0;
-			  $http.get('/getAllUsers/'+$scope.pageno)
+			  $http.get('/getAllPregnantCattle/'+$scope.parentId+'/'+$scope.pageno)
 				.success(function(data) {
-					
-					$scope.users = data.users
-					$scope.activeusercount = data.activeusercount;
-				// count = parseInt(data.jobsCount);
-					//console.log("count"+count);
-					
-					//console.log("$scope.JobPre"+$scope.JobPre);
+					$scope.caters = data.caters;
 					if(data.userCount <= 10){
 						$('#next1').hide();
 						$('#next').hide();
-						//$scope.JobPre  = parseInt($scope.totalJobs);
 					}else{
 						$('#next1').show();
 						$('#next').show();
-					//	$scope.JobPre= 10;
 						
 					}
 				});
@@ -6830,33 +6804,20 @@ App.controller('ViewAllPregnantCattleController', function ($scope, $rootScope, 
 		  }
 		 
 	 $scope.clickPre = function() {
-		 // $scope.position = "notSelected";
 	      $scope.pageno--;
-	     // var count = 0;
 	      
-		  $http.get('/getAllUsers/'+$scope.pageno)
+		  $http.get('/getAllPregnantCattle/'+$scope.parentId+'/'+$scope.pageno)
 			.success(function(data) {
-				$scope.users = data.users;
-				$scope.activeusercount = data.activeusercount;
-				
-				
-			//	$scope.count = parseInt(data.jobsCount);
-				//console.log("count"+count);
-				//$scope.JobPre = count - 10;
-				
+				$scope.caters = data.caters;
+
 				if(data.userCount <= 10){
 					$('#next').hide();
 					$('#next1').hide();
-					//$scope.JobPre = data.jobsCount;
-					//$scope.JobPre =  parseInt($scope.nextCount) - 10;
+				
 				}else{
 					$('#next').show();
 					$('#next1').show();
-					//$scope.JobPre  = 10;
-					//$scope.JobPre = parseInt($scope.nextCount) -  10;
 				}
-				
-				
 				
 			});
 			if($scope.pageno <= 0){
@@ -6868,10 +6829,8 @@ App.controller('ViewAllPregnantCattleController', function ($scope, $rootScope, 
 			}
 		  }
  
-
 		$http.get('/getUserPermissions?d='+Math.random())
 		.success(function(data) {
-		// $scope.userData = data;
 			$rootScope.cattleFeedMaster = false;
 			$rootScope.cattleIntake = false;
 			$rootScope.Users = false;
@@ -6945,50 +6904,37 @@ App.controller('ViewAllPregnantCattleController', function ($scope, $rootScope, 
 		$scope.update =  false;
 		$scope.add =  false;
 		$scope.cat = cat;
-		$http.get('/getAllUsers/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyUsers/?d='+Math.random()).success(function(data) {
 	    	$scope.users = data.users;
-	    	console.log("user s: "+data.users);
 			angular.forEach($scope.users, function(obj, index){
 				angular.forEach($scope.cat.users, function(obj1, index){
 					if ((obj.id == obj1.id)) {
 						obj.isSelect = true;
-						console.log(" users  in true");
-						//$scope.userExperience = obj.experianceLevel;
 						};
 					});
 				});
 			});
 		
-		$http.get('/getAllOrgs/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyOrg/?d='+Math.random()).success(function(data) {
 	    	$scope.orgs = data.orgs;
-	    	console.log("orgs: " + $scope.orgs);
 			angular.forEach($scope.orgs, function(obj, index){
-				console.log("user  org:  "+$scope.cat.oraganization.orgId);
 					if ((obj.orgId == $scope.cat.oraganization.orgId)) {
 						obj.isSelect = true;
-						console.log("in true");
-						//$scope.userExperience = obj.experianceLevel;
 						};
 				});
 			});
 
-		$http.get('/getAllCattleMaster/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyCattleMaster/?d='+Math.random()).success(function(data) {
 	    	$scope.cattle = data.caters;
-	    	console.log("orgs: " + $scope.cattle);
 			angular.forEach($scope.cattle, function(obj, index){
 					if ((obj.cattleId == $scope.cat.cattleMaster.cattleId)) {
 						obj.isSelect = true;
-						console.log("in true");
-						//$scope.userExperience = obj.experianceLevel;
 						$scope.parentId = obj.cattleId;
 						};
 				});
 			});
-		
 		$('#editCatdersDetails').modal();
-		
 	}
-	
 		
 	$scope.permList;
 	$scope.updateSuccess = false;
@@ -7019,7 +6965,7 @@ App.controller('ViewAllPregnantCattleController', function ($scope, $rootScope, 
 			//console.log("success");
 			$scope.updateSuccess = true;
 			$('#addnewCattle').modal('hide');
-			$http.get('/getAllPregnantCattle/'+$scope.parentId)
+			$http.get('/getAllPregnantCattle/'+$scope.parentId+'/'+$scope.pageno)
 				.success(function(data) {
 					$scope.caters = data.caters;
 					$scope.add =  true;
@@ -7035,7 +6981,7 @@ App.controller('ViewAllPregnantCattleController', function ($scope, $rootScope, 
 		$scope.cat = "";
 		$scope.update =  false;
 		$scope.add =  false;
-		$http.get('/getAllUsers/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyUsers/?d='+Math.random()).success(function(data) {
 	    	$scope.users = data.users;
 	    	console.log("user s: "+data.users);
 			angular.forEach($scope.users, function(obj, index){
@@ -7050,7 +6996,7 @@ App.controller('ViewAllPregnantCattleController', function ($scope, $rootScope, 
 				});
 			});
 		
-		$http.get('/getAllOrgs/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyOrg/?d='+Math.random()).success(function(data) {
 	    	$scope.orgs = data.orgs;
 	    	console.log("orgs: " + $scope.orgs);
 			/*angular.forEach($scope.orgs, function(obj, index){
@@ -7062,7 +7008,7 @@ App.controller('ViewAllPregnantCattleController', function ($scope, $rootScope, 
 				});*/
 			});
 		
-		$http.get('/getAllCattleMaster/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyCattleMaster/?d='+Math.random()).success(function(data) {
 	    	$scope.cattle = data.caters;
 	    	console.log("cattle: " + $scope.cattle);
 			/*angular.forEach($scope.cattle, function(obj, index){
@@ -7076,6 +7022,35 @@ App.controller('ViewAllPregnantCattleController', function ($scope, $rootScope, 
 			});
 		
 		$("#addnewCattle").modal('show');
+		
+		
+		 $('#dob').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+		 $('#lastDeliveryDate').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+		 $('#expectedPregnancyDate').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+		 $('#firstInseminationDate').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+		 $('#secondInseminationDate').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+		 $('#thirdInseminationDate').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+		 $('#actualPregnancyDate').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+		 $('#expectedDeliveryDate').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+		 $('#milkingStoppingDate').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
 		
 	}
 
@@ -7124,12 +7099,11 @@ App.controller('ViewAllCattleChildMasterController', function ($scope, $rootScop
 	 $scope.parentId = 0;
 	 
 	 $scope.getparentsChilds = function(){
-		 $http.get('/getAllChildCattleMaster/'+$scope.parentId)
+		 $http.get('/getAllChildCattleMaster/'+$scope.parentId+'/'+$scope.pageno)
 			.success(function(data){
 				if(data) {
 					$scope.caters = data.caters;
 					
-					$scope.activeusercount = data.activeusercount;
 					if(data.userCount <= 10){
 						$('#next1').hide();
 						$('#next').hide();
@@ -7147,13 +7121,12 @@ App.controller('ViewAllCattleChildMasterController', function ($scope, $rootScop
 	 
 	 $scope.getAllCattleMaster = function(){
 
-		$http.get('/getAllChildCattleMaster/'+$scope.parentId)
+		$http.get('/getAllChildCattleMaster/'+$scope.parentId+'/'+$scope.pageno)
 		.success(function(data){
 			if(data) {
 				$scope.caters = data.caters;
 				$scope.cattle = data.caters;
 				
-				$scope.activeusercount = data.activeusercount;
 				if(data.userCount <= 10){
 					$('#next1').hide();
 					$('#next').hide();
@@ -7181,15 +7154,10 @@ App.controller('ViewAllCattleChildMasterController', function ($scope, $rootScop
 			  $scope.pageno++;
 			 // $scope.nextCount = parseInt( $scope.nextCount) + 10;
 			 // var count= 0;
-			  $http.get('/getAllUsers/'+$scope.pageno)
+			  $http.get('/getAllChildCattleMaster/'+$scope.parentId+'/'+$scope.pageno)
 				.success(function(data) {
 					
-					$scope.users = data.users
-					$scope.activeusercount = data.activeusercount;
-				// count = parseInt(data.jobsCount);
-					//console.log("count"+count);
-					
-					//console.log("$scope.JobPre"+$scope.JobPre);
+					$scope.caters = data.caters;
 					if(data.userCount <= 10){
 						$('#next1').hide();
 						$('#next').hide();
@@ -7217,30 +7185,16 @@ App.controller('ViewAllCattleChildMasterController', function ($scope, $rootScop
 	      $scope.pageno--;
 	     // var count = 0;
 	      
-		  $http.get('/getAllUsers/'+$scope.pageno)
+		  $http.get('/getAllChildCattleMaster/'+$scope.parentId+'/'+$scope.pageno)
 			.success(function(data) {
-				$scope.users = data.users;
-				$scope.activeusercount = data.activeusercount;
-				
-				
-			//	$scope.count = parseInt(data.jobsCount);
-				//console.log("count"+count);
-				//$scope.JobPre = count - 10;
-				
+				$scope.caters = data.caters;
 				if(data.userCount <= 10){
 					$('#next').hide();
 					$('#next1').hide();
-					//$scope.JobPre = data.jobsCount;
-					//$scope.JobPre =  parseInt($scope.nextCount) - 10;
 				}else{
 					$('#next').show();
 					$('#next1').show();
-					//$scope.JobPre  = 10;
-					//$scope.JobPre = parseInt($scope.nextCount) -  10;
 				}
-				
-				
-				
 			});
 			if($scope.pageno <= 0){
 				$('#pre').hide();
@@ -7327,7 +7281,7 @@ App.controller('ViewAllCattleChildMasterController', function ($scope, $rootScop
 		$scope.update =  false;
 		$scope.add =  false;
 		$scope.cat = cat;
-		$http.get('/getAllUsers/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyUsers/?d='+Math.random()).success(function(data) {
 	    	$scope.users = data.users;
 	    	console.log("user s: "+data.users);
 			angular.forEach($scope.users, function(obj, index){
@@ -7341,7 +7295,7 @@ App.controller('ViewAllCattleChildMasterController', function ($scope, $rootScop
 				});
 			});
 		
-		$http.get('/getAllOrgs/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyOrg/?d='+Math.random()).success(function(data) {
 	    	$scope.orgs = data.orgs;
 	    	console.log("orgs: " + $scope.orgs);
 			angular.forEach($scope.orgs, function(obj, index){
@@ -7354,7 +7308,7 @@ App.controller('ViewAllCattleChildMasterController', function ($scope, $rootScop
 				});
 			});
 
-		$http.get('/getAllCattleMaster/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyCattleMaster/?d='+Math.random()).success(function(data) {
 	    	$scope.cattle = data.caters;
 	    	console.log("orgs: " + $scope.cattle);
 			angular.forEach($scope.cattle, function(obj, index){
@@ -7407,9 +7361,6 @@ App.controller('ViewAllCattleChildMasterController', function ($scope, $rootScop
 					$scope.add =  true;
 				});
 		});
-
-		
-
 		
 }
 	
@@ -7417,7 +7368,7 @@ App.controller('ViewAllCattleChildMasterController', function ($scope, $rootScop
 		$scope.cat = "";
 		$scope.update =  false;
 		$scope.add =  false;
-		$http.get('/getAllUsers/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyUsers/?d='+Math.random()).success(function(data) {
 	    	$scope.users = data.users;
 	    	console.log("user s: "+data.users);
 			angular.forEach($scope.users, function(obj, index){
@@ -7432,7 +7383,7 @@ App.controller('ViewAllCattleChildMasterController', function ($scope, $rootScop
 				});
 			});
 		
-		$http.get('/getAllOrgs/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyOrg/?d='+Math.random()).success(function(data) {
 	    	$scope.orgs = data.orgs;
 	    	console.log("orgs: " + $scope.orgs);
 			/*angular.forEach($scope.orgs, function(obj, index){
@@ -7444,7 +7395,7 @@ App.controller('ViewAllCattleChildMasterController', function ($scope, $rootScop
 				});*/
 			});
 		
-		$http.get('/getAllCattleMaster/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyCattleMaster/?d='+Math.random()).success(function(data) {
 	    	$scope.cattle = data.caters;
 	    	console.log("cattle: " + $scope.cattle);
 			/*angular.forEach($scope.cattle, function(obj, index){
@@ -7489,6 +7440,7 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 	 $scope.activeusercount = 0;
 	 $scope.update =  false;
 	 $scope.add =  false;
+	 $scope.doberror = false;
 	 
 	 $scope.initempDatepicker = function(){
 		 $('#dob').datepicker({
@@ -7505,11 +7457,10 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 	 
 	$scope.getAllCattleMaster = function(){
 
-		$http.get('/getAllCattleMaster/')
+		$http.get('/getAllCattleMaster/'+$scope.pageno)
 		.success(function(data){
 			if(data) {
 				$scope.caters = data.caters;
-				$scope.activeusercount = data.activeusercount;
 				if(data.userCount <= 10){
 					$('#next1').hide();
 					$('#next').hide();
@@ -7533,28 +7484,16 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 	}
 
 	$scope.clickNext = function() {
-		//console.log("nexdt");
 			  $scope.pageno++;
-			 // $scope.nextCount = parseInt( $scope.nextCount) + 10;
-			 // var count= 0;
-			  $http.get('/getAllUsers/'+$scope.pageno)
+			  $http.get('/getAllCattleMaster/'+$scope.pageno)
 				.success(function(data) {
-					
-					$scope.users = data.users
-					$scope.activeusercount = data.activeusercount;
-				// count = parseInt(data.jobsCount);
-					//console.log("count"+count);
-					
-					//console.log("$scope.JobPre"+$scope.JobPre);
+					$scope.caters = data.caters
 					if(data.userCount <= 10){
 						$('#next1').hide();
 						$('#next').hide();
-						//$scope.JobPre  = parseInt($scope.totalJobs);
 					}else{
 						$('#next1').show();
 						$('#next').show();
-					//	$scope.JobPre= 10;
-						
 					}
 				});
 			  
@@ -7565,40 +7504,23 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 					$('#pre').show();
 					$('#pre1').show();
 				}
-			 
 		  }
 		 
 	 $scope.clickPre = function() {
-		 // $scope.position = "notSelected";
 	      $scope.pageno--;
-	     // var count = 0;
-	      
-		  $http.get('/getAllUsers/'+$scope.pageno)
+		  $http.get('/getAllCattleMaster/'+$scope.pageno)
 			.success(function(data) {
-				$scope.users = data.users;
-				$scope.activeusercount = data.activeusercount;
-				
-				
-			//	$scope.count = parseInt(data.jobsCount);
-				//console.log("count"+count);
-				//$scope.JobPre = count - 10;
-				
+				$scope.caters = data.caters;
 				if(data.userCount <= 10){
 					$('#next').hide();
 					$('#next1').hide();
-					//$scope.JobPre = data.jobsCount;
-					//$scope.JobPre =  parseInt($scope.nextCount) - 10;
 				}else{
 					$('#next').show();
 					$('#next1').show();
-					//$scope.JobPre  = 10;
-					//$scope.JobPre = parseInt($scope.nextCount) -  10;
 				}
-				
-				
-				
 			});
-			if($scope.pageno <= 0){
+
+		  if($scope.pageno <= 0){
 				$('#pre').hide();
 				$('#pre1').hide();
 			}else{
@@ -7610,7 +7532,6 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 
 		$http.get('/getUserPermissions?d='+Math.random())
 		.success(function(data) {
-		// $scope.userData = data;
 			$rootScope.cattleFeedMaster = false;
 			$rootScope.cattleIntake = false;
 			$rootScope.Users = false;
@@ -7658,8 +7579,6 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 					}
 			}
 			
-		
-			
 		});
 	
 	// check for gthe admin when page refresh
@@ -7683,7 +7602,7 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 		$scope.update =  false;
 		$scope.add =  false;
 		$scope.cat = cat;
-		$http.get('/getAllUsers/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyUsers/?d='+Math.random()).success(function(data) {
 	    	$scope.users = data.users;
 	    	console.log("user s: "+data.users);
 			angular.forEach($scope.users, function(obj, index){
@@ -7697,7 +7616,7 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 				});
 			});
 		
-		$http.get('/getAllOrgs/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyOrg/?d='+Math.random()).success(function(data) {
 	    	$scope.orgs = data.orgs;
 	    	console.log("orgs: " + $scope.orgs);
 			angular.forEach($scope.orgs, function(obj, index){
@@ -7710,9 +7629,8 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 				});
 			});
 
-		$http.get('/getAllCattleMaster/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyCattleMaster/?d='+Math.random()).success(function(data) {
 	    	$scope.cattle = data.caters;
-	    	console.log($scope.cattle);
 			angular.forEach($scope.cattle, function(obj, index){
 					if ((obj.cattleId == $scope.cat.parentId)) {
 						obj.isSelect = true;
@@ -7723,8 +7641,21 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 				});
 			});
 		
+		$http.get('/getAllBreeds/?d='+Math.random()).success(function(data) {
+	    	$scope.breeds = data.breeds;
+					if ((obj.breedName == $scope.cat.breed)) {
+						obj.isSelect = true;
+						};
+			});
+		
 		$('#editCatdersDetails').modal();
 		
+		 $('#dob').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+		 $('#dobnew').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
 	}
 	
 		
@@ -7735,33 +7666,47 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 	$scope.userId;
 	$scope.updateCattleProfileByAdmin = function(cat){
 		$scope.cat = cat;
+		$scope.doberror = false;
+		if(!angular.isUndefined($scope.cat.dateofBirth) ||  ! $scope.cat.dateofBirth == "" ||  ! $scope.cat.dateofBirth == null){
 			$http.post('/updateCattleProfileByAdmin?d='+Math.random(),{cat:$scope.cat,userId:$scope.userId,org:$scope.org,parentId:$scope.parentId})
 			.success(function(data){
 				//console.log("success");
 				$scope.updateSuccess = true;
 				$('#editCatdersDetails').modal('hide');
-				$http.get('/getAllCattleMaster/')
+				$http.get('/getAllCattleMaster/'+$scope.pageno)
 					.success(function(data) {
 						$scope.caters = data.caters;
 						$scope.update =  true;
+						$scope.doberror = false;
 						
 					});
 			});
+			
+		}else{
+			$scope.doberror = true;
+		}
 	}
 
 	$scope.addCattleProfileByAdmin = function(cat){
 		$scope.cat = cat;
-		$http.post('/updateCattleProfileByAdmin?d='+Math.random(),{cat:$scope.cat,userId:$scope.userId,org:$scope.org,parentId:$scope.parentId})
-		.success(function(data){
-			//console.log("success");
-			$scope.updateSuccess = true;
-			$('#addnewCattle').modal('hide');
-			$http.get('/getAllCattleMaster/')
-				.success(function(data) {
-					$scope.caters = data.caters;
-					$scope.add =  true;
-				});
-		});
+		$scope.doberror = false;
+		if(!angular.isUndefined($scope.cat.dateofBirth) ||  ! $scope.cat.dateofBirth == "" ||  ! $scope.cat.dateofBirth == null){
+			$http.post('/updateCattleProfileByAdmin?d='+Math.random(),{cat:$scope.cat,userId:$scope.userId,org:$scope.org,parentId:$scope.parentId})
+			.success(function(data){
+				//console.log("success");
+				$scope.updateSuccess = true;
+				$('#addnewCattle').modal('hide');
+				$http.get('/getAllCattleMaster/'+$scope.pageno)
+					.success(function(data) {
+						$scope.caters = data.caters;
+						$scope.add =  true;
+						$scope.doberror = false;
+					});
+			});	
+		}else{
+			$scope.doberror = true;
+		}
+		
 }
 	
 	$scope.parentId;
@@ -7769,7 +7714,8 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 		$scope.cat = "";
 		$scope.update =  false;
 		$scope.add =  false;
-		$http.get('/getAllUsers/?d='+Math.random()).success(function(data) {
+		
+		$http.get('/getAllOnlyUsers/?d='+Math.random()).success(function(data) {
 	    	$scope.users = data.users;
 	    	console.log("user s: "+data.users);
 			angular.forEach($scope.users, function(obj, index){
@@ -7784,7 +7730,7 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 				});
 			});
 		
-		$http.get('/getAllOrgs/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyOrg/?d='+Math.random()).success(function(data) {
 	    	$scope.orgs = data.orgs;
 	    	console.log("orgs: " + $scope.orgs);
 			/*angular.forEach($scope.orgs, function(obj, index){
@@ -7796,7 +7742,7 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 				});*/
 			});
 		
-		$http.get('/getAllCattleMaster/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyCattleMaster/?d='+Math.random()).success(function(data) {
 	    	$scope.cattle = data.caters;
 	    	console.log("cattle: " + $scope.cattle);
 			/*angular.forEach($scope.cattle, function(obj, index){
@@ -7808,9 +7754,21 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 						};
 				});*/
 			});
-		
+
+		$http.get('/getAllBreeds/?d='+Math.random()).success(function(data) {
+	    	$scope.breeds = data.breeds;
+					
+			});
 		
 		$("#addnewCattle").modal('show');
+		
+		 $('#dob').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+		 
+		 $('#dobnew').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
 		
 	}
 
@@ -7843,20 +7801,16 @@ App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope
 	 
 	$scope.getAllFeedCattleMaster = function(){
 
-		$http.get('/getAllFeedCattleMaster/')
+		$http.get('/getAllFeedCattleMaster/'+$scope.pageno)
 		.success(function(data){
 			if(data) {
 				$scope.feedcaters = data.feedcaters;
-				$scope.activeusercount = data.activeusercount;
 				if(data.userCount <= 10){
 					$('#next1').hide();
 					$('#next').hide();
-					//$scope.JobPre  = parseInt($scope.totalJobs);
 				}else{
 					$('#next1').show();
 					$('#next').show();
-				//	$scope.JobPre= 10;
-					
 				}
 			} 
 		});
@@ -7875,16 +7829,10 @@ App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope
 			  $scope.pageno++;
 			 // $scope.nextCount = parseInt( $scope.nextCount) + 10;
 			 // var count= 0;
-			  $http.get('/getAllUsers/'+$scope.pageno)
+			  $http.get('/getAllFeedCattleMaster/'+$scope.pageno)
 				.success(function(data) {
-					
-					$scope.users = data.users
-					$scope.activeusercount = data.activeusercount;
-				// count = parseInt(data.jobsCount);
-					//console.log("count"+count);
-					
-					//console.log("$scope.JobPre"+$scope.JobPre);
-					if(data.userCount <= 10){
+					$scope.feedcaters = data.feedcaters;
+						if(data.userCount <= 10){
 						$('#next1').hide();
 						$('#next').hide();
 						//$scope.JobPre  = parseInt($scope.totalJobs);
@@ -7907,15 +7855,10 @@ App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope
 		  }
 		 
 	 $scope.clickPre = function() {
-		 // $scope.position = "notSelected";
 	      $scope.pageno--;
-	     // var count = 0;
-	      
 		  $http.get('/getAllFeedCattleMaster/'+$scope.pageno)
 			.success(function(data) {
-				$scope.users = data.users;
-				$scope.activeusercount = data.activeusercount;
-				
+				$scope.feedcaters = data.feedcaters;
 				if(data.userCount <= 10){
 					$('#next').hide();
 					$('#next1').hide();
@@ -8009,7 +7952,7 @@ App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope
 		$scope.add =  false;
 		
 		console.log(cat);
-		$http.get('/getAllUsers/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyUsers/?d='+Math.random()).success(function(data) {
 	    	$scope.users = data.users;
 	    	console.log("user s: "+data.users);
 			angular.forEach($scope.users, function(obj, index){
@@ -8019,7 +7962,7 @@ App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope
 				});
 			});
 		
-		$http.get('/getAllOrgs/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyOrg/?d='+Math.random()).success(function(data) {
 	    	$scope.orgs = data.orgs;
 	    	console.log("orgs: " + $scope.orgs);
 			angular.forEach($scope.orgs, function(obj, index){
@@ -8047,7 +7990,7 @@ App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope
 				//console.log("success");
 				$scope.updateSuccess = true;
 				$('#editfeedCatdersDetails').modal('hide');
-				$http.get('/getAllFeedCattleMaster/')
+				$http.get('/getAllFeedCattleMaster/'+$scope.pageno)
 					.success(function(data) {
 						$scope.feedcaters = data.feedcaters;
 						$scope.update =  true;
@@ -8062,7 +8005,7 @@ App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope
 			//console.log("success");
 			$scope.updateSuccess = true;
 			$('#addnewfeedCattle').modal('hide');
-			$http.get('/getAllFeedCattleMaster/')
+			$http.get('/getAllFeedCattleMaster/'+$scope.pageno)
 				.success(function(data) {
 					$scope.feedcaters = data.feedcaters;
 					
@@ -8077,7 +8020,7 @@ App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope
 		$scope.update =  false;
 		$scope.add =  false;
 		
-		$http.get('/getAllUsers/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyUsers/?d='+Math.random()).success(function(data) {
 	    	$scope.users = data.users;
 			angular.forEach($scope.users, function(obj, index){
 					if ((obj.userId == $scope.cat.users.userId)) {
@@ -8087,7 +8030,7 @@ App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope
 				
 			});
 		
-		$http.get('/getAllOrgs/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyOrg/?d='+Math.random()).success(function(data) {
 	    	$scope.orgs = data.orgs;
 			angular.forEach($scope.orgs, function(obj, index){
 				console.log("user  org:  "+$scope.cat.oraganization.orgId);
@@ -8113,6 +8056,7 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 		$('#medicationEnddate').datepicker({
 			    format: 'dd-MM-yyyy'
 		});
+		
 	 }
 	 
 	 $scope.medicationStartDatepicker = function(){
@@ -8181,7 +8125,7 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 		$scope.update =  false;
 		$scope.add =  false;
 		
-		$http.get('/getAllCattleHealth/')
+		$http.get('/getAllCattleHealth/'+$scope.pageno)
 		.success(function(data){
 			if(data) {
 				$scope.catershealth = data.catershealth;
@@ -8213,16 +8157,10 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 			  $scope.pageno++;
 			 // $scope.nextCount = parseInt( $scope.nextCount) + 10;
 			 // var count= 0;
-			  $http.get('/getAllUsers/'+$scope.pageno)
+			  $http.get('/getAllCattleHealth/'+$scope.pageno)
 				.success(function(data) {
-					
-					$scope.users = data.users
-					$scope.activeusercount = data.activeusercount;
-				// count = parseInt(data.jobsCount);
-					//console.log("count"+count);
-					
-					//console.log("$scope.JobPre"+$scope.JobPre);
-					if(data.userCount <= 10){
+			     $scope.catershealth = data.catershealth;
+				if(data.userCount <= 10){
 						$('#next1').hide();
 						$('#next').hide();
 						//$scope.JobPre  = parseInt($scope.totalJobs);
@@ -8251,9 +8189,7 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 	      
 		  $http.get('/getAllCattleHealth/'+$scope.pageno)
 			.success(function(data) {
-				$scope.users = data.users;
-				$scope.activeusercount = data.activeusercount;
-				
+				$scope.catershealth = data.catershealth;
 				if(data.userCount <= 10){
 					$('#next').hide();
 					$('#next1').hide();
@@ -8322,7 +8258,6 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 					
 					}
 			}
-		
 			
 		});
 	
@@ -8346,7 +8281,7 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 		
 		$scope.cat = cat;
 		console.log(cat);
-		$http.get('/getAllUsers/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyUsers/?d='+Math.random()).success(function(data) {
 	    	$scope.users = data.users;
 	    	console.log("user s: "+data.users);
 			angular.forEach($scope.users, function(obj, index){
@@ -8356,7 +8291,7 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 				});
 			});
 		
-		$http.get('/getAllOrgs/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyOrg/?d='+Math.random()).success(function(data) {
 	    	$scope.orgs = data.orgs;
 	    	console.log("orgs: " + $scope.orgs);
 			angular.forEach($scope.orgs, function(obj, index){
@@ -8368,6 +8303,24 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 			});
 
 		$('#editfeedCatdersDetails').modal();
+		$('#medicationEnddate').datepicker({
+		    format: 'dd-MM-yyyy'
+	});
+	
+	 $('#medicationStartDate').datepicker({
+		    format: 'dd-MM-yyyy'
+	});
+	 $('#duedate').datepicker({
+		    format: 'dd-MM-yyyy'
+	});
+	 $('#pregnancyDate').datepicker({
+		    format: 'dd-MM-yyyy'
+	});
+	 $('#lastDelivaerydate').datepicker({
+		    format: 'dd-MM-yyyy'
+	});
+		
+		
 		
 	}
 	
@@ -8385,7 +8338,7 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 				//console.log("success");
 				$scope.updateSuccess = true;
 				$('#editfeedCatdersDetails').modal('hide');
-				$http.get('/getAllCattleHealth/')
+				$http.get('/getAllCattleHealth/'+$scope.pageno)
 					.success(function(data) {
 						$scope.catershealth = data.catershealth;
 						console.log(data.catershealth);
@@ -8402,10 +8355,9 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 			//console.log("success");
 			$scope.updateSuccess = true;
 			$('#addnewfeedCattle').modal('hide');
-			$http.get('/getAllCattleHealth/')
+			$http.get('/getAllCattleHealth/'+$scope.pageno)
 				.success(function(data) {
 					$scope.catershealth = data.catershealth;
-					
 					$scope.add =  true;
 				});
 		});
@@ -8418,7 +8370,7 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 		$scope.add =  false;
 		
 		$scope.cat = "";
-		$http.get('/getAllUsers/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyUsers/?d='+Math.random()).success(function(data) {
 	    	$scope.users = data.users;
 			angular.forEach($scope.users, function(obj, index){
 					if ((obj.userId == $scope.cat.users.userId)) {
@@ -8428,7 +8380,7 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 				
 			});
 		
-		$http.get('/getAllOrgs/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyOrg/?d='+Math.random()).success(function(data) {
 	    	$scope.orgs = data.orgs;
 			angular.forEach($scope.orgs, function(obj, index){
 				console.log("user  org:  "+$scope.cat.oraganization.orgId);
@@ -8439,6 +8391,24 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 			});
 		
 		$("#addnewfeedCattle").modal('show');
+		
+		
+		$('#medicationEnddate').datepicker({
+		    format: 'dd-MM-yyyy'
+	});
+	
+	 $('#medicationStartDatenew').datepicker({
+		    format: 'dd-MM-yyyy'
+	});
+	 $('#duedatenew').datepicker({
+		    format: 'dd-MM-yyyy'
+	});
+	 $('#pregnancyDatenew').datepicker({
+		    format: 'dd-MM-yyyy'
+	});
+	 $('#lastDelivaerydatenew').datepicker({
+		    format: 'dd-MM-yyyy'
+	});
 	}
 	
 });
@@ -8466,13 +8436,11 @@ App.controller('ViewAllCattleOutputController', function ($scope, $rootScope, $r
 	 
 	$scope.getAllCattleOutput = function(){
 
-		$http.get('/getAllCattleOutput/')
+		$http.get('/getAllCattleOutput/'+$scope.pageno)
 		.success(function(data){
 			if(data) {
 				$scope.catersoutput = data.catersoutput;
-				console.log(data.catersoutput);
 				
-				$scope.activeusercount = data.activeusercount;
 				if(data.userCount <= 10){
 					$('#next1').hide();
 					$('#next').hide();
@@ -8496,19 +8464,11 @@ App.controller('ViewAllCattleOutputController', function ($scope, $rootScope, $r
 	}
 
 	$scope.clickNext = function() {
-		//console.log("nexdt");
-			  $scope.pageno++;
-			 // $scope.nextCount = parseInt( $scope.nextCount) + 10;
-			 // var count= 0;
-			  $http.get('/getAllUsers/'+$scope.pageno)
+		 	  $scope.pageno++;
+			  $http.get('/getAllCattleOutput/'+$scope.pageno)
 				.success(function(data) {
 					
-					$scope.users = data.users
-					$scope.activeusercount = data.activeusercount;
-				// count = parseInt(data.jobsCount);
-					//console.log("count"+count);
-					
-					//console.log("$scope.JobPre"+$scope.JobPre);
+					$scope.catersoutput = data.catersoutput;;
 					if(data.userCount <= 10){
 						$('#next1').hide();
 						$('#next').hide();
@@ -8532,15 +8492,10 @@ App.controller('ViewAllCattleOutputController', function ($scope, $rootScope, $r
 		  }
 		 
 	 $scope.clickPre = function() {
-		 // $scope.position = "notSelected";
 	      $scope.pageno--;
-	     // var count = 0;
-	      
 		  $http.get('/getAllCattleOutput/'+$scope.pageno)
 			.success(function(data) {
-				$scope.users = data.users;
-				$scope.activeusercount = data.activeusercount;
-				
+				$scope.catersoutput = data.catersoutput;
 				if(data.userCount <= 10){
 					$('#next').hide();
 					$('#next1').hide();
@@ -8634,7 +8589,9 @@ App.controller('ViewAllCattleOutputController', function ($scope, $rootScope, $r
 		$scope.update =  false;
 		$scope.add =  false;
 		
-		$http.get('/getAllUsers/?d='+Math.random()).success(function(data) {
+		
+		
+		$http.get('/getAllOnlyUsers/?d='+Math.random()).success(function(data) {
 	    	$scope.users = data.users;
 	    	console.log("user s: "+data.users);
 			angular.forEach($scope.users, function(obj, index){
@@ -8644,7 +8601,7 @@ App.controller('ViewAllCattleOutputController', function ($scope, $rootScope, $r
 				});
 			});
 		
-		$http.get('/getAllOrgs/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyOrg/?d='+Math.random()).success(function(data) {
 	    	$scope.orgs = data.orgs;
 	    	console.log("orgs: " + $scope.orgs);
 			angular.forEach($scope.orgs, function(obj, index){
@@ -8655,7 +8612,7 @@ App.controller('ViewAllCattleOutputController', function ($scope, $rootScope, $r
 				});
 			});
 		
-		$http.get('/getAllCattleMaster/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyCattleMaster/?d='+Math.random()).success(function(data) {
 	    	$scope.caters = data.caters;
 	    	console.log("caters: " + $scope.feedcaters);
 			angular.forEach($scope.caters, function(obj, index){
@@ -8667,7 +8624,7 @@ App.controller('ViewAllCattleOutputController', function ($scope, $rootScope, $r
 				});
 			});
 		
-		 $http.get('/getAllPregnantCattle/'+$scope.parentId)
+		 $http.get('/getAllOnlyPregnantCattle/'+$scope.parentId)
 			.success(function(data){
 				if(data) {
 					$scope.pregnant = data.caters;
@@ -8683,6 +8640,15 @@ App.controller('ViewAllCattleOutputController', function ($scope, $rootScope, $r
 		
 		
 		$('#editfeedCatdersDetails').modal();
+		
+		 $('#dob').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+		 
+		 $('#dobnew').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+		 
 		
 	}
 	
@@ -8700,7 +8666,7 @@ App.controller('ViewAllCattleOutputController', function ($scope, $rootScope, $r
 				//console.log("success");
 				$scope.updateSuccess = true;
 				$('#editfeedCatdersDetails').modal('hide');
-				$http.get('/getAllCattleOutput/')
+				$http.get('/getAllCattleOutput/'+$scope.pageno)
 					.success(function(data) {
 						$scope.catersoutput = data.catersoutput;
 						console.log(data.catersoutput);
@@ -8718,32 +8684,29 @@ App.controller('ViewAllCattleOutputController', function ($scope, $rootScope, $r
 			//console.log("success");
 			$scope.updateSuccess = true;
 			$('#addnewfeedCattle').modal('hide');
-			$http.get('/getAllCattleOutput/')
+			$http.get('/getAllCattleOutput/'+$scope.pageno)
 				.success(function(data) {
 					$scope.catersoutput = data.catersoutput;
 					$scope.add =  true;
 					$scope.catersIds = "";
 				});
 		});
-		
 }
 	
 	$scope.addnewfeedCattle = function(){
 		$scope.update =  false;
 		$scope.add =  false;
-		
 		$scope.cat = "";
-		$http.get('/getAllUsers/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyUsers/?d='+Math.random()).success(function(data) {
 	    	$scope.users = data.users;
 			angular.forEach($scope.users, function(obj, index){
 					if ((obj.userId == $scope.cat.users.userId)) {
 						obj.isSelect = true;
 						};
 					});
-				
 			});
 		
-		$http.get('/getAllOrgs/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyOrg/?d='+Math.random()).success(function(data) {
 	    	$scope.orgs = data.orgs;
 			angular.forEach($scope.orgs, function(obj, index){
 				console.log("user  org:  "+$scope.cat.oraganization.orgId);
@@ -8753,12 +8716,12 @@ App.controller('ViewAllCattleOutputController', function ($scope, $rootScope, $r
 				});
 			});
 		
-		$http.get('/getAllCattleMaster/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyCattleMaster/?d='+Math.random()).success(function(data) {
 	    	$scope.caters = data.caters;
 	    	console.log("caters: " + $scope.feedcaters);
 			});
 		
-		 $http.get('/getAllPregnantCattle/'+$scope.parentId)
+		 $http.get('/getAllOnlyPregnantCattle/'+$scope.parentId)
 			.success(function(data){
 				if(data) {
 					$scope.pregnant = data.caters;
@@ -8772,8 +8735,15 @@ App.controller('ViewAllCattleOutputController', function ($scope, $rootScope, $r
 				} 
 			});
 		
-		
 		$("#addnewfeedCattle").modal('show');
+		 $('#dob').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+		 
+		 $('#dobnew').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+		
 	}
 	
 });
@@ -8801,11 +8771,10 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope, $r
 	 
 	$scope.getAllCattleIntake = function(){
 
-		$http.get('/getAllCattleIntake/')
+		$http.get('/getAllCattleIntake/'+$scope.pageno)
 		.success(function(data){
 			if(data) {
 				$scope.catersintake = data.catersintake;
-				$scope.activeusercount = data.activeusercount;
 				if(data.userCount <= 10){
 					$('#next1').hide();
 					$('#next').hide();
@@ -8831,21 +8800,12 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope, $r
 	$scope.clickNext = function() {
 		//console.log("nexdt");
 			  $scope.pageno++;
-			 // $scope.nextCount = parseInt( $scope.nextCount) + 10;
-			 // var count= 0;
-			  $http.get('/getAllUsers/'+$scope.pageno)
+			  $http.get('/getAllCattleIntake/'+$scope.pageno)
 				.success(function(data) {
-					
-					$scope.users = data.users
-					$scope.activeusercount = data.activeusercount;
-				// count = parseInt(data.jobsCount);
-					//console.log("count"+count);
-					
-					//console.log("$scope.JobPre"+$scope.JobPre);
+					$scope.catersintake = data.catersintake;;
 					if(data.userCount <= 10){
 						$('#next1').hide();
 						$('#next').hide();
-						//$scope.JobPre  = parseInt($scope.totalJobs);
 					}else{
 						$('#next1').show();
 						$('#next').show();
@@ -8865,15 +8825,10 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope, $r
 		  }
 		 
 	 $scope.clickPre = function() {
-		 // $scope.position = "notSelected";
 	      $scope.pageno--;
-	     // var count = 0;
-	      
-		  $http.get('/getAllFeedCattleMaster/'+$scope.pageno)
+		  $http.get('/getAllCattleIntake/'+$scope.pageno)
 			.success(function(data) {
-				$scope.users = data.users;
-				$scope.activeusercount = data.activeusercount;
-				
+				$scope.catersintake = data.catersintake;
 				if(data.userCount <= 10){
 					$('#next').hide();
 					$('#next1').hide();
@@ -8891,7 +8846,6 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope, $r
 				$('#pre1').show();
 			}
 		  }
- 
 
 		$http.get('/getUserPermissions?d='+Math.random())
 		.success(function(data) {
@@ -8969,7 +8923,7 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope, $r
 		
 		$scope.cat = cat;
 		console.log(cat);
-		$http.get('/getAllUsers/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyUsers/?d='+Math.random()).success(function(data) {
 	    	$scope.users = data.users;
 	    	console.log("user s: "+data.users);
 			angular.forEach($scope.users, function(obj, index){
@@ -8979,7 +8933,7 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope, $r
 				});
 			});
 		
-		$http.get('/getAllOrgs/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyOrg/?d='+Math.random()).success(function(data) {
 	    	$scope.orgs = data.orgs;
 	    	console.log("orgs: " + $scope.orgs);
 			angular.forEach($scope.orgs, function(obj, index){
@@ -8991,7 +8945,7 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope, $r
 			});
 		
 		
-		$http.get('/getAllFeedCattleMaster/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyFeedCattleMaster/?d='+Math.random()).success(function(data) {
 	    	$scope.feedcaters = data.feedcaters;
 	    	console.log("feedcaters: " + $scope.feedcaters);
 			angular.forEach($scope.feedcaters, function(obj, index){
@@ -9002,7 +8956,7 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope, $r
 				});
 			});
 
-		$http.get('/getAllCattleMaster/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyCattleMaster/?d='+Math.random()).success(function(data) {
 	    	$scope.caters = data.caters;
 	    	console.log("feedcaters: " + $scope.caters);
 			angular.forEach($scope.caters, function(obj, index){
@@ -9015,7 +8969,7 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope, $r
 			});		
 		
 		
-		 $http.get('/getAllPregnantCattle/'+$scope.parentId)
+		 $http.get('/getAllOnlyPregnantCattle/'+$scope.parentId)
 			.success(function(data){
 				if(data) {
 					$scope.pregnant = data.caters;
@@ -9030,6 +8984,15 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope, $r
 			});
 		
 		$('#editfeedCatdersDetails').modal();
+		
+		$('#dob').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+		 
+		 $('#dobnew').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+		
 	}
 	
 	$scope.permList;
@@ -9045,13 +9008,12 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope, $r
 				//console.log("success");
 				$scope.updateSuccess = true;
 				$('#editfeedCatdersDetails').modal('hide');
-				$http.get('/getAllCattleIntake/')
+				$http.get('/getAllCattleIntake/'+$scope.pageno)
 					.success(function(data) {
 						$scope.catersintake = data.catersintake;
 						console.log(data.catersintake);
 						$scope.update =  true;
 						$scope.catersIds = "";
-						
 					});
 			});
 	}
@@ -9060,17 +9022,15 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope, $r
 		$scope.cat = cat;
 		$http.post('/updateCattleIntakeProfileByAdmin?d='+Math.random(),{cat:$scope.cat,userId:$scope.userId,org:$scope.org,feedId:$scope.feedId,catersIds:$scope.catersIds,pregIds:$scope.pregIds})
 		.success(function(data){
-			//console.log("success");
 			$scope.updateSuccess = true;
 			$('#addnewfeedCattle').modal('hide');
-			$http.get('/getAllCattleIntake/')
+			$http.get('/getAllCattleIntake/'+$scope.pageno)
 				.success(function(data) {
 					$scope.catersintake = data.catersintake;
 					$scope.catersIds = "";
 					$scope.add =  true;
 				});
 		});
-		
 }
 	$scope.catersIds;
 	$scope.parentId = 0;
@@ -9079,42 +9039,38 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope, $r
 		$scope.update =  false;
 		$scope.add =  false;
 		
-		$http.get('/getAllUsers/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyUsers/?d='+Math.random()).success(function(data) {
 	    	$scope.users = data.users;
 			angular.forEach($scope.users, function(obj, index){
 					if ((obj.userId == $scope.cat.users.userId)) {
 						obj.isSelect = true;
 						};
 					});
-				
 			});
 		
-		$http.get('/getAllOrgs/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyOrg/?d='+Math.random()).success(function(data) {
 	    	$scope.orgs = data.orgs;
 			angular.forEach($scope.orgs, function(obj, index){
-				console.log("user  org:  "+$scope.cat.oraganization.orgId);
 					if ((obj.orgId == $scope.cat.oraganization.orgId)) {
 						obj.isSelect = true;
 						};
 				});
 			});
 		
-		$http.get('/getAllFeedCattleMaster/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyFeedCattleMaster/?d='+Math.random()).success(function(data) {
 	    	$scope.feedcaters = data.feedcaters;
-	    	console.log("feedcaters: " + $scope.feedcaters);
 			angular.forEach($scope.feedcaters, function(obj, index){
-				console.log("user  feedcaters:  "+$scope.cat.cattleFeedMaster.feedId);
 					if ((obj.feedId == $scope.cat.cattleFeedMaster.feedId)) {
 						obj.isSelect = true;
 						};
 				});
 			});
-		$http.get('/getAllCattleMaster/?d='+Math.random()).success(function(data) {
+
+		$http.get('/getAllOnlyCattleMaster/?d='+Math.random()).success(function(data) {
 	    	$scope.caters = data.caters;
-			
 			});		
 		
-		 $http.get('/getAllPregnantCattle/'+$scope.parentId)
+		 $http.get('/getAllOnlyPregnantCattle/'+$scope.parentId)
 			.success(function(data){
 				if(data) {
 					$scope.pregnant = data.caters;
@@ -9122,8 +9078,15 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope, $r
 			});
 		
 		$("#addnewfeedCattle").modal('show');
+		
+		$('#dob').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+		 
+		 $('#dobnew').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
 	}
-	
 });
 
 
@@ -9142,7 +9105,7 @@ App.controller('ViewAllUsersController', function ($scope, $rootScope, $routePar
 		$scope.add =  false;
 	 
 	$scope.getAllUsers = function(){
-		$http.get('/getAllUsers/')
+		$http.get('/getAllUsers/'+$scope.pageno)
 		.success(function(data){
 			if(data) {
 				$scope.users = data.users;
@@ -9216,11 +9179,6 @@ App.controller('ViewAllUsersController', function ($scope, $rootScope, $routePar
 				$scope.users = data.users;
 				$scope.activeusercount = data.activeusercount;
 				
-				
-			//	$scope.count = parseInt(data.jobsCount);
-				//console.log("count"+count);
-				//$scope.JobPre = count - 10;
-				
 				if(data.userCount <= 10){
 					$('#next').hide();
 					$('#next1').hide();
@@ -9232,8 +9190,6 @@ App.controller('ViewAllUsersController', function ($scope, $rootScope, $routePar
 					//$scope.JobPre  = 10;
 					//$scope.JobPre = parseInt($scope.nextCount) -  10;
 				}
-				
-				
 				
 			});
 			if($scope.pageno <= 0){
@@ -9253,7 +9209,6 @@ App.controller('ViewAllUsersController', function ($scope, $rootScope, $routePar
 			$rootScope.Users = false;
 			$rootScope.cattleMaster = false;
 			$rootScope.Orgnization = false;
-			
 			
 			$rootScope.username = data.user.userId;
 			console.log("per: "+JSON.stringify(data.user.permissions));
@@ -9347,7 +9302,7 @@ App.controller('ViewAllUsersController', function ($scope, $rootScope, $routePar
 	    		console.log($scope.entities);
 			});
 		
-		$http.get('/getAllOrgs/?d='+Math.random()).success(function(data) {
+		$http.get('/getAllOnlyOrg/?d='+Math.random()).success(function(data) {
 	    	$scope.orgs = data.orgs;
 	    	console.log("orgs: " + $scope.orgs);
 			angular.forEach($scope.orgs, function(obj, index){
@@ -9381,7 +9336,7 @@ App.controller('ViewAllUsersController', function ($scope, $rootScope, $routePar
 				$('#editUserDetails').modal('hide');
 				$scope.permList = " ";
 				$scope.users = "";
-				$http.get('/getAllUsers/')
+				$http.get('/getAllUsers/'+$scope.pageno)
 					.success(function(data) {
 						$scope.users = data.users;
 						$scope.update =  true;
@@ -9397,11 +9352,10 @@ App.controller('ViewAllUsersController', function ($scope, $rootScope, $routePar
 				//console.log("success");
 				$scope.updateSuccess = true;
 				$("#addnewUserpopup").modal('hide');
-				$http.get('/getAllUsers/')
+				$http.get('/getAllUsers/'+$scope.pageno)
 					.success(function(data) {
 						$scope.users = data.users;
 						$scope.user = "";
-						
 						$scope.add =  true;
 					});
 			});
@@ -9427,7 +9381,7 @@ App.controller('ViewAllUsersController', function ($scope, $rootScope, $routePar
 				});
 			});
 		
-			$http.get('/getAllOrgs/?d='+Math.random()).success(function(data) {
+			$http.get('/getAllOnlyOrg/?d='+Math.random()).success(function(data) {
 		    	$scope.orgs = data.orgs;
 				angular.forEach($scope.orgs, function(obj, index){
 					angular.forEach($scope.user.oraganization, function(obj1, index){
@@ -9462,10 +9416,6 @@ App.controller('ViewAllUsersController', function ($scope, $rootScope, $routePar
 	}
 	
 });
-
-
-
-
 
 
 App.controller('ExtraSigninController', function ($scope, $routeParams){

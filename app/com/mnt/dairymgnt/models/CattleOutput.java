@@ -194,15 +194,30 @@ public class CattleOutput extends Model {
 	public static Finder<Long, CattleOutput> find = new Finder<Long, CattleOutput>(
 			Long.class, CattleOutput.class);
 	
-	public static List<CattleOutput> getAllCattleOutput(){
+	/*public static List<CattleOutput> getAllCattleOutput(){
 		return find.all();
-	}
+	}*/
 
 	public static CattleOutput getUserByCattleId(int cattleId){
 		return find.where().eq("cattleId", cattleId).findUnique();
 		
 	}
 
+
+	@JsonIgnore
+	public static List<CattleOutput> getAllCattleOutput(int pageNumber,int rowperpage){
+		return find.setFirstRow(pageNumber * 10).setMaxRows(rowperpage)
+				.findList();
+	}
+	
+	@JsonIgnore
+	public static int getAllCattleOutputCount(int pageNumber) {
+		// TODO Auto-generated method stub
+		return find.setFirstRow(pageNumber * 10)
+				.setMaxRows(CattleOutput.find.findRowCount()).findList().size();
+	}
+	
+	
 	public static void update(CattleOutput ud) {
 		Ebean.update(ud);
 	}

@@ -172,21 +172,32 @@ public class CattleFeedMaster extends Model {
 	public static Finder<Long, CattleFeedMaster> find = new Finder<Long, CattleFeedMaster>(
 			Long.class, CattleFeedMaster.class);
 	
-	public static List<CattleFeedMaster> getAllFeedCattleMaster(){
-		return find.all();
+	
+	public static void update(CattleFeedMaster ud) {
+		Ebean.update(ud);
 	}
-
+	
 	public static CattleFeedMaster getUserByfeedId(int feedId){
 		return find.where().eq("feedId", feedId).findUnique();
 		
 	}
 
-	public static void update(CattleFeedMaster ud) {
-		Ebean.update(ud);
+	@JsonIgnore
+	public static List<CattleFeedMaster> getAllOnlyFeedCattleMaster(){
+		return find.all();
+	}
+
+	@JsonIgnore
+	public static List<CattleFeedMaster> getAllFeedCattleMaster(int pageNumber,int rowperpage){
+		return find.setFirstRow(pageNumber * 10).setMaxRows(rowperpage)
+				.findList();
 	}
 	
-	/*public static CattleFeedMaster getRecoredByPermissionsName(String permissionName){
-		return find.where().eq("permissionName",permissionName.trim()).findUnique();
-	}*/
+	@JsonIgnore
+	public static int getAllFeedCattleMasterCount(int pageNumber) {
+		// TODO Auto-generated method stub
+		return find.setFirstRow(pageNumber * 10)
+				.setMaxRows(CattleFeedMaster.find.findRowCount()).findList().size();
+	}
 	
 }

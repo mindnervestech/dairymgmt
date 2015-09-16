@@ -127,12 +127,25 @@ public class PregnantCattle extends Model {
 	public static Finder<Long, PregnantCattle> find = new Finder<Long, PregnantCattle>(
 			Long.class, PregnantCattle.class);
 	
-	public static List<PregnantCattle> getAllPregnantCattle(int cattleId){
-		if(cattleId != 0){
-			return find.where().eq("cattleId", cattleId).findList();
+	public static List<PregnantCattle> getAllPregnantCattle(int cattleId ,int pageNumber ,int rowperpage){
+		if(cattleId == 0){
+			//return find.all();
+			return find.setFirstRow(pageNumber * 10).setMaxRows(rowperpage)
+					.findList();
+			
 		}else{
-			return find.all();	
+			//return find.where().eq("cattleId", cattleId).findList();
+			return find.where().eq("cattleId", cattleId).setFirstRow(pageNumber * 10).setMaxRows(rowperpage)
+					.findList();
 		}
+		
+	}
+	
+	@JsonIgnore
+	public static int getAllPregnantCattleCount(int pageNumber) {
+		// TODO Auto-generated method stub
+		return find.setFirstRow(pageNumber * 10)
+				.setMaxRows(PregnantCattle.find.findRowCount()).findList().size();
 	}
 
 	public static PregnantCattle getPregnantCattleByCattleId(int pregnancyId){
@@ -147,7 +160,8 @@ public class PregnantCattle extends Model {
 	public static PregnantCattle getRecoredByPermissionsName(String permissionName){
 		return find.where().eq("permissionName",permissionName.trim()).findUnique();
 	}
-
+	
+	@JsonIgnore
 	public static List<PregnantCattle> getAllPregnantCattleById(int cattleId) {
 		// TODO Auto-generated method stub
 		if(cattleId == 0){
@@ -157,5 +171,18 @@ public class PregnantCattle extends Model {
 		}
 		
 	}
+	@JsonIgnore
+	public static List<PregnantCattle> getAllOnlyPregnantCattle(int cattleId) {
+		// TODO Auto-generated method stub
+		if(cattleId == 0){
+			return find.all();
+		}else{
+			return find.where().eq("cattleId", cattleId).findList();	
+		}
+		
+	}
+	
+	
+	
 	
 }

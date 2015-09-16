@@ -3,6 +3,7 @@ package com.mnt.dairymgnt.models;
 import javax.persistence.Entity;
 
 
+
 import javax.persistence.CascadeType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -136,7 +137,20 @@ public class Users extends Model {
 	}
 		
 	@JsonIgnore
-	public static List<Users> getAllUsers(){
+	public static List<Users> getAllUsers(int pageNumber, int rowperpage) {
+		return find.setFirstRow(pageNumber * 10).setMaxRows(rowperpage)
+				.findList();
+	}
+	
+	@JsonIgnore
+	public static int getAllUsersCount(int pageNumber) {
+		// TODO Auto-generated method stub
+		return find.setFirstRow(pageNumber * 10)
+				.setMaxRows(Users.find.findRowCount()).findList().size();
+	}
+	
+	@JsonIgnore
+	public static List<Users> getAllOnlyUsers(){
 		return find.all();
 	} 
 	

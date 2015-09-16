@@ -188,7 +188,7 @@ public class CattleMaster extends Model {
 	public static Finder<Long, CattleMaster> find = new Finder<Long, CattleMaster>(
 			Long.class, CattleMaster.class);
 	
-	public static List<CattleMaster> getAllCattleMaster(){
+	public static List<CattleMaster> getAllOnlyCattleMaster(){
 		return find.all();
 	}
 
@@ -204,14 +204,29 @@ public class CattleMaster extends Model {
 		return find.where().eq("permissionName",permissionName.trim()).findUnique();
 	}
 
-	public static List<CattleMaster> getAllCattleMasterByParentId(int parentId) {
+	public static List<CattleMaster> getAllCattleMasterByParentId(int parentId,int pageNumber,int rowperpage) {
 		// TODO Auto-generated method stub
 		if(parentId == 0){
 			return find.all();
 		}else{
-			return find.where().eq("parentId", parentId).findList();	
+			//return find.where().eq("parentId", parentId).findList();
+			return find.where().eq("parentId", parentId).setFirstRow(pageNumber * 10).setMaxRows(rowperpage)
+					.findList();
 		}
-		
 	}
+
+	public static List<CattleMaster> getAllCattleMaster(int pageNumber, int rowperpage) {
+		// TODO Auto-generated method stub
+		return find.setFirstRow(pageNumber * 10).setMaxRows(rowperpage)
+				.findList();
+	}
+	
+	@JsonIgnore
+	public static int getAllCattleMasterCount(int pageNumber) {
+		// TODO Auto-generated method stub
+		return find.setFirstRow(pageNumber * 10)
+				.setMaxRows(CattleMaster.find.findRowCount()).findList().size();
+	}
+	
 	
 }

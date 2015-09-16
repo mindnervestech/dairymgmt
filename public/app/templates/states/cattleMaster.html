@@ -57,7 +57,7 @@
 											<th>Breed</th>
 											<th>Gender</th>
 											<th>Cattle Identification Mark</th>
-											<th>View</th>
+											<th>Details</th>
 										</tr>
 										<tr data-ng-repeat="cat in caters"
 											style="background-color: #fff !important; left: -900">
@@ -80,7 +80,7 @@
 									</tbody>
 								</table>
 							</div>
-							<!-- <div class="pull-right">
+							 <div class="pull-right">
 								<button id="pre" type="button" ng-click="clickPre()"
 									class="btn btn-success-custom">
 									<i class="glyphicon glyphicon-arrow-left"></i>
@@ -90,7 +90,7 @@
 									class="btn btn-success-custom">
 									<i class="glyphicon glyphicon-arrow-right"></i>
 								</button>
-							</div> -->
+							</div> 
 						</div>
 					</div>
 
@@ -116,26 +116,21 @@
 			<div class="modal-body">
 				<div class = "col-md-12">
 				<div class = "col-md-6">
-						<!-- <div class="col-md-12">
-  								<label for="username">Cattle Id:</label>
-  								<input type="text" ng-model = "user.userId" class="form-control"  readonly id="usr">
-						</div>
-
-						<div class="col-md-12">
-  								<label for="username">RFID :</label>
-  								<input type="text" ng-model = "user.password" class="form-control"   id="password">
-						</div>
- -->
+											   
 						<div class="col-md-12">
   							<label for="usr">Name</label>
   							<input type="text" ng-model = "cat.name" class="form-control" maxlength="80"   id="firstname">
 						</div>
 
-
-						<div class="col-md-12">
-  							<label for="usr">Breed </label>
-  							<input type="text" ng-model = "cat.breed" class="form-control" maxlength="80" id="firstname">
-						</div>	
+						<div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
+		              <label class="control-label col-md-8">Select Breed name</label>
+		              <div class="col-md-12"> 
+			                <select id = "use"  data-ng-model="cat.breed" class= "col-md-5"  style="    width: 110%;">
+			                 <option ng-repeat="u in breeds" value="{{u.breedName}}"   ng-selected="u.breedName  == cat.breed">{{u.breedName}}</option>
+			                </select>
+	            		</div>   
+	            	</div>	
+						
 						<div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
 		              <label class="control-label col-md-8">Select parent name</label>
 		              <div class="col-md-12"> 
@@ -147,6 +142,7 @@
 						  <div class="col-md-12">
 										<div class="">
 											<div class="">
+											<div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>
 												<div class="input-group">
 												<span>Date of Birth</span>
 													 <input type="text" ng-model="cat.dateofBirth"
@@ -160,14 +156,6 @@
 											</div>
 									</div>
 					</div>
-					<!-- 	<div class="col-md-12">
-  							<label for="usr">DOB </label>
-  							<input type="text" ng-model = "cat.dateofBirth" class="form-control" id="firstname">
-						</div>	 -->
-						<!-- <div class="col-md-12">
-  							<label for="usr">Gender </label>
-  							<input type="text" ng-model = "cat.gender" class="form-control" id="firstname">
-						</div>	 -->
 						<div class="col-md-12">
   							<label for="usr">Gender </label>
   							<!-- <input type="text"  class="form-control" > -->
@@ -178,15 +166,6 @@
 					
 						</div>	
 						
-				
-				<!-- <div class="col-md-12" style="margin-top:1%;">
-		              <label class="control-label col-md-8">Select Orgnization</label>
-		              <div class="col-md-12"> 
-			                <select id = "org"  data-ng-model="org" class = "col-md-5">
-			                 <option ng-repeat="o in orgs" value="{{o.orgId}}"   ng-selected="o.isSelect  == true">{{o.name}}</option>
-			                </select>
-	            		</div>   
-	            	</div> -->
 						</div>
 						<div class = "col-md-6	">
 						<div class="col-md-12">
@@ -252,11 +231,19 @@
 						</div>
 
 
-						<div class="col-md-12">
+						<!-- <div class="col-md-12">
   							<label for="usr">Breed </label>
   							<input type="text" ng-model = "cat.breed" class="form-control" maxlength="80" id="firstname">
 						</div>		
-						
+						 -->
+						 <div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
+		              <label class="control-label col-md-8">Select Breed name</label>
+		              <div class="col-md-12"> 
+			                <select id = "use"  data-ng-model="cat.breed" class= "col-md-5"  style="    width: 110%;">
+			                 <option ng-repeat="u in breeds" value="{{u.breedName}}"   ng-selected="u.breedName  == cat.breed">{{u.breedName}}</option>
+			                </select>
+	            		</div>   
+	            	</div>	
 					
 						<div class="col-md-12">
   							<label for="usr">Gender </label>
@@ -281,6 +268,7 @@
 						  <div class="col-md-12">
 										<div class="">
 											<div class="">
+											<div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>
 												<div class="input-group">
 												<span>Date of Birth</span>
 													 <input type="text" ng-model="cat.dateofBirth"

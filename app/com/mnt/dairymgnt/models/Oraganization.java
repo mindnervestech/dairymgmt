@@ -36,7 +36,6 @@ public class Oraganization extends Model {
 	public int pincode;
 	
 	
-	
 	public String getName() {
 		return name;
 	}
@@ -87,7 +86,7 @@ public class Oraganization extends Model {
 	public static Finder<Long, Oraganization> find = new Finder<Long, Oraganization>(
 			Long.class, Oraganization.class);
 	
-	public static List<Oraganization> getAllOrgs(){
+	public static List<Oraganization> getAllOnlyOrgs(){
 		return find.all();
 	}
 	public static Oraganization getOrgById(int orgId2) {
@@ -96,4 +95,21 @@ public class Oraganization extends Model {
 		return find.where().eq("orgId", orgId2).findUnique();
 	}
 	
+	
+	@JsonIgnore
+	public static List<Oraganization> getAllOrgs(int pageNumber, int rowperpage) {
+		return find.setFirstRow(pageNumber * 10).setMaxRows(rowperpage)
+				.findList();
+	}
+	
+	@JsonIgnore
+	public static int getAllOrgsCount(int pageNumber) {
+		// TODO Auto-generated method stub
+		return find.setFirstRow(pageNumber * 10)
+				.setMaxRows(Oraganization.find.findRowCount()).findList().size();
+	}
+	
+	public static List<Oraganization> getAllOnlyOrg(){
+		return find.where().findList();
+	}
 }

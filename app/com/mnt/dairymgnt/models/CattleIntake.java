@@ -181,10 +181,15 @@ public class CattleIntake  extends Model{
 	public static Finder<Long, CattleIntake> find = new Finder<Long, CattleIntake>(
 			Long.class, CattleIntake.class);
 	
-	public static List<CattleIntake> getAllCattleIntake(){
+	public static List<CattleIntake> getAllOnlyCattleIntake(){
 		return find.all();
 	}
 
+	public static List<CattleIntake> getAllCattleIntake(int pageNumber,int rowperpage){
+		return find.setFirstRow(pageNumber * 10).setMaxRows(rowperpage)
+				.findList();
+	}
+	
 	public static CattleIntake getUserByCattleId(int cattleId){
 		return find.where().eq("cattleId", cattleId).findUnique();
 		
@@ -194,5 +199,11 @@ public class CattleIntake  extends Model{
 		Ebean.update(ud);
 	}
 	
+	@JsonIgnore
+	public static int getAllCattleIntakeCount(int pageNumber) {
+		// TODO Auto-generated method stub
+		return find.setFirstRow(pageNumber * 10)
+				.setMaxRows(CattleIntake.find.findRowCount()).findList().size();
+	}
 	
 }

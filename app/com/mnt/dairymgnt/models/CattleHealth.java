@@ -199,6 +199,19 @@ public class CattleHealth  extends Model{
 		return find.all();
 	}
 
+	@JsonIgnore
+	public static List<CattleHealth> getAllCattleOutput(int pageNumber,int rowperpage){
+		return find.setFirstRow(pageNumber * 10).setMaxRows(rowperpage)
+				.findList();
+	}
+	
+	@JsonIgnore
+	public static int getAllCattleHealthCount(int pageNumber) {
+		// TODO Auto-generated method stub
+		return find.setFirstRow(pageNumber * 10)
+				.setMaxRows(CattleHealth.find.findRowCount()).findList().size();
+	}
+	
 	public static CattleHealth getUserByCattleId(int cattleId){
 		return find.where().eq("cattleId", cattleId).findUnique();
 		

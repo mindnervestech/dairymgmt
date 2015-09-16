@@ -208,4 +208,13 @@ public class ChildCattle extends Model {
 		return find.where().eq("permissionName",permissionName.trim()).findUnique();
 	}
 	
+	
+	@JsonIgnore
+	public static int getAllPregnantCattleCount(int pageNumber) {
+		// TODO Auto-generated method stub
+		return find.setFirstRow(pageNumber * 10)
+				.setMaxRows(PregnantCattle.find.findRowCount()).findList().size();
+	}
+	
+	
 }

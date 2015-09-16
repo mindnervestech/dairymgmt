@@ -39,6 +39,7 @@ import com.mnt.dairymgnt.VM.ChildCattleVM;
 import com.mnt.dairymgnt.VM.OrgnizationVM;
 import com.mnt.dairymgnt.VM.PregnancyCattleVM;
 import com.mnt.dairymgnt.VM.UserVM;
+import com.mnt.dairymgnt.models.Breeds;
 import com.mnt.dairymgnt.models.CattleFeedMaster;
 import com.mnt.dairymgnt.models.CattleHealth;
 import com.mnt.dairymgnt.models.CattleIntake;
@@ -98,15 +99,12 @@ public class Application extends Controller {
 		return ok(signin.render());
 	}
 
-	
-	public static Result getAllOrgs(){
-		
+	public static Result getAllOrgs( int pageNo){
 		List<OrgnizationVM> orgs = new ArrayList<>();
-		
-		List<Oraganization> os = Oraganization.getAllOrgs();
-		
+		List<Oraganization> os = Oraganization.getAllOrgs(pageNo,10);
+		int count  = 0;
+		count = Oraganization.getAllOrgsCount(pageNo);
 		for(Oraganization or:os){
-			
 			OrgnizationVM o = new OrgnizationVM();
 			o.name = or.name;
 			o.orgId = or.orgId;
@@ -122,12 +120,41 @@ public class Application extends Controller {
 		
 		HashMap  <String ,Object> hm = new HashMap();
 		hm.put("orgs", orgs);
+		hm.put("userCount",count);
 		return ok(Json.toJson(hm));
 		
 	}
-
-	public static Result getAllUsers(){
-		List<Users> users = Users.getAllUsers();
+	
+	
+	public static Result getAllOnlyOrgs(){
+		List<OrgnizationVM> orgs = new ArrayList<>();
+		List<Oraganization> os = Oraganization.getAllOnlyOrg();
+		for(Oraganization or:os){
+			OrgnizationVM o = new OrgnizationVM();
+			o.name = or.name;
+			o.orgId = or.orgId;
+			o.city =  or.city;
+			o.addressLine1 = or.addressLine1;
+			o.addressLine2 = or.addressLine2;
+			o.state  = or.state;
+			o.pincode = or.pincode;
+			o.lastUpdatedtime = or.lastUpdatedtime;
+			orgs.add(o);
+		}
+		
+		HashMap  <String ,Object> hm = new HashMap();
+		hm.put("orgs", orgs);
+		return ok(Json.toJson(hm));
+		
+	}
+	
+	
+	
+	
+	
+	
+	public  static  Result getAllOnlyUsers(){
+		List<Users> users = Users.getAllOnlyUsers();
         ArrayList<UserVM> uvm = new ArrayList<>();
 		
 		for(Users u : users){
@@ -145,10 +172,65 @@ public class Application extends Controller {
 		HashMap  <String ,Object> hm = new HashMap();
 		hm.put("users", uvm);
 		return ok(Json.toJson(hm));
+	} 
+
+	public static Result getAllUsers(int pageNo){
+		int count = 0;
+		List<Users> users = Users.getAllUsers(pageNo,10);
+		count  = Users.getAllUsersCount(pageNo);
+        ArrayList<UserVM> uvm = new ArrayList<>();
+		
+		for(Users u : users){
+			UserVM uv = new UserVM();
+			uv.firstname = u.firstname;
+			uv.lastname = u.lastname;
+			uv.password = u.password;
+			uv.userId = u.userId;
+			uv.permissions  = u.permissions;
+			uv.lastUpdatedatetime = u.lastUpdatedatetime;
+			uv.oraganization = u.oraganization;
+			uvm.add(uv);
+		}
+
+		HashMap  <String ,Object> hm = new HashMap();
+		hm.put("users", uvm);
+		hm.put("userCount", count);
+		return ok(Json.toJson(hm));
 	}
 	
-	public static Result getAllCattleMaster(){
-		List<CattleMaster> cattleMasters = CattleMaster.getAllCattleMaster();
+	public static Result getAllCattleMaster(int pageNo){
+		int count  = 0;
+		List<CattleMaster> cattleMasters = CattleMaster.getAllCattleMaster(pageNo,10);
+        ArrayList<CattleMasterVM> cmvm = new ArrayList<>();
+		count = CattleMaster.getAllCattleMasterCount(pageNo);
+		
+		for(CattleMaster u : cattleMasters){
+			CattleMasterVM cvm = new CattleMasterVM();
+			cvm.breed = u.breed;
+			cvm.cattleId = u.cattleId;
+			cvm.cattleIdentificationMark =    u.cattleIdentificationMark;
+			cvm.dateofBirth = u.dateofBirth;
+			cvm.gender  = u.gender;
+			cvm.name = u.name;
+			cvm.users = u.users;
+			cvm.oraganization = u.oraganization;
+			cvm.RFID = u.RFID;
+			cvm.parentId  =u.parentId; 
+			
+			cvm.lastUpdateDateTime = u.lastUpdateDateTime;
+			cmvm.add(cvm);
+		}
+
+		HashMap  <String ,Object> hm = new HashMap();
+		hm.put("caters",cmvm);
+		hm.put("userCount", count);
+		
+		return ok(Json.toJson(hm));
+	}
+	
+	
+	public static Result getAllOnlyCattleMaster(){
+		List<CattleMaster> cattleMasters = CattleMaster.getAllOnlyCattleMaster();
         ArrayList<CattleMasterVM> cmvm = new ArrayList<>();
 		
 		for(CattleMaster u : cattleMasters){
@@ -173,9 +255,14 @@ public class Application extends Controller {
 		return ok(Json.toJson(hm));
 	}
 	
-	public static Result getAllChildCattleMaster(int parentId){
-		List<CattleMaster> cattleMasters = CattleMaster.getAllCattleMasterByParentId(parentId);
-        ArrayList<CattleMasterVM> cmvm = new ArrayList<>();
+	
+	
+	public static Result getAllChildCattleMaster(int parentId,int pageno){
+		List<CattleMaster> cattleMasters = CattleMaster.getAllCattleMasterByParentId(parentId,pageno,10);
+        int count = 0;
+        count  = CattleMaster.getAllCattleMasterCount(pageno);
+        
+		ArrayList<CattleMasterVM> cmvm = new ArrayList<>();
 		
 		for(CattleMaster u : cattleMasters){
 			CattleMasterVM cvm = new CattleMasterVM();
@@ -208,12 +295,16 @@ public class Application extends Controller {
 
 		HashMap  <String ,Object> hm = new HashMap();
 		hm.put("caters",cmvm);
+		hm.put("userCount", count);
 		return ok(Json.toJson(hm));
 	}
 	
-	public static Result getAllFeedCattleMaster(){
-		List<CattleFeedMaster> cattleFeedMasters = CattleFeedMaster.getAllFeedCattleMaster();
-        ArrayList<CattleFeedMasterVM> cmvm = new ArrayList<>();
+	public static Result getAllFeedCattleMaster(int pageno){
+		List<CattleFeedMaster> cattleFeedMasters = CattleFeedMaster.getAllFeedCattleMaster(pageno,10);
+        int count  = 0;
+        count  = CattleFeedMaster.getAllFeedCattleMasterCount(pageno);
+        
+		ArrayList<CattleFeedMasterVM> cmvm = new ArrayList<>();
 		
 		for(CattleFeedMaster u : cattleFeedMasters){
 			CattleFeedMasterVM cfvm = new CattleFeedMasterVM();
@@ -228,16 +319,77 @@ public class Application extends Controller {
 			cfvm.oraganization = u.oraganization;
 			cmvm.add(cfvm);
 		}
-
+		HashMap  <String ,Object> hm = new HashMap();
+		hm.put("feedcaters",cmvm);
+		hm.put("userCount", count);
+		return ok(Json.toJson(hm));
+	}
+	
+	
+	public static Result getAllOnlyFeedCattleMaster(){
+		List<CattleFeedMaster> cattleFeedMasters = CattleFeedMaster.getAllOnlyFeedCattleMaster();
+        
+		ArrayList<CattleFeedMasterVM> cmvm = new ArrayList<>();
+		
+		for(CattleFeedMaster u : cattleFeedMasters){
+			CattleFeedMasterVM cfvm = new CattleFeedMasterVM();
+			cfvm.feedFiber = u.feedFiber;
+			cfvm.feedId = u.feedId;
+			cfvm.feedprotine =    u.feedprotine;
+			cfvm.feedType = u.feedType;
+			cfvm.feedVitamins = u.feedVitamins;
+			cfvm.feedWaterContent = u.feedWaterContent;
+			cfvm.lastUpdateDateTime =  u.lastUpdateDateTime;
+			cfvm.users = u.users;
+			cfvm.oraganization = u.oraganization;
+			cmvm.add(cfvm);
+		}
+		
 		HashMap  <String ,Object> hm = new HashMap();
 		hm.put("feedcaters",cmvm);
 		return ok(Json.toJson(hm));
 	}
 		
 	
-	public static Result getAllPregnantCattle(int pregnant){
-		List<PregnantCattle> pregnantCattle = PregnantCattle.getAllPregnantCattle(pregnant);
-        ArrayList<PregnancyCattleVM> cmvm = new ArrayList<>();
+	public static Result getAllPregnantCattle(int pregnant,int pageno){
+		List<PregnantCattle> pregnantCattle = PregnantCattle.getAllPregnantCattle(pregnant,pageno,10);
+        int count = 0;
+        count  = PregnantCattle.getAllPregnantCattleCount(pageno);
+		ArrayList<PregnancyCattleVM> cmvm = new ArrayList<>();
+        CattleMaster cm = new CattleMaster();
+		for(PregnantCattle u : pregnantCattle){
+			PregnancyCattleVM cfvm = new PregnancyCattleVM();
+			
+			cfvm.pregnancyId =  u.pregnancyId;
+			if(u.cattleId != 0 ){
+		     CattleMaster c = cm.getUserByCattleId(u.cattleId);;
+		     cfvm.cattleId = c.cattleId;
+		     cfvm.dateofBirth = c.dateofBirth;
+		     cfvm.name = c.name;
+			}
+			
+			cfvm.lastDeliveryDate =u.lastDeliveryDate ;
+			cfvm.expectedPregnancyDate = u.expectedPregnancyDate;
+			cfvm.firstInseminationDate = u.firstInseminationDate;
+			cfvm.secondInseminationDate = u.secondInseminationDate;
+			cfvm.thirdInseminationDate= u.thirdInseminationDate ;
+			cfvm.actualPregnancyDate = u.actualPregnancyDate;
+			cfvm.expectedDeliveryDate  = u.expectedDeliveryDate;
+			cfvm.milkingStoppingDate = u.milkingStoppingDate;
+			cmvm.add(cfvm);
+		}
+
+		HashMap  <String ,Object> hm = new HashMap();
+		hm.put("caters",cmvm);
+		hm.put("userCount", count);
+		
+		return ok(Json.toJson(hm));
+	}
+		
+	public static Result getAllOnlyPregnantCattle(int pregnant){
+		List<PregnantCattle> pregnantCattle = PregnantCattle.getAllOnlyPregnantCattle(pregnant);
+
+		ArrayList<PregnancyCattleVM> cmvm = new ArrayList<>();
         CattleMaster cm = new CattleMaster();
 		for(PregnantCattle u : pregnantCattle){
 			PregnancyCattleVM cfvm = new PregnancyCattleVM();
@@ -265,11 +417,45 @@ public class Application extends Controller {
 		hm.put("caters",cmvm);
 		return ok(Json.toJson(hm));
 	}
-		
+	
 
 	
-	public static Result getAllCattleIntake(){
-		List<CattleIntake> cattleIntake = CattleIntake.getAllCattleIntake();
+	public static Result getAllCattleIntake(int pageno){
+		List<CattleIntake> cattleIntake = CattleIntake.getAllCattleIntake(pageno,10);
+       int count = 0;
+       count = CattleIntake.getAllCattleIntakeCount(pageno);
+		ArrayList<CattleIntakeVM> cmvm = new ArrayList<>();
+		
+		for(CattleIntake u : cattleIntake){
+			CattleIntakeVM cfvm = new CattleIntakeVM();
+			cfvm.date = u.date;
+			cfvm.deviceID = u.deviceID;
+			cfvm.quantity = u.quantity;
+			cfvm.lastUpdateDateTime =  u.lastUpdateDateTime;
+			cfvm.users = u.users;
+			cfvm.oraganization = u.oraganization;
+			cfvm.cattleFeedMaster = u.CattleFeedMaster;
+			cfvm.cattleId = u.cattleId;
+			cfvm.cattleMaster = u.CattleMaster;
+			cfvm.date = u.date;
+			cfvm.pregnantCattle = u.pregnantCattle;
+			cfvm.actualFeedType =  u.actualFeedType;
+			cfvm.actualFeedName  =  u.actualFeedName;
+			cfvm.expectedFeedType = u.expectedFeedType;
+			cfvm.expectedFeedName = u.expectedFeedName;
+			cfvm.expectedFeedQuantity = u.expectedFeedQuantity;
+			cmvm.add(cfvm);
+		}
+
+		HashMap  <String ,Object> hm = new HashMap();
+		hm.put("catersintake",cmvm);
+		hm.put("userCount", count);
+		return ok(Json.toJson(hm));
+	}
+	
+	
+	public static Result getAllOnlyCattleIntake(){
+		List<CattleIntake> cattleIntake = CattleIntake.getAllOnlyCattleIntake();
         ArrayList<CattleIntakeVM> cmvm = new ArrayList<>();
 		
 		for(CattleIntake u : cattleIntake){
@@ -298,9 +484,12 @@ public class Application extends Controller {
 		return ok(Json.toJson(hm));
 	}
 		
-	public static Result getAllCattleOutput(){
-		List<CattleOutput> cattleOutput = CattleOutput.getAllCattleOutput();
-        ArrayList<CattleOutputVM> cmvm = new ArrayList<>();
+	public static Result getAllCattleOutput(int pageno){
+		List<CattleOutput> cattleOutput = CattleOutput.getAllCattleOutput(pageno,10);
+		int count =0;
+		count  = CattleOutput.getAllCattleOutputCount(pageno);
+		
+		ArrayList<CattleOutputVM> cmvm = new ArrayList<>();
 		
 		for(CattleOutput u : cattleOutput){
 			CattleOutputVM cfvm = new CattleOutputVM();
@@ -321,12 +510,15 @@ public class Application extends Controller {
 
 		HashMap  <String ,Object> hm = new HashMap();
 		hm.put("catersoutput",cmvm);
+		hm.put("userCount", count);
 		return ok(Json.toJson(hm));
 	}
 	
-	public static Result getAllCattleHealth(){
-		List<CattleHealth> cattleHealth = CattleHealth.getAllCattleOutput();
-        ArrayList<CattleHealthVM> cmvm = new ArrayList<>();
+	public static Result getAllCattleHealth(int pageno){
+		List<CattleHealth> cattleHealth = CattleHealth.getAllCattleOutput(pageno,10);
+        int count  = 0;
+        count  = CattleHealth.getAllCattleHealthCount(pageno);
+		ArrayList<CattleHealthVM> cmvm = new ArrayList<>();
 		
 		for(CattleHealth u : cattleHealth){
 			CattleHealthVM cfvm = new CattleHealthVM();
@@ -594,7 +786,6 @@ public class Application extends Controller {
 			PregnancyCattleVM uvm = userinfoMapper.readValue(catJson.traverse(),PregnancyCattleVM.class);
 			PregnantCattle u = PregnantCattle.getPregnantCattleByCattleId(uvm.pregnancyId);
 			if(u !=  null){
-
 				u.setActualPregnancyDate(uvm.actualPregnancyDate);
 				u.setCattleId(uvm.cattleId);
 				u.setExpectedDeliveryDate(uvm.expectedDeliveryDate);
@@ -605,7 +796,7 @@ public class Application extends Controller {
 				u.setPregnancyId(uvm.pregnancyId);
 				u.setSecondInseminationDate(uvm.secondInseminationDate);
 				u.setThirdInseminationDate(uvm.thirdInseminationDate);
-				
+			
 				u.update(u);
 
 			}else{
@@ -1286,6 +1477,15 @@ public class Application extends Controller {
 		hm.put("entities", entities);
 		return ok(Json.toJson(hm));
 	}
+	
+	public static Result  getAllBreeds(){
+		List<Breeds> breeds = Breeds.getAllBreeds();
+		HashMap< String, Object> hm = new HashMap<>();
+		hm.put("breeds", breeds);
+		return ok(Json.toJson(hm));
+	}
+	
+	
 	
 	public static Result checkUserExits(String userId){
 		Users u  = Users.getUserByEmail(userId);
