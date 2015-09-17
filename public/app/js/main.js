@@ -7602,17 +7602,16 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 		$scope.update =  false;
 		$scope.add =  false;
 		$scope.cat = cat;
+		
 		$http.get('/getAllOnlyUsers/?d='+Math.random()).success(function(data) {
 	    	$scope.users = data.users;
 	    	console.log("user s: "+data.users);
 			angular.forEach($scope.users, function(obj, index){
-				angular.forEach($scope.cat.users, function(obj1, index){
-					if ((obj.id == obj1.id)) {
+					if ((obj.userId == $scope.cat.users.userId)) {
 						obj.isSelect = true;
 						console.log(" users  in true");
 						//$scope.userExperience = obj.experianceLevel;
 						};
-					});
 				});
 			});
 		
@@ -7715,18 +7714,21 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 		$scope.update =  false;
 		$scope.add =  false;
 		
+		$http.get('/getuserId/?d='+Math.random()).success(function(data) {
+			$scope.userId = data;
+			
+			});
+		
+		
 		$http.get('/getAllOnlyUsers/?d='+Math.random()).success(function(data) {
 	    	$scope.users = data.users;
 	    	console.log("user s: "+data.users);
 			angular.forEach($scope.users, function(obj, index){
-				angular.forEach($scope.cat.users, function(obj1, index){
-					if ((obj.id == obj1.id)) {
+					if ((obj.userId == $scope.userId)) {
 						obj.isSelect = true;
 						console.log(" users  in true");
 						//$scope.userExperience = obj.experianceLevel;
-					
 						};
-					});
 				});
 			});
 		
@@ -7954,7 +7956,7 @@ App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope
 		console.log(cat);
 		$http.get('/getAllOnlyUsers/?d='+Math.random()).success(function(data) {
 	    	$scope.users = data.users;
-	    	console.log("user s: "+data.users);
+	    	console.log("user s: "+data.users +"$scope.cat.users.userId"+$scope.cat.users.userId);
 			angular.forEach($scope.users, function(obj, index){
 					if ((obj.userId == $scope.cat.users.userId)) {
 						obj.isSelect = true;
@@ -8020,14 +8022,22 @@ App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope
 		$scope.update =  false;
 		$scope.add =  false;
 		
+		$http.get('/getuserId/?d='+Math.random()).success(function(data) {
+			$scope.userId = data;
+			
+			});
+		
+		
 		$http.get('/getAllOnlyUsers/?d='+Math.random()).success(function(data) {
 	    	$scope.users = data.users;
+	    	console.log("user s: "+data.users);
 			angular.forEach($scope.users, function(obj, index){
-					if ((obj.userId == $scope.cat.users.userId)) {
+					if ((obj.userId == $scope.userId)) {
 						obj.isSelect = true;
+						console.log(" users  in true");
+						//$scope.userExperience = obj.experianceLevel;
 						};
-					});
-				
+				});
 			});
 		
 		$http.get('/getAllOnlyOrg/?d='+Math.random()).success(function(data) {
@@ -8370,14 +8380,22 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 		$scope.add =  false;
 		
 		$scope.cat = "";
+		$http.get('/getuserId/?d='+Math.random()).success(function(data) {
+			$scope.userId = data;
+			
+			});
+		
+		
 		$http.get('/getAllOnlyUsers/?d='+Math.random()).success(function(data) {
 	    	$scope.users = data.users;
+	    	console.log("user s: "+data.users);
 			angular.forEach($scope.users, function(obj, index){
-					if ((obj.userId == $scope.cat.users.userId)) {
+					if ((obj.userId == $scope.userId)) {
 						obj.isSelect = true;
+						console.log(" users  in true");
+						//$scope.userExperience = obj.experianceLevel;
 						};
-					});
-				
+				});
 			});
 		
 		$http.get('/getAllOnlyOrg/?d='+Math.random()).success(function(data) {
@@ -8697,13 +8715,22 @@ App.controller('ViewAllCattleOutputController', function ($scope, $rootScope, $r
 		$scope.update =  false;
 		$scope.add =  false;
 		$scope.cat = "";
+		$http.get('/getuserId/?d='+Math.random()).success(function(data) {
+			$scope.userId = data;
+			
+			});
+		
+		
 		$http.get('/getAllOnlyUsers/?d='+Math.random()).success(function(data) {
 	    	$scope.users = data.users;
+	    	console.log("user s: "+data.users);
 			angular.forEach($scope.users, function(obj, index){
-					if ((obj.userId == $scope.cat.users.userId)) {
+					if ((obj.userId == $scope.userId)) {
 						obj.isSelect = true;
+						console.log(" users  in true");
+						//$scope.userExperience = obj.experianceLevel;
 						};
-					});
+				});
 			});
 		
 		$http.get('/getAllOnlyOrg/?d='+Math.random()).success(function(data) {
@@ -9039,13 +9066,22 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope, $r
 		$scope.update =  false;
 		$scope.add =  false;
 		
+		$http.get('/getuserId/?d='+Math.random()).success(function(data) {
+			$scope.userId = data;
+			
+			});
+		
+		
 		$http.get('/getAllOnlyUsers/?d='+Math.random()).success(function(data) {
 	    	$scope.users = data.users;
+	    	console.log("user s: "+data.users);
 			angular.forEach($scope.users, function(obj, index){
-					if ((obj.userId == $scope.cat.users.userId)) {
+					if ((obj.userId == $scope.userId)) {
 						obj.isSelect = true;
+						console.log(" users  in true");
+						//$scope.userExperience = obj.experianceLevel;
 						};
-					});
+				});
 			});
 		
 		$http.get('/getAllOnlyOrg/?d='+Math.random()).success(function(data) {

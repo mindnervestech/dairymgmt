@@ -777,6 +777,11 @@ public class Application extends Controller {
 		return ok("");
 	}
 	
+	public  static Result  getuserId(){
+		String userId = session().get("email");
+		return ok(userId);
+	}
+	
 	public static Result updateCattlePregnancyProfileByAdmin(){
 		JsonNode json = request().body().asJson();
 		JsonNode catJson = json.get("cat");
