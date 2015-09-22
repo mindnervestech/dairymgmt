@@ -584,7 +584,7 @@ public class Application extends Controller {
 					}
 				}
 				
-				JsonNode permissionJson = json.path("permList");
+				
 				JsonNode org = json.path("org");
 				System.out.println(org);
 				if(org.toString() != ""){
@@ -594,19 +594,22 @@ public class Application extends Controller {
 					}
 					
 				}
-				
-				if(permissionJson != null){
-					ArrayNode perms = (ArrayNode) permissionJson;
-					for (int j = 0; j < perms.size(); j++) {
-						String position = perms.get(j).asText();
-					    Permissions p = new Permissions();
-					    p.access = "W";
-					    p.permissionName = position;
-					    p.users = Users.getUserByEmail(uvm.userId);
-					    p.save();
-					    u.permissions.add(p);
+				if(json.path("permList")!= null && json.path("permList").size() != 0){
+					JsonNode permissionJson = json.path("permList");
+					if(permissionJson != null){
+						ArrayNode perms = (ArrayNode) permissionJson;
+						for (int j = 0; j < perms.size(); j++) {
+							String position = perms.get(j).asText();
+						    Permissions p = new Permissions();
+						    p.access = "W";
+						    p.permissionName = position;
+						    p.users = Users.getUserByEmail(uvm.userId);
+						    p.save();
+						    u.permissions.add(p);
+						}
 					}
 				}
+				
 
 				u.setFirstname(uvm.firstname);
 				u.lastname =   uvm.lastname;
@@ -638,19 +641,21 @@ public class Application extends Controller {
 				}
 				//u.oraganization.update(org);
 				
-				JsonNode permissionJson = json.path("permList");
-				if(permissionJson != null){
-					ArrayNode perms = (ArrayNode) permissionJson;
-					for (int j = 0; j < perms.size(); j++) {
-						String position = perms.get(j).asText();
-					    Permissions p = new Permissions();
-					    p.access = "W";
-					    p.permissionName = position;
-					    p.users = Users.getUserByEmail(uvm.userId);
-					    p.save();
-					    u.permissions.add(p);
+				if(json.path("permList") != null){
+					JsonNode permissionJson = json.path("permList");
+					if(permissionJson != null){
+						ArrayNode perms = (ArrayNode) permissionJson;
+						for (int j = 0; j < perms.size(); j++) {
+							String position = perms.get(j).asText();
+						    Permissions p = new Permissions();
+						    p.access = "W";
+						    p.permissionName = position;
+						    p.users = Users.getUserByEmail(uvm.userId);
+						    p.save();
+						}
 					}
 				}
+				
 				u.update();
 			}
 		} catch (JsonParseException e1) {
