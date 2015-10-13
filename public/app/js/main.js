@@ -9412,6 +9412,7 @@ App.controller('ViewAllUsersController', function ($scope, $rootScope, $routePar
 		$('#editUserDetails').modal();
 		
 		setTimeout(function(){
+			   $('#pre-selected-options').multiSelect('refresh');
 	           $('#pre-selected-options').multiSelect();
 	       },500);
 	}
