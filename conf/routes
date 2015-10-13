@@ -45,6 +45,8 @@ GET      /getAllOnlyPregnantCattle/:pregnantCattleId      com.mnt.dairymgnt.cont
 GET      /getAllBreeds/                                   com.mnt.dairymgnt.controllers.Application.getAllBreeds()
 POST     /updateCattlePregnancyProfileByAdmin             com.mnt.dairymgnt.controllers.Application.updateCattlePregnancyProfileByAdmin()               
 GET      /getuserId/                                        com.mnt.dairymgnt.controllers.Application.getuserId()
+GET      /getAllKPIMaster/                                   com.mnt.dairymgnt.controllers.Application.getAllKPIMaster()
+POST      /updateandsaveKPIMaster                        com.mnt.dairymgnt.controllers.Application.updateandsaveKPIMaster()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               					controllers.Assets.at(path="/public", file)

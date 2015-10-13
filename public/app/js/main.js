@@ -111,7 +111,7 @@ App.config(function ($routeProvider) {
        .when('/allCattleHealth', { templateUrl: 'assets/app/templates/states/cattleHealth.html', controller: 'ViewAllCattleHealthController'})
        .when('/allChildCattle', { templateUrl: 'assets/app/templates/states/childCattle.html', controller: 'ViewAllCattleChildMasterController'})
         .when('/allPregnantCatttle', { templateUrl: 'assets/app/templates/states/pregnantCattle.html', controller: 'ViewAllPregnantCattleController'})
-       
+       .when('/allKPIMaster', { templateUrl: 'assets/app/templates/states/kpiMaster.html', controller: 'ViewAllKPIMasterController'})
        .when('/extra-signin', { templateUrl: 'assets/app/templates/states/extra-signin.html', controller: 'ExtraSigninController'})
         .when('/extra-signup', { templateUrl: 'assets/app/templates/states/extra-signup.html', controller: 'ExtraSignupController'})
         .when('/extra-lock-screen', { templateUrl: 'assets/app/templates/states/extra-lock-screen.html', controller: 'ExtraLockScreenController'})
@@ -8431,6 +8431,63 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 	
 });
 
+
+
+
+App.controller('ViewAllKPIMasterController', function ($scope, $rootScope, $routeParams, $http, $upload){
+	 
+	
+	//Get all KPI master to admin
+	 $scope.email;
+	 $scope.pageno = 0;
+	 $scope.activeusercount = 0;
+     $scope.getAllKPIMaster = function(){
+
+		$scope.update =  false;
+		$scope.add =  false;
+		$scope.kpvm = {};
+		$http.get('/getAllKPIMaster/')
+		.success(function(data){
+			if(data) {
+				$scope.kpvm = data.kpvm;
+				$scope.activeusercount = data.activeusercount;
+				if(data.userCount <= 10){
+					$('#next1').hide();
+					$('#next').hide();
+					//$scope.JobPre  = parseInt($scope.totalJobs);
+				}else{
+					$('#next1').show();
+					$('#next').show();
+				//	$scope.JobPre= 10;
+				}
+			} 
+		});
+		
+		if($scope.pageno <= 0){
+			$('#pre').hide();
+			$('#pre1').hide();
+		}else{
+			$('#pre').show();
+			$('#pre1').show();
+		}
+	}
+     
+     $scope.updateandsaveKPIMaster = function(kpvm){
+    	 $scope.kpvm = kpvm;
+    	 console.log($scope.kpvm);
+    	 var arr = [1,2,3];
+    	 $http({url:'/updateandsaveKPIMaster',method:'POST',data:{kpvm12: kpvm}})
+ 		.success(function(data){
+ 			$scope.updateSuccess = true;
+ 			$http.get('/getAllKPIMaster/')
+ 				.success(function(data) {
+ 					$scope.kpvm = data.kpvm;
+ 					$scope.update =  true;
+ 				});
+ 		});
+     }
+	
+});
 
 App.controller('ViewAllCattleOutputController', function ($scope, $rootScope, $routeParams, $http, $upload){
 	// get all Cattle master to admin

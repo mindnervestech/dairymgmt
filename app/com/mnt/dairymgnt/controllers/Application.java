@@ -2,6 +2,7 @@ package com.mnt.dairymgnt.controllers;
 
 import java.io.IOException;
 
+
 import java.util.ArrayList;
 
 import java.util.Date;
@@ -36,6 +37,7 @@ import com.mnt.dairymgnt.VM.CattleIntakeVM;
 import com.mnt.dairymgnt.VM.CattleMasterVM;
 import com.mnt.dairymgnt.VM.CattleOutputVM;
 import com.mnt.dairymgnt.VM.ChildCattleVM;
+import com.mnt.dairymgnt.VM.KPIMasterVM;
 import com.mnt.dairymgnt.VM.OrgnizationVM;
 import com.mnt.dairymgnt.VM.PregnancyCattleVM;
 import com.mnt.dairymgnt.VM.UserVM;
@@ -47,6 +49,8 @@ import com.mnt.dairymgnt.models.CattleMaster;
 import com.mnt.dairymgnt.models.CattleOutput;
 import com.mnt.dairymgnt.models.ChildCattle;
 import com.mnt.dairymgnt.models.Entities;
+import com.mnt.dairymgnt.models.KPIMaster;
+import com.mnt.dairymgnt.models.KPIName;
 import com.mnt.dairymgnt.models.Oraganization;
 import com.mnt.dairymgnt.models.Permissions;
 import com.mnt.dairymgnt.models.PregnantCattle;
@@ -648,7 +652,11 @@ public class Application extends Controller {
 					    p.permissionName = position;
 					    p.users = Users.getUserByEmail(uvm.userId);
 					    p.save();
-					    u.permissions.add(p);
+					    
+					    if(p != null){
+					    	 u.permissions.add(p);
+					    }
+					   
 					}
 				}
 				u.update();
@@ -1541,6 +1549,96 @@ public class Application extends Controller {
 	    
 		map.put("user", uv);
 		return ok(Json.toJson(map));
+	}
+	
+	public static Result getAllKPIMaster(){
+		HashMap<String,Object>  map  = new HashMap<>();
+		
+		KPIMasterVM kpvm = new KPIMasterVM();
+		
+		List<KPIMaster> KPIMasters = KPIMaster.getAllKPIMaster();
+		
+  		List<KPIName>  kpiname = KPIName.getAllKPIName();
+
+  	      for(KPIMaster  kp:KPIMasters ){
+  	    	KPIMasterVM kpm = new KPIMasterVM();
+  	    	kpm.kpiId = kp.kpiId;
+  	    	kpm.KPIDesc = kp.KPIDesc;
+  	    	kpm.kpiValue = kp.kpiValue;
+  	    	kpm.KPIName = kp.KPIName;
+  	    	
+  	    	kpm.CycleDaysBetweenInsemination = kpiname.get(0).CycleDaysBetweenInsemination;
+  	    	kpm.DaysbyWhenCalvsCanbeInseminated = kpiname.get(0).DaysbyWhenCalvsCanbeInseminated;
+  	    	
+  	    	kpm.DaysbyWhenCalvscanProduceMilk = kpiname.get(0).DaysbyWhenCalvscanProduceMilk;
+  	    	
+  	    	kpm.DaysOfPregnancy = kpiname.get(0).DaysOfPregnancy;
+  	    	
+  	    	kpm.DaysofStopMilkingBreedWisePreDelivery = kpiname.get(0).DaysofStopMilkingBreedWisePreDelivery;
+  	    	
+  	    	kpm.MonthsOfMilkingPerCattleBreedwiseafterDelivery = kpiname.get(0).MonthsOfMilkingPerCattleBreedwiseafterDelivery;
+  	    	
+  	    	kpm.noOfClavesPerYear = kpiname.get(0).noOfClavesPerYear;
+  	    	kpm.ReadyforInseminationDaysAfterDelivery = kpiname.get(0).ReadyforInseminationDaysAfterDelivery;
+  	    	kpm.TotalNoOfCalvesPerCattle = kpiname.get(0).TotalNoOfCalvesPerCattle;
+  	    	kpvm = kpm;
+  	      }
+	map.put("kpvm", kpvm);
+	return ok(Json.toJson(map));
+	} 
+	
+	public static Result updateandsaveKPIMaster(){
+		List<KPIMaster> KPIMasters = KPIMaster.getAllKPIMaster();
+
+		for(KPIMaster k: KPIMasters){
+			k.delete();
+		}
+		
+  		List<KPIName>  kpiname1 = KPIName.getAllKPIName();
+
+  		 for(KPIName k: kpiname1){
+		 	k.delete();
+		 }
+  		
+  		JsonNode json = request().body().asJson();
+  		System.out.println(json);
+		
+  		JsonNode kpvmJson = json.get("kpvm12");
+		try{
+		ObjectMapper userinfoMapper = new ObjectMapper();
+		ObjectMapper mapper = new ObjectMapper();
+        
+         		KPIMasterVM   kp = userinfoMapper.readValue(kpvmJson.traverse(),KPIMasterVM.class);
+				KPIMaster kpm = new KPIMaster();
+	  	    	
+				kpm.kpiId = kp.kpiId;
+	  	    	kpm.KPIDesc = kp.KPIDesc;
+	  	    	kpm.kpiValue = kp.kpiValue;
+	  	    	kpm.KPIName = kp.KPIName;
+	  	    	kpm.save();
+
+	  	    	KPIName kpiname = new KPIName();
+	  	    	kpiname.CycleDaysBetweenInsemination = kp.CycleDaysBetweenInsemination;
+	  	    	kpiname.DaysbyWhenCalvsCanbeInseminated = kp.DaysbyWhenCalvsCanbeInseminated;
+	  	    	kpiname.DaysbyWhenCalvscanProduceMilk = kp.DaysbyWhenCalvscanProduceMilk;
+	  	    	kpiname.DaysOfPregnancy = kp.DaysOfPregnancy;
+	  	    	kpiname.DaysofStopMilkingBreedWisePreDelivery = kp.DaysofStopMilkingBreedWisePreDelivery;
+	  	    	kpiname.MonthsOfMilkingPerCattleBreedwiseafterDelivery = kp.MonthsOfMilkingPerCattleBreedwiseafterDelivery;
+	  	    	kpiname.noOfClavesPerYear = kp.noOfClavesPerYear;
+	  	    	kpiname.ReadyforInseminationDaysAfterDelivery = kp.ReadyforInseminationDaysAfterDelivery;
+	  	    	kpiname.TotalNoOfCalvesPerCattle = kp.TotalNoOfCalvesPerCattle;
+	  	    	kpiname.save();
+		} catch (JsonParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (JsonMappingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+	  	    	return ok("");
 	}
 }
 	

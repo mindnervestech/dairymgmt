@@ -1,0 +1,543 @@
+<style>
+.Color {
+	color: green
+}
+
+.redColor {
+	color: red
+}
+
+.btn-success-custom {
+	color: white;
+	background-color: #21205f;
+}
+
+.btn-success-custom:hover {
+	color: white;
+	background-color: #999999;
+}
+</style>
+ <!-- ... -->
+ <div class="row">
+	<div class="col-lg-12">
+		<div class="portlet box" style="min-height: 500px;">
+			<div class="">
+				<div class="caption"> KPI Master</div>
+			</div>
+			
+			<div class="portlet-body" ng-init="init();" style="overflow-x: auto;">
+				<span ng-if="add == true" style="color:green;">Record Added Successfully.</span>
+			<span ng-if="update == true" style="color:green;">Record Updated  Successfully.</span>
+			
+				<div class="row mbm">
+					<div class="col-lg-12">
+						<!-- {{jobs}} -->
+						<div>
+							 <!-- <div class="pull-left">
+								<span>
+									<button class="btn btn-success-custom" data-toggle="tooltip"
+										data-placement="bottom" title="Add new  feed Cattle"
+											ng-click="addnewfeedCattle();" ng-if = "CattleHealth == true">Add </button>
+								</span>
+
+							</div>
+							 -->
+						</div>
+						<div class="pull-right"></div>
+						
+						<div ng-init="getAllKPIMaster()" class="table-responsive">
+							<div class="page-header">
+	
+	                   <div class = "col-md-12" style="margin-top:1%">
+		                   	
+		                   	<div class ="col-md-6"><b>No Of Claves Per Year</b> </div>
+		                   	<div class ="col-md-6" > 
+		                   	<input type="text" ng-model = "kpvm.noOfClavesPerYear" />
+		                   	</div>
+	    	               </div>
+	    	           <div class = "col-md-12" style="margin-top:1%">
+		                   
+	    	               <div class ="col-md-6"><b> Months Of Milking Per Cattle Breed wise after Delivery</b></div>
+	        	           	<div class ="col-md-6" ng-model = "kpvm.MonthsOfMilkingPerCattleBreedwiseafterDelivery">
+	        	           	<input type="text"/>
+	        	           	 </div>
+	            	   </div>
+	            	   <div class = "col-md-12" style="margin-top:1%">
+		                   
+	                	   <div class ="col-md-6"> <b>Total No Of Calves Per Cattle</b></div>
+	                   		<div class ="col-md-6" ng-model = "kpvm.TotalNoOfCalvesPerCattle">
+	                   		<input type="text"/>
+	                   		 </div>
+	                   </div>
+	                   <div class = "col-md-12" style="margin-top:1%">
+	
+	                   		<div class ="col-md-6"> <b>Days Of Pregnancy</b></div>
+	                   		<div class ="col-md-6" ng-model = "kpvm.DaysOfPregnancy"> 
+	                   		<input type="text"/>
+	                   		</div>
+	                   </div>
+	                   <div class = "col-md-12" style="margin-top:1%">
+		               
+	                   		<div class ="col-md-6"><b> Cycle Days Between Insemination</b></div>
+	                   		<div class ="col-md-6" >
+	                   		<input type="text" ng-model = "kpvm.CycleDaysBetweenInsemination"/>
+	                   		 </div>
+	                   </div>
+	                   <div class = "col-md-12" style="margin-top:1%">
+		               
+	                   		<div class ="col-md-6"><b>Days by When Calvs Can be Inseminated</b> </div>
+	                   		<div class ="col-md-6" > 
+	                   		<input type="text" ng-model = "kpvm.DaysbyWhenCalvsCanbeInseminated"/>
+	                   		</div>
+	                   
+	                   </div>
+	                    <div class = "col-md-12" style="margin-top:1%">
+		               
+	                   		<div class ="col-md-6"><b>Days by When Calv scan Produce Milk</b> </div>
+	                   		<div class ="col-md-6" style="margin-top:1%">
+	                   		<input type="text" ng-model = "kpvm.DaysbyWhenCalvscanProduceMilk" />
+	                   		 </div>
+	                   
+	                   </div>
+	                    <div class = "col-md-12" style="margin-top:1%">
+	                   		<div class ="col-md-6" > <b>Days of Stop Milking Breed Wise Pre Delivery</b> </div>
+	                   		<div class ="col-md-6" > 
+	                   		<input type="text" ng-model = "kpvm.DaysofStopMilkingBreedWisePreDelivery"/>
+	                   		</div>
+	                   </div>
+
+	                    <div class = "col-md-12" style="margin-top:1%"> 
+	                   		<div class ="col-md-6"><b>Ready for Insemination Days After Delivery </b></div>
+	                   		<div class ="col-md-6" >
+	                   		<input type="text" ng-model = "kpvm.ReadyforInseminationDaysAfterDelivery"/>
+	                   		 </div>
+	                   </div>
+	                   
+	                   <div class="pull-right" style="margin-right: 23%;">
+								<button type="submit" ng-click="updateandsaveKPIMaster(kpvm);"
+									class="btn btn-success-custom" >Save</button>
+								&nbsp;
+								
+								<!-- <button type="button" class="btn btn-default">Cancel</button> -->
+							</div>
+	                   </div>
+	
+								
+						<!-- 	</div>
+						 <div class="pull-right">
+								<button id="pre" type="button" ng-click="clickPre()"
+									class="btn btn-success-custom">
+									<i class="glyphicon glyphicon-arrow-left"></i>
+								</button>
+								&nbsp;
+								<button id="next" type="button" ng-click="clickNext()"
+									class="btn btn-success-custom">
+									<i class="glyphicon glyphicon-arrow-right"></i>
+								</button>
+							</div>  -->
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	 <script type="text/javascript">
+	 $('.datepickerid').datepicker({
+		    format: 'mm/dd/yyyy',
+		    startDate: '-3d'
+		})
+        </script>
+	
+</div>
+
+<!-- Modal Edit user details-->
+<div class="modal fade" id="editfeedCatdersDetails" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Edit  Cattle Health</h4>
+			</div>
+			<div class="modal-body">
+				<div class = "col-md-12">
+				<div class = "col-md-6">
+					
+						<div class="col-md-10">
+  							<label for="usr">Medication Type </label>
+  							<input type="text" ng-model = "cat.medicationType" class="form-control" id="medicationType">
+						</div>	
+				
+						<div class="col-md-10">
+  							<label for="usr">Medication Name</label>
+  							<input type="text" ng-model = "cat.medicationName" class="form-control" id="medicationName">
+						</div>
+				
+					<div class="col-md-10">
+										<div class="">
+											<div class="">
+												<div class="input-group">
+												<span>Medication Start Date </span>
+													 <input type="text" ng-model="cat.medicationStartDate"
+														name="dob" class="form-control " id="medicationStartDate"
+														 ng-click="medicationStartDatepicker();"
+														style="font-size: 12px;" required>
+												</div>
+											</div>
+									</div>
+					</div>
+						<!-- <div class="col-md-12">
+  							<label for="usr">Medication Start Date </label>
+  							<input type="text" ng-model = "cat.medicationStartDate" class="form-control" id="medicationStartDate">
+						</div>
+						 -->
+						
+						<div class="col-md-10">
+										<div class="">
+											<div class="">
+												<div class="input-group">
+												<span>Medication End Date </span>
+													 <input type="text" ng-model="cat.medicationEnddate"
+														name="dob" class="form-control " id="medicationEnddate"
+														 ng-click="medicationEnddatepicker();"
+														style="font-size: 12px;" required>
+												</div>
+											</div>
+									</div>
+					</div>
+					<!-- 	<div class="col-md-12">
+  							<label for="usr">Medication End Date </label>
+  							<input type="text" ng-model = "cat.medicationEnddate" class="form-control" id="medicationEnddate">
+						</div>	 -->
+						
+						<!-- <div class="col-md-12">
+  							<label for="usr">Pregnant </label>
+  							<input type="text" ng-model = "cat.pregnant" class="form-control" id="pregnant">
+						</div>	
+						 -->
+						
+						<div class="col-md-10" style="margin-top:1%;margin-left: -4%;">
+		              <label class="control-label col-md-8">Pregnant</label>
+		              <div class="col-md-12">
+			                <select id = "use"  data-ng-model="cat.pregnant" class = "col-md-5"  style="    width: 110%;">
+			                 <option value="true"  ng-selected = "cat.pregnant == true">Y</option>
+			                  <option value="false"  ng-selected = "cat.pregnant == false">N</option>
+			                </select>
+	            		</div>   
+	            	</div>
+						
+						</div>
+						<div class = "col-md-6	">
+						
+						<!-- <div class="col-md-12">
+  							<label for="usr">Pregnancy Date </label>
+  							<input type="text" ng-model = "cat.pregnancyDate" class="form-control" id="pregnancyDate">
+						</div>	
+						 -->
+						<div class="col-md-10">
+										<div class="">
+											<div class="">
+												<div class="input-group">
+												<span>Pregnancy Date </span>
+													 <input type="text" ng-model="cat.pregnancyDate"
+														name="dob" class="form-control " id="pregnancyDate"
+														 ng-click="pregnancyDatepicker();"
+														style="font-size: 12px;" required>
+												</div>
+											</div>
+									</div>
+					</div>
+						
+						<!-- <div class="col-md-12">
+  							<label for="usr">Last Delivaery date </label>
+  							<input type="text" ng-model = "cat.lastDelivaerydate" class="form-control" id="lastDelivaerydate">
+						</div>	 -->	
+					
+					<div class="col-md-9">
+										<div class="">
+											<div class="">
+												<div class="input-group" style="    width: 102%;">
+												<span>Last Delivary date </span>
+													 <input type="text" ng-model="cat.lastDelivaerydate"
+														name="dob" class="form-control " id="lastDelivaerydate"
+														 ng-click="lastDelivaerydatepicker();"
+														style="font-size: 12px;" required>
+												</div>
+											</div>
+									</div>
+					</div>
+					
+					
+				<!-- 	
+					<div class="col-md-12">
+  							<label for="usr">Due Date </label>
+  							<input type="text" ng-model = "cat.duedate" class="form-control" id="duedate">
+						</div>	 -->
+						
+					<div class="col-md-10">
+										<div class="">
+											<div class="">
+												<div class="input-group col-md-11">
+												<span>Due date </span>
+													 <input type="text" ng-model="cat.duedate"
+														name="duedate" class="form-control " id="duedate"
+														 ng-click="duedatepicker();"
+														style="font-size: 12px;" required>
+												</div>
+											</div>
+									</div>
+					</div>
+						<!-- <div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
+		              <label class="control-label col-md-8">Select Orgnization</label>
+		              <div class="col-md-12"> 
+			                <select id = "org"  data-ng-model="org" class="col-md-5" style="width:110%;">
+			                 <option ng-repeat="o in orgs" value="{{o.orgId}}"   ng-selected="o.isSelect  == true">{{o.name}}</option>
+			                </select>
+	            		</div>   
+	            	</div> -->
+						<div class="col-md-10" style="margin-top:1%;margin-left:-4%;">
+		              <label class="control-label col-md-8">Select User Id</label>
+		              <div class="col-md-11">
+			                <select id = "use"  data-ng-model="userId" class="col-md-5" style="width:110%;">
+			                 <option ng-repeat="u in users" value="{{u.userId}}"   ng-selected="u.isSelect  == true">{{u.userId}}</option>
+			                </select>
+	            		</div>   
+	            	</div>
+	            	</div>
+	            	</div>
+						<div class="form-actions">
+							<div class="pull-right">
+								<button type="submit" ng-click="updateCattleHealthProfileByAdmin(cat);"
+									class="btn btn-success-custom" ng-if = "CattleHealth == true">Update</button>
+								&nbsp;
+								<button type="button" class="btn btn-success-custom"
+									data-dismiss="modal">Close</button>
+								&nbsp;
+								<!-- <button type="button" class="btn btn-default">Cancel</button> -->
+							</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+<!-- Add new user model  -->
+<!-- Modal Edit user details-->
+<div class="modal fade" id="addnewfeedCattle" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Add  Cattle Health</h4>
+			</div>
+			<div class="modal-body">
+				<div class = "col-md-12">
+				<div class = "col-md-6">
+					
+						<div class="col-md-10">
+  							<label for="usr">Medication Type </label>
+  							<input type="text" ng-model = "cat.medicationType" class="form-control" id="medicationType">
+						</div>	
+				
+						<div class="col-md-10">
+  							<label for="usr">Medication Name</label>
+  							<input type="text" ng-model = "cat.medicationName" class="form-control" id="medicationName">
+						</div>
+				
+					<div class="col-md-10">
+										<div class="">
+											<div class="">
+												<div class="input-group">
+												<span>Medication Start Date </span>
+													 <input type="text" ng-model="cat.medicationStartDate"
+														name="dob" class="form-control " id="medicationStartDatenew"
+														 ng-focus="medicationStartDatepickernew();"
+														style="font-size: 12px;" required>
+												</div>
+											</div>
+									</div>
+					</div>
+						<!-- <div class="col-md-12">
+  							<label for="usr">Medication Start Date </label>
+  							<input type="text" ng-model = "cat.medicationStartDate" class="form-control" id="medicationStartDate">
+						</div>
+						 -->
+						
+						<div class="col-md-10">
+										<div class="">
+											<div class="">
+												<div class="input-group">
+												<span>Medication End Date </span>
+													 <input type="text" ng-model="cat.medicationEnddate"
+														name="dob" class="form-control " id="medicationEnddatenew"
+														 ng-focus="medicationEnddatepickernew();"
+														style="font-size: 12px;" required>
+												</div>
+											</div>
+									</div>
+					</div>
+					<!-- 	<div class="col-md-12">
+  							<label for="usr">Medication End Date </label>
+  							<input type="text" ng-model = "cat.medicationEnddate" class="form-control" id="medicationEnddate">
+						</div>	 -->
+						
+						<!-- <div class="col-md-12">
+  							<label for="usr">Pregnant </label>
+  							<input type="text" ng-model = "cat.pregnant" class="form-control" id="pregnant">
+						</div> -->
+						
+						<div class="col-md-10" style="margin-top:1%;margin-left: -4%;">
+		              <label class="control-label col-md-8">Pregnant</label>
+		              <div class="col-md-12">
+			                <select id = "use"  data-ng-model="cat.pregnant" class = "col-md-5"  style="    width: 110%;">
+			                 <option value="true"  ng-selected = "cat.pregnant == true">Y</option>
+			                  <option value="false"  ng-selected = "cat.pregnant == false">N</option>
+			                </select>
+	            		</div>   
+	            	</div>	
+						
+						</div>
+						<div class = "col-md-6	">
+						
+						<!-- <div class="col-md-12">
+  							<label for="usr">Pregnancy Date </label>
+  							<input type="text" ng-model = "cat.pregnancyDate" class="form-control" id="pregnancyDate">
+						</div>	
+						 -->
+						<div class="col-md-12">
+										<div class="">
+											<div class="">
+												<div class="input-group ">
+												<span>Pregnancy Date </span>
+													 <input type="text" ng-model="cat.pregnancyDate"
+														name="dob" class="form-control " id="pregnancyDatenew"
+														 ng-focus="pregnancyDatepickernew();"
+														style="font-size: 12px;" required>
+												</div>
+											</div>
+									</div>
+					</div>
+						
+						
+						<!-- <div class="col-md-12">
+  							<label for="usr">Last Delivaery date </label>
+  							<input type="text" ng-model = "cat.lastDelivaerydate" class="form-control" id="lastDelivaerydate">
+						</div>	 -->	
+					
+					<div class="col-md-9">
+										<div class="">
+											<div class="">
+												<div class="input-group"  style="    width: 102%;">
+												<span>Last Delivary date </span>
+													 <input type="text" ng-model="cat.lastDelivaerydate"
+														name="dob" class="form-control " id="lastDelivaerydatenew"
+														 ng-focus="lastDelivaerydatepickernew();"
+														style="font-size: 12px;" required>
+												</div>
+											</div>
+									</div>
+					</div>
+					
+				<!-- 	
+					<div class="col-md-12">
+  							<label for="usr">Due Date </label>
+  							<input type="text" ng-model = "cat.duedate" class="form-control" id="duedate">
+						</div>	 -->
+						
+					<div class="col-md-10">
+										<div class="">
+											<div class="">
+												<div class="input-group col-md-11">
+												<span>Due date </span>
+													 <input type="text" ng-model="cat.duedate"
+														name="dob" class="form-control " id="duedatenew"
+														 ng-focus="duedatepickernew();"
+														style="font-size: 12px;" required>
+												</div>
+											</div>
+									</div>
+					</div>
+						<!-- <div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
+		              <label class="control-label col-md-8">Select Orgnization</label>
+		              <div class="col-md-12"> 
+			                <select id = "org"  data-ng-model="org" class="col-md-5" style="width:110%;">
+			                 <option ng-repeat="o in orgs" value="{{o.orgId}}"   ng-selected="o.isSelect  == true">{{o.name}}</option>
+			                </select>
+	            		</div>   
+	            	</div> -->
+						<div class="col-md-10" style="margin-top:1%;margin-left:-4%;">
+		              <label class="control-label col-md-8">Select User Id</label>
+		              <div class="col-md-11">
+			                <select id = "use"  data-ng-model="userId" class="col-md-5" style="width:110%;">
+			                 <option ng-repeat="u in users" value="{{u.userId}}"   ng-selected="u.isSelect  == true">{{u.userId}}</option>
+			                </select>
+	            		</div>   
+	            	</div>
+	            	</div>
+	            	</div>
+						<div class="form-actions">
+							<div class="pull-right" style="margin-top:2%;">
+								<button type="submit" ng-click="addCattleHealthProfileByAdmin(cat);"
+									class="btn btn-success-custom" ng-if = "CattleHealth == true">Save</button>
+								&nbsp;
+								<button type="button" class="btn btn-success-custom"
+									data-dismiss="modal">Close</button>
+								&nbsp;
+								<!-- <button type="button" class="btn btn-default">Cancel</button> -->
+							</div>
+				</div>
+			</div>
+			
+			
+		</div>
+	</div>
+	
+</div>
+
+<style type="text/css">
+.modal .modal-dialog {
+	width: 70%;
+}
+
+.modal .modal-body {
+	max-height: 500px;
+	overflow-y: auto;
+}
+fieldset.scheduler-border {
+	border: 1px groove !important;
+	padding: 0 1.4em 1.4em 1.4em !important;
+	margin: 0 0 1.5em 0 !important;
+	-webkit-box-shadow: 0px 0px 0px 0px #000;
+	box-shadow: 0px 0px 0px 0px #000;
+	border-color: #darkgrey;
+}
+
+legend.scheduler-border {
+	font-size: 1.0em !important;
+	text-align: left !important;
+	width: inherit;
+	padding: 0 10px;
+	border-bottom: none;
+	color: darkgray;
+}
+
+.clsDatePicker {
+	z-index: 100000;
+}
+</style>
+
+<style>
+.datepicker {
+	z-index: 1151 !important;
+}
+</style>
