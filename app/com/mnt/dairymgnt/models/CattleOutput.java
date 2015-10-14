@@ -200,7 +200,6 @@ public class CattleOutput extends Model {
 
 	public static CattleOutput getUserByCattleId(int cattleId){
 		return find.where().eq("cattleId", cattleId).findUnique();
-		
 	}
 
 
