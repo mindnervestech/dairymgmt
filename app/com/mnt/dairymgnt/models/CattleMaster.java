@@ -221,6 +221,13 @@ public class CattleMaster extends Model {
 				.findList();
 	}
 	
+	public static List<CattleMaster> getAllCattleMasterReport(int pageNumber, int rowperpage) {
+		// TODO Auto-generated method stub
+		return find.where().setFirstRow(pageNumber * 10).setMaxRows(rowperpage)
+				.findList();
+	}
+	
+	
 	@JsonIgnore
 	public static int getAllCattleMasterCount(int pageNumber) {
 		// TODO Auto-generated method stub

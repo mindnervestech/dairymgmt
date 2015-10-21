@@ -1,5 +1,6 @@
 package com.mnt.dairymgnt.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -11,7 +12,11 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 
 import com.avaje.ebean.Ebean;
+import com.avaje.ebean.RawSql;
+import com.avaje.ebean.RawSqlBuilder;
+import com.avaje.ebean.SqlRow;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.mnt.dairymgnt.VM.CattleOutputVMs;
 
 import play.db.ebean.Model;
 import play.db.ebean.Model.Finder;
@@ -202,12 +207,68 @@ public class CattleOutput extends Model {
 		return find.where().eq("cattleId", cattleId).findUnique();
 	}
 
-
 	@JsonIgnore
 	public static List<CattleOutput> getAllCattleOutput(int pageNumber,int rowperpage){
 		return find.setFirstRow(pageNumber * 10).setMaxRows(rowperpage)
 				.findList();
 	}
+	
+	@JsonIgnore
+	public static List<CattleOutputVMs> getAllCattleOutputReport(int pageNumber,int rowperpage){
+		 String sql = "select sum(co.quantity) as quantity, sum(co.expected_milk_quantity) as expectedQuntity, cm.breed as breed  from cattle_output as co inner join cattle_master as cm on  co.cattle_master_cattle_id = cm.cattle_id  group by cm.breed;";
+		 RawSql rawSql = RawSqlBuilder.parse(sql).create();
+		 List<SqlRow> rawSqls = Ebean.createSqlQuery(sql).findList();
+		 ArrayList<CattleOutputVMs> cmvm = new ArrayList<>();
+			
+		 for(SqlRow row:rawSqls) {
+		      CattleOutputVMs cfvm = new CattleOutputVMs();
+			  cfvm.CattleName = row.getString("breed");
+					//cfvm.deviceID = u.deviceID;
+			  cfvm.actualMilkQuantity = row.getInteger("quantity");
+			  cfvm.expectedMilkQuantity = row.getInteger("expectedQuntity"); 
+					//cfvm.SNFContent = u.SNFContent;
+					//cfvm.fatContent = u.fatContent;
+					//cfvm.lastUpdateDateTime =  u.LastUpdateDateTime;
+				    //cfvm.users = u.users;
+			    	//cfvm.oraganization = u.oraganization;
+					//cfvm.cattleId = u.CattleMaster.getBreed();
+					//cfvm.CattleName = u.CattleMaster.getName();
+				    //cfvm.cattleMaster = u.CattleMaster;
+					//cfvm.pregnantCattle = u.pregnantCattle;
+			 cmvm.add(cfvm);
+		 }
+		return  cmvm;
+	}
+	
+	@JsonIgnore
+	public static List<CattleOutputVMs> getAllCattleOutputReportBreed(){
+		 String sql = "select co.quantity as quantity, co.expected_milk_quantity as expectedQuntity, cm.breed as breed,cm.name as cattlename  from cattle_output as co inner join cattle_master as cm on  co.cattle_master_cattle_id = cm.cattle_id;";
+		 RawSql rawSql = RawSqlBuilder.parse(sql).create();
+		 List<SqlRow> rawSqls = Ebean.createSqlQuery(sql).findList();
+		 ArrayList<CattleOutputVMs> cmvm = new ArrayList<>();
+			
+		 for(SqlRow row:rawSqls) {
+		      CattleOutputVMs cfvm = new CattleOutputVMs();
+			  cfvm.breed = row.getString("breed");
+					//cfvm.deviceID = u.deviceID;
+			  cfvm.actualMilkQuantity = row.getInteger("quantity");
+			  cfvm.expectedMilkQuantity = row.getInteger("expectedQuntity"); 
+			  cfvm.CattleName = row.getString("cattlename");
+					//cfvm.SNFContent = u.SNFContent;
+					//cfvm.fatContent = u.fatContent;
+					//cfvm.lastUpdateDateTime =  u.LastUpdateDateTime;
+				    //cfvm.users = u.users;
+			    	//cfvm.oraganization = u.oraganization;
+					//cfvm.cattleId = u.CattleMaster.getBreed();
+					//cfvm.CattleName = u.CattleMaster.getName();
+				    //cfvm.cattleMaster = u.CattleMaster;
+					//cfvm.pregnantCattle = u.pregnantCattle;
+			 cmvm.add(cfvm);
+		 }
+		return  cmvm;
+	}
+	
+	
 	
 	@JsonIgnore
 	public static int getAllCattleOutputCount(int pageNumber) {
@@ -216,11 +277,16 @@ public class CattleOutput extends Model {
 				.setMaxRows(CattleOutput.find.findRowCount()).findList().size();
 	}
 	
-	
 	public static void update(CattleOutput ud) {
 		Ebean.update(ud);
 	}
 	
-	  
+	@JsonIgnore
+	public static List<CattleOutput> getAllCattleOutputReportbyBreed(Date startdate,Date enddate,String breed){
+		String brd =  breed.replaceAll("\"", "");
+		System.out.println(brd);
+			
+		return find.where().eq("CattleMaster.breed", brd).between("LastUpdateDateTime", startdate, enddate).findList();
+	}
 }
 

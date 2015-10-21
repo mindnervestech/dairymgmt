@@ -3,6 +3,7 @@ package com.mnt.dairymgnt.controllers;
 import java.io.IOException;
 
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import java.util.Date;
@@ -35,7 +36,9 @@ import com.mnt.dairymgnt.VM.CattleFeedMasterVM;
 import com.mnt.dairymgnt.VM.CattleHealthVM;
 import com.mnt.dairymgnt.VM.CattleIntakeVM;
 import com.mnt.dairymgnt.VM.CattleMasterVM;
+import com.mnt.dairymgnt.VM.CattleMasterVMs;
 import com.mnt.dairymgnt.VM.CattleOutputVM;
+import com.mnt.dairymgnt.VM.CattleOutputVMs;
 import com.mnt.dairymgnt.VM.ChildCattleVM;
 import com.mnt.dairymgnt.VM.KPIMasterVM;
 import com.mnt.dairymgnt.VM.OrgnizationVM;
@@ -231,6 +234,64 @@ public class Application extends Controller {
 		
 		return ok(Json.toJson(hm));
 	}
+	
+	public static Result getAllCattleMasterReport(int pageNo){
+		int count  = 0;
+		List<CattleMaster> cattleMasters = CattleMaster.getAllCattleMasterReport(pageNo,10);
+        ArrayList<CattleMasterVMs> cmvm = new ArrayList<>();
+		count = CattleMaster.getAllCattleMasterCount(pageNo);
+		
+		for(CattleMaster u : cattleMasters){
+			
+			CattleMasterVMs cvm = new CattleMasterVMs();
+			cvm.breed = u.breed;
+			cvm.cattleId = u.cattleId;
+			cvm.cattleIdentificationMark =    u.cattleIdentificationMark;
+			cvm.dateofBirth = u.dateofBirth;
+			cvm.gender  = u.gender;
+			cvm.name = u.name;
+			
+			//	cvm.users = u.users;
+			//cvm.oraganization = u.oraganization;
+			//cvm.RFID = u.RFID;
+			//cvm.parentId  =u.parentId; 
+			//cvm.lastUpdateDateTime = u.lastUpdateDateTime;
+
+			SimpleDateFormat format = new SimpleDateFormat("dd-MMMM-yyyy");
+			Date d1 = null;
+			String d2 = null;
+ 			Date d3  = null;
+ 			long diff = 0;
+ 			long diffDays = 0;
+			try {
+				
+			if(u.dateofBirth !=null){
+				d1 = format.parse(u.dateofBirth);
+				d2 = format.format(new Date());
+				d3 = format.parse(d2);
+				diff = d3.getTime() - d1.getTime();
+				diffDays = diff / (24 * 60 * 60 * 1000);
+				System.out.print(diffDays + " days, ");
+			}	
+				//in milliseconds
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+            if(diffDays > 480){
+            	cmvm.add(cvm);	
+            }
+			
+		}
+
+		HashMap  <String ,Object> hm = new HashMap();
+		hm.put("caters",cmvm);
+		hm.put("userCount", count);
+		
+		return ok(Json.toJson(hm));
+	}
+	
+	
 	
 	
 	public static Result getAllOnlyCattleMaster(){
@@ -518,6 +579,102 @@ public class Application extends Controller {
 		return ok(Json.toJson(hm));
 	}
 	
+	
+	
+	public static Result getAllCattleOutputReportbyBreed(){
+		
+		JsonNode json = request().body().asJson();
+		JsonNode startdate = json.get("startdate");
+		JsonNode enddate = json.get("enddate");
+		JsonNode  breed = json.get("breed");
+
+		Date endate = null;
+		Date strdate  = null;
+		String sd = startdate.toString().replaceAll("\"", "");
+		String ed = enddate.toString().replaceAll("\"", "");
+		
+		SimpleDateFormat  format = new SimpleDateFormat("dd-MMM-yyyy");  
+		try{
+			 endate = format.parse(ed);  
+			 strdate = format.parse(sd);  
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		System.out.println(endate +"new date: "+new Date());  
+		List<CattleOutput> cattleOutput = CattleOutput.getAllCattleOutputReportbyBreed(strdate,endate,breed.toString());
+		int count =0;
+		//count  = CattleOutput.getAllCattleOutputCount(pageno);
+		
+		ArrayList<CattleOutputVMs> cmvm = new ArrayList<>();
+		
+		for(CattleOutput u : cattleOutput){
+			CattleOutputVMs cfvm = new CattleOutputVMs();
+			cfvm.date = u.date;
+			//cfvm.deviceID = u.deviceID;
+			cfvm.actualMilkQuantity = u.quantity;
+			cfvm.expectedMilkQuantity = Integer.parseInt(u.expectedMilkQuantity); 
+			cfvm.SNFContent = u.SNFContent;
+			cfvm.fatContent = u.fatContent;
+			//cfvm.lastUpdateDateTime =  u.LastUpdateDateTime;
+		    //cfvm.users = u.users;
+	    	//cfvm.oraganization = u.oraganization;
+			cfvm.breed = u.CattleMaster.getBreed();
+			cfvm.CattleName = u.CattleMaster.getName();
+		    //cfvm.cattleMaster = u.CattleMaster;
+			//cfvm.pregnantCattle = u.pregnantCattle;
+			cmvm.add(cfvm);
+		}
+
+		HashMap  <String ,Object> hm = new HashMap();
+		hm.put("catersoutput",cmvm);
+		hm.put("userCount", count);
+		return ok(Json.toJson(hm));
+	}
+	
+	public static Result getAllCattleOutputReport(int pageno){
+		List<CattleOutputVMs> cattleOutput = CattleOutput.getAllCattleOutputReport(pageno,10);
+		List<CattleOutputVMs>cattleMasterVMs = CattleOutput.getAllCattleOutputReportBreed();
+		//System.out.println(cattleOutput.size());
+		//System.out.println(cattleMasterVMs.size());
+		
+		int count =0;
+		List<CattleOutputVMs> CattleOutputVMss = new ArrayList<>();
+		for(CattleOutputVMs co :cattleOutput){
+			CattleOutputVMs c = new CattleOutputVMs();
+			c.breed = co.CattleName;
+			for(CattleOutputVMs cos :cattleMasterVMs){
+				if(cos.breed.equalsIgnoreCase(co.CattleName)){
+					CattleOutputVMs cc = new CattleOutputVMs();
+					c.actualMilkQuantity += cos.actualMilkQuantity;
+					//c.CattleName += cos.CattleName;
+					c.expectedMilkQuantity += cos.expectedMilkQuantity;
+					//CattleOutputVMss.add(cc);
+				}
+			}
+			
+			CattleOutputVMss.add(c);
+			for(CattleOutputVMs cos :cattleMasterVMs){
+				if(cos.breed.equalsIgnoreCase(co.CattleName)){
+					CattleOutputVMs cc = new CattleOutputVMs();
+					cc.actualMilkQuantity = cos.actualMilkQuantity;
+					cc.CattleName = cos.CattleName;
+					cc.expectedMilkQuantity = cos.expectedMilkQuantity;
+					CattleOutputVMss.add(cc);
+				}
+			}
+		}
+		
+		count  = CattleOutput.getAllCattleOutputCount(pageno);
+		HashMap  <String ,Object> hm = new HashMap();
+		hm.put("catersoutput",CattleOutputVMss);
+		hm.put("userCount", count);
+		return ok(Json.toJson(hm));
+	}
+	
+	
+	
 	public static Result getAllCattleHealth(int pageno){
 		List<CattleHealth> cattleHealth = CattleHealth.getAllCattleOutput(pageno,10);
         int count  = 0;
@@ -722,6 +879,7 @@ public class Application extends Controller {
 				u.setGender(uvm.gender);
 				u.setLastUpdateDateTime(new Date());
 				u.setName(uvm.name);
+				u.setDateofBirth(uvm.dateofBirth);
 				u.update(u);
 
 			}else{
@@ -733,6 +891,7 @@ public class Application extends Controller {
 				u.setGender(uvm.gender);
 				u.setLastUpdateDateTime(new Date());
 				u.setName(uvm.name);
+				u.setDateofBirth(uvm.dateofBirth);
 				
 				u.save();
 
