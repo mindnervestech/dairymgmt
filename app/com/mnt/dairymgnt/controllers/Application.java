@@ -1,6 +1,13 @@
 package com.mnt.dairymgnt.controllers;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.io.InputStreamReader;
 
 
 import java.text.SimpleDateFormat;
@@ -12,6 +19,7 @@ import java.util.List;
 
 
 
+import play.Play;
 import play.data.DynamicForm;
 import play.data.Form;
 import play.libs.Json;
@@ -709,7 +717,24 @@ public class Application extends Controller {
 		String uname = dynamicForm.get("username");
 		String pass = dynamicForm.get("password");
 			
-		Users ud = Users.isUser(uname, pass);
+		Date d  = new Date();
+		System.out.println(d);
+		
+		 Date curDate = new Date();
+		 
+		 SimpleDateFormat format = new SimpleDateFormat("dd/MM/yy");
+		 String DateToStr = format.format(curDate);
+		 System.out.println(DateToStr);
+		 DateToStr = DateToStr.replaceAll("/", "");
+		 System.out.println(DateToStr);
+		 
+		 int key =  getencryptKey(Integer.parseInt(DateToStr));
+		 System.out.println("key :" +key);
+		 
+		 int getKeyfromfile  = getLicencekeyformFile();
+		System.out.println("getKeyfromfile: "+getKeyfromfile);
+		 
+		 Users ud = Users.isUser(uname, pass);
 			if (ud != null) {
 				session().clear();
 				session().put("email", ud.userId);
@@ -725,6 +750,70 @@ public class Application extends Controller {
 
 	}
 	
+	private static int getLicencekeyformFile() {
+		// TODO Auto-generated method stub
+		String sCurrentLine = new String();
+		String key  = new String();
+		    	  //Specify the file name and path here
+		    	  File f_ = new File(Play.application().path().getAbsolutePath() + "/public/app/encrypt/encryptedfile.txt");
+		    	  
+			       //BufferedReader br = null;
+					try {
+					
+						FileInputStream fis = new FileInputStream(f_);
+						 
+						//Construct BufferedReader from InputStreamReader
+						BufferedReader br = new BufferedReader(new InputStreamReader(fis));
+					 
+						String line = null;
+						while ((line = br.readLine()) != null) {
+						
+							if(line.contains("Encrypt")){
+								String keys[] = line.split(" ");
+								for(String s:keys){
+									key = keys[2];
+								}
+							}
+						}
+					 
+						br.close();
+
+					} catch (IOException e) {
+						e.printStackTrace();
+					} finally {
+						
+					}
+			
+					 return Integer.parseInt(key);
+	}
+
+	private static int getencryptKey(int parseInt) {
+		// TODO Auto-generated method stub
+		
+		int firstDigit, secondDigit, thirdDigit, fourthDigit,fifthDigit,sixthDigit,  temp;
+		int number = parseInt;
+		
+		firstDigit = number / 1000; 
+		secondDigit = number / 100 % 10; 
+		thirdDigit = number / 10 % 10; 
+		fourthDigit = number % 10;   
+		firstDigit = (firstDigit + 7) % 10; 
+		secondDigit = (secondDigit + 7) % 10; 
+		thirdDigit = (thirdDigit + 7) % 10; 
+		fourthDigit = (fourthDigit + 7) % 10;   
+		temp = firstDigit; 
+		firstDigit = thirdDigit; 
+		thirdDigit = temp;   
+		temp = secondDigit; 
+		secondDigit = fourthDigit; 
+		fourthDigit = temp;   
+
+		return Integer.parseInt(firstDigit +""+secondDigit+""+ thirdDigit+""+ fourthDigit);	
+		
+	}
+
+
+
 	public static Result updateUserProfileByAdmin(){
 		JsonNode json = request().body().asJson();
 		JsonNode userJson = json.get("user");
