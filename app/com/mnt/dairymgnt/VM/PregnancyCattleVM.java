@@ -15,7 +15,8 @@ public class PregnancyCattleVM {
 	public String secondInseminationDate;
 	public String thirdInseminationDate;
 	public String actualPregnancyDate;
-	public String expectedDeliveryDate;
+	public String expectedDeliveryDateVM;
+	public Date expectedDeliveryDate;
 	public String milkingStoppingDate;
 	public int cattleId;
 	public  String name;

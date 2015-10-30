@@ -1,5 +1,6 @@
 package com.mnt.dairymgnt.models;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -32,7 +33,10 @@ public class PregnantCattle extends Model {
 	public String secondInseminationDate;
 	public String thirdInseminationDate;
 	public String actualPregnancyDate;
-	public String expectedDeliveryDate;
+	public Date expectedDeliveryDate;
+	
+
+
 	public String milkingStoppingDate;
 	public int cattleId;
 	
@@ -40,6 +44,10 @@ public class PregnantCattle extends Model {
 		return cattleId;
 	}
 
+	public void setExpectedDeliveryDate(Date expectedDeliveryDate) {
+		this.expectedDeliveryDate = expectedDeliveryDate;
+	}
+	
 	public void setCattleId(int cattleId) {
 		this.cattleId = cattleId;
 	}
@@ -99,15 +107,7 @@ public class PregnantCattle extends Model {
 	public void setActualPregnancyDate(String actualPregnancyDate) {
 		this.actualPregnancyDate = actualPregnancyDate;
 	}
-
-	public String getExpectedDeliveryDate() {
-		return expectedDeliveryDate;
-	}
-
-	public void setExpectedDeliveryDate(String expectedDeliveryDate) {
-		this.expectedDeliveryDate = expectedDeliveryDate;
-	}
-
+	
 	public String getMilkingStoppingDate() {
 		return milkingStoppingDate;
 	}

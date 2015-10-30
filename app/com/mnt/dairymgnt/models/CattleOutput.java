@@ -284,9 +284,29 @@ public class CattleOutput extends Model {
 	@JsonIgnore
 	public static List<CattleOutput> getAllCattleOutputReportbyBreed(Date startdate,Date enddate,String breed){
 		String brd =  breed.replaceAll("\"", "");
-		System.out.println(brd);
+		//System.out.println(brd);
 			
 		return find.where().eq("CattleMaster.breed", brd).between("LastUpdateDateTime", startdate, enddate).findList();
+	}
+	
+	@JsonIgnore
+	public static List<SqlRow> getAllCattleOutputReportbyMonth(Date startdate,Date enddate,String breed, String cattleName){
+		String brd =  breed.replaceAll("\"", "");
+		
+			//SQL query.
+			String sql = "select co.cattle_master_cattle_id, co.last_update_date_time, cm.name, cm.breed, co.quantity, co.expected_milk_quantity from cattle_output as co inner join cattle_master as cm on co.cattle_master_cattle_id = cm.cattle_id where cm.breed = :brd and cm.name = :cat and co.last_update_date_time BETWEEN :startdate and :enddate";
+			List<SqlRow> sqlRows = Ebean.createSqlQuery(sql).setParameter("brd", brd).setParameter("startdate", startdate).setParameter("enddate", enddate).setParameter("cat", cattleName).findList();
+		
+		return sqlRows;
+	}
+
+	public static List<SqlRow> getAllCattleDeliveryReportbyYear(Date startDate, Date endDate, String breedName) {
+		System.out.println("start "+startDate+" enddate "+endDate+" breed "+breedName);
+		String sql = "select pc.cattle_id, cm.name, cm.breed, pc.expected_delivery_date from pregnant_cattle as pc inner join cattle_master as cm on pc.cattle_id = cm.cattle_id where cm.breed = :brd and pc.expected_delivery_date BETWEEN :startdate and :enddate";
+		
+		List<SqlRow> sqlRows = Ebean.createSqlQuery(sql).setParameter("brd", breedName).setParameter("startdate", startDate).setParameter("enddate", endDate).findList();
+		System.out.println("result "+sqlRows);
+		return sqlRows;
 	}
 }
 

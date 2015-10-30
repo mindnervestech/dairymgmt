@@ -44,6 +44,8 @@ public class CattleMaster extends Model {
 	public String attrib5;
 	public int parentId;
 	
+	public String lastDelivery;
+	public String isPregnant;
 	
 	public int getParentId() {
 		return parentId;
@@ -235,5 +237,19 @@ public class CattleMaster extends Model {
 				.setMaxRows(CattleMaster.find.findRowCount()).findList().size();
 	}
 	
-	
+	public String getIsPregnant() {
+		return isPregnant;
+	}
+
+	public void setIsPregnant(String isPregnant) {
+		this.isPregnant = isPregnant;
+	}
+
+	public String getLastDelivery() {
+		return lastDelivery;
+	}
+
+	public void setLastDelivery(String lastDelivery) {
+		this.lastDelivery = lastDelivery;
+	}
 }

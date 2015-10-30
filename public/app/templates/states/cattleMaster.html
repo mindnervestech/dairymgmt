@@ -125,7 +125,7 @@
 						<div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
 		              <label class="control-label col-md-8">Select Breed name</label>
 		              <div class="col-md-12"> 
-			                <select id = "use"  data-ng-model="cat.breed" class= "col-md-5"  style="    width: 110%;">
+			                <select id = "use"  data-ng-model="cat.breed" class= "col-md-5 form-control"  style="    width: 110%;">
 			                 <option ng-repeat="u in breeds" value="{{u.breedName}}"   ng-selected="u.breedName  == cat.breed">{{u.breedName}}</option>
 			                </select>
 	            		</div>   
@@ -134,7 +134,7 @@
 						<div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
 		              <label class="control-label col-md-8">Select parent name</label>
 		              <div class="col-md-12"> 
-			                <select id = "use"  data-ng-model="parentId" class= "col-md-5"  style="    width: 110%;">
+			                <select id = "use"  data-ng-model="parentId" class= "col-md-5 form-control"  style="    width: 110%;">
 			                 <option ng-repeat="u in cattle" value="{{u.cattleId}}"   ng-selected="u.isSelect  == true">{{u.cattleId}}/{{u.name}}</option>
 			                </select>
 	            		</div>   
@@ -184,11 +184,38 @@
 						<div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
 		              <label class="control-label col-md-8">Select User Id</label>
 		              <div class="col-md-12">
-			                <select id = "use"  data-ng-model="userId" class = "col-md-5" style="    width: 110%;">
+			                <select id = "use"  data-ng-model="userId" class = "col-md-5 form-control" style="    width: 110%;">
 			                 <option ng-repeat="u in users" value="{{u.userId}}"   ng-selected="u.isSelect  == true">{{u.userId}}</option>
 			                </select>
 	            		</div>   
 	            	</div>
+	            	
+	            	<div class="col-md-12">
+										<div class="">
+											<div class="">
+											<div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>
+												<div class="input-group">
+												<span>Last Delivery Date</span>
+													 <input type="text" ng-model="cat.lastDelivery"
+														name="ld" class="form-control " id="dodelivery"
+														 ng-click="initDeliveryDatepicker();"
+														style="font-size: 12px;" required>
+														<div class="input-group-addon">
+														<i class="fa fa-calendar"></i>
+														</div>
+												</div>
+											</div>
+									</div>
+					</div>
+					
+					<div class="col-md-12">
+  							<label for="usr">Is Currently Pregnant </label>
+							<select ng-model = "cat.isPregnant"  id="plegnant" ng-selected="cat.isPregnant"  class="form-control">
+  								<option value="Yes">Yes</option>
+  								<option value="No">No</option>
+							</select>
+						</div>
+						
 	            	</div>
 	            	</div>
 						<div class="form-actions">
@@ -239,7 +266,7 @@
 						 <div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
 		              <label class="control-label col-md-8">Select Breed name</label>
 		              <div class="col-md-12"> 
-			                <select id = "use"  data-ng-model="cat.breed" class= "col-md-5"  style="    width: 110%;">
+			                <select id = "use"  data-ng-model="cat.breed" class= "col-md-5 form-control"  style="    width: 110%;">
 			                 <option ng-repeat="u in breeds" value="{{u.breedName}}"   ng-selected="u.breedName  == cat.breed">{{u.breedName}}</option>
 			                </select>
 	            		</div>   
@@ -255,11 +282,28 @@
 						<div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
 		              <label class="control-label col-md-8">Select parent name</label>
 		              <div class="col-md-12"> 
-			                <select id = "use"  data-ng-model="parentId" class= "col-md-5"  style="    width: 110%;">
+			                <select id = "use"  data-ng-model="parentId" class= "col-md-5 form-control"  style="    width: 110%;">
 			                 <option ng-repeat="u in cattle" value="{{u.cattleId}}"   ng-selected="u.isSelect  == true">{{u.cattleId}}/{{u.name}}</option>
 			                </select>
 	            		</div>   
-	            	</div>	
+	            	</div>
+	            		<div class="col-md-12">
+										<div class="">
+											<div class="">
+											<div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>
+												<div class="input-group">
+												<span>Last Delivery Date</span>
+													 <input type="text" ng-model="cat.lastDelivery"
+														name="ld" class="form-control " id="dodelivery"
+														 ng-click="initDeliveryDatepicker();"
+														style="font-size: 12px;" required>
+														<div class="input-group-addon">
+														<i class="fa fa-calendar"></i>
+														</div>
+												</div>
+											</div>
+									</div>
+					</div>	
 					
 						</div>
 						<div class = "col-md-6	">
@@ -295,10 +339,17 @@
 						<div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
 		              <label class="control-label col-md-8">Select User Id</label>
 		              <div class="col-md-12"> 
-			                <select id = "use"  data-ng-model="userId" class= "col-md-5"  style="    width: 110%;">
+			                <select id = "use"  data-ng-model="userId" class= "col-md-5 form-control"  style="    width: 110%;">
 			                 <option ng-repeat="u in users" value="{{u.userId}}"   ng-selected="u.isSelect  == true">{{u.userId}}</option>
 			                </select>
-	            		</div>   
+	            		</div>
+	            		<div class="col-md-12">
+  							<label for="usr">Is Currently Pregnant </label>
+							<select ng-model = "cat.isPregnant"  id="plegnant" ng-selected="cat.isPregnant"  class="form-control">
+  								<option value="Yes">Yes</option>
+  								<option value="No">No</option>
+							</select>
+						</div>   
 	            	</div>
 	            	</div>
 	            	</div>

@@ -10,12 +10,17 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
 
 
 
@@ -45,6 +50,7 @@ import com.mnt.dairymgnt.VM.CattleHealthVM;
 import com.mnt.dairymgnt.VM.CattleIntakeVM;
 import com.mnt.dairymgnt.VM.CattleMasterVM;
 import com.mnt.dairymgnt.VM.CattleMasterVMs;
+import com.mnt.dairymgnt.VM.CattleOutputMonthVM;
 import com.mnt.dairymgnt.VM.CattleOutputVM;
 import com.mnt.dairymgnt.VM.CattleOutputVMs;
 import com.mnt.dairymgnt.VM.ChildCattleVM;
@@ -231,7 +237,8 @@ public class Application extends Controller {
 			cvm.oraganization = u.oraganization;
 			cvm.RFID = u.RFID;
 			cvm.parentId  =u.parentId; 
-			
+			cvm.lastDelivery = u.lastDelivery;
+			cvm.isPregnant = u.isPregnant;
 			cvm.lastUpdateDateTime = u.lastUpdateDateTime;
 			cmvm.add(cvm);
 		}
@@ -447,7 +454,7 @@ public class Application extends Controller {
 			cfvm.secondInseminationDate = u.secondInseminationDate;
 			cfvm.thirdInseminationDate= u.thirdInseminationDate ;
 			cfvm.actualPregnancyDate = u.actualPregnancyDate;
-			cfvm.expectedDeliveryDate  = u.expectedDeliveryDate;
+			cfvm.expectedDeliveryDateVM  = u.expectedDeliveryDate.toString();
 			cfvm.milkingStoppingDate = u.milkingStoppingDate;
 			cmvm.add(cfvm);
 		}
@@ -640,6 +647,272 @@ public class Application extends Controller {
 		hm.put("userCount", count);
 		return ok(Json.toJson(hm));
 	}
+	
+	
+	public static Result getAllCattleOutputReportbyMonth(){
+		
+		JsonNode json = request().body().asJson();
+		JsonNode month = json.get("month");
+		JsonNode year = json.get("year");
+		JsonNode  breed = json.get("breed");
+		
+		List<SqlRow> sqlRows;
+		ArrayList<CattleOutputVMs> cmvm = new ArrayList<>();
+		
+		if((breed.toString().replace("\"", "")).equalsIgnoreCase("all")){
+			
+			String sql = "select cattle_id, name, breed from cattle_master";
+			sqlRows = Ebean.createSqlQuery(sql).findList();
+		}else {
+			String sql = "select cattle_id, name, breed from cattle_master where breed = :brd";
+			sqlRows = Ebean.createSqlQuery(sql).setParameter("brd", (breed.toString().replace("\"", ""))).findList();
+		}
+		
+		for(SqlRow dataRows: sqlRows){
+			Date enddate = null;
+			Date strdate  = null;
+			
+			String cattleName = dataRows.getString("name");
+			int cattleId = dataRows.getInteger("cattle_id");
+			String breedName = dataRows.getString("breed");
+			
+			String sdate = ("01-"+month+"-"+year).replace("\"", "");
+			
+			SimpleDateFormat  format = new SimpleDateFormat("dd-MMM-yyyy");  
+			try{
+				 strdate = format.parse(sdate);
+				 
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			
+			SimpleDateFormat  newformat = new SimpleDateFormat("dd-MM-yyyy");  
+			try{
+				Calendar now = Calendar.getInstance();    
+			     now.setTime(strdate);
+			     
+			     now.add(Calendar.MONTH, 10);
+			     String end = now.get(Calendar.DATE)+"-" + (now.get(Calendar.MONTH) + 1) + "-"+ now.get(Calendar.YEAR);
+			     enddate = newformat.parse(end);
+
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+
+			
+			List<SqlRow> cattleOutput = (List<SqlRow>) CattleOutput.getAllCattleOutputReportbyMonth(strdate,enddate,breedName,cattleName);
+		
+			//System.out.println(cattleName);
+			//System.out.println(cattleOutput.size());
+			
+			ArrayList<CattleOutputMonthVM> monthList = new ArrayList<>();
+			for(SqlRow u : cattleOutput){
+				CattleOutputMonthVM comv = new CattleOutputMonthVM();
+				//comv.date = u.getString("last_update_date_time");
+				comv.quantity = u.getInteger("quantity");
+				comv.lastUpdateDateTime = u.getDate("last_update_date_time");
+				comv.cattleId = u.getInteger("cattle_master_cattle_id");
+				monthList.add(comv);
+				/**/
+			}
+			
+			CattleOutputVMs cfvm = new CattleOutputVMs();
+			cfvm.breed = breedName;
+			cfvm.CattleName = cattleName;
+		    cfvm.cattleId = cattleId;
+		    cfvm.cattleData = monthList; 
+		    cfvm.M1 = 0;
+		    cfvm.M2 = 0;
+		    cfvm.M3 = 0;
+		    cfvm.M4 = 0;
+		    cfvm.M5 = 0;
+		    cfvm.M6 = 0;
+		    cfvm.M7 = 0;
+		    cfvm.M8 = 0;
+		    cfvm.M9 = 0;
+		    cfvm.M10 = 0;
+			for(int i=0; i<10; i++) {
+				Date starting = strdate;
+				Date ending = getEndDate(starting, 1);
+				for(CattleOutputMonthVM u : monthList){
+					
+					if(u.lastUpdateDateTime.before(ending) && u.lastUpdateDateTime.after(starting)){
+					switch(i+1){
+					   case 1:  cfvm.M1 += u.quantity;
+								break;
+			           case 2:  cfvm.M2 += u.quantity;
+			                    break;
+			           case 3:  cfvm.M3 += u.quantity;
+			                    break;
+			           case 4:  cfvm.M4 += u.quantity;
+			                    break;
+			           case 5:  cfvm.M5 += u.quantity;
+			                    break;
+			           case 6:  cfvm.M6 += u.quantity;
+			                    break;
+			           case 7:  cfvm.M7 += u.quantity;
+			                    break;
+			           case 8:  cfvm.M8 += u.quantity;
+			                    break;
+			           case 9:  cfvm.M9 += u.quantity;
+			                    break;
+			           case 10: cfvm.M10 += u.quantity;
+			                    break;
+					}
+					}
+				}
+				strdate = ending;
+			}
+			
+			cmvm.add(cfvm);
+		}
+		
+		
+		int count =0;
+		//count  = CattleOutput.getAllCattleOutputCount(pageno);
+		
+		HashMap  <String ,Object> hm = new HashMap();
+		hm.put("catersoutput",cmvm);
+		hm.put("userCount", count);
+		return ok(Json.toJson(hm));
+	}
+	
+	public static Date getEndDate(Date myDate, int month){
+		Date strdate = myDate;
+		Date enddate = null;
+		SimpleDateFormat  newformat = new SimpleDateFormat("dd-MM-yyyy");  
+		try{
+			Calendar now = Calendar.getInstance();    
+		     now.setTime(strdate);
+		     
+		     now.add(Calendar.MONTH, month);
+		     String end = now.get(Calendar.DATE)+"-" + (now.get(Calendar.MONTH) + 1) + "-"+ now.get(Calendar.YEAR);
+		     enddate = newformat.parse(end);
+		    
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		 return enddate;
+	}
+	
+	public static Result getAllCattleDeliveryReportbyYear(){
+		
+		JsonNode json = request().body().asJson();
+		JsonNode  breed = json.get("breed");
+		
+		List<SqlRow> sqlRows;
+		ArrayList<CattleOutputVMs> cmvm = new ArrayList<>();
+		
+		if((breed.toString().replace("\"", "")).equalsIgnoreCase("all")){
+			
+			String sql = "select id, breed_name from breeds";
+			sqlRows = Ebean.createSqlQuery(sql).findList();
+		}else {
+			String sql = "select id, breed_name from breeds where breed_name = :brd";
+			sqlRows = Ebean.createSqlQuery(sql).setParameter("brd", (breed.toString().replace("\"", ""))).findList();
+		}
+		
+		for(SqlRow dataRows: sqlRows){
+			
+			Date enddate = null;
+			Date strdate  = null;
+			
+			String breedName = dataRows.getString("breed_name");
+			
+			Calendar cal = Calendar.getInstance();
+		    int year = cal.get(cal.YEAR);
+		    String month = new SimpleDateFormat("MMM").format(cal.getTime());
+		    
+			String sdate = ("01-"+month+"-"+year).replace("\"", "");
+			
+			SimpleDateFormat  format = new SimpleDateFormat("dd-MMM-yyyy");  
+			try{
+				 strdate = format.parse(sdate);
+				 
+			}catch(Exception e){
+				e.printStackTrace();
+			}
+			
+			enddate = getEndDate(strdate, 12);
+			
+			List<SqlRow> cattleOutput = (List<SqlRow>) CattleOutput.getAllCattleDeliveryReportbyYear(strdate,enddate,breedName);
+			
+			ArrayList<CattleOutputMonthVM> monthList = new ArrayList<>();
+			for(SqlRow u : cattleOutput){
+				CattleOutputMonthVM comv = new CattleOutputMonthVM();
+				
+				comv.cattleId = u.getInteger("cattle_id");
+				comv.expectedDelivery = u.getDate("expected_delivery_date");
+				comv.cattleName = u.getString("name");
+				comv.breed = breedName;
+				monthList.add(comv);
+			}
+			
+			CattleOutputVMs cfvm = new CattleOutputVMs();
+			cfvm.breed = breedName;
+		    cfvm.cattleData = monthList; 
+		    cfvm.M1 = 0;
+		    cfvm.M2 = 0;
+		    cfvm.M3 = 0;
+		    cfvm.M4 = 0;
+		    cfvm.M5 = 0;
+		    cfvm.M6 = 0;
+		    cfvm.M7 = 0;
+		    cfvm.M8 = 0;
+		    cfvm.M9 = 0;
+		    cfvm.M10 = 0;
+		    cfvm.M11 = 0;
+		    cfvm.M12 = 0;
+			for(int i=0; i<12; i++) {
+				Date starting = strdate;
+				Date ending = getEndDate(starting, 1);
+				for(CattleOutputMonthVM u : monthList){
+					
+					if(u.expectedDelivery.before(ending) && u.expectedDelivery.after(starting)){
+					switch(i+1){
+					   case 1:  cfvm.M1++;
+								break;
+			           case 2:  cfvm.M2++;
+			                    break;
+			           case 3:  cfvm.M3++;
+			                    break;
+			           case 4:  cfvm.M4++;
+			                    break;
+			           case 5:  cfvm.M5++;
+			                    break;
+			           case 6:  cfvm.M6++;
+			                    break;
+			           case 7:  cfvm.M7++;
+			                    break;
+			           case 8:  cfvm.M8++;
+			                    break;
+			           case 9:  cfvm.M9++;
+			                    break;
+			           case 10: cfvm.M10++;
+			                    break;
+			           case 11: cfvm.M11++;
+	                    		break;
+			           case 12: cfvm.M12++;
+	                    		break;
+					}
+					}
+				}
+				strdate = ending;
+			}
+			
+			cmvm.add(cfvm);
+		}
+		
+		
+		int count =0;
+		//count  = CattleOutput.getAllCattleOutputCount(pageno);
+		
+		HashMap  <String ,Object> hm = new HashMap();
+		hm.put("catersoutput",cmvm);
+		hm.put("userCount", count);
+		return ok(Json.toJson(hm));
+		
+		}
 	
 	public static Result getAllCattleOutputReport(int pageno){
 		List<CattleOutputVMs> cattleOutput = CattleOutput.getAllCattleOutputReport(pageno,10);
@@ -969,6 +1242,8 @@ public class Application extends Controller {
 				u.setLastUpdateDateTime(new Date());
 				u.setName(uvm.name);
 				u.setDateofBirth(uvm.dateofBirth);
+				u.setIsPregnant(uvm.isPregnant);
+				u.setLastDelivery(uvm.lastDelivery);
 				u.update(u);
 
 			}else{
@@ -981,6 +1256,9 @@ public class Application extends Controller {
 				u.setLastUpdateDateTime(new Date());
 				u.setName(uvm.name);
 				u.setDateofBirth(uvm.dateofBirth);
+				
+				u.setIsPregnant(uvm.isPregnant);
+				u.setLastDelivery(uvm.lastDelivery);
 				
 				u.save();
 
@@ -1051,7 +1329,28 @@ public class Application extends Controller {
 			if(u !=  null){
 				u.setActualPregnancyDate(uvm.actualPregnancyDate);
 				u.setCattleId(uvm.cattleId);
-				u.setExpectedDeliveryDate(uvm.expectedDeliveryDate);
+				
+				SimpleDateFormat format = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d1 = null;
+				//System.out.println(" dfgfd gdfgd fgf"+uvm.expectedDeliveryDate);
+				try {
+					
+				if(uvm.expectedDeliveryDateVM !=null){
+					if(uvm.expectedDeliveryDateVM.contains("\"")){
+						d1 = format.parse(uvm.expectedDeliveryDateVM.replaceAll("\"", ""));
+					}else{
+						d1 = format.parse(uvm.expectedDeliveryDateVM);
+					}
+					
+				}	
+					//in milliseconds
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				//System.out.println("d1" +d1);
+				
+				u.setExpectedDeliveryDate(d1);
 				u.setFirstInseminationDate(uvm.firstInseminationDate);
 				u.setSecondInseminationDate(uvm.secondInseminationDate);
 				u.setLastDeliveryDate(uvm.lastDeliveryDate);
@@ -1067,7 +1366,32 @@ public class Application extends Controller {
 				u  = new PregnantCattle();
 				u.setActualPregnancyDate(uvm.actualPregnancyDate);
 				u.setCattleId(uvm.cattleId);
-				u.setExpectedDeliveryDate(uvm.expectedDeliveryDate);
+				
+				
+				
+				SimpleDateFormat format = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d1 = null;
+				//System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa "+uvm.expectedDeliveryDate);
+				try {
+					
+					if(uvm.expectedDeliveryDateVM !=null){
+						if(uvm.expectedDeliveryDateVM.contains("\"")){
+							d1 = format.parse(uvm.expectedDeliveryDateVM.replaceAll("\"", ""));
+						}else{
+							d1 = format.parse(uvm.expectedDeliveryDateVM);
+						}
+						
+					}	
+							
+					//in milliseconds
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				//System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaa" +d1);
+				u.setExpectedDeliveryDate(d1);
+				
+			     //u.setExpectedDeliveryDate(uvm.expectedDeliveryDate);
 				u.setFirstInseminationDate(uvm.firstInseminationDate);
 				u.setSecondInseminationDate(uvm.secondInseminationDate);
 				u.setLastDeliveryDate(uvm.lastDeliveryDate);

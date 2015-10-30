@@ -27,7 +27,9 @@ public class CattleMasterVM {
 	public String attrib4;
 	public String attrib5;
 	public int parentId;
-
+	public String lastDelivery;
+	public String isPregnant;
+	
 	public Oraganization oraganization;
 	public Users users;
 	

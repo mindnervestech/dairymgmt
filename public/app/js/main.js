@@ -107,6 +107,8 @@ App.config(function ($routeProvider) {
        .when('/allCattleMaster', { templateUrl: 'assets/app/templates/states/cattleMaster.html', controller: 'ViewAllCattleMasterController'})
         .when('/reportMaster', { templateUrl: 'assets/app/templates/states/reportMaster.html', controller: 'ViewReportMasterController'})
         .when('/reportCattleOutput', { templateUrl: 'assets/app/templates/states/reportCattleOutput.html', controller: 'ReportCattleOutputController'})
+       .when('/reportMonthly', { templateUrl: 'assets/app/templates/states/reportMonthly.html', controller: 'ViewReportMonthlyController'})
+       .when('/deliveryReport', { templateUrl: 'assets/app/templates/states/deliveryReport.html', controller: 'ViewDeliveryReportController'})
        
         
         .when('/allFeedCattleMaster', { templateUrl: 'assets/app/templates/states/feedCattleMaster.html', controller: 'ViewAllFeedCattleMasterController'})
@@ -7826,6 +7828,11 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 		});
 	 }
 	 
+	 $scope.initDeliveryDatepicker = function(){
+		 $('#dodelivery').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+	 }
 	 
 	$scope.getAllCattleMaster = function(){
 
@@ -8995,6 +9002,179 @@ App.controller('ReportCattleOutputController', function ($scope, $rootScope, $ro
 	
 });
 
+App.controller('ViewReportMonthlyController', function ($scope, $rootScope, $routeParams, $http, $upload){
+	
+	 var months = [ "January", "February", "March", "April", "May", "June",
+	                "July", "August", "September", "October", "November", "December" ];
+	 $scope.month = months[(new Date()).getMonth()];
+	 $scope.year = (new Date()).getFullYear();
+	 $scope.breed = "all";
+	 
+	 $scope.startdate;
+	 $scope.enddate;
+	 
+	 var rowtpl='<div ng-class="{\'blue\':row.entity.breed!=null}" <div ng-repeat="col in colContainer.renderedColumns track by col.colDef.name"  class="ui-grid-cell" ui-grid-cell></div></div>'
+
+		 $scope.gridOptions = {
+				 rowTemplate:rowtpl,
+					columnDefs: [
+					             { field: 'breed' ,name : 'Breed Name', width: "13%", cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
+					            	 /* if (row.entity.breed != '') {
+	                                       return 'blue';
+	                                     }*/
+					                 }
+					             },
+					             { field: 'CattleName' ,name : 'Cattle Name', width: "13%"},
+					             { field: 'M1' ,name : 'M1'},
+					             { field: 'M2' ,name : 'M2'},
+					             { field: 'M3' ,name : 'M3'},
+					             { field: 'M4' ,name : 'M4'},
+					             { field: 'M5' ,name : 'M5'},
+					             { field: 'M6' ,name : 'M6'},
+					             { field: 'M7' ,name : 'M7'},
+					             { field: 'M8' ,name : 'M8'},
+					             { field: 'M9' ,name : 'M9'},
+					             { field: 'M10' ,name : 'M10'}
+	     			  ]
+				  };
+	 
+	 $scope.getBreedsDetails = function(){
+		 $http.post('/getAllCattleOutputReportbyMonth',{month:$scope.month,year:$scope.year,breed:$scope.breed})
+			.success(function(data){
+				console.log(data);
+				data.catersoutput.sort(function(a, b) {
+				    return a.breed.localeCompare(b.breed);
+				});
+				
+				for(var i=0; i<data.catersoutput.length; i++){
+					var now = data.catersoutput[i];
+					if(now.breed != null){
+						for(var j=i+1; j<data.catersoutput.length; j++){
+							if(now.breed == data.catersoutput[j].breed){
+								data.catersoutput[j].breed = null;
+							}else{
+								break;
+							}
+						}
+					}
+				}
+				$scope.gridOptions.data = data.catersoutput;
+			});
+	 }
+	 
+	 
+	 $http.get('/getAllBreeds/?d='+Math.random()).success(function(data) {
+	    	$scope.breeds = data.breeds;
+					
+			});
+	 
+	  
+	$scope.getAllCattleOutput = function(){
+		 $http.post('/getAllCattleOutputReportbyMonth',{month:$scope.month,year:$scope.year,breed:$scope.breed})
+			.success(function(data){
+				console.log(data);
+				
+				data.catersoutput.sort(function(a, b) {
+				    return a.breed.localeCompare(b.breed);
+				});
+				
+				for(var i=0; i<data.catersoutput.length; i++){
+					var now = data.catersoutput[i];
+					if(now.breed != null){
+						for(var j=i+1; j<data.catersoutput.length; j++){
+							if(now.breed == data.catersoutput[j].breed){
+								data.catersoutput[j].breed = null;
+							}else{
+								break;
+							}
+						}
+					}
+				}
+				
+				console.log(data);
+				$scope.gridOptions.data = data.catersoutput;
+			});
+	}
+
+});
+
+App.controller('ViewDeliveryReportController', function ($scope, $rootScope, $routeParams, $http, $upload){
+	$scope.breed = "all";
+	
+	$http.get('/getAllBreeds/?d='+Math.random()).success(function(data) {
+	    	$scope.breeds = data.breeds;
+					
+	});
+	
+	var rowtpl='<div ng-class="{\'blue\':row.entity.breed==\'Total\'}" <div ng-repeat="col in colContainer.renderedColumns track by col.colDef.name"  class="ui-grid-cell" ui-grid-cell></div></div>'
+
+	$scope.gridOptions = {
+				 rowTemplate:rowtpl,
+					columnDefs: [
+					             { field: 'breed' ,name : 'Breed Name', width: "13%", cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
+					            	 /* if (row.entity.breed != '') {
+	                                       return 'blue';
+	                                     }*/
+					                 }
+					             },
+					             
+					             { field: 'M1' ,name : 'M1'},
+					             { field: 'M2' ,name : 'M2'},
+					             { field: 'M3' ,name : 'M3'},
+					             { field: 'M4' ,name : 'M4'},
+					             { field: 'M5' ,name : 'M5'},
+					             { field: 'M6' ,name : 'M6'},
+					             { field: 'M7' ,name : 'M7'},
+					             { field: 'M8' ,name : 'M8'},
+					             { field: 'M9' ,name : 'M9'},
+					             { field: 'M10' ,name : 'M10'},
+					             { field: 'M11' ,name : 'M11'},
+					             { field: 'M12' ,name : 'M12'}
+	     			  ]
+	};
+	
+	$scope.getBreedsDetails = function(){
+		 $http.post('/getAllCattleDeliveryReportbyYear',{breed:$scope.breed})
+			.success(function(data){
+				console.log(data);
+				var temp = {
+						"breed": "Total",
+						"M1": 0,
+						"M2": 0,
+						"M3": 0,
+						"M4": 0,
+						"M5": 0,
+						"M6": 0,
+						"M7": 0,
+						"M8": 0,
+						"M9": 0,
+						"M10": 0,
+						"M11": 0,
+						"M12": 0
+				};
+				for(var i=0; i<data.catersoutput.length; i++){
+					temp.M1 += data.catersoutput[i].M1;
+					temp.M2 += data.catersoutput[i].M2;
+					temp.M3 += data.catersoutput[i].M3;
+					temp.M4 += data.catersoutput[i].M4;
+					temp.M5 += data.catersoutput[i].M5;
+					temp.M6 += data.catersoutput[i].M6;
+					temp.M7 += data.catersoutput[i].M7;
+					temp.M8 += data.catersoutput[i].M8;
+					temp.M9 += data.catersoutput[i].M9;
+					temp.M10 += data.catersoutput[i].M10;
+					temp.M11 += data.catersoutput[i].M11;
+					temp.M12 += data.catersoutput[i].M12;
+					
+				}
+				data.catersoutput.push(temp);
+
+				$scope.gridOptions.data = data.catersoutput;
+			});
+	 }
+
+
+});
 
 
 App.controller('ViewAllCattleOutputController', function ($scope, $rootScope, $routeParams, $http, $upload){
