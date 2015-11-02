@@ -20,5 +20,6 @@ public class PregnancyCattleVM {
 	public String milkingStoppingDate;
 	public int cattleId;
 	public  String name;
-	public String dateofBirth;
+	public String dateofBirthVM;
+	public Date dateofBirth;
 }

@@ -20,6 +20,9 @@ public class CattleOutputMonthVM {
 	public String breed;
 	public Date expectedDelivery;
 	public String cattleName;
+	
+	public Date birthDate;
+	public Date lastDelivery;
 	//public String cattleName;
 	//public String expectedMilkQuantity; 
 	

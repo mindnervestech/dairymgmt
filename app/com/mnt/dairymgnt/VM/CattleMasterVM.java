@@ -18,7 +18,7 @@ public class CattleMasterVM {
 	public Date lastUpdateDateTime;
 	public  String name;
 	public String breed;
-	public String dateofBirth;
+	public Date dateofBirth;
 	public String  gender;
 	public String cattleIdentificationMark;
 	public String attrib1;
@@ -27,8 +27,10 @@ public class CattleMasterVM {
 	public String attrib4;
 	public String attrib5;
 	public int parentId;
-	public String lastDelivery;
+	public Date lastDelivery;
 	public String isPregnant;
+	public String lastDeliveryVM; 
+	public String dateofBirthVM;
 	
 	public Oraganization oraganization;
 	public Users users;

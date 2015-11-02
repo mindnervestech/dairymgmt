@@ -109,7 +109,8 @@ App.config(function ($routeProvider) {
         .when('/reportCattleOutput', { templateUrl: 'assets/app/templates/states/reportCattleOutput.html', controller: 'ReportCattleOutputController'})
        .when('/reportMonthly', { templateUrl: 'assets/app/templates/states/reportMonthly.html', controller: 'ViewReportMonthlyController'})
        .when('/deliveryReport', { templateUrl: 'assets/app/templates/states/deliveryReport.html', controller: 'ViewDeliveryReportController'})
-       
+       .when('/cattleReport', { templateUrl: 'assets/app/templates/states/cattleReport.html', controller: 'ViewCattleReportController'})
+ 
         
         .when('/allFeedCattleMaster', { templateUrl: 'assets/app/templates/states/feedCattleMaster.html', controller: 'ViewAllFeedCattleMasterController'})
         .when('/allCattleIntake', { templateUrl: 'assets/app/templates/states/cattleIntake.html', controller: 'ViewAllCattleIntakeController'})
@@ -7832,6 +7833,10 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 		 $('#dodelivery').datepicker({
 			    format: 'dd-MM-yyyy'
 		});
+		 
+		 $('#dodelivery1').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
 	 }
 	 
 	$scope.getAllCattleMaster = function(){
@@ -8034,6 +8039,8 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 		 $('#dobnew').datepicker({
 			    format: 'dd-MM-yyyy'
 		});
+		 
+		 
 	}
 	
 		
@@ -8045,7 +8052,7 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 	$scope.updateCattleProfileByAdmin = function(cat){
 		$scope.cat = cat;
 		$scope.doberror = false;
-		if(!angular.isUndefined($scope.cat.dateofBirth) ||  ! $scope.cat.dateofBirth == "" ||  ! $scope.cat.dateofBirth == null){
+		if(!angular.isUndefined($scope.cat.dateofBirthVM) ||  ! $scope.cat.dateofBirth == "" ||  ! $scope.cat.dateofBirth == null){
 			$http.post('/updateCattleProfileByAdmin?d='+Math.random(),{cat:$scope.cat,userId:$scope.userId,org:$scope.org,parentId:$scope.parentId})
 			.success(function(data){
 				//console.log("success");
@@ -8068,7 +8075,7 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 	$scope.addCattleProfileByAdmin = function(cat){
 		$scope.cat = cat;
 		$scope.doberror = false;
-		if(!angular.isUndefined($scope.cat.dateofBirth) ||  ! $scope.cat.dateofBirth == "" ||  ! $scope.cat.dateofBirth == null){
+		if(!angular.isUndefined($scope.cat.dateofBirthVM) ||  ! $scope.cat.dateofBirth == "" ||  ! $scope.cat.dateofBirth == null){
 			$http.post('/updateCattleProfileByAdmin?d='+Math.random(),{cat:$scope.cat,userId:$scope.userId,org:$scope.org,parentId:$scope.parentId})
 			.success(function(data){
 				//console.log("success");
@@ -8148,6 +8155,10 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 		});
 		 
 		 $('#dobnew').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+		 
+		 $('#dodelivery').datepicker({
 			    format: 'dd-MM-yyyy'
 		});
 		
@@ -9169,6 +9180,90 @@ App.controller('ViewDeliveryReportController', function ($scope, $rootScope, $ro
 				}
 				data.catersoutput.push(temp);
 
+				$scope.gridOptions.data = data.catersoutput;
+			});
+	 }
+
+
+});
+
+
+App.controller('ViewCattleReportController', function ($scope, $rootScope, $routeParams, $http, $upload){
+	$scope.breed = "all";
+	$scope.month = "M1";
+	
+	
+	$http.get('/getAllBreeds/?d='+Math.random()).success(function(data) {
+	    	$scope.breeds = data.breeds;
+					
+	});
+	
+	var rowtpl='<div ng-class="{\'blue\':row.entity.breed!=null}" <div ng-repeat="col in colContainer.renderedColumns track by col.colDef.name"  class="ui-grid-cell" ui-grid-cell></div></div>'
+
+	$scope.gridOptions = {
+				 rowTemplate:rowtpl,
+					columnDefs: [
+					             { field: 'breed' ,name : 'Breed Name', cellClass: function(grid, row, col, rowRenderIndex, colRenderIndex) {
+					            	 /* if (row.entity.breed != '') {
+	                                       return 'blue';
+	                                     }*/
+					                 }
+					             },
+					             { field: 'CattleName' ,name : 'Cattle Name'},
+					             { field: 'M1' ,name : 'Month'},
+					             
+					             
+	     			  ]
+	};
+	
+	$scope.getBreedsDetails = function(){
+		 $http.post('/getMonthlyCattleOutputReport',{breed:$scope.breed, month:$scope.month})
+			.success(function(data){
+				console.log(data);
+				
+				for(var i=0; i<data.catersoutput.length; i++){
+					var now = data.catersoutput[i];
+					if(now.cattleData.length == 0){
+						data.catersoutput.splice(i, 1);
+						i=i-1;
+					}
+				}
+				
+				data.catersoutput.sort(function(a, b) {
+				    return a.breed.localeCompare(b.breed);
+				});
+				
+				
+				for(var i=0; i<data.catersoutput.length; i++){
+					var now = data.catersoutput[i];
+					var breed = now.breed;	
+						if(breed != null){
+							var temp = {};
+							var count=0;
+							
+							temp = {
+									"breed": now.breed,
+									"M1": count
+								};
+							
+							for(var j=i; j<data.catersoutput.length; j++){
+								
+								if(breed == data.catersoutput[j].breed){
+									data.catersoutput[j].breed = null;
+									count++;
+									temp.M1 = count;
+									
+									data.catersoutput[j].M1 = "";
+								} else {
+									break;
+								}
+							}
+							
+							data.catersoutput.splice(i, 0, temp);
+							i = j;
+						}
+				}
+				console.log(data);
 				$scope.gridOptions.data = data.catersoutput;
 			});
 	 }

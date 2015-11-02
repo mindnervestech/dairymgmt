@@ -308,5 +308,16 @@ public class CattleOutput extends Model {
 		System.out.println("result "+sqlRows);
 		return sqlRows;
 	}
+
+	public static List<SqlRow> getMonthlyCattleOutputReport(Date firstDeliveryDate, Date lastDeliveryDate, String breedName, String cattleName, Date firstBirthDate, Date lastBirthDate) {
+		//System.out.println("start1 "+firstBirthDate+" end1 "+lastBirthDate + "breed "+breedName);
+		String sql = "select name, breed, last_delivery, dateof_birth from cattle_master where breed = :brd and name = :cat and is_pregnant = \"No\" and ((last_delivery BETWEEN :startdate and :enddate) OR (dateof_birth BETWEEN :startbirthdate and :endbirthdate))";
+		//String sql = "select name, breed, last_delivery, dateof_birth from cattle_master where breed = :brd and name = :cat and is_pregnant = \"No\" and last_delivery BETWEEN :startdate and :enddate";
+		List<SqlRow> sqlRows = Ebean.createSqlQuery(sql).setParameter("brd", breedName).setParameter("startdate", lastDeliveryDate).setParameter("enddate", firstDeliveryDate).setParameter("cat", cattleName).setParameter("startbirthdate", lastBirthDate).setParameter("endbirthdate", firstBirthDate).findList();
+	
+		return sqlRows;
+	}
+
+	
 }
 

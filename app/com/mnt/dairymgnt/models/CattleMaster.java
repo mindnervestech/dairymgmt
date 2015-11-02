@@ -34,7 +34,7 @@ public class CattleMaster extends Model {
 	public Date lastUpdateDateTime;
 	public  String name;
 	public String breed;
-	public String dateofBirth;
+	public Date dateofBirth;
 	public String  gender;
 	public String cattleIdentificationMark;
 	public String attrib1;
@@ -44,7 +44,8 @@ public class CattleMaster extends Model {
 	public String attrib5;
 	public int parentId;
 	
-	public String lastDelivery;
+	//public String lastDeliveryVM;
+	public Date lastDelivery;
 	public String isPregnant;
 	
 	public int getParentId() {
@@ -123,11 +124,11 @@ public class CattleMaster extends Model {
 		this.breed = breed;
 	}
 
-	public String getDateofBirth() {
+	public Date getDateofBirth() {
 		return dateofBirth;
 	}
 
-	public void setDateofBirth(String dateofBirth) {
+	public void setDateofBirth(Date dateofBirth) {
 		this.dateofBirth = dateofBirth;
 	}
 
@@ -245,11 +246,11 @@ public class CattleMaster extends Model {
 		this.isPregnant = isPregnant;
 	}
 
-	public String getLastDelivery() {
+	public Date getLastDelivery() {
 		return lastDelivery;
 	}
 
-	public void setLastDelivery(String lastDelivery) {
+	public void setLastDelivery(Date lastDelivery) {
 		this.lastDelivery = lastDelivery;
 	}
 }
