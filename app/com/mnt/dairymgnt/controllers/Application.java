@@ -1546,10 +1546,11 @@ public static Result getMonthlyCattleOutputReport(){
 				
 				JsonNode userId = json.path("userId");
 				System.out.println(userId);
-				if(userId.toString() != ""){
-					Users    uId = null;
-				    uId = Users.getUserByEmail(userId.toString().replace("\"", ""));
-					if(uId != null){
+				if (userId.toString() != "") {
+					Users uId = null;
+					uId = Users.getUserByEmail(userId.toString().replace("\"",
+							""));
+					if (uId != null) {
 						u.setUsers(uId);
 					}
 					
