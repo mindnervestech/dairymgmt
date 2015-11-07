@@ -1228,7 +1228,7 @@ public static Result getMonthlyCattleOutputReport(){
 		String sCurrentLine = new String();
 		String key  = new String();
 		    	  //Specify the file name and path here
-		    	  File f_ = new File(Play.application().path().getAbsolutePath() + "/public/app/encrypt/encryptedfile.txt");
+		    	  File f_ = new File(Play.application().path().getAbsolutePath() + "/public/encrypt/encryptedfile.txt");
 		    	  
 			       //BufferedReader br = null;
 					try {
@@ -1243,7 +1243,9 @@ public static Result getMonthlyCattleOutputReport(){
 						
 							if(line.contains("Encrypt")){
 								String keys[] = line.split(" ");
+								System.out.println("Keys Length : "+keys.length);
 								for(String s:keys){
+									System.out.println("S key from file: "+s);
 									key = keys[2];
 								}
 							}
