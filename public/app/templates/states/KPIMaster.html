@@ -27,7 +27,8 @@
 			
 			<div class="portlet-body" ng-init="init();" style="overflow-x: auto;">
 				<span ng-if="add == true" style="color:green;">Record Added Successfully.</span>
-			<span ng-if="update == true" style="color:green;">Record Updated  Successfully.</span>
+			    <span ng-if="update == true" style="color:green;">Record Updated  Successfully.</span>
+			    <span ng-if="error == true" ><code>Please Enter all Fields.</code></span>
 			
 				<div class="row mbm">
 					<div class="col-lg-12">
@@ -44,50 +45,50 @@
 							 -->
 						</div>
 						<div class="pull-right"></div>
-						
-						<div ng-init="getAllKPIMaster()" class="table-responsive">
+						<form class="form-validate">
+					    <div ng-init="getAllKPIMaster()" class="table-responsive">
 							<div class="page-header">
 	
 	                   <div class = "col-md-12" style="margin-top:1%">
 		                   	
 		                   	<div class ="col-md-6"><b>No Of Claves Per Year</b> </div>
 		                   	<div class ="col-md-6" > 
-		                   	<input type="text" ng-model = "kpvm.noOfClavesPerYear" />
+			                   	<input type="text" name="noOfClavesPerYear" ng-model = "kpvm.noOfClavesPerYear" required/>
 		                   	</div>
 	    	               </div>
 	    	           <div class = "col-md-12" style="margin-top:1%">
 		                   
 	    	               <div class ="col-md-6"><b> Months Of Milking Per Cattle Breed wise after Delivery</b></div>
-	        	           	<div class ="col-md-6" ng-model = "kpvm.MonthsOfMilkingPerCattleBreedwiseafterDelivery">
-	        	           	<input type="text"/>
+	        	           	<div class ="col-md-6" >
+	        	           	<input type="text" ng-model = "kpvm.MonthsOfMilkingPerCattleBreedwiseafterDelivery" required/>
 	        	           	 </div>
 	            	   </div>
 	            	   <div class = "col-md-12" style="margin-top:1%">
 		                   
 	                	   <div class ="col-md-6"> <b>Total No Of Calves Per Cattle</b></div>
-	                   		<div class ="col-md-6" ng-model = "kpvm.TotalNoOfCalvesPerCattle">
-	                   		<input type="text"/>
+	                   		<div class ="col-md-6" >
+	                   		<input type="text" ng-model = "kpvm.TotalNoOfCalvesPerCattle" required/>
 	                   		 </div>
 	                   </div>
 	                   <div class = "col-md-12" style="margin-top:1%">
 	
 	                   		<div class ="col-md-6"> <b>Days Of Pregnancy</b></div>
-	                   		<div class ="col-md-6" ng-model = "kpvm.DaysOfPregnancy"> 
-	                   		<input type="text"/>
+	                   		<div class ="col-md-6" > 
+	                   		<input type="text" ng-model = "kpvm.DaysOfPregnancy" required/>
 	                   		</div>
 	                   </div>
 	                   <div class = "col-md-12" style="margin-top:1%">
 		               
 	                   		<div class ="col-md-6"><b> Cycle Days Between Insemination</b></div>
 	                   		<div class ="col-md-6" >
-	                   		<input type="text" ng-model = "kpvm.CycleDaysBetweenInsemination"/>
+	                   		<input type="text" ng-model = "kpvm.CycleDaysBetweenInsemination" required/>
 	                   		 </div>
 	                   </div>
 	                   <div class = "col-md-12" style="margin-top:1%">
 		               
 	                   		<div class ="col-md-6"><b>Days by When Calvs Can be Inseminated</b> </div>
 	                   		<div class ="col-md-6" > 
-	                   		<input type="text" ng-model = "kpvm.DaysbyWhenCalvsCanbeInseminated"/>
+	                   		<input type="text" ng-model = "kpvm.DaysbyWhenCalvsCanbeInseminated" required/>
 	                   		</div>
 	                   
 	                   </div>
@@ -95,21 +96,21 @@
 		               
 	                   		<div class ="col-md-6"><b>Days by When Calv scan Produce Milk</b> </div>
 	                   		<div class ="col-md-6" style="margin-top:1%">
-	                   			<input type="text" ng-model = "kpvm.DaysbyWhenCalvscanProduceMilk" />
+	                   			<input type="text" ng-model = "kpvm.DaysbyWhenCalvscanProduceMilk" required/>
 	                   	    </div>
 	                   
 	                   </div>
 	                    <div class = "col-md-12" style="margin-top:1%">
 	                   		<div class ="col-md-6" > <b>Days of Stop Milking Breed Wise Pre Delivery</b> </div>
 	                   		<div class ="col-md-6" > 
-	                   		<input type="text" ng-model = "kpvm.DaysofStopMilkingBreedWisePreDelivery"/>
+	                   		<input type="text" ng-model = "kpvm.DaysofStopMilkingBreedWisePreDelivery" required/>
 	                   		</div>
 	                   </div>
 
 	                    <div class = "col-md-12" style="margin-top:1%"> 
 	                   		<div class ="col-md-6"><b>Ready for Insemination Days After Delivery </b></div>
 	                   		<div class ="col-md-6" >
-	                   		<input type="text" ng-model = "kpvm.ReadyforInseminationDaysAfterDelivery"/>
+	                   		<input type="text" ng-model = "kpvm.ReadyforInseminationDaysAfterDelivery" required/>
 	                   		 </div>
 	                   </div>
 	                   
@@ -136,6 +137,7 @@
 								</button>
 							</div>  -->
 						</div>
+						</form>
 					</div>
 
 				</div>

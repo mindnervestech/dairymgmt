@@ -25,6 +25,22 @@ public class CattleOutputVMs {
 	public int M10;
 	public int M11;
 	public int M12;
+	
+	public ArrayList<CattleOutputMonthVM> cattleDataM1 = new ArrayList<>();
+	public ArrayList<CattleOutputMonthVM> cattleDataM2 = new ArrayList<>();
+	public ArrayList<CattleOutputMonthVM> cattleDataM3= new ArrayList<>();
+	public ArrayList<CattleOutputMonthVM> cattleDataM4= new ArrayList<>();
+	public ArrayList<CattleOutputMonthVM> cattleDataM5= new ArrayList<>();
+	public ArrayList<CattleOutputMonthVM> cattleDataM6= new ArrayList<>();
+	public ArrayList<CattleOutputMonthVM> cattleDataM7= new ArrayList<>();
+	public ArrayList<CattleOutputMonthVM> cattleDataM8= new ArrayList<>();
+	public ArrayList<CattleOutputMonthVM> cattleDataM9= new ArrayList<>();
+	public ArrayList<CattleOutputMonthVM> cattleDataM10= new ArrayList<>();
+	public ArrayList<CattleOutputMonthVM> cattleDataM11= new ArrayList<>();
+	public ArrayList<CattleOutputMonthVM> cattleDataM12= new ArrayList<>();
+	
+	
+	
 	public ArrayList<CattleOutputMonthVM> cattleData;
 	public Date expectedDelivery;
 	//public String deviceID;

@@ -238,6 +238,19 @@ public class CattleMaster extends Model {
 				.setMaxRows(CattleMaster.find.findRowCount()).findList().size();
 	}
 	
+	public static List<CattleMaster> getDailyMilkReport(int pageNumber, int rowperpage) {
+		// TODO Auto-generated method stub
+		return find.where().setFirstRow(pageNumber * 20).setMaxRows(rowperpage)
+				.findList();
+	}
+	
+	@JsonIgnore
+	public static int getDailyMilkReportCount(int pageNumber) {
+		// TODO Auto-generated method stub
+		return find.setFirstRow(pageNumber * 10)
+				.setMaxRows(CattleMaster.find.findRowCount()).findList().size();
+	}
+	
 	public String getIsPregnant() {
 		return isPregnant;
 	}

@@ -294,7 +294,7 @@ public class CattleOutput extends Model {
 		String brd =  breed.replaceAll("\"", "");
 		
 			//SQL query.
-			String sql = "select co.cattle_master_cattle_id, co.last_update_date_time, cm.name, cm.breed, co.quantity, co.expected_milk_quantity from cattle_output as co inner join cattle_master as cm on co.cattle_master_cattle_id = cm.cattle_id where cm.breed = :brd and cm.name = :cat and co.last_update_date_time BETWEEN :startdate and :enddate";
+			String sql = "select co.cattle_master_cattle_id, co.last_update_date_time, cm.name, cm.breed, co.quantity, co.expected_milk_quantity from cattle_output as co inner join cattle_master as cm on co.cattle_master_cattle_id = cm.cattle_id where cm.breed = :brd and cm.name = :cat and cm.last_delivery BETWEEN :startdate and :enddate";
 			List<SqlRow> sqlRows = Ebean.createSqlQuery(sql).setParameter("brd", brd).setParameter("startdate", startdate).setParameter("enddate", enddate).setParameter("cat", cattleName).findList();
 		
 		return sqlRows;

@@ -416,6 +416,72 @@ public class Application extends Controller {
 	}
 	
 	
+	public static Result getDailyMilkReport(int pageno){
+		Date strdate  = null;
+		Calendar cal = Calendar.getInstance();
+	    int year = cal.get(cal.YEAR);
+	    String month = new SimpleDateFormat("MMM").format(cal.getTime());
+	    
+		String sdate = ("01-"+month+"-"+year).replace("\"", "");
+		
+		SimpleDateFormat  format = new SimpleDateFormat("dd-MMM-yyyy");  
+		try{
+			 strdate = format.parse(sdate);
+			 
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+		List<CattleMaster> cattleMasters = CattleMaster.getDailyMilkReport(pageno,20);
+        int count  = 0;
+        count  = CattleMaster.getDailyMilkReportCount(pageno);
+        
+		ArrayList<CattleMasterVM> cmvm = new ArrayList<>();
+		List<KPIName> kpi  = KPIName.getAllKPIName();
+		int cattleInsimination = 0;
+		
+		for(KPIName u : kpi){
+			cattleInsimination = u.DaysbyWhenCalvsCanbeInseminated;
+		}
+		
+		for(CattleMaster u : cattleMasters){
+			Date d1 = null;
+			Date d2 = null;
+
+			try {
+				d1 = u.lastDelivery;
+				d2 = strdate;
+
+				//in milliseconds
+				long diff = d2.getTime() - d1.getTime();
+				long diffDays = diff / (24 * 60 * 60 * 1000);
+
+
+				if(cattleInsimination >= diffDays){
+					System.out.println("days======" + diffDays + "cattleInsimination--------"+ cattleInsimination);
+					System.out.println("u.lastDelivery------" + d1 + "strdate---------" + d2);
+					CattleMasterVM cfvm = new CattleMasterVM();
+					cfvm.cattleId = u.cattleId;
+					cfvm.breed = u.breed;
+					cfvm.name = u.name;
+					cfvm.lastDelivery = u.lastDelivery;
+					cmvm.add(cfvm);
+				}
+
+				
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+		HashMap  <String ,Object> hm = new HashMap();
+		hm.put("dailyMilkReport",cmvm);
+		hm.put("userCount", count);
+		return ok(Json.toJson(hm));
+	}
+	
+	
+	
 	public static Result getAllOnlyFeedCattleMaster(){
 		List<CattleFeedMaster> cattleFeedMasters = CattleFeedMaster.getAllOnlyFeedCattleMaster();
         
@@ -742,40 +808,43 @@ public class Application extends Controller {
 		    cfvm.M8 = 0;
 		    cfvm.M9 = 0;
 		    cfvm.M10 = 0;
-			for(int i=0; i<10; i++) {
-				Date starting = strdate;
-				Date ending = getEndDate(starting, 1);
-				for(CattleOutputMonthVM u : monthList){
-					
-					if(u.lastUpdateDateTime.before(ending) && u.lastUpdateDateTime.after(starting)){
-					switch(i+1){
-					   case 1:  cfvm.M1 += u.quantity;
-								break;
-			           case 2:  cfvm.M2 += u.quantity;
-			                    break;
-			           case 3:  cfvm.M3 += u.quantity;
-			                    break;
-			           case 4:  cfvm.M4 += u.quantity;
-			                    break;
-			           case 5:  cfvm.M5 += u.quantity;
-			                    break;
-			           case 6:  cfvm.M6 += u.quantity;
-			                    break;
-			           case 7:  cfvm.M7 += u.quantity;
-			                    break;
-			           case 8:  cfvm.M8 += u.quantity;
-			                    break;
-			           case 9:  cfvm.M9 += u.quantity;
-			                    break;
-			           case 10: cfvm.M10 += u.quantity;
-			                    break;
+		    if(!monthList.isEmpty()){
+				for(int i=0; i<10; i++) {
+					Date starting = strdate;
+					Date ending = getEndDate(starting, 1);
+					for(CattleOutputMonthVM u : monthList){
+						
+						if(u.lastUpdateDateTime.before(ending) && u.lastUpdateDateTime.after(starting)){
+						switch(i+1){
+						   case 1:  cfvm.M1 += u.quantity;
+									break;
+				           case 2:  cfvm.M2 += u.quantity;
+				                    break;
+				           case 3:  cfvm.M3 += u.quantity;
+				                    break;
+				           case 4:  cfvm.M4 += u.quantity;
+				                    break;
+				           case 5:  cfvm.M5 += u.quantity;
+				                    break;
+				           case 6:  cfvm.M6 += u.quantity;
+				                    break;
+				           case 7:  cfvm.M7 += u.quantity;
+				                    break;
+				           case 8:  cfvm.M8 += u.quantity;
+				                    break;
+				           case 9:  cfvm.M9 += u.quantity;
+				                    break;
+				           case 10: cfvm.M10 += u.quantity;
+				                    break;
+						}
+						}
 					}
-					}
+					strdate = ending;
 				}
-				strdate = ending;
-			}
-			
-			cmvm.add(cfvm);
+				
+				cmvm.add(cfvm);
+		    }
+
 		}
 		
 		
@@ -863,6 +932,7 @@ public class Application extends Controller {
 			cfvm.breed = breedName;
 		    cfvm.cattleData = monthList; 
 		    cfvm.M1 = 0;
+		    
 		    cfvm.M2 = 0;
 		    cfvm.M3 = 0;
 		    cfvm.M4 = 0;
@@ -878,32 +948,48 @@ public class Application extends Controller {
 				Date starting = strdate;
 				Date ending = getEndDate(starting, 1);
 				for(CattleOutputMonthVM u : monthList){
-					
+					CattleOutputMonthVM covmm = new CattleOutputMonthVM();
+					covmm.cattleId = u.cattleId;
+					covmm.expectedDelivery = u.expectedDelivery;
+					covmm.cattleName = u.cattleName;
+					covmm.breed = u.breed;		
 					if(u.expectedDelivery.before(ending) && u.expectedDelivery.after(starting)){
 					switch(i+1){
 					   case 1:  cfvm.M1++;
+					   			cfvm.cattleDataM1.add(covmm);
 								break;
-			           case 2:  cfvm.M2++;
+					   case 2:  cfvm.M2++;
+								cfvm.cattleDataM2.add(covmm);
 			                    break;
 			           case 3:  cfvm.M3++;
+			           			cfvm.cattleDataM3.add(covmm);
 			                    break;
 			           case 4:  cfvm.M4++;
+			           			cfvm.cattleDataM4.add(covmm);
 			                    break;
 			           case 5:  cfvm.M5++;
+			           			cfvm.cattleDataM5.add(covmm);
 			                    break;
 			           case 6:  cfvm.M6++;
+			           			cfvm.cattleDataM6.add(covmm);
 			                    break;
 			           case 7:  cfvm.M7++;
+			           			cfvm.cattleDataM7.add(covmm);
 			                    break;
 			           case 8:  cfvm.M8++;
+			           			cfvm.cattleDataM8.add(covmm);
 			                    break;
 			           case 9:  cfvm.M9++;
+			           			cfvm.cattleDataM9.add(covmm);
 			                    break;
 			           case 10: cfvm.M10++;
+			           			cfvm.cattleDataM10.add(covmm);
 			                    break;
 			           case 11: cfvm.M11++;
+			           			cfvm.cattleDataM11.add(covmm);
 	                    		break;
 			           case 12: cfvm.M12++;
+			           			cfvm.cattleDataM12.add(covmm);
 	                    		break;
 					}
 					}

@@ -1,0 +1,124 @@
+<style>
+.Color {
+	color: green
+}
+
+.redColor {
+	color: red
+}
+
+.btn-success-custom {
+	color: white;
+	background-color: #21205f;
+}
+
+.btn-success-custom:hover {
+	color: white;
+	background-color: #999999;
+}
+</style>
+ <!-- ... -->
+ <div class="row">
+	<div class="col-lg-12">
+		<div class="portlet box" style="min-height: 500px;">
+			<div class="portlet-header">
+				<div class="caption">Daily Milk Report</div>
+			</div>
+			
+			<div class="portlet-body" ng-init="init();" style="overflow-x: auto;">
+							<div>
+				<h4>Date : <span>{{CurrentDatetime | date:'yyyy-MM-dd'}}</span></h4> 
+			</div>
+			
+				<div class="row mbm">
+					<div class="col-lg-12">
+						<div ng-init="getAllCattleHealth()" class="table-responsive">
+							<div class="page-header">
+								<table id="table_id"
+									class="table table-hover table-striped table-bordered table-advanced tablesorter display">
+									<tbody>
+										<tr>
+											<th>Cattle Id</th>
+											<th>Breed Name</th>
+											<th>Cattle Name</th>
+											<th>Last Delivaery date</th>
+										</tr>
+										<tr data-ng-repeat="cat in catershealth"
+											style="background-color: #fff !important; left: -900">
+											<td ng-click="" data-toggle="tooltip" data-placement="bottom"
+												title="Cattle Id"><a
+												>{{cat.cattleId}}</a></td>
+											
+											<td ng-click="">{{cat.breed}}</td>
+											<td ng-click="">{{cat.name}}</td>
+											<td ng-click="">{{cat.lastDelivery | date:'yyyy-MM-dd'}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						 <div class="pull-right">
+								<button id="pre" type="button" ng-click="clickPre()"
+									class="btn btn-success-custom">
+									<i class="glyphicon glyphicon-arrow-left"></i>
+								</button>
+								&nbsp;
+								<button id="next" type="button" ng-click="clickNext()"
+									class="btn btn-success-custom">
+									<i class="glyphicon glyphicon-arrow-right"></i>
+								</button>
+							</div> 
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	 <script type="text/javascript">
+	 $('.datepickerid').datepicker({
+		    format: 'mm/dd/yyyy',
+		    startDate: '-3d'
+		})
+        </script>
+	
+</div>
+
+<!-- Modal Edit user details-->
+<style type="text/css">
+.modal .modal-dialog {
+	width: 70%;
+}
+
+.modal .modal-body {
+	max-height: 500px;
+	overflow-y: auto;
+}
+fieldset.scheduler-border {
+	border: 1px groove !important;
+	padding: 0 1.4em 1.4em 1.4em !important;
+	margin: 0 0 1.5em 0 !important;
+	-webkit-box-shadow: 0px 0px 0px 0px #000;
+	box-shadow: 0px 0px 0px 0px #000;
+	border-color: #darkgrey;
+}
+
+legend.scheduler-border {
+	font-size: 1.0em !important;
+	text-align: left !important;
+	width: inherit;
+	padding: 0 10px;
+	border-bottom: none;
+	color: darkgray;
+}
+
+.clsDatePicker {
+	z-index: 100000;
+}
+</style>
+
+<style>
+.datepicker {
+	z-index: 1151 !important;
+}
+</style>

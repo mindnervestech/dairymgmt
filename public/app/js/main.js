@@ -116,6 +116,7 @@ App.config(function ($routeProvider) {
         .when('/allCattleIntake', { templateUrl: 'assets/app/templates/states/cattleIntake.html', controller: 'ViewAllCattleIntakeController'})
        .when('/allCattleOutput', { templateUrl: 'assets/app/templates/states/cattleOutput.html', controller: 'ViewAllCattleOutputController'})
        .when('/allCattleHealth', { templateUrl: 'assets/app/templates/states/cattleHealth.html', controller: 'ViewAllCattleHealthController'})
+        .when('/dailyMilkReport', { templateUrl: 'assets/app/templates/states/dailyMilkReport.html', controller: 'ViewAllDailyMilkReportController'})
        .when('/allChildCattle', { templateUrl: 'assets/app/templates/states/childCattle.html', controller: 'ViewAllCattleChildMasterController'})
         .when('/allPregnantCatttle', { templateUrl: 'assets/app/templates/states/pregnantCattle.html', controller: 'ViewAllPregnantCattleController'})
        .when('/allKPIMaster', { templateUrl: 'assets/app/templates/states/kpiMaster.html', controller: 'ViewAllKPIMasterController'})
@@ -8448,6 +8449,118 @@ App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope
 
 
 
+App.controller('ViewAllDailyMilkReportController', function ($scope, $rootScope, $routeParams, $http, $upload){
+	
+	 
+	 
+	 
+	//Get all Cattle master to admin
+	$scope.CurrentDatetime = new Date();
+	 $scope.pageno = 0;
+     $scope.getAllCattleHealth = function(){
+		$http.get('/getDailyMilkReport/'+$scope.pageno)
+		.success(function(data){
+			if(data) {
+				$scope.catershealth = data.dailyMilkReport;
+				console.log(data.dailyMilkReport);
+				$scope.activeusercount = data.activeusercount;
+				if(data.userCount <= 10){
+					$('#next1').hide();
+					$('#next').hide();
+					//$scope.JobPre  = parseInt($scope.totalJobs);
+				}else{
+					$('#next1').show();
+					$('#next').show();
+				//	$scope.JobPre= 10;
+					
+				}
+			} 
+		});
+		
+		if($scope.pageno <= 0){
+			$('#pre').hide();
+			$('#pre1').hide();
+		}else{
+			$('#pre').show();
+			$('#pre1').show();
+		}
+	}
+
+	$scope.clickNext = function() {
+		//console.log("nexdt");
+			  $scope.pageno++;
+			 // $scope.nextCount = parseInt( $scope.nextCount) + 10;
+			 // var count= 0;
+			  $http.get('/getDailyMilkReport/'+$scope.pageno)
+				.success(function(data) {
+			     $scope.catershealth = data.dailyMilkReport;
+				if(data.userCount <= 10){
+						$('#next1').hide();
+						$('#next').hide();
+						//$scope.JobPre  = parseInt($scope.totalJobs);
+					}else{
+						$('#next1').show();
+						$('#next').show();
+					//	$scope.JobPre= 10;
+						
+					}
+				});
+			  
+				if($scope.pageno <= 0){
+					$('#pre').hide();
+					$('#pre1').hide();
+				}else{
+					$('#pre').show();
+					$('#pre1').show();
+				}
+			 
+		  }
+		 
+	 $scope.clickPre = function() {
+		 // $scope.position = "notSelected";
+	      $scope.pageno--;
+	     // var count = 0;
+	      
+		  $http.get('/getDailyMilkReport/'+$scope.pageno)
+			.success(function(data) {
+				$scope.catershealth = data.dailyMilkReport;
+				if(data.userCount <= 10){
+					$('#next').hide();
+					$('#next1').hide();
+				}else{
+					$('#next').show();
+					$('#next1').show();
+				}
+				
+			});
+			if($scope.pageno <= 0){
+				$('#pre').hide();
+				$('#pre1').hide();
+			}else{
+				$('#pre').show();
+				$('#pre1').show();
+			}
+		  }
+ 
+
+	
+	// check for gthe admin when page refresh
+	$http.get('checkForadmin?d='+Math.random())
+	.success(function(data){
+		if(data == 'notAdmin') {
+			$rootScope.isUser = true;
+			$rootScope.isAdmin = false;
+		}else{
+			$rootScope.isAdmin = true;
+			$rootScope.isUser = false;
+		} 
+	});
+	
+	
+});
+
+
+
 App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $routeParams, $http, $upload){
 	
 	 
@@ -8520,7 +8633,7 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 	 $scope.email;
 	 $scope.pageno = 0;
 	 $scope.activeusercount = 0;
-     $scope.getAllCattleHealth = function(){
+    $scope.getAllCattleHealth = function(){
 
 		$scope.update =  false;
 		$scope.add =  false;
@@ -8607,7 +8720,7 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 				$('#pre1').show();
 			}
 		  }
- 
+
 
 		$http.get('/getUserPermissions?d='+Math.random())
 		.success(function(data) {
@@ -8839,6 +8952,7 @@ App.controller('ViewAllKPIMasterController', function ($scope, $rootScope, $rout
 		$http.get('/getAllKPIMaster/')
 		.success(function(data){
 			if(data) {
+				console.log(data.kpvm);
 				$scope.kpvm = data.kpvm;
 				$scope.activeusercount = data.activeusercount;
 				if(data.userCount <= 10){
@@ -8861,20 +8975,25 @@ App.controller('ViewAllKPIMasterController', function ($scope, $rootScope, $rout
 			$('#pre1').show();
 		}
 	}
-     
+     $scope.error = false;
      $scope.updateandsaveKPIMaster = function(kpvm){
     	 $scope.kpvm = kpvm;
-    	 console.log($scope.kpvm);
+    	 console.log(kpvm);
     	 var arr = [1,2,3];
-    	 $http({url:'/updateandsaveKPIMaster',method:'POST',data:{kpvm12: kpvm}})
- 		.success(function(data){
- 			$scope.updateSuccess = true;
- 			$http.get('/getAllKPIMaster/')
- 				.success(function(data) {
- 					$scope.kpvm = data.kpvm;
- 					$scope.update =  true;
- 				});
- 		});
+    	 if(kpvm.noOfClavesPerYear != "0" && kpvm.MonthsOfMilkingPerCattleBreedwiseafterDelivery != "0" && kpvm.TotalNoOfCalvesPerCattle!="0" && kpvm.DaysOfPregnancy!="0" && kpvm.CycleDaysBetweenInsemination!="0" && kpvm.DaysbyWhenCalvsCanbeInseminated!="0" && kpvm.DaysbyWhenCalvscanProduceMilk!="0" && kpvm.DaysofStopMilkingBreedWisePreDelivery!="0" && kpvm.ReadyforInseminationDaysAfterDelivery!="0" ){
+    	     $scope.error = false;
+        	 $http({url:'/updateandsaveKPIMaster',method:'POST',data:{kpvm12: kpvm}})
+      		.success(function(data){
+      			$scope.updateSuccess = true;
+      			$http.get('/getAllKPIMaster/')
+      				.success(function(data) {
+      					$scope.kpvm = data.kpvm;
+      					$scope.update =  true;
+      				});
+      		});
+    	 }else{
+    	     $scope.error = true;
+    	 }
      }
 	
 });
@@ -9111,7 +9230,7 @@ App.controller('ViewReportMonthlyController', function ($scope, $rootScope, $rou
 
 App.controller('ViewDeliveryReportController', function ($scope, $rootScope, $routeParams, $http, $upload){
 	$scope.breed = "all";
-	
+	$scope.derliveryCountRepotObject = [];
 	$http.get('/getAllBreeds/?d='+Math.random()).success(function(data) {
 	    	$scope.breeds = data.breeds;
 					
@@ -9129,21 +9248,28 @@ App.controller('ViewDeliveryReportController', function ($scope, $rootScope, $ro
 					                 }
 					             },
 					             
-					             { field: 'M1' ,name : 'M1'},
-					             { field: 'M2' ,name : 'M2'},
-					             { field: 'M3' ,name : 'M3'},
-					             { field: 'M4' ,name : 'M4'},
-					             { field: 'M5' ,name : 'M5'},
-					             { field: 'M6' ,name : 'M6'},
-					             { field: 'M7' ,name : 'M7'},
-					             { field: 'M8' ,name : 'M8'},
-					             { field: 'M9' ,name : 'M9'},
-					             { field: 'M10' ,name : 'M10'},
-					             { field: 'M11' ,name : 'M11'},
-					             { field: 'M12' ,name : 'M12'}
+					             { field: 'M1' ,name : 'M1', cellTemplate: '<div class="textaligncenter" ng-click="grid.appScope.getMonthlyReportofCount(row.entity.cattleDataM1)">{{row.entity.M1}}</div>'},
+					             { field: 'M2' ,name : 'M2', cellTemplate: '<div class="textaligncenter" ng-click="grid.appScope.getMonthlyReportofCount(row.entity.cattleDataM2)">{{row.entity.M2}}</div>'},
+					             { field: 'M3' ,name : 'M3', cellTemplate: '<div class="textaligncenter" ng-click="grid.appScope.getMonthlyReportofCount(row.entity.cattleDataM3)">{{row.entity.M3}}</div>'},
+					             { field: 'M4' ,name : 'M4', cellTemplate: '<div class="textaligncenter" ng-click="grid.appScope.getMonthlyReportofCount(row.entity.cattleDataM4)">{{row.entity.M4}}</div>'},
+					             { field: 'M5' ,name : 'M5', cellTemplate: '<div class="textaligncenter" ng-click="grid.appScope.getMonthlyReportofCount(row.entity.cattleDataM5)">{{row.entity.M5}}</div>'},
+					             { field: 'M6' ,name : 'M6', cellTemplate: '<div class="textaligncenter" ng-click="grid.appScope.getMonthlyReportofCount(row.entity.cattleDataM6)">{{row.entity.M6}}</div>'},
+					             { field: 'M7' ,name : 'M7', cellTemplate: '<div class="textaligncenter" ng-click="grid.appScope.getMonthlyReportofCount(row.entity.cattleDataM7)">{{row.entity.M7}}</div>'},
+					             { field: 'M8' ,name : 'M8',cellTemplate: '<div class="textaligncenter" ng-click="grid.appScope.getMonthlyReportofCount(row.entity.cattleDataM8)">{{row.entity.M8}}</div>'},
+					             { field: 'M9' ,name : 'M9', cellTemplate: '<div class="textaligncenter" ng-click="grid.appScope.getMonthlyReportofCount(row.entity.cattleDataM9)">{{row.entity.M9}}</div>'},
+					             { field: 'M10' ,name : 'M10', cellTemplate: '<div class="textaligncenter" ng-click="grid.appScope.getMonthlyReportofCount(row.entity.cattleDataM10)">{{row.entity.M10}}</div>'},
+					             { field: 'M11' ,name : 'M11', cellTemplate: '<div class="textaligncenter" ng-click="grid.appScope.getMonthlyReportofCount(row.entity.cattleDataM11)">{{row.entity.M11}}</div>'},
+					             { field: 'M12' ,name : 'M12', cellTemplate: '<div class="textaligncenter" ng-click="grid.appScope.getMonthlyReportofCount(row.entity.cattleDataM12)">{{row.entity.M12}}</div>'}
 	     			  ]
 	};
 	
+	$scope.getMonthlyReportofCount = function(data){
+		console.log(data);
+		if(data.length != 0){
+			$scope.derliveryCountRepotObject = data;
+			$("#showCattleDeliveryCount").modal('show');
+		}
+	};
 	$scope.getBreedsDetails = function(){
 		 $http.post('/getAllCattleDeliveryReportbyYear',{breed:$scope.breed})
 			.success(function(data){
@@ -9179,7 +9305,7 @@ App.controller('ViewDeliveryReportController', function ($scope, $rootScope, $ro
 					
 				}
 				data.catersoutput.push(temp);
-
+				console.log(data.catersoutput);
 				$scope.gridOptions.data = data.catersoutput;
 			});
 	 }
