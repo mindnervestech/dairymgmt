@@ -2396,6 +2396,13 @@ public static Result getMonthlyCattleOutputReport(){
 				//Breeds b = Breeds.getBreedsById(uvm.Breed);
 				//u.setBreed(b.breedName);
 				//u.setBreed(uvm.Breed);
+				if(uvm.Breed.matches("\\d+")){
+					Breeds b = Breeds.getBreedsById(uvm.Breed);
+					u.setBreed(b.breedName);
+				}else{
+					Breeds b = Breeds.getBreedsByName(uvm.Breed);
+					u.setBreed(b.breedName);	
+				}
 				
 				u.setStage(uvm.Stage);
 				u.setSKUId(uvm.SKUId);

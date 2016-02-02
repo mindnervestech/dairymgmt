@@ -8091,10 +8091,12 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 	$scope.org;
 	$scope.users;
 	$scope.userId;
+	$scope.fnameError = false;
 	$scope.updateCattleProfileByAdmin = function(cat){
 		$scope.cat = cat;
 		$scope.doberror = false;
-		if(!angular.isUndefined($scope.cat.dateofBirthVM) ||  ! $scope.cat.dateofBirth == "" ||  ! $scope.cat.dateofBirth == null){
+		$scope.fnameError = false;
+		if(!angular.isUndefined($scope.cat.dateofBirthVM) ||  (! $scope.cat.dateofBirth == "") ||  (! $scope.cat.dateofBirth == null) || (!angular.isUndefined($scope.cat.name)) || (!$scope.cat.name == "") || (!$scope.cat.name == null)){
 			$http.post('/updateCattleProfileByAdmin?d='+Math.random(),{cat:$scope.cat,userId:$scope.userId,org:$scope.org,parentId:$scope.parentId})
 			.success(function(data){
 				//console.log("success");
@@ -8112,6 +8114,7 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 			
 		}else{
 			$scope.doberror = true;
+			$scope.fnameError = true;
 		}
 	}
 
@@ -8119,11 +8122,13 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 		$scope.cat = cat;
 		console.log(cat);
 		$scope.doberror = false;
-		if(!angular.isUndefined($scope.cat.dateofBirthVM) ||  ! $scope.cat.dateofBirth == "" ||  ! $scope.cat.dateofBirth == null){
+		$scope.fnameError = false;
+		if((!angular.isUndefined($scope.cat.dateofBirthVM)) ||  (!$scope.cat.dateofBirth == "") ||  (!$scope.cat.dateofBirth == null) || (!angular.isUndefined($scope.cat.name)) ||  (!$scope.cat.name == "") || (!$scope.cat.name == null)){
 			$http.post('/updateCattleProfileByAdmin?d='+Math.random(),{cat:$scope.cat,userId:$scope.userId,org:$scope.org,parentId:$scope.parentId})
 			.success(function(data){
 				//console.log("success");
 				$scope.updateSuccess = true;
+				
 				$('#addnewCattle').modal('hide');
 				$http.get('/getAllCattleMaster/'+$scope.pageno)
 					.success(function(data) {
@@ -8136,6 +8141,7 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 			});	
 		}else{
 			$scope.doberror = true;
+			$scope.fnameError = true;
 		}
 		
 }

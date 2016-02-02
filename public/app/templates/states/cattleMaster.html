@@ -140,7 +140,7 @@
 			<div class="modal-body">
 				<div class = "col-md-12">
 				<div class = "col-md-6">
-											   
+						<span ng-if= "fnameError == true" style="color:red;"> Please enter value</span> 
 						<div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr">Name</label>
   							<input type="text" ng-model = "cat.name" class="form-control" maxlength="80"   id="firstname"onkeypress="return onlyAlphabets(event,this);">
@@ -209,8 +209,8 @@
 					
 	            	<div class="col-md-12">
 										
-											<div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>
-												<div class="input-group" style = "margin-top: 5%;">
+											<!-- <div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>
+											 -->	<div class="input-group" style = "margin-top: 5%;">
 												<span>Last Delivery Date</span>
 													 <input type="text" ng-model="cat.lastDeliveryVM"
 														name="ld" class="form-control " id="dodelivery1"
@@ -225,8 +225,8 @@
 					
 					<div class="col-md-12">
 										
-											<div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>
-												<div class="input-group" style = "margin-top: 6%;">
+											<!-- <div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>
+										 -->		<div class="input-group" style = "margin-top: 6%;">
 												<span>Died on Date</span>
 													 <input type="text" ng-model="cat.diedonDateVM"
 														name="dob" class="form-control " id="dieondatenew"
@@ -282,8 +282,9 @@
 			<div class="modal-body">
 				<div class = "col-md-12">
 				<div class = "col-md-6">
-						
+						<span ng-if= "fnameError == true" style="color:red;"> Please enter value</span>
 						<div class="col-md-12">
+							
   							<label for="usr" style = "margin-top: 5%;">Name</label>
   							<input type="text" ng-model = "cat.name" class="form-control" maxlength="80" id="firstname"onkeypress="return onlyAlphabets(event,this);" required>
 						</div>
@@ -341,8 +342,8 @@
 						  <div class="col-md-12">
 										<div class="">
 											<div class="">
-											<div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>
-												<div class="input-group" style = "margin-top: 6%;">
+											<!-- <div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>
+											 -->	<div class="input-group" style = "margin-top: 6%;">
 												<span>Date of Birth</span>
 													 <input type="text" ng-model="cat.dateofBirthVM"
 														name="dob" class="form-control " id="dobnew"
@@ -372,8 +373,8 @@
 						<div class="col-md-12">
 										<div class="">
 											<div class="">
-											<div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>
-												<div class="input-group" style = "margin-top: 6%;">
+											<!-- <div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>
+											 -->	<div class="input-group" style = "margin-top: 6%;">
 												<span>Died on Date</span>
 													 <input type="text" ng-model="cat.diedonDateVM"
 														name="dob" class="form-control " id="dieondateAddnew"
@@ -411,7 +412,7 @@
 	            	</div>-->
 	            	</div>
 	            	</div>
-						<div class="form-actions">
+						<div class="form-actions" >
 							<div class="pull-right" style="margin-top:2%;">
 								<button type="submit" ng-click="addCattleProfileByAdmin(cat);"
 									class="btn btn-success-custom"  ng-if= "cattleMaster == true">Add</button>

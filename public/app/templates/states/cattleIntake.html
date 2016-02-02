@@ -55,6 +55,7 @@
 									<tbody>
 										<tr>
 											<th>Cattle Id</th>
+											<th>Cattle Breed</th>
 											<th>Device ID</th>
 											<th>Quantity</th>
 										<!--  	<th>Actual Feed Type</th>
@@ -70,6 +71,8 @@
 											<td ng-click="" data-toggle="tooltip" data-placement="bottom"
 												title="Send to mail to user"><a
 												href="mailto:{{user.email}}">{{cat.cattleId}}</a></td>
+											
+												<td ng-click="">{{cat.cattleFeedMaster.Breed}}</td>
 											<td ng-click="">{{cat.deviceID}}</td>
 											<td ng-click="">{{cat.quantity}}</td>
 											<!--  <td ng-click="">{{cat.actualFeedType}}</td>
