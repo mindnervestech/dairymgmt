@@ -2354,7 +2354,7 @@ public static Result getMonthlyCattleOutputReport(){
 				JsonNode feeds = json.path("feeds");
 				System.out.println(feeds);
 				if(feeds.toString() != null){
-					List<CattleFeeds> cc = CattleFeeds.getCatleFeedsById(u.feedId);
+					List<CattleFeeds> cc = CattleFeeds.getCatleFeedsById(uvm.feedId);
 					if(cc.size() > 0 ){
 						for(CattleFeeds c: cc){
 							c.delete();
@@ -2376,7 +2376,7 @@ public static Result getMonthlyCattleOutputReport(){
 						        c.feedWaterContent = uv.get(i).feedWaterContent;
 						        c.feedFiber = 	uv.get(i).feedFiber;
 						        c.feedName = uv.get(i).feedName;
-						        c.feedId = uv.get(i).feedId;
+						        c.feedId = uvm.feedId;
 						        System.out.println("save ");
 						        c.save();
 								//u.setCattleFeeds(c);		
@@ -2422,7 +2422,7 @@ public static Result getMonthlyCattleOutputReport(){
 						        c.feedWaterContent = uv.get(i).feedWaterContent;
 						        c.feedFiber = 	uv.get(i).feedFiber;
 						        c.feedName = uv.get(i).feedName;
-						        c.feedId = uv.get(i).feedId;
+						        c.feedId = u.feedId;
 						        System.out.println("save ");
 						        c.save();
 								//u.setCattleFeeds(c);		
