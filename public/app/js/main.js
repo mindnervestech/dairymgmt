@@ -7811,7 +7811,7 @@ App.controller('ViewReportMasterController', function ($scope, $rootScope, $rout
 
 
 
-App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $routeParams, $http, $upload){
+App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $routeParams, $http, $upload,Flash){
 	// get all Cattle master to admin
 	$scope.email;
 	 $scope.pageno = 0;
@@ -8105,7 +8105,8 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 						$scope.caters = data.caters;
 						$scope.update =  true;
 						$scope.doberror = false;
-						
+						var message = '<strong> Well done!</strong>  You successfully update the record.';
+					    Flash.create('success', message, 'custom-class');
 					});
 			});
 			
@@ -8129,6 +8130,8 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 						$scope.caters = data.caters;
 						$scope.add =  true;
 						$scope.doberror = false;
+						var message = '<strong> Well done!</strong>  You successfully Added the record.';
+					    Flash.create('success', message, 'custom-class');
 					});
 			});	
 		}else{
@@ -8408,14 +8411,15 @@ App.controller('ViewAllFeedMasterController', function ($scope, $rootScope, $rou
 		$scope.feed = feed;
 		$scope.doberror = false;
 		$scope.emptyFieldsError = false;
-		if(angular.isUndefined($scope.feed.feedName)  || angular.isUndefined($scope.feed.feedProtine) || 
-				angular.isUndefined($scope.feed.feedWaterContent) || 
-				angular.isUndefined($scope.feed.feedFiber) || angular.isUndefined($scope.feed.feedVitamins) ||
-				angular.isUndefined($scope.feed.skuId) ||
-				angular.isUndefined($scope.feed.quantityofProtine) ||  
-				angular.isUndefined($scope.feed.quantityofWater) || 
-				angular.isUndefined($scope.feed.quantityofFiber) ||
-				angular.isUndefined($scope.feed.quantityofVitamin)){
+		if(     angular.isUndefined($scope.feed.feedName)  || ( $scope.feed.feedName == "" )|| ($scope.feed.feedName == null)  ||
+				angular.isUndefined($scope.feed.feedProtine) || ($scope.feed.feedProtine == "") || ($scope.feed.feedProtine == null )||
+				angular.isUndefined($scope.feed.feedWaterContent) || ($scope.feed.feedWaterContent == "") || ($scope.feed.feedWaterContent  == null) ||
+				angular.isUndefined($scope.feed.feedFiber) || ($scope.feed.feedFiber = "") || ($scope.feed.feedFiber == null )||  
+				angular.isUndefined($scope.feed.feedVitamins) || ($scope.feed.feedVitamins == "") ||  ($scope.feed.feedVitamins == null) || 
+				angular.isUndefined($scope.feed.skuId) || ($scope.feed.skuId == "") || ($scope.feed.skuId == null) ||
+ 				angular.isUndefined($scope.feed.quantityofProtine) || ($scope.feed.quantityofProtine = "") || ($scope.feed.quantityofProtine == null) ||
+ 				angular.isUndefined($scope.feed.quantityofWater) ||   ($scope.feed.quantityofWater == "") ||  ($scope.feed.quantityofWater == null)
+	){
 			    $scope.emptyFieldsError = true;
 			}
 		else
@@ -8444,11 +8448,15 @@ App.controller('ViewAllFeedMasterController', function ($scope, $rootScope, $rou
 		console.log(feed);
 		$scope.doberror = false;
 		$scope.emptyFieldsError = false;
-		if(angular.isUndefined($scope.feed.feedName) || angular.isUndefined($scope.feed.feedProtine) || 
-				angular.isUndefined($scope.feed.feedWaterContent) || angular.isUndefined($scope.feed.feedFiber) ||  
-				angular.isUndefined($scope.feed.feedVitamins) || angular.isUndefined($scope.feed.skuId) ||
-				angular.isUndefined($scope.feed.quantityofProtine) || angular.isUndefined($scope.feed.quantityofWater) || 
-				angular.isUndefined($scope.feed.quantityofFiber) || angular.isUndefined($scope.feed.quantityofVitamin))
+		if(angular.isUndefined($scope.feed.feedName)  || ( $scope.feed.feedName == "" )|| ($scope.feed.feedName == null)  ||
+				angular.isUndefined($scope.feed.feedProtine) || ($scope.feed.feedProtine == "") || ($scope.feed.feedProtine == null )||
+				angular.isUndefined($scope.feed.feedWaterContent) || ($scope.feed.feedWaterContent == "") || ($scope.feed.feedWaterContent  == null) ||
+				angular.isUndefined($scope.feed.feedFiber) || ($scope.feed.feedFiber = "") || ($scope.feed.feedFiber == null )||  
+				angular.isUndefined($scope.feed.feedVitamins) || ($scope.feed.feedVitamins == "") ||  ($scope.feed.feedVitamins == null) || 
+				angular.isUndefined($scope.feed.skuId) || ($scope.feed.skuId == "") || ($scope.feed.skuId == null) ||
+ 				angular.isUndefined($scope.feed.quantityofProtine) || ($scope.feed.quantityofProtine = "") || ($scope.feed.quantityofProtine == null) ||
+ 				angular.isUndefined($scope.feed.quantityofWater) ||   ($scope.feed.quantityofWater == "") ||  ($scope.feed.quantityofWater == null)
+		)
 		{
 			$scope.emptyFieldsError = true;
 		}
@@ -8538,7 +8546,13 @@ App.controller('ViewAllFeedMasterController', function ($scope, $rootScope, $rou
 
 
 
-App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope, $routeParams, $http, $upload){
+
+
+
+
+
+
+App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope, $routeParams, $http, $upload,Flash){
 	// get all Cattle master to admin
 	$scope.email;
 	 $scope.pageno = 0;
@@ -8739,6 +8753,28 @@ App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope
 		}
 		
 		
+		$http.get('/getAllBreeds/?d='+Math.random()).success(function(data) {
+	    	$scope.breeds = data.breeds;
+					if ((obj.breedName == $scope.cat.Breed)) {
+						obj.isSelect = true;
+						};
+			});
+		
+		 $http.post('/getAllSubBreedsByName',{breed:$scope.cat.Breed}).then(function(res){
+	 			console.log(res);
+	 			$scope.subBreeds = res.data;
+	 			console.log($scope.cat.SubBreed);
+	 			angular.forEach($scope.subBreeds, function(obj, index){
+					if ((obj.sub_breed == $scope.cat.SubBreed)) {
+						obj.isSelect = true;
+						console.log("in true");
+						//$scope.userExperience = obj.experianceLevel;
+						//$scope.parentId = obj.cattleId;
+						};
+				});
+		 
+		 });
+		
 		$('#editfeedCatdersDetails').modal();
 		
 	}
@@ -8760,6 +8796,8 @@ App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope
 					.success(function(data) {
 						$scope.feedcaters = data.feedcaters;
 						$scope.update =  true;
+						var message = '<strong> Well done!</strong>  You successfully update the record.';
+					    Flash.create('success', message, 'custom-class');
 					});
 			});
 	}
@@ -8776,6 +8814,8 @@ App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope
 					$scope.feedcaters = data.feedcaters;
 					
 					$scope.add =  true;
+					var message = '<strong> Well done!</strong>  You successfully Added the record.';
+				    Flash.create('success', message, 'custom-class');
 				});
 		});
 		
@@ -8790,6 +8830,7 @@ App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope
 			$scope.userId = data;
 			
 			});
+		
 		
 		
 		$http.get('/getAllOnlyUsers/?d='+Math.random()).success(function(data) {
@@ -8820,6 +8861,20 @@ App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope
 			
 	    });
 		
+		
+		$http.get('/getAllBreeds/?d='+Math.random()).success(function(data) {
+	    	$scope.breeds = data.breeds;
+					if ((obj.breedName == $scope.cat.breed)) {
+						obj.isSelect = true;
+						};
+			});
+		
+		 $http.post('/getAllSubBreedsByName',{breed:$scope.cat.breed}).then(function(res){
+	 			console.log(res);
+	 			$scope.subBreeds = res.data;
+	 			
+		 
+		 });
 		$("#addnewfeedCattle").modal('show');
 	}
 	
@@ -8846,7 +8901,15 @@ App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope
 	    	$scope.feeds[index] = obj;
 	    	
 	    }
-	    
+	    $scope.getsubBreedById = function(id){
+			 console.log(id);
+			 console.log("in function");
+	   	  $http.post('/getsubBreed',{id:id}
+	 		).then(function(res){
+	 			console.log(res);
+	 			$scope.subBreeds = res.data;
+	 		});
+		 };
 	
 });
 
@@ -10146,7 +10209,7 @@ App.controller('ViewAllCattleOutputController', function ($scope, $rootScope, $r
 });
 
 
-App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope, $routeParams, $http, $upload){
+App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope, $routeParams, $http, $upload,Flash){
 	// get all Cattle master to admin
 	$scope.email;
 	 $scope.pageno = 0;
@@ -10411,6 +10474,8 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope, $r
 						console.log(data.catersintake);
 						$scope.update =  true;
 						$scope.catersIds = "";
+						var message = '<strong> Well done!</strong>  You successfully update the record.';
+					    Flash.create('success', message, 'custom-class');
 					});
 			});
 	}
@@ -10426,6 +10491,8 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope, $r
 					$scope.catersintake = data.catersintake;
 					$scope.catersIds = "";
 					$scope.add =  true;
+					var message = '<strong> Well done!</strong>  You successfully Added the record.';
+				    Flash.create('success', message, 'custom-class');
 				});
 		});
 }

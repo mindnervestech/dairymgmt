@@ -63,7 +63,7 @@ function isNumber(evt) {
 				<div class="caption">All Feed Master</div>
 			</div>
 			<div class="portlet-body" ng-init="init();" style="overflow-x: auto;">
-					<span flash-message="50000"  style="folat:right;width:40%;" ></span> 
+					<div flash-message="5000"  style="float:right;width:80%;" ></div> 
 					<!-- <span ng-if="add == true" style="color:green;">Record Added Successfully.</span>
 					<span ng-if="update == true" style="color:green;">Record Updated  Successfully.</span> -->
 				<div class="row mbm">
@@ -149,7 +149,7 @@ function isNumber(evt) {
 	aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-		<span ng-if = "emptyFieldsError == true"><code> Please fill all fields!!!</code></span>
+		
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
@@ -158,6 +158,7 @@ function isNumber(evt) {
 				<h4 class="modal-title" id="myModalLabel">Edit Feed</h4>
 			</div>
 			<div class="modal-body">
+			<span ng-if = "emptyFieldsError == true"><code> Please fill all fields!!!</code></span>
 				<div class = "col-md-12">
 				<div class = "col-md-6">
 											   
@@ -349,7 +350,7 @@ function isNumber(evt) {
 	aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
 		<div class="modal-content">
-		<span ng-if = "emptyFieldsError == true"><code> Please fill all fields!!!</code></span>
+		
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"
 					aria-label="Close">
@@ -358,6 +359,7 @@ function isNumber(evt) {
 				<h4 class="modal-title" id="myModalLabel">Add Feed</h4>
 			</div>
 			<div class="modal-body">
+		<span ng-if = "emptyFieldsError == true"><code> Please fill all fields!!!</code></span>
 				<div class = "col-md-12">
 				<div class = "col-md-6">
 						
