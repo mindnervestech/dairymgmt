@@ -179,6 +179,7 @@ function isNumber(evt) {
 						
 						<div class="col-md-12" ng-repeat="feed in feeds">
 							<select id = "feedType"  data-ng-model="feeds[$index]" ng-change = "assignFeedValue(feeds[$index],$index)" >
+			                     <option value="" disabled>--- Select ---</option>
 			                 <option ng-repeat="o in mastersFeed" value="{{o}}"   ng-selected="o.isSelect  == true">{{o.feedName}}</option>
 			                </select>
 			                <span>Feed Name</span>
@@ -325,6 +326,7 @@ function isNumber(evt) {
 	            	
 						<div class="col-md-12" ng-repeat="feed in feeds">
 							<select id = "feedType"  data-ng-model="feeds[$index]" ng-change = "assignFeedValue(feeds[$index],$index)" >
+			                    <option value="" disabled>--- Select ---</option>
 			                 <option ng-repeat="o in mastersFeed" value="{{o}}"   ng-selected="o.isSelect  == true">{{o.feedName}}</option>
 			                </select><span> Feed Name</span>
 							<input type="text" class="xdTextBox" ng-model="feeds[$index].feedName" /> 
