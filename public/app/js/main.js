@@ -8420,10 +8420,8 @@ App.controller('ViewAllFeedMasterController', function ($scope, $rootScope, $rou
 		if(     angular.isUndefined($scope.feed.feedName)  || ( $scope.feed.feedName == "" )|| ($scope.feed.feedName == null)  ||
 				angular.isUndefined($scope.feed.feedProtine) || ($scope.feed.feedProtine == "") || ($scope.feed.feedProtine == null )||
 				angular.isUndefined($scope.feed.feedWaterContent) || ($scope.feed.feedWaterContent == "") || ($scope.feed.feedWaterContent  == null) ||
-				angular.isUndefined($scope.feed.feedFiber) || ($scope.feed.feedFiber = "") || ($scope.feed.feedFiber == null )||  
 				angular.isUndefined($scope.feed.feedVitamins) || ($scope.feed.feedVitamins == "") ||  ($scope.feed.feedVitamins == null) || 
 				angular.isUndefined($scope.feed.skuId) || ($scope.feed.skuId == "") || ($scope.feed.skuId == null) ||
- 				angular.isUndefined($scope.feed.quantityofProtine) || ($scope.feed.quantityofProtine = "") || ($scope.feed.quantityofProtine == null) ||
  				angular.isUndefined($scope.feed.quantityofWater) ||   ($scope.feed.quantityofWater == "") ||  ($scope.feed.quantityofWater == null)
 	){
 			    $scope.emptyFieldsError = true;
@@ -8457,10 +8455,8 @@ App.controller('ViewAllFeedMasterController', function ($scope, $rootScope, $rou
 		if(angular.isUndefined($scope.feed.feedName)  || ( $scope.feed.feedName == "" )|| ($scope.feed.feedName == null)  ||
 				angular.isUndefined($scope.feed.feedProtine) || ($scope.feed.feedProtine == "") || ($scope.feed.feedProtine == null )||
 				angular.isUndefined($scope.feed.feedWaterContent) || ($scope.feed.feedWaterContent == "") || ($scope.feed.feedWaterContent  == null) ||
-				angular.isUndefined($scope.feed.feedFiber) || ($scope.feed.feedFiber = "") || ($scope.feed.feedFiber == null )||  
 				angular.isUndefined($scope.feed.feedVitamins) || ($scope.feed.feedVitamins == "") ||  ($scope.feed.feedVitamins == null) || 
 				angular.isUndefined($scope.feed.skuId) || ($scope.feed.skuId == "") || ($scope.feed.skuId == null) ||
- 				angular.isUndefined($scope.feed.quantityofProtine) || ($scope.feed.quantityofProtine = "") || ($scope.feed.quantityofProtine == null) ||
  				angular.isUndefined($scope.feed.quantityofWater) ||   ($scope.feed.quantityofWater == "") ||  ($scope.feed.quantityofWater == null)
 		)
 		{
