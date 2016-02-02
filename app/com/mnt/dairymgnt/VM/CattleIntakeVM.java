@@ -22,9 +22,9 @@ public class CattleIntakeVM {
 	public CattleFeedMaster cattleFeedMaster;
 	public PregnantCattle pregnantCattle;
 	public CattleMaster cattleMaster;
-	public String actualFeedType;
-	public String actualFeedName;
-	public String expectedFeedType;
-	public String expectedFeedName;
-	public String expectedFeedQuantity;
+//	public String actualFeedType;
+//	public String actualFeedName;
+//	public String expectedFeedType;
+//	public String expectedFeedName;
+//	public String expectedFeedQuantity;
 }

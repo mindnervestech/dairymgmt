@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.avaje.ebean.Ebean;
@@ -28,16 +29,6 @@ public class CattleFeedMaster extends Model {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public int feedId;
 	public Date lastUpdateDateTime;
-	public String feedType;
-	public String	feedprotine;
-	public String feedWaterContent;
-	public String feedFiber;
-	public String feedVitamins;
-	public String attrib1;
-	public String attrib2;
-	public String attrib3;
-	public String attrib4;
-	public String attrib5;
 	
 	public CattleFeedMaster() {
 
@@ -60,88 +51,98 @@ public class CattleFeedMaster extends Model {
 		this.lastUpdateDateTime = lastUpdateDateTime;
 	}
 
+	public String Breed;
+	public String getBreed() {
+		return Breed;
+	}
+
+
+	public void setBreed(String breed) {
+		Breed = breed;
+	}
+
+
+	public String getSubBreed() {
+		return SubBreed;
+	}
+
+
+	public void setSubBreed(String subBreed) {
+		SubBreed = subBreed;
+	}
+
+
+	public String getStage() {
+		return Stage;
+	}
+
+
+	public void setStage(String stage) {
+		Stage = stage;
+	}
+
+
+	public String getFeedName() {
+		return feedName;
+	}
+
+
+	public void setFeedName(String feedName) {
+		this.feedName = feedName;
+	}
+
+
 	public String getFeedType() {
 		return feedType;
 	}
+
 
 	public void setFeedType(String feedType) {
 		this.feedType = feedType;
 	}
 
-	public String getFeedprotine() {
-		return feedprotine;
-	}
 
-	public void setFeedprotine(String feedprotine) {
-		this.feedprotine = feedprotine;
-	}
-
-	public String getFeedWaterContent() {
-		return feedWaterContent;
-	}
-
-	public void setFeedWaterContent(String feedWaterContent) {
-		this.feedWaterContent = feedWaterContent;
-	}
-
-	public String getFeedFiber() {
-		return feedFiber;
-	}
-
-	public void setFeedFiber(String feedFiber) {
-		this.feedFiber = feedFiber;
-	}
-
-	public String getFeedVitamins() {
-		return feedVitamins;
-	}
-
-	public void setFeedVitamins(String feedVitamins) {
-		this.feedVitamins = feedVitamins;
-	}
-
-	public String getAttrib1() {
-		return attrib1;
-	}
-
-	public void setAttrib1(String attrib1) {
-		this.attrib1 = attrib1;
-	}
-
-	public String getAttrib2() {
-		return attrib2;
-	}
-
-	public void setAttrib2(String attrib2) {
-		this.attrib2 = attrib2;
-	}
-
-	public String getAttrib3() {
-		return attrib3;
-	}
-
-	public void setAttrib3(String attrib3) {
-		this.attrib3 = attrib3;
-	}
-
-	public String getAttrib4() {
-		return attrib4;
-	}
-
-	public void setAttrib4(String attrib4) {
-		this.attrib4 = attrib4;
-	}
-
-	public String getAttrib5() {
-		return attrib5;
-	}
-
-	public void setAttrib5(String attrib5) {
-		this.attrib5 = attrib5;
+	public String getSKUId() {
+		return SKUId;
 	}
 
 
+	public void setSKUId(String sKUId) {
+		SKUId = sKUId;
+	}
 
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+
+	
+
+	public String getMealType() {
+		return MealType;
+	}
+
+
+	public void setMealType(String mealType) {
+		MealType = mealType;
+	}
+
+
+	
+
+	public String SubBreed;
+	public String 	Stage;
+	public String  feedName;
+	public String  feedType;
+	public String  SKUId;
+	public int  quantity;
+	public String  MealType;
 
 	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)
@@ -168,7 +169,20 @@ public class CattleFeedMaster extends Model {
 		this.users = users;
 	}
 
+	@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL)
+	public CattleFeeds cattleFeeds;
 	
+	
+	public CattleFeeds getCattleFeeds() {
+		return cattleFeeds;
+	}
+
+
+	public void setCattleFeeds(CattleFeeds cattleFeeds) {
+		this.cattleFeeds = cattleFeeds;
+	}
+
 	public static Finder<Long, CattleFeedMaster> find = new Finder<Long, CattleFeedMaster>(
 			Long.class, CattleFeedMaster.class);
 	

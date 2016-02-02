@@ -56,11 +56,11 @@
 											<th>Cattle Id</th>
 											<th>Device ID</th>
 											<th>Quantity</th>
-											<th>Actual Feed Type</th>
+										<!--  	<th>Actual Feed Type</th>
 											<th>Actual Feed Name</th>
 											<th>Expected Feed Type</th>
 											<th>Expected Feed Name</th>
-											<th>Expected Feed Quantity</th>
+											<th>Expected Feed Quantity</th>-->
 											<th>Last Update Date Time</th>
 											<th>Details</th>
 										</tr>
@@ -71,11 +71,11 @@
 												href="mailto:{{user.email}}">{{cat.cattleId}}</a></td>
 											<td ng-click="">{{cat.deviceID}}</td>
 											<td ng-click="">{{cat.quantity}}</td>
-											<td ng-click="">{{cat.actualFeedType}}</td>
+											<!--  <td ng-click="">{{cat.actualFeedType}}</td>
 											<td ng-click="">{{cat.actualFeedName}}</td>
 											<td ng-click="">{{cat.expectedFeedType}}</td>
 											<td ng-click="">{{cat.expectedFeedName}}</td>
-											<td ng-click="">{{cat.expectedFeedQuantity}}</td>
+											<td ng-click="">{{cat.expectedFeedQuantity}}</td>-->
 											<td> {{cat.lastUpdateDateTime | date:'yyyy-MM-dd HH:mm:ss '}}</td>
 											<td><button class="btn btn-success-custom"
 													ng-click="editfeedCatdersDetails(cat);" data-toggle="tooltip"
@@ -135,37 +135,19 @@
 	            	</div> -->
 	            	
 	            	
-						<div class="col-md-12">
-  							<label for="usr">Quantity </label>
-  							<input type="text" ng-model = "cat.quantity" onkeypress="return isNumber(event)" class="form-control" id="firstname">
-						</div>		
+							
 						
-	            	<div class="col-md-12">
-										<div class="">
-											<div class="">
-											<span>Date of Birth</span>
-												<div class="input-group">
-													 <input type="text" ng-model="cat.date"
-														name="dob" class="form-control " id="dob"
-														 ng-click="initempDatepicker();"
-														style="font-size: 12px;" required>
-														<div class="input-group-addon">
-														<i class="fa fa-calendar"></i>
-														</div>
-												</div>
-											</div>
-									</div>
-					</div>
+	            	
 					
-						<div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
+						<!--  <div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
 		              <label class="control-label col-md-10">Select  Pregnant Name   </label>
 		              <div class="col-md-12"> 
 			                <select id = "feed"  data-ng-model="pregIds" class = "col-md-5"  style="    width: 110%;">
 			                 <option ng-repeat="f in pregnant" value="{{f.pregnancyId}}"   ng-selected="f.isSelect  == true">{{f.pregnancyId}}/{{f.name}}</option>
 			                </select>
 	            		</div>   
-	            	</div>
-	            	 <div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
+	            	</div>-->
+	            	 <div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
 		              <label class="control-label col-md-10">Select Feed Cattle Master </label>
 		              <div class="col-md-12"> 
 			                <select id = "feed"  data-ng-model="feedId"  class = "col-md-5"  style="    width: 110%;">
@@ -174,7 +156,7 @@
 	            		</div>   
 	            	</div> 
 	            	
-	            	 <div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
+	            	 <div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
 		              <label class="control-label col-md-10">Cattle Master </label>
 		              <div class="col-md-12"> 
 			                <select id = "feed"  data-ng-model="catersIds" class = "col-md-5"  style="    width: 110%;">
@@ -183,7 +165,7 @@
 	            		</div>   
 	            	</div> 
 	            	
-						<div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
+						<div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
 		              <label class="control-label col-md-8">Select User Id</label>
 		              <div class="col-md-12">
 			                <select id = "use"  data-ng-model="userId"  style="    width: 110%;">
@@ -191,17 +173,39 @@
 			                </select>
 	            		</div>   
 	            	</div>
-	            	<div class="col-md-12">
-  							<label for="usr">Device Id </label>
-  							<input type="text" ng-model = "cat.deviceID" class="form-control" id="firstname">
-						</div>
+	            	
 	            	</div>
 	            	
 	            	<div class = "col-md-6">
 						
+						<div class="col-md-12" style="margin-top:5%;">
+										<div class="">
+											<div class="">
+											<span>Date of Birth</span>
+												<div class="input-group">
+													 <input type="text" ng-model="cat.date"
+														name="dob" class="form-control " id="dob"
+														 ng-click="initempDatepicker();"
+														style="font-size: 12px; width: 390px;" required>
+														<!--  <div class="input-group-addon">
+														<i class="fa fa-calendar"></i>
+														</div>-->
+												</div>
+											</div>
+									</div>
+					</div>
+					
+					<div class="col-md-12" style="margin-top:5%;>
+  							<label for="usr">Device Id </label>
+  							<input type="text" ng-model = "cat.deviceID" class="form-control" id="firstname">
+						</div>
+						
+						<div class="col-md-12" style="margin-top:5%;>
+  							<label for="usr">Quantity </label>
+  							<input type="text" ng-model = "cat.quantity" onkeypress="return isNumber(event)" class="form-control" id="firstname">
+						</div>	
 
-
-						<div class="col-md-12">
+						<!--  <div class="col-md-12">
   							<label for="usr">Actual FeedType</label>
   							<input type="text" ng-model = "cat.actualFeedType" class="form-control" id="actualFeedType">
 						</div>
@@ -224,7 +228,7 @@
 						<div class="col-md-12">
   							<label for="usr">Expected Feed Quantity </label>
   							<input type="text" ng-model = "cat.expectedFeedQuantity" onkeypress="return isNumber(event)" class="form-control" id="expectedFeedQuantity">
-						</div>
+						</div>-->
 
 						
 					
@@ -273,36 +277,18 @@
 			                </select>
 	            		</div>   
 	            	</div> -->
-	            	<div class="col-md-12">
-  							<label for="usr">Quantity </label>
-  							<input type="text" ng-model = "cat.quantity" onkeypress="return isNumber(event)" class="form-control" id="firstname">
-						</div>	
-	            		<div class="col-md-12">
-										<div class="">
-											<div class="">
-												<div class="input-group">
-												<span>Date Of Birth</span>
-													 <input type="text" ng-model="cat.date"
-														name="dobnew" class="form-control " id="dobnew"
-														 ng-click="initempDatepickerAddnew();"
-														style="font-size: 12px;" required>
-														<div class="input-group-addon">
-														<i class="fa fa-calendar"></i>
-														</div>
-												</div>
-											</div>
-									</div>
-					</div>
-						<div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
+	            		
+	            		
+						<!--  <div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
 		              <label class="control-label col-md-10">Select  Pregnant Name   </label>
 		              <div class="col-md-12"> 
 			                <select id = "feed"  data-ng-model="pregIds" class = "col-md-5"  style="    width: 110%;">
 			                 <option ng-repeat="f in pregnant" value="{{f.pregnancyId}}"   ng-selected="f.isSelect  == true">{{f.pregnancyId}}/{{f.name}}</option>
 			                </select>
 	            		</div>   
-	            	</div>
+	            	</div>-->
 	            	
-					 <div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
+					 <div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
 		              <label class="control-label col-md-10">Cattle Master </label>
 		              <div class="col-md-12"> 
 			                <select id = "feed"  data-ng-model="catersIds" class = "col-md-5"  style="    width: 110%;">
@@ -311,7 +297,7 @@
 	            		</div>   
 	            	</div> 
 	            	
-					 <div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
+					 <div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
 		              <label class="control-label col-md-10">Select Feed Cattle Master </label>
 		              <div class="col-md-12"> 
 			                <select id = "feed"  data-ng-model="feedId" class = "col-md-5"  style="    width: 110%;">
@@ -319,7 +305,7 @@
 			                </select>
 	            		</div>   
 	            	</div> 
-						<div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
+						<div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
 		              <label class="control-label col-md-8">Select User Id</label>
 		              <div class="col-md-12">
 			                <select id = "use"  data-ng-model="userId" class = "col-md-5"  style="    width: 110%;">
@@ -327,16 +313,40 @@
 			                </select>
 	            		</div>   
 	            	</div>
-	            	<div class="col-md-12">
+	            	</div>
+	            	
+	            	<div class = "col-md-6">
+	            		
+	            		<div class="col-md-12"  style="margin-top:5%;">
+										<div class="">
+											<div class="">
+												<div class="input-group">
+												<span>Date Of Birth</span>
+													 <input type="text" ng-model="cat.date"
+														name="dobnew" class="form-control " id="dobnew"
+														 ng-click="initempDatepickerAddnew();"
+														style="font-size: 12px; 12px; width: 390px;" required>
+														<!--  <div class="input-group-addon">
+														<i class="fa fa-calendar"></i>
+														</div>-->
+												</div>
+											</div>
+									</div>
+					</div>
+					
+					<div class="col-md-12"  style="margin-top:5%;">
   							<label for="usr">Device Id </label>
   							<input type="text" ng-model = "cat.deviceID" class="form-control" id="firstname">
 						</div>
 	            	
-	            	</div>
 	            	
-	            	<div class = "col-md-6">
+	            	
+	            	<div class="col-md-12" style="margin-top:5%;">
+  							<label for="usr">Quantity </label>
+  							<input type="text" ng-model = "cat.quantity" onkeypress="return isNumber(event)" class="form-control" id="firstname">
+						</div>
 						
-						<div class="col-md-12">
+						<!--  <div class="col-md-12">
   							<label for="usr">Actual FeedType</label>
   							<input type="text" ng-model = "cat.actualFeedType" class="form-control" id="actualFeedType">
 						</div>
@@ -359,7 +369,7 @@
 						<div class="col-md-12">
   							<label for="usr">Expected Feed Quantity </label>
   							<input type="text" ng-model = "cat.expectedFeedQuantity" onkeypress="return isNumber(event)" class="form-control" id="expectedFeedQuantity">
-						</div>
+						</div>-->
 
 							
 								

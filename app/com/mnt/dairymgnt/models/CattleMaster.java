@@ -34,6 +34,8 @@ public class CattleMaster extends Model {
 	public Date lastUpdateDateTime;
 	public  String name;
 	public String breed;
+	//sub Breed
+	public String subBreed;
 	public Date dateofBirth;
 	public String  gender;
 	public String cattleIdentificationMark;
@@ -47,6 +49,8 @@ public class CattleMaster extends Model {
 	//public String lastDeliveryVM;
 	public Date lastDelivery;
 	public String isPregnant;
+	//died on date
+	public Date diedonDate;
 	
 	public int getParentId() {
 		return parentId;
@@ -126,6 +130,22 @@ public class CattleMaster extends Model {
 
 	public Date getDateofBirth() {
 		return dateofBirth;
+	}
+
+	public String getSubBreed() {
+		return subBreed;
+	}
+
+	public void setSubBreed(String subBreed) {
+		this.subBreed = subBreed;
+	}
+
+	public Date getDiedonDate() {
+		return diedonDate;
+	}
+
+	public void setDiedonDate(Date diedonDate) {
+		this.diedonDate = diedonDate;
 	}
 
 	public void setDateofBirth(Date dateofBirth) {

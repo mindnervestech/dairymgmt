@@ -27,15 +27,15 @@ public class CattleIntake  extends Model{
 	public String date;
 	public int quantity; 
 	public String  deviceID;
-	public String actualFeedType;
-	public String actualFeedName;
-	public String expectedFeedType;
-	public String expectedFeedName;
-	public String expectedFeedQuantity;
+//	public String actualFeedType;
+//	public String actualFeedName;
+//	public String expectedFeedType;
+//	public String expectedFeedName;
+//	public String expectedFeedQuantity;
 	
 	//public Date  dob;
 	
-	public String getActualFeedType() {
+	/*public String getActualFeedType() {
 		return actualFeedType;
 	}
 
@@ -74,7 +74,7 @@ public class CattleIntake  extends Model{
 	public void setExpectedFeedQuantity(String expectedFeedQuantity) {
 		this.expectedFeedQuantity = expectedFeedQuantity;
 	}
-
+*/
 	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)
 	public PregnantCattle pregnantCattle;

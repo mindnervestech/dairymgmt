@@ -34,6 +34,9 @@ public class CattleMasterVM {
 	
 	public Oraganization oraganization;
 	public Users users;
+	public String subbreed;
+	public Date diedonDate;
+	public String diedonDateVM;
 	
 
 	

@@ -22,9 +22,13 @@ GET    /getAllEntities                                  com.mnt.dairymgnt.contro
 GET    /checkUserExits/:userId                          com.mnt.dairymgnt.controllers.Application.checkUserExits(userId : String)
 POST   /updateOrgByAdmin                                com.mnt.dairymgnt.controllers.Application.updateOrgByAdmin()
 GET    /getAllCattleMaster/:pageNo                      com.mnt.dairymgnt.controllers.Application.getAllCattleMaster(pageNo: Integer)
+
+GET    /getAllFeedMaster/:pageNo                        com.mnt.dairymgnt.controllers.Application.getAllFeedMaster(pageNo: Integer)
 GET    /getAllOnlyCattleMaster/                         com.mnt.dairymgnt.controllers.Application.getAllOnlyCattleMaster()
 #GET    /getAllChildCattleMaster                        com.mnt.dairymgnt.controllers.Application.getAllChildCattleMaster()
 POST   /updateCattleProfileByAdmin               		com.mnt.dairymgnt.controllers.Application.updateCattleProfileByAdmin()
+
+POST   /updateFeedProfileByAdmin               		com.mnt.dairymgnt.controllers.Application.updateFeedProfileByAdmin()
 GET    /getAllFeedCattleMaster/:pageno                  com.mnt.dairymgnt.controllers.Application.getAllFeedCattleMaster(pageno : Integer)
 GET    /getAllOnlyFeedCattleMaster/                     com.mnt.dairymgnt.controllers.Application.getAllOnlyFeedCattleMaster()
 
@@ -56,5 +60,9 @@ POST	 /getAllCattleDeliveryReportbyYear					com.mnt.dairymgnt.controllers.Applic
 POST     /getMonthlyCattleOutputReport					com.mnt.dairymgnt.controllers.Application.getMonthlyCattleOutputReport()
 GET      /getDailyMilkReport/:pageno                    com.mnt.dairymgnt.controllers.Application.getDailyMilkReport(pageno : Integer)
 
+
+POST		/getsubBreed									com.mnt.dairymgnt.controllers.Application.getsubBreedlist()
+POST        /getAllSubBreedsByName                           com.mnt.dairymgnt.controllers.Application.getAllSubBreedsByName()
+GET         /getAllOnlyFeedMaster/                        com.mnt.dairymgnt.controllers.Application.getAllOnlyFeedMaster()
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               					controllers.Assets.at(path="/public", file)
