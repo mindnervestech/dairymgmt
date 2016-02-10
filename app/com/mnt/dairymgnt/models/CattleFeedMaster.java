@@ -29,12 +29,45 @@ public class CattleFeedMaster extends Model {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public int feedId;
 	public Date lastUpdateDateTime;
-	
+	public Date feedPlanStartDate;
+	public Date feedPlanEndDate;
+	public String feedPlanName;
 	public CattleFeedMaster() {
 
 	}
 	
 	
+	
+	public Date getFeedPlanStartDate() {
+		return feedPlanStartDate;
+	}
+
+
+	public void setFeedPlanStartDate(Date feedPlanStartDate) {
+		this.feedPlanStartDate = feedPlanStartDate;
+	}
+
+
+	public Date getFeedPlanEndDate() {
+		return feedPlanEndDate;
+	}
+
+
+	public void setFeedPlanEndDate(Date feedPlanEndDate) {
+		this.feedPlanEndDate = feedPlanEndDate;
+	}
+
+
+	public String getFeedPlanName() {
+		return feedPlanName;
+	}
+
+
+	public void setFeedPlanName(String feedPlanName) {
+		this.feedPlanName = feedPlanName;
+	}
+
+
 	public int getFeedId() {
 		return feedId;
 	}
@@ -147,6 +180,8 @@ public class CattleFeedMaster extends Model {
 	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)
 	public Oraganization oraganization;
+	
+	
 	
 	public Oraganization getOraganization() {
 		return oraganization;

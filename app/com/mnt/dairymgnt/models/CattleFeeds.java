@@ -28,7 +28,16 @@ public class CattleFeeds extends Model{
 	public String feedWaterContent;
 	public String feedFiber;
 	public String feedName;
+	public String quantity;
 	
+	public String getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(String quantity) {
+		this.quantity = quantity;
+	}
+
 	public String getFeedName() {
 		return feedName;
 	}

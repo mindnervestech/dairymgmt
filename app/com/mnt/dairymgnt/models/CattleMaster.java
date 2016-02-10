@@ -96,13 +96,13 @@ public class CattleMaster extends Model {
 		this.cattleId = cattleId;
 	}
 
-/*	public int getRFID() {
+	public int getRFID() {
 		return RFID;
 	}
 
 	public void setRFID(int rFID) {
-		RFID = rFID;
-	}*/
+		this.RFID = rFID;
+	}
 
 	public Date getLastUpdateDateTime() {
 		return lastUpdateDateTime;
@@ -286,4 +286,6 @@ public class CattleMaster extends Model {
 	public void setLastDelivery(Date lastDelivery) {
 		this.lastDelivery = lastDelivery;
 	}
+	
+	
 }

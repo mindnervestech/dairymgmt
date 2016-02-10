@@ -33,6 +33,9 @@ public class CattleFeedMasterVM {
 	public String feedName2;
 	public String Breed;
 	public String SubBreed;
+	public String feedPlanStartDateVM;
+	public String feedPlanEndDateVM;
+	public String feedPlanName;
 
 	public Oraganization oraganization;
 	public Users users;

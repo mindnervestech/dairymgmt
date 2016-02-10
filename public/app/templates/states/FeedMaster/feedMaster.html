@@ -97,6 +97,7 @@ function isNumber(evt) {
 											<th>Quantity Of Fiber</th>
 											<th>Feed Water Content </th>
 											<th>Quantity Of Water </th>
+											<th>Price </th>
 											<th>Details</th>
 										</tr>
 										<tr data-ng-repeat="feed in caters"
@@ -112,7 +113,7 @@ function isNumber(evt) {
 											<td ng-click="">{{feed.quantityofFiber}}</td>
 											<td ng-click="">{{feed.feedWaterContent}}</td>
 											<td ng-click="">{{feed.quantityofWater}}</td>
-											
+											<td ng-click="">{{feed.price}}</td>
 											<td><button class="btn btn-success-custom"
 													ng-click="editCatdersDetails(feed);" data-toggle="tooltip"
 													data-placement="bottom" title="View Caters  details">
@@ -228,14 +229,15 @@ function isNumber(evt) {
   							<label for="usr"> Feed Vitamins</label>
   							<input type="text" ng-model = "feed.feedVitamins" class="form-control" maxlength="80"   id="firstname" onkeypress="return onlyAlphabets(event,this);">
 						</div>
-						
-						</div>
-					<div class = "col-md-6	">
-						
+					
 						<div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr">SKU Id </label>
   							<input type="text" ng-model = "feed.skuId" maxlength="80" class="form-control" id="firstname"  onkeypress="return isNumber(event)">
 						</div>	
+						
+						</div>
+					<div class = "col-md-6	">
+						
 						
 						<!--  <div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
 		                <label class="control-label col-md-8">Select Sub Breed name</label>
@@ -324,6 +326,11 @@ function isNumber(evt) {
   							<label for="usr">Quantity Of Vitamins(%) </label>
   							<input type="text" ng-model = "feed.quantityofVitamins" maxlength="80" class="form-control" id="firstname" onkeypress="return isNumber(event)">
 						</div>
+					
+							<div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr">Price</label>
+  							<input type="text" ng-model = "feed.price" maxlength="10" class="form-control" id="firstname"  onkeypress="return isNumber(event)">
+						</div>	
 						
 	            	</div>
 	            	</div>
@@ -349,7 +356,7 @@ function isNumber(evt) {
 <div class="modal fade" id="addnewCattle" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
-		<div class="modal-content">
+		<div class="modal-content" ng-init="reset()">
 		
 			<div class="modal-header">
 				<button type="button" class="close" data-dismiss="modal"
@@ -436,7 +443,12 @@ function isNumber(evt) {
   							<label for="usr" style = "margin-top: 5%;"> Feed Vitamins</label>
   							<input type="text" ng-model = "feed.feedVitamins" class="form-control" maxlength="80" id="firstname">
 						</div>
-					
+						
+						<div class="col-md-12">
+  							<label for="usr" style = "margin-top: 5%;"> SKU Id</label>
+  							<input type="text" ng-model = "feed.skuId" class="form-control" maxlength="80" id="firstname" onkeypress="return isNumber(event)">
+						</div>
+						
 						</div>
 						<div class = "col-md-6	">
 						<form name="myForm">
@@ -457,10 +469,7 @@ function isNumber(evt) {
 											</div>
 									</div>
 					</div>-->
-					<div class="col-md-12">
-  							<label for="usr" style = "margin-top: 5%;"> SKU Id</label>
-  							<input type="text" ng-model = "feed.skuId" class="form-control" maxlength="80" id="firstname" onkeypress="return isNumber(event)">
-						</div>
+					
 					
 					<!--  <div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
 		              <label class="control-label col-md-8">Select Sub Breed name</label>
@@ -493,6 +502,11 @@ function isNumber(evt) {
   							<label for="usr">Qantity Of Vitamins(%) </label>
   							<input type="text" ng-model = "feed.quantityofVitamins" maxlength="80" class="form-control" id="firstname" onkeypress="return isNumber(event)">
 						</div>	
+						
+						<div class="col-md-12">
+  							<label for="usr" style = "margin-top: 5%;">Price</label>
+  							<input type="text" ng-model = "feed.price" class="form-control" maxlength="10" id="firstname" onkeypress="return isNumber(event)">
+						</div>
 						
 						<!--  <div class="col-md-12">
 										<div class="">

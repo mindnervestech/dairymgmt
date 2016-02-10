@@ -45,6 +45,16 @@ public class FeedMaster extends Model
 	public String feedVitamins;
 	public String quantityofVitamins;
 	public Date lastUpdateDateTime;
+	public Float price;
+	
+	public Float getPrice() {
+		return price;
+	}
+
+	public void setPrice(Float price) {
+		this.price = price;
+	}
+
 	
 	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)

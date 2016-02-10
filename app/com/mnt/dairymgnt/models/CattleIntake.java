@@ -1,6 +1,7 @@
 package com.mnt.dairymgnt.models;
 
 import java.util.Date;
+
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -8,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.avaje.ebean.Ebean;
@@ -19,17 +21,23 @@ import play.db.ebean.Model.Finder;
 @Entity
 public class CattleIntake  extends Model{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public int cattleId;	
 	
 	public Date lastUpdateDateTime;
-	public String date;
+	public String dateOfBirth;
 	public int quantity; 
 	public String  deviceID;
+	//public Long FeedPlanId;
 //	public String actualFeedType;
 //	public String actualFeedName;
-//	public String expectedFeedType;
+//	public String expectedFeedType;3
 //	public String expectedFeedName;
 //	public String expectedFeedQuantity;
 	
@@ -75,15 +83,16 @@ public class CattleIntake  extends Model{
 		this.expectedFeedQuantity = expectedFeedQuantity;
 	}
 */
+	
+	
 	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)
 	public PregnantCattle pregnantCattle;
 	
-	
 	public PregnantCattle getPregnantCattle() {
 		return pregnantCattle;
 	}
-
+	
 	public void setPregnantCattle(PregnantCattle pregnantCattle) {
 		this.pregnantCattle = pregnantCattle;
 	}
@@ -105,11 +114,11 @@ public class CattleIntake  extends Model{
 	}
 
 	public String getDate() {
-		return date;
+		return dateOfBirth;
 	}
 
-	public void setDate(String date) {
-		this.date = date;
+	public void setDate(String dateOfBirth) {
+		this.dateOfBirth = dateOfBirth;
 	}
 
 	public int getQuantity() {
@@ -144,11 +153,31 @@ public class CattleIntake  extends Model{
 	@OneToOne(cascade = CascadeType.ALL)
 	public Users users;
 	
-	
 	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)
-	public CattleFeedMaster CattleFeedMaster;
+	public CattleFeedMaster cattleFeedMaster;
 	
+	public CattleFeedMaster getCattleFeedMaster() {
+		return cattleFeedMaster;
+	}
+
+	public void setCattleFeedMaster(CattleFeedMaster cattleFeedMaster) {
+		this.cattleFeedMaster = cattleFeedMaster;
+	}
+
+	/*@JsonIgnore
+	@OneToMany(cascade = CascadeType.ALL)
+	public CattleIntakePlan cattleintakePlan;
+	
+	
+	public CattleIntakePlan getCattleintakePlan() {
+		return cattleintakePlan;
+	}
+
+	public void setCattleintakePlan(CattleIntakePlan cattleintakePlan) {
+		this.cattleintakePlan = cattleintakePlan;
+	}*/
+
 	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)
 	public CattleMaster CattleMaster;
@@ -161,14 +190,7 @@ public class CattleIntake  extends Model{
 		CattleMaster = cattleMaster;
 	}
 
-	public CattleFeedMaster getCattleFeedMaster() {
-		return CattleFeedMaster;
-	}
-
-	public void setCattleFeedMaster(CattleFeedMaster cattleFeedMaster) {
-		CattleFeedMaster = cattleFeedMaster;
-	}
-
+	
 	public Users getUsers() {
 		return users;
 	}
@@ -205,5 +227,7 @@ public class CattleIntake  extends Model{
 		return find.setFirstRow(pageNumber * 10)
 				.setMaxRows(CattleIntake.find.findRowCount()).findList().size();
 	}
+		
+	
 	
 }

@@ -85,7 +85,8 @@ function isNumber(evt) {
 											<th>Breed</th>
 											<th>SubBreed</th>
 											<th> Stage</th>
-											<th>SKUId</th>
+											<th>MealType</th>
+										<!-- 	<th>SKUId</th> -->
 											<th>Last Update Date Time</th>
 											<th>Details</th>
 										</tr>
@@ -103,7 +104,8 @@ function isNumber(evt) {
 	 -->										<td ng-click="">{{cat.Breed}}</td>
 											<td ng-click="">{{cat.SubBreed}}</td>
 											<td ng-click="">{{cat.Stage}}</td>
-											<td ng-click="">{{cat.SKUId}}</td>
+											<td ng-click="">{{cat.MealType}}</td>
+											<!-- <td ng-click="">{{cat.SKUId}}</td> -->
 											<td> {{cat.lastUpdateDateTime | date:'yyyy-MM-dd HH:mm:ss '}}</td>
 											<td><button class="btn btn-success-custom"
 													ng-click="editfeedCatdersDetails(cat);" data-toggle="tooltip"
@@ -146,113 +148,163 @@ function isNumber(evt) {
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title" id="myModalLabel">Edit Feed Cattle</h4>
+				<h4 class="modal-title" id="myModalLabel">Edit Feed Cattle Master</h4>
 			</div>
 			<div class="modal-body">
-				<div class = "col-md-12">
-				<div class = "col-md-12">
-
-
-						<!-- <div class="col-md-12">
-  							<label for="usr">Feed Name </label>
-  							<input type="text" ng-model = "cat.feedName" class="form-control" id="feedprotine" required>
-						
-						</div>		
-
-						<div class="col-md-12">
-  							<label for="usr">Feed Type</label>
-  							<input type="text" ng-model = "cat.feedType" class="form-control" id="feedType" required>
+			<span ng-if = "emptyFieldsError == true"><code> Please fill all fields!!!</code></span>
+			
+				<div class = "col-md-12	">
+				<div class = "col-md-6	">
+						<span ng-if = "feedPlanNameDup == true"> <code>Feed Plan name is present please use another one!!</code></span>
+							 
+							<div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr">Feed Plan Name</label>
+  							<input type="text" ng-model = "cat.feedPlanName" ng-blur="checkDuplicateFeedName(cat.feedPlanName)" class="form-control" id="Stage" >
 						</div>
-						
-						
-						<div class="col-md-12">
-  							<label for="usr">Meal Type </label>
-  							<input type="text" ng-model = "cat.MealType" class="form-control" id="feedWaterContent" required>
-						</div>						
-				
-						
-							<div class="col-md-12">
-  							<label for="usr">Quantity</label>
-  							<input type="text" ng-model = "cat.quantity" class="form-control" id="quantity" onkeypress="return isNumber(event)" required>
-						</div>				
-				 -->
-						
-						<div class="col-md-12" ng-repeat="feed in feeds">
-							<select id = "feedType"  data-ng-model="feeds[$index]" ng-change = "assignFeedValue(feeds[$index],$index)" >
-			                     <option value="" disabled>--- Select ---</option>
-			                 <option ng-repeat="o in mastersFeed" value="{{o}}"   ng-selected="o.isSelect  == true">{{o.feedName}}</option>
-			                </select>
-			                <span>Feed Name</span>
-							<input type="text" class="xdTextBox" ng-model="feeds[$index].feedName" /> 
-							<span>Feed Name</span>
-							<input type="text" class="xdTextBox" ng-model="feeds[$index].feedProtine" /> 
 							
-							<span>SkuId </span><input type="text" class="xdTextBox" ng-model="feeds[$index].skuId" />
+					</div>				
+					</div>
+				<div class = "col-md-12">
+				<div class = "col-md-6"  >
+				
+				<div class="col-md-12" >
+										<div class="">
+											<div class="">
+											<!--  <div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>-->
+												<div class="input-group col-md-12" style = "margin-top: 5%;">
+												<span> Feed Plan Start Date</span>
+													 <input type="text" ng-model="cat.feedPlanStartDateVM"
+														name="startDate" class="form-control " id="startDateNew"
+														 ng-click="initStartDatepickerNew();"
+														style="font-size: 12px;  width: 100%;" required>
+														<!--  <div class="input-group-addon">
+														<i class="fa fa-calendar"></i>
+														</div>-->
+												</div>
+											</div>
+									</div>
+					      </div>
+				
+						<!--  <div class="col-md-12" style = "margin-top: 5%;" ng-init="findBreed()">
+  							<label for="usr">Breed </label>	
+							<select id = "use"  data-ng-model="cat.Breed" class= "col-md-5 form-control" style="    width: 100%;" ng-change="getsubBreedById(cat.Breed)" >
+			                <option value="" disabled>--- Select ---</option>
+			                <option ng-repeat="u in breeds" value="{{u.id}}"   ng-selected="u.breedName  == cat.breed">{{u.breedName}}</option>
+			                </select>
+						</div>-->	
 
-							<button ng-click="deleteFeed($index)" style="float:right;margn-top:1%;">Delete</button>
-							<button ng-click="addFields(feed)" style="float:right;margn-top:1%;">Add</button>
-								<hr>
-						
-						</div>	
-								</div>	
-					<!-- <div class="col-md-12" style="margin-top:1%;">
-		              <label class="control-label col-md-3">Select Orgnization</label>
-		              <div class="col-md-12"> 
-			                <select id = "org"  data-ng-model="org" >
-			                 <option ng-repeat="o in orgs" value="{{o.orgId}}"   ng-selected="o.isSelect  == true">{{o.name}}</option>
-			                </select>
-	            		</div>   
-	            	</div> -->
-						
-						
-							<div class = "col-md-12	">	
-						<!-- 
-						<div class="col-md-12" style="margin-top:1%;margin-left: -4%;">
-		              <label class="control-label col-md-8">Select Orgnization</label>
-		              <div class="col-md-12"> 
-			                <select id = "org"  data-ng-model="org" class = "col-md-5"  style="    width: 110%;">
-			                 <option ng-repeat="o in orgs" value="{{o.orgId}}"   ng-selected="o.isSelect  == true">{{o.name}}</option>
-			                </select>
-	            		</div>   
-	            	</div> -->
-           	
-	            	<div class="col-md-4" ng-init="findBreed()">
+
+						  <div class="col-md-12" style = "margin-top: 5%;" ng-init="findBreed()">
+  							<div class="col-md-0" ng-init="findBreed()">
   							<label for="usr">Breed </label>
-  							
-						<select id = "use"  data-ng-model="cat.Breed" class= "col-md-5 form-control" ng-change="getsubBreedById(cat.Breed)" style="    width: 110%;">
+							<select id = "use"  data-ng-model="cat.Breed" class= "col-md-5 form-control"  style="    width: 100%;" ng-change="getsubBreedById(cat.Breed)" style="    width: 110%;">
 			                 <option value="" disabled>--- Select ---</option>
 			                 <option ng-repeat="u in breeds" value="{{u.id}}"   ng-selected="u.breedName  == cat.Breed">{{u.breedName}}</option>
 			                </select>
-						</div>	
+							</div>	
+						</div>
 						
-           				<div class="col-md-4">
-  							<label for="usr">Sub Breed</label>
-  							<select ng-model = "cat.SubBreed" class="form-control" id="SubBreed" ng-change="" >
-								<option value="" disabled>--- Select ---</option>
-								<option ng-repeat="item in subBreeds" value="{{item.sub_breed}}" ng-selected="item.sub_breed  == cat.SubBreed">{{item.sub_breed}}</option>
-								
-						</select>
-						</div>	
-						<div class="col-md-4">
+						
+						
+						 <div class="col-md-12"style = "margin-top: 5%;" >
   							<label for="usr">Stage</label>
   							<input type="text" ng-model = "cat.Stage" class="form-control" id="Stage" onkeypress="return isNumber(event)">
 						</div>	
-						<!-- <div class="col-md-12">
-  							<label for="usr">SKU Id</label>
-  							<input type="text" ng-model = "cat.SKUId" class="form-control" id="SKUId" onkeypress="return isNumber(event)">
+						
+						
+					      
+					     
+					      
+					    					
+						
+						
+					</div>	
+					
+           			<div class = "col-md-6">
+           			
+           			<div class="col-md-12" >
+										<div class="">
+											<div class="">
+											<div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>
+												<div class="input-group col-md-12" style = "margin-top: 5%;">
+												<span>Feed Plan End Date</span>
+													 <input type="text" ng-model="cat.feedPlanEndDateVM"
+														name="dob" class="form-control " id="endDateNew"
+														 ng-click="initEndDatepickerNew();"
+														style="font-size: 12px;  width:   100%;" required>
+														<!--  <div class="input-group-addon">
+														<i class="fa fa-calendar"></i>
+														</div>-->
+												</div>
+											</div>
+									</div>
+					      </div>
+           				
+           				<div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr">Sub Breed</label>
+  							<select ng-model = "cat.SubBreed" class="form-control" id="SubBreed" ng-change="" >
+								<option value="" disabled>--- Select ---</option>
+								<option ng-repeat="item in subBreeds" value="{{item.sub_breed}}" style="    width: 100%;" ng-selected="item.sub_breed  == cat.SubBreed">{{item.sub_breed}}</option>
+							</select>
 						</div>	
-	            	 -->
-	            	
-						<!-- <div class="col-md-12" style="margin-top:1%;margin-left: -4%;">
-		              <label class="control-label col-md-8">Select User Id</label>
-		              <div class="col-md-12">
-			                <select id = "use"  data-ng-model="userId" class = "col-md-5" style="    width: 110%;">
-			                 <option ng-repeat="u in users" value="{{u.userId}}"   ng-selected="u.isSelect  == true">{{u.userId}}</option>
+						
+						<div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr">Meal Type</label>
+  							<select id = "use"  ng-model="cat.MealType" class= "form-control" ng-change="" style="    width: 100%;">
+			                <option value="">--- Select ---</option>
+			                <option value="Morning" >Morning</option>
+    						<option value="Afternoon">Afternoon</option>
+    						<option value="Evening">Evening</option>
 			                </select>
-	            		</div>   
-	            	</div> -->
-	            	</div>
-	            	</div>
+						</div>	
+					      	
+           			</div>
+						
+						
+						
+						
+	            	
+						<div class="col-md-12">
+							<div class="col-md-12" ng-repeat="feed in feeds" style = "margin-top: 5%;">
+							<span> Feed Name</span>
+							<select id = "feedType" data-ng-model="feeds[$index]" ng-change = "assignFeedValue(feeds[$index],$index)" style=" width:30%;">
+			                <option value="" disabled>--- Select ---</option>
+			                <option ng-repeat="o in mastersFeed" value="{{o}}" ng-selected="{{o.Selected == true}}">{{o.feedName}}</option>
+			                </select>
+							 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+							<span> Feed Type</span>
+							<input type="text" class="xdTextBox" ng-model="feeds[$index].feedProtine"  style=" width:30%;" disabled/> 
+							&nbsp;&nbsp;
+							<br><br>
+							<span> SKUID</span>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="text" class="xdTextBox" ng-model="feeds[$index].skuId" style=" width:30%;"  disabled/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<span> Quantity</span>
+							&nbsp;&nbsp;&nbsp;
+							<input type="text" class="xdTextBox" ng-model="feeds[$index].quantity" style=" width:30%;" /> &nbsp;
+							
+							<br><br>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							
+							<button ng-click="addFields(feed)" style=" &nbsp;  float: right;margin-top: 1%;">Add</button>
+							<button ng-click="deleteFeed($index)" style=" &nbsp; float: right;margin-top: 1%;">Delete</button>
+							<hr>
+							</div>
+						
+						</div>
+           				
+										
+				</div>
 						<div class="form-actions">
 							<div class="pull-right" style="margin-top:2%;">
 								<button type="submit" ng-click="updatefeedCattleProfileByAdmin(cat);"
@@ -271,7 +323,6 @@ function isNumber(evt) {
 </div>
 <form>
 <!-- Add new user model  -->
-<!-- Modal Edit user details-->
 <div class="modal fade" id="addnewfeedCattle" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true"  ng-form="myForm">
 	<div class="modal-dialog">
@@ -281,116 +332,150 @@ function isNumber(evt) {
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title" id="myModalLabel">Add Feed Cattle</h4>
+				<h4 class="modal-title" id="myModalLabel">Add Feed Cattle Master</h4>
 			</div>
 			<div class="modal-body">
-				<div class = "col-md-12">
-				<div class = "col-md-12">
-						
-
-						<!-- <div class="col-md-12">
-  							<label for="usr">Feed Name </label>
-  							<span style=" color:red" class="error" ng-show="myForm.feedname.$error.required">*</span>
-  							<input name="feedname" type="text" ng-model = "cat.feedName" class="form-control" id="feedprotine" required>	
+			<span ng-if = "emptyFieldsError == true"><code> Please fill all fields!!!</code></span>
+				<div class = "col-md-12	">
+				<div class = "col-md-6	">
+						<span ng-if = "feedPlanNameDup == true"> <code>Feed Plan name is present please use another one!!</code></span>
+							 
+							 <div class="col-md-12" style = "margin-top: 5%;">
+  							 <label for="usr">Feed Plan Name</label>
+  							 <input type="text" ng-model = "cat.feedPlanName" ng-blur="checkDuplicateFeedName(cat.feedPlanName)" class="form-control" id="Stage" >
+						</div>
 							
+					</div>				
+					</div>
+				<div class = "col-md-12">
+				<div class = "col-md-6	">
 						
-						</div>		
-	
-						<div class="col-md-12">
-  							<label for="usr">Feed Type</label>
-  							<input type="text" ng-model = "cat.feedType" class="form-control" id="feedType" required>
-						</div>
-						
-						
-						<div class="col-md-12">
-  							<label for="usr">Meal Type </label>
-  							<input type="text" ng-model = "cat.MealType" class="form-control" id="feedWaterContent" required>
-						</div>						
-					
-						<div class="col-md-12">
-  							<label for="usr">Quantity</label>
-  							<input type="text" ng-model = "cat.quantity" class="form-control" id="quantity" onkeypress="return isNumber(event)" required>
-						</div>
-											
-						 -->
-				
-					<!-- <div class="col-md-12" style="margin-top:1%;">
-		              <label class="control-label col-md-3">Select Orgnization</label>
-		              <div class="col-md-12"> 
-			                <select id = "org"  data-ng-model="org" >
-			                 <option ng-repeat="o in orgs" value="{{o.orgId}}"   ng-selected="o.isSelect  == true">{{o.name}}</option>
-			                </select>
-	            		</div>   
-	            	</div> -->
-	            	
-	            	
-						<div class="col-md-12" ng-repeat="feed in feeds">
-							<select id = "feedType"  data-ng-model="feeds[$index]" ng-change = "assignFeedValue(feeds[$index],$index)" >
-			                    <option value="" disabled>--- Select ---</option>
-			                 <option ng-repeat="o in mastersFeed" value="{{o}}"   ng-selected="o.isSelect  == true">{{o.feedName}}</option>
-			                </select><span> Feed Name</span>
-							<input type="text" class="xdTextBox" ng-model="feeds[$index].feedName" /> 
-							<span> Feed Protine</span>
-							<input type="text" class="xdTextBox" ng-model="feeds[$index].feedProtine" /> 
-							<span> SKUID</span>
-							<input type="text" class="xdTextBox" ng-model="feeds[$index].skuId" />
-
-							<button ng-click="deleteFeed($index)" style="    float: right;margin-top: 1%;">Delete</button>
-							<button ng-click="addFields(feed)" style="    float: right;margin-top: 1%;">Add</button>
-								<hr>
-						
-						</div>	
-						</div>
-						<div class = "col-md-6	">
+						  <div class="col-md-12" >
+										<div class="">
+											<div class="">
+											<!--  <div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>-->
+												<div class="input-group col-md-12" style = "margin-top: 5%;">
+												<span> Feed Plan Start Date</span>
+													 <input type="text" ng-model="cat.feedPlanStartDateVM"
+														name="startDate" class="form-control " id="startDateAddNew"
+														 ng-click="initStartDatepickerNew();"
+														style="font-size: 12px;  width: 100%;" required>
+														<!--  <div class="input-group-addon">
+														<i class="fa fa-calendar"></i>
+														</div>-->
+												</div>
+											</div>
+									</div>
+					      </div>
 									
-						<!-- 
-						<div class="col-md-12" style="margin-top:1%;margin-left: -4%;">
-		              <label class="control-label col-md-8">Select Orgnization</label>
-		              <div class="col-md-12"> 
-			                <select id = "org"  data-ng-model="org" class = "col-md-5"  style="    width: 110%;">
-			                 <option ng-repeat="o in orgs" value="{{o.orgId}}"   ng-selected="o.isSelect  == true">{{o.name}}</option>
-			                </select>
-	            		</div>   
-	            	</div> -->
+						
            				
-           				<div class="col-md-6" ng-init="findBreed()">
-  							<label for="usr">Breed </label>
-  							
-						<select id = "use"  data-ng-model="cat.Breed" class= "col-md-5 form-control" ng-change="getsubBreedById(cat.Breed)" style="    width: 110%;">
-			                 <option value="" disabled>--- Select ---</option>
-			                 <option ng-repeat="u in breeds" value="{{u.id}}"   ng-selected="u.breedName  == cat.breed">{{u.breedName}}</option>
+           				<div class="col-md-12" style = "margin-top: 5%;" ng-init="findBreed()">
+  							<label for="usr">Breed </label>	
+							<select id = "use"  data-ng-model="cat.Breed" class= "col-md-5 form-control" style="    width: 100%;" ng-change="getsubBreedById(cat.Breed)" >
+			                <option value="" disabled>--- Select ---</option>
+			                <option ng-repeat="u in breeds" value="{{u.id}}"   ng-selected="u.breedName  == cat.breed">{{u.breedName}}</option>
 			                </select>
 						</div>	
 						
-           				<div class="col-md-6">
-  							<label for="usr">Sub Breed</label>
-  							<select ng-model = "cat.SubBreed" class="form-control" id="SubBreed" ng-change="" >
-								<option value="" disabled>--- Select ---</option>
-								<option ng-repeat="item in subBreeds" value="{{item.sub_breed}}">{{item.sub_breed}}</option>
-								
-						</select>
-						</div>
-	            		
-						<div class="col-md-6">
+						 <div class="col-md-12"style = "margin-top: 5%;" >
   							<label for="usr">Stage</label>
   							<input type="text" ng-model = "cat.Stage" class="form-control" id="Stage" onkeypress="return isNumber(event)">
 						</div>	
-						<!-- <div class="col-md-12">
-  							<label for="usr">SKU Id</label>
-  							<input type="text" ng-model = "cat.SKUId" class="form-control" id="SKUId" onkeypress="return isNumber(event)">
-						</div>	 -->
-	            	
-	            	
-					<!-- 	<div class="col-md-12" style="margin-top:1%;margin-left: -4%;">
-		              <label class="control-label col-md-8">Select User Id</label>
-		              <div class="col-md-12">
-			                <select id = "use"  data-ng-model="userId" class = "col-md-5" style="    width: 110%;">
-			                 <option ng-repeat="u in users" value="{{u.userId}}"   ng-selected="u.isSelect  == true">{{u.userId}}</option>
+						
+						
+					      
+					     
+					      
+					  
+					
+												
+						      
+					</div>
+					
+					
+					    
+				    <div class = "col-md-6	">
+				    
+				    	<div class="col-md-12">
+										<div class="">
+											<div class="">
+											<div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>
+												<div class="input-group col-md-12" style = "margin-top: 5%;">
+												<span>Feed Plan End Date</span>
+													 <input type="text" ng-model="cat.feedPlanEndDateVM"
+														name="dob" class="form-control " id="endDateAddNew"
+														 ng-click="initEndDatepickerNew();"
+														style="font-size: 12px;  width:   100%;" required>
+														<!--  <div class="input-group-addon">
+														<i class="fa fa-calendar"></i>
+														</div>-->
+												</div>
+											</div>
+									</div>
+					      </div>	
+				
+	            	  
+           				<div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr">Sub Breed</label>
+  							<select ng-model = "cat.SubBreed" class="form-control" style="    width: 100%;" id="SubBreed" ng-change="" >
+								<option value="" disabled>--- Select ---</option>
+								<option ng-repeat="item in subBreeds" value="{{item.sub_breed}}">{{item.sub_breed}}</option>
+							</select>
+						</div>
+	            		
+						
+						
+						<div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr">Meal Type</label>
+  							<select id = "use"  ng-model="cat.MealType" class= "form-control" ng-change="" style="    width: 100%;">
+			                <option value="">--- Select ---</option>
+			                <option value="Morning" >Morning</option>
+    						<option value="Afternoon">Afternoon</option>
+    						<option value="Evening">Evening</option>
 			                </select>
-	            		</div>   
-	            	</div> -->
-	            	</div>
-	            	</div>
+			           </div>
+			           
+			           
+				</div>
+						<div class="col-md-12">
+							<div class="col-md-12" ng-repeat="feed in feeds" style = "margin-top: 5%;">
+							<span>Feed Name</span>
+							<select id = "feedType" data-ng-model="feeds[$index]"  style="  width:30%;" ng-change = "assignFeedValue(feeds[$index],$index)">
+			                <option value="" disabled>--- Select ---</option>
+			                <option ng-repeat="o in mastersFeed" value="{{o}}" ng-selected="{{o.Selected == true}}">{{o.feedName}}</option>
+			                </select>
+			                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<span> Feed Type</span>
+							<input type="text" class="xdTextBox" ng-model="feeds[$index].feedProtine"  style=" width:30%;" disabled/> 
+							&nbsp;&nbsp;
+							<br><br>
+							<span> SKUID</span>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="text" class="xdTextBox" ng-model="feeds[$index].skuId" style=" width:30%;"  disabled/>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<span> Quantity</span>
+							&nbsp;&nbsp;&nbsp;
+							<input type="text" class="xdTextBox" ng-model="feeds[$index].quantity" style=" width:30%;" /> &nbsp;
+							<br><br>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<button ng-click="addFields(feed)" style=" &nbsp;  float: right;margin-top: 1%;">Add</button>
+							<button ng-click="deleteFeed($index)" style=" &nbsp; float: right;margin-top: 1%;">Delete</button>
+							<hr>
+							</div>
+						
+						</div>
+	            	
+				</div>
 						<div class="form-actions">
 							<div class="pull-right" style="margin-top:2%;">
 								<button type="submit" ng-click="addfeedCattleProfileByAdmin(cat);"

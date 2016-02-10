@@ -12,4 +12,5 @@ public class CattleFeedsVM {
 	public String feedFiber;
 	public String feedName;
 	public List<CattleFeedsVM> cattleFeeds;
+	public String quantity;
 }

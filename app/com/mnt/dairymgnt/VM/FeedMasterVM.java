@@ -22,4 +22,5 @@ public class FeedMasterVM {
 	public Oraganization oraganization;
 	public Users users;
 	public String skuId;
+	public Float price;
 }

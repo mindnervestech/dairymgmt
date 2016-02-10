@@ -123,77 +123,42 @@
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title" id="myModalLabel">Edit  Cattle Intake</h4>
+				<h4 class="modal-title" id="myModalLabel">Edit Cattle Intake</h4>
 			</div>
 			<div class="modal-body">
+			<span ng-if = "emptyFieldsError == true"><code> Please fill all fields!!!</code></span>
 				<div class = "col-md-12">
-				
-						<div class = "col-md-6	">
-						<!-- <div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
-		              <label class="control-label col-md-8">Select Orgnization</label>
-		              <div class="col-md-12"> 
-			                <select id = "org"  data-ng-model="org" class = "col-md-5" style="    width: 110%;">
-			                 <option ng-repeat="o in orgs" value="{{o.orgId}}"   ng-selected="o.isSelect  == true">{{o.name}}</option>
-			                </select>
-	            		</div>   
-	            	</div> -->
-	            	
-	            	
-							
+				<div class = "col-md-6	">
 						
-	            	
-					
-						<!--  <div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
-		              <label class="control-label col-md-10">Select  Pregnant Name   </label>
-		              <div class="col-md-12"> 
-			                <select id = "feed"  data-ng-model="pregIds" class = "col-md-5"  style="    width: 110%;">
-			                 <option ng-repeat="f in pregnant" value="{{f.pregnancyId}}"   ng-selected="f.isSelect  == true">{{f.pregnancyId}}/{{f.name}}</option>
-			                </select>
-	            		</div>   
-	            	</div>-->
-	            	 <div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
-		              <label class="control-label col-md-10">Select Feed Cattle Master </label>
-		              <div class="col-md-12"> 
-			                <select id = "feed"  data-ng-model="feedId"  class = "col-md-5"  style="    width: 110%;">
-			                 <option ng-repeat="f in feedcaters" value="{{f.feedId}}"   ng-selected="f.isSelect  == true">{{f.feedType}}</option>
-			                </select>
-	            		</div>   
-	            	</div> 
-	            	
-	            	 <div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
-		              <label class="control-label col-md-10">Cattle Master </label>
-		              <div class="col-md-12"> 
-			                <select id = "feed"  data-ng-model="catersIds" class = "col-md-5"  style="    width: 110%;">
+	            	 <div class="col-md-12" style="margin-top:5%;">
+		              <label class=" col-md-0">Cattle Master </label> 
+			                <select id = "feed"  data-ng-model="catersIds"  class = "col-md-5 form-control"  style="    width: 100%; ">
 			                 <option ng-repeat="f in caters" value="{{f.cattleId}}"   ng-selected="f.isSelect  == true">{{f.name}}</option>
 			                </select>
-	            		</div>   
+	            		</div>  
+	            		
+	            		 
+	            	 <div class="col-md-12" style="margin-top:5%;">
+		              <label class=" col-md-0">Select Feed Cattle Master </label>
+		             
+			                <select id = "feed"  data-ng-model="feedId"  class = "col-md-5 form-control"  style="    width: 100%;">
+			                 <option ng-repeat="f in feedcaters" value="{{f.feedId}}"   ng-selected="f.isSelect  == true">{{f.feedType}}</option>
+			                </select>   
 	            	</div> 
-	            	
-						<div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
-		              <label class="control-label col-md-8">Select User Id</label>
-		              <div class="col-md-12">
-			                <select id = "use"  data-ng-model="userId"  style="    width: 110%;">
-			                 <option ng-repeat="u in users" value="{{u.userId}}"   ng-selected="u.isSelect  == true">{{u.userId}}</option>
-			                </select>
-	            		</div>   
 	            	</div>
-	            	
-	            	</div>
-	            	
 	            	<div class = "col-md-6">
 						
 						<div class="col-md-12" style="margin-top:5%;">
 										<div class="">
 											<div class="">
+											<div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>
 											<span>Date of Birth</span>
-												<div class="input-group">
-													 <input type="text" ng-model="cat.date"
+												<div class="input-group col-md-12"style="margin-top:2%;">
+													 <input type="text" ng-model="cat.dateOfBirth"
 														name="dob" class="form-control " id="dob"
 														 ng-click="initempDatepicker();"
-														style="font-size: 12px; width: 390px;" required>
-														<!--  <div class="input-group-addon">
-														<i class="fa fa-calendar"></i>
-														</div>-->
+														style="font-size: 12px; width:  100%;" required>
+														
 												</div>
 											</div>
 									</div>
@@ -201,42 +166,46 @@
 					
 					<div class="col-md-12" style="margin-top:5%;>
   							<label for="usr">Device Id </label>
-  							<input type="text" ng-model = "cat.deviceID" class="form-control" id="firstname">
+  							<input type="text" ng-model = "cat.deviceID" style="margin-top:2%;"class="form-control" id="firstname">
 						</div>
 						
-						<div class="col-md-12" style="margin-top:5%;>
+						<!--  <div class="col-md-12" style="margin-top:5%;">
   							<label for="usr">Quantity </label>
   							<input type="text" ng-model = "cat.quantity" onkeypress="return isNumber(event)" class="form-control" id="firstname">
-						</div>	
-
-						<!--  <div class="col-md-12">
-  							<label for="usr">Actual FeedType</label>
-  							<input type="text" ng-model = "cat.actualFeedType" class="form-control" id="actualFeedType">
-						</div>
-
-						<div class="col-md-12">
-  							<label for="usr">Actual Feed Name </label>
-  							<input type="text" ng-model = "cat.actualFeedName" class="form-control" id="actualFeedName">
-						</div>
-
-						<div class="col-md-12">
-  							<label for="usr">Expected Feed Type </label>
-  							<input type="text" ng-model = "cat.expectedFeedType" class="form-control" id="expectedFeedType">
-						</div>
-
-						<div class="col-md-12">
-  							<label for="usr">Expected Feed Name </label>
-  							<input type="text" ng-model = "cat.expectedFeedName" class="form-control" id="expectedFeedName">
-						</div>
-
-						<div class="col-md-12">
-  							<label for="usr">Expected Feed Quantity </label>
-  							<input type="text" ng-model = "cat.expectedFeedQuantity" onkeypress="return isNumber(event)" class="form-control" id="expectedFeedQuantity">
-						</div>-->
-
-						
-					
+						</div>-->	
 	            	
+						</div>
+						<div class="col-md-12"  >
+						 <div class="col-md-12" ng-repeat="feed in cattleIntakefeedsPlan" style = "margin-top: 5%;">
+							<span>Plan Id</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<select id = "feedType" data-ng-model="cattleIntakefeedsPlan[$index]" style=" width:30%" ng-change = "getAllFieldPlanName(cattleIntakefeedsPlan[$index],$index)">
+			                <option value="" disabled>--- Select ---</option>
+			                <option ng-repeat="o in feedsPlan" value="{{o}}" ng-selected="{{o.Selected == true}}">{{o.feedPlanName}}</option>
+			                </select>
+			                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			                <span>  Feed Plan Name</span>
+							<input type="text" class="xdTextBox" ng-model="cattleIntakefeedsPlan[$index].feedPlanName"  style=" width:30%" disabled/> 
+							<br><br>
+							
+							<span> Plan Start Date</span>
+							<input type="text" class="xdTextBox" ng-model="cattleIntakefeedsPlan[$index].feedPlanStartDate"  style=" width:30%" disabled/> 
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<span> Plan End Date</span>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="text" class="xdTextBox" ng-model="cattleIntakefeedsPlan[$index].feedPlanEndDate" style=" width:30%"  disabled/>
+						  	 <br><br>
+							 <span>quantity</span>
+						    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="text" class="xdTextBox" ng-model="cattleIntakefeedsPlan[$index].quantity" style=" width:30%"  disabled/>
+							
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<button ng-click="addFields(feed)" style=" &nbsp;  float: right;margin-top: 1%;">Add</button>
+							<button ng-click="deleteFeed($index)" style=" &nbsp; float: right;margin-top: 1%;">Delete</button>
+								
+						 </div>
 						</div>
 	            	</div>
 						<div class="form-actions">
@@ -270,66 +239,41 @@
 				<h4 class="modal-title" id="myModalLabel">Add  Cattle Intake</h4>
 			</div>
 			<div class="modal-body">
+			<span ng-if = "emptyFieldsError == true"><code> Please fill all fields!!!</code></span>
 				<div class = "col-md-12">
 				
 						<div class = "col-md-6	">
-						<!-- <div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
-		              <label class="control-label col-md-8">Select Orgnization</label>
-		              <div class="col-md-12"> 
-			                <select id = "org"  data-ng-model="org" class = "col-md-5"  style="    width: 110%;">
-			                 <option ng-repeat="o in orgs" value="{{o.orgId}}"   ng-selected="o.isSelect  == true">{{o.name}}</option>
-			                </select>
-	            		</div>   
-	            	</div> -->
-	            		
-	            		
-						<!--  <div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
-		              <label class="control-label col-md-10">Select  Pregnant Name   </label>
-		              <div class="col-md-12"> 
-			                <select id = "feed"  data-ng-model="pregIds" class = "col-md-5"  style="    width: 110%;">
-			                 <option ng-repeat="f in pregnant" value="{{f.pregnancyId}}"   ng-selected="f.isSelect  == true">{{f.pregnancyId}}/{{f.name}}</option>
-			                </select>
-	            		</div>   
-	            	</div>-->
+						
 	            	
-					 <div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
-		              <label class="control-label col-md-10">Cattle Master </label>
-		              <div class="col-md-12"> 
-			                <select id = "feed"  data-ng-model="catersIds" class = "col-md-5"  style="    width: 110%;">
+					 <div class="col-md-12" style="margin-top:5%;">
+		              <label class=" col-md-0">Cattle Master </label> 
+			                <select id = "feed"  data-ng-model="catersIds"  class = "col-md-5 form-control"  style="    width: 100%; ">
 			                 <option ng-repeat="f in caters" value="{{f.cattleId}}"   ng-selected="f.isSelect  == true">{{f.name}}</option>
 			                </select>
 	            		</div>   
-	            	</div> 
+	            
 	            	
-					 <div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
-		              <label class="control-label col-md-10">Select Feed Cattle Master </label>
-		              <div class="col-md-12"> 
-			                <select id = "feed"  data-ng-model="feedId" class = "col-md-5"  style="    width: 110%;">
+					 <div class="col-md-12" style="margin-top:5%;">
+		              <label class=" col-md-0">Select Feed Cattle Master </label>
+			                <select id = "feed"  data-ng-model="feedId" class = "col-md-5 form-control"  style="    width: 100%; ">
 			                 <option ng-repeat="f in feedcaters" value="{{f.feedId}}"   ng-selected="f.isSelect  == true">{{f.feedType}}</option>
 			                </select>
 	            		</div>   
-	            	</div> 
-						<div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
-		              <label class="control-label col-md-8">Select User Id</label>
-		              <div class="col-md-12">
-			                <select id = "use"  data-ng-model="userId" class = "col-md-5"  style="    width: 110%;">
-			                 <option ng-repeat="u in users" value="{{u.userId}}"   ng-selected="u.isSelect  == true">{{u.userId}}</option>
-			                </select>
-	            		</div>   
-	            	</div>
+	    						
 	            	</div>
 	            	
 	            	<div class = "col-md-6">
 	            		
 	            		<div class="col-md-12"  style="margin-top:5%;">
 										<div class="">
-											<div class="">
-												<div class="input-group">
+											<div class="" >
+											<div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>
+												<div class="input-group col-md-12" >
 												<span>Date Of Birth</span>
-													 <input type="text" ng-model="cat.date"
+													 <input type="text"  ng-model="cat.dateOfBirth"
 														name="dobnew" class="form-control " id="dobnew"
 														 ng-click="initempDatepickerAddnew();"
-														style="font-size: 12px; 12px; width: 390px;" required>
+														style="font-size: 12px;  width: 100%; margin-top:1%;" required>
 														<!--  <div class="input-group-addon">
 														<i class="fa fa-calendar"></i>
 														</div>-->
@@ -345,41 +289,52 @@
 	            	
 	            	
 	            	
-	            	<div class="col-md-12" style="margin-top:5%;">
+	            	<!--  <div class="col-md-12" style="margin-top:5%;">
   							<label for="usr">Quantity </label>
   							<input type="text" ng-model = "cat.quantity" onkeypress="return isNumber(event)" class="form-control" id="firstname">
+						</div> -->  
+						
+				
+				  </div>
+						<div class="col-md-12"  >
+						 <div class="col-md-12" ng-repeat="feed in cattleIntakefeedsPlan" style = "margin-top: 5%;">
+							<span>Plan Id</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<select id = "feedType" data-ng-model="cattleIntakefeedsPlan[$index]" style = "width: 30%;"ng-change = "getAllFieldPlanName(cattleIntakefeedsPlan[$index],$index)">
+			                <option value="" disabled>--- Select ---</option>
+			                <option ng-repeat="o in feedsPlan" value="{{o}}" ng-selected="{{o.Selected == true}}">{{o.feedPlanName}}</option>
+			                </select>
+			                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+			                <span> Feed Plan Name</span>
+							<input type="text" class="xdTextBox" ng-model="cattleIntakefeedsPlan[$index].feedPlanName"  style=" width:30%" disabled/> 
+								<br><br>
+							
+							<span> Plan Start Date</span>
+							<input type="text" class="xdTextBox" ng-model="cattleIntakefeedsPlan[$index].feedPlanStartDate"  style=" width:30%" disabled/> 
+								
+							
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<span> Plan End Date</span>
+							&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="text" class="xdTextBox" ng-model="cattleIntakefeedsPlan[$index].feedPlanEndDate" style=" width:30%"  disabled/>
+							<br><br>						
+							<span>quantity</span>
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							<input type="text" class="xdTextBox" ng-model="cattleIntakefeedsPlan[$index].quantity" style=" width:30%"  disabled/>
+						
+							
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+							
+							<button ng-click="addFields(feed)" style=" &nbsp;  float: right;margin-top: 1%;">Add</button>
+							<button ng-click="deleteFeed($index)" style=" &nbsp; float: right;margin-top: 1%;">Delete</button>
+								
+						 </div>
 						</div>
 						
-						<!--  <div class="col-md-12">
-  							<label for="usr">Actual FeedType</label>
-  							<input type="text" ng-model = "cat.actualFeedType" class="form-control" id="actualFeedType">
-						</div>
-
-						<div class="col-md-12">
-  							<label for="usr">Actual Feed Name </label>
-  							<input type="text" ng-model = "cat.actualFeedName" class="form-control" id="actualFeedName">
-						</div>
-
-						<div class="col-md-12">
-  							<label for="usr">Expected Feed Type </label>
-  							<input type="text" ng-model = "cat.expectedFeedType" class="form-control" id="expectedFeedType">
-						</div>
-
-						<div class="col-md-12">
-  							<label for="usr">Expected Feed Name </label>
-  							<input type="text" ng-model = "cat.expectedFeedName"  class="form-control" id="expectedFeedName">
-						</div>
-
-						<div class="col-md-12">
-  							<label for="usr">Expected Feed Quantity </label>
-  							<input type="text" ng-model = "cat.expectedFeedQuantity" onkeypress="return isNumber(event)" class="form-control" id="expectedFeedQuantity">
-						</div>-->
-
-							
-								
-				
-						</div>
-	            	</div>
+						
+					</div>
 						<div class="form-actions">
 							<div class="pull-right" style="margin-top:2%;">
 								<button type="submit" ng-click="addCattleIntakeProfileByAdmin(cat);"
