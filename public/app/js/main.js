@@ -1,5 +1,5 @@
 "use strict";
-var App = angular.module('MAdmin', ['ngRoute', 'ui.bootstrap', 'ngDialog', 'ngTable', 'angularFileUpload','ui.sortable','ui.grid','ui.grid.edit','flash']).factory('MyHttpInterceptor', function ($q) {
+var App = angular.module('MAdmin', ['ngRoute', 'ui.bootstrap', 'ngDialog', 'ngTable', 'angularFileUpload','ui.sortable','ui.grid','ui.grid.edit','flash','ui.grid.autoResize']).factory('MyHttpInterceptor', function ($q) {
     return {
         request: function (config) {
                     $('#loading-id').show();
