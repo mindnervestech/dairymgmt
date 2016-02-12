@@ -23,4 +23,5 @@ public class FeedMasterVM {
 	public Users users;
 	public String skuId;
 	public Float price;
+	public String feedType;
 }

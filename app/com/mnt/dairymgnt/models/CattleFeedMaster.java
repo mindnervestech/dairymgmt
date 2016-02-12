@@ -32,6 +32,13 @@ public class CattleFeedMaster extends Model {
 	public Date feedPlanStartDate;
 	public Date feedPlanEndDate;
 	public String feedPlanName;
+	public String SubBreed;
+	public String 	Stage;
+	public String  feedName;
+	public String  feedType;
+	public String  SKUId;
+	public int  quantity;
+	public String  MealType;
 	public CattleFeedMaster() {
 
 	}
@@ -169,13 +176,7 @@ public class CattleFeedMaster extends Model {
 
 	
 
-	public String SubBreed;
-	public String 	Stage;
-	public String  feedName;
-	public String  feedType;
-	public String  SKUId;
-	public int  quantity;
-	public String  MealType;
+	
 
 	@JsonIgnore
 	@OneToOne(cascade = CascadeType.ALL)

@@ -8800,7 +8800,7 @@ App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope
 		console.log($scope.feeds );
 		if($scope.feeds.length == 0){
 			 $scope.feeds = [
-			                 { feedId:'',feedName: '', feedProtine: '', quantity: '',skuId:''}
+			                 { feedId:'',feedName: '', feedType: '', quantity: '',skuId:''}
 			    ];
 		}
 		
@@ -8909,9 +8909,12 @@ App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope
 	}
 		
 }
-	$scope.feeds = [];
+	$scope.feeds = {};
 	$scope.addnewfeedCattle = function(){
+		$scope.feeds.feedType = {};
+		$scope.feeds.skuId = {};
 		$scope.cat = {};
+		
 		$scope.update =  false;
 		$scope.add =  false;
 		
@@ -8976,12 +8979,12 @@ App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope
 	}
 	
 	 $scope.feeds = [
-	                 { feedId:'',feedName: '', feedProtine: '', quantity: '',skuId:''}
+	                 { feedId:'',feedName: '', feedType: '', quantity: '',skuId:''}
 	    ];
 	    
 	    $scope.addFields = function (feed) {  
 	    	//$scope.feeds.length + 1;
-	    	$scope.feeds.push({feedId:'',feedName: '', feedProtine: '', quantity: '',skuId:''});
+	    	$scope.feeds.push({feedId:'',feedName: '', feedType: '', quantity: '',skuId:''});
 	    }
 	    
 	    $scope.deleteFeed = function(index){
@@ -8994,7 +8997,7 @@ App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope
 	    $scope.assignFeedValue = function(o,index){
 	    	var oo = JSON.parse(o)
 	    	console.log(oo);
-	    	var obj = {feedId:oo.feedId,feedName:oo.feedName, feedProtine:oo.feedProtine, quantity: oo.quantity,skuId:oo.skuId}
+	    	var obj = {feedId:oo.feedId,feedName:oo.feedName, feedType:oo.feedType,skuId:oo.skuId}
 	    	$scope.feeds[index] = obj;
 	    	
 	    }
@@ -10595,7 +10598,7 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope, $r
 			
 			 $scope.emptyFieldsError = false;
 		
-			$http.post('/updateCattleIntakeProfileByAdmin?d='+Math.random(),{cat:$scope.cat,userId:$scope.userId,org:$scope.org,feedId:$scope.feedId,catersIds:$scope.catersIds,pregIds:$scope.pregIds,cattleIntakefeedsPlan:$scope.cattleIntakefeedsPlan})
+			$http.post('/updateCattleIntakeProfileByAdmin?d='+Math.random(),{cat:$scope.cat,userId:$scope.userId,org:$scope.org,feedId:$scope.feedId,catersIds:$scope.catersIds,pregIds:$scope.pregIds,cattleIntakefeedsPlan:$scope.PlanData})
 			.success(function(data){
 				//console.log("success");
 				$scope.updateSuccess = true;
@@ -10627,7 +10630,7 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope, $r
 			
 			 $scope.emptyFieldsError = false;
 		
-		$http.post('/updateCattleIntakeProfileByAdmin?d='+Math.random(),{cat:$scope.cat,userId:$scope.userId,org:$scope.org,feedId:$scope.feedId,catersIds:$scope.catersIds,pregIds:$scope.pregIds,cattleIntakefeedsPlan:$scope.cattleIntakefeedsPlan})
+		$http.post('/updateCattleIntakeProfileByAdmin?d='+Math.random(),{cat:$scope.cat,userId:$scope.userId,org:$scope.org,feedId:$scope.feedId,catersIds:$scope.catersIds,pregIds:$scope.pregIds,cattleIntakefeedsPlan:$scope.PlanData})
 		.success(function(data){
 			$scope.updateSuccess = true;
 			$('#addnewfeedCattle').modal('hide');
@@ -10737,8 +10740,37 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope, $r
 			    format: 'dd-MM-yyyy'
 		});
 	}
-});
-
+	 $scope.getPlanDetailsBYId = function(id){
+		 console.log(id);
+		 console.log("in function");
+   	  $http.post('/getPlanDetails',{id:id}
+ 		).then(function(res){
+ 			console.log(res);
+ 			$scope.PlanData = res.data;
+ 			//console.log(PlanData);
+ 			
+ 		});
+	 };
+	 
+		$scope.gridOptions = {};
+		$scope.gridOptions.data={};
+		
+		$scope.gridOptions = {
+				  columnDefs: [
+			                 {field: 'feedName', displayName: 'Feed Name',enableCellEdit:false},
+			                 {field: 'feedType', displayName: 'Feed Type',enableCellEdit:false},
+			                 {field: 'skuId', displayName: 'SkuId',enableCellEdit:false},
+			                 {field: 'quantity', displayName: 'Expected Quantity',enableCellEdit:false},
+			                 {field: 'quantity', displayName: 'Actual Quantity',enableCellEdit:true}
+			                 
+			                
+			                 
+			                 ]};
+							$scope.gridOptions.data='PlanData'; 
+							
+							
+});   
+ 
 
 
 

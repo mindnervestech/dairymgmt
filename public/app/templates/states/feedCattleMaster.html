@@ -82,12 +82,17 @@ function isNumber(evt) {
 											<th>Meal Type </th>
 											<th>Date of Birth</th>
 											<th>Quantity</th> -->
+											<th>Plan Name</th>
+											<th>Plan Start Date </th>
+											<th>Plan End Date</th>
 											<th>Breed</th>
 											<th>SubBreed</th>
 											<th> Stage</th>
 											<th>MealType</th>
+											
+											
 										<!-- 	<th>SKUId</th> -->
-											<th>Last Update Date Time</th>
+											<!--  <th>Last Update Date Time</th>-->
 											<th>Details</th>
 										</tr>
 										<tr data-ng-repeat="cat in feedcaters"
@@ -100,13 +105,18 @@ function isNumber(evt) {
 											<td ng-click="">{{cat.MealType}}</td> -->
 											<!-- <td>{{cat.dateofBirth | date:'yyyy-MM-dd HH:mm:ss '}}</td>
 											 -->
-											 <!-- <td ng-click="">{{cat.quantity}}</td>
-	 -->										<td ng-click="">{{cat.Breed}}</td>
+											 <!-- <td ng-click="">{{cat.quantity}}</td> -->	
+											 
+											<td ng-click="">{{cat.feedPlanName}}</td>
+											<td ng-click="">{{cat.feedPlanStartDateVM}}</td>
+											<td ng-click="">{{cat.feedPlanEndDateVM}}</td>
+											<td ng-click="">{{cat.Breed}}</td>
 											<td ng-click="">{{cat.SubBreed}}</td>
 											<td ng-click="">{{cat.Stage}}</td>
 											<td ng-click="">{{cat.MealType}}</td>
+											
 											<!-- <td ng-click="">{{cat.SKUId}}</td> -->
-											<td> {{cat.lastUpdateDateTime | date:'yyyy-MM-dd HH:mm:ss '}}</td>
+											<!--  <td> {{cat.lastUpdateDateTime | date:'yyyy-MM-dd HH:mm:ss '}}</td> -->
 											<td><button class="btn btn-success-custom"
 													ng-click="editfeedCatdersDetails(cat);" data-toggle="tooltip"
 													data-placement="bottom" title="View Feed Caters  details">
@@ -273,7 +283,7 @@ function isNumber(evt) {
 			                </select>
 							 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
 							<span> Feed Type</span>
-							<input type="text" class="xdTextBox" ng-model="feeds[$index].feedProtine"  style=" width:30%;" disabled/> 
+							<input type="text" class="xdTextBox" ng-model="feeds[$index].feedType"  style=" width:30%;" disabled/> 
 							&nbsp;&nbsp;
 							<br><br>
 							<span> SKUID</span>
@@ -382,15 +392,6 @@ function isNumber(evt) {
   							<label for="usr">Stage</label>
   							<input type="text" ng-model = "cat.Stage" class="form-control" id="Stage" onkeypress="return isNumber(event)">
 						</div>	
-						
-						
-					      
-					     
-					      
-					  
-					
-												
-						      
 					</div>
 					
 					
@@ -441,13 +442,13 @@ function isNumber(evt) {
 						<div class="col-md-12">
 							<div class="col-md-12" ng-repeat="feed in feeds" style = "margin-top: 5%;">
 							<span>Feed Name</span>
-							<select id = "feedType" data-ng-model="feeds[$index]"  style="  width:30%;" ng-change = "assignFeedValue(feeds[$index],$index)">
+							<select id = "feedName" data-ng-model="feeds[$index]"  style="  width:30%;" ng-change = "assignFeedValue(feeds[$index],$index)">
 			                <option value="" disabled>--- Select ---</option>
 			                <option ng-repeat="o in mastersFeed" value="{{o}}" ng-selected="{{o.Selected == true}}">{{o.feedName}}</option>
 			                </select>
 			                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<span> Feed Type</span>
-							<input type="text" class="xdTextBox" ng-model="feeds[$index].feedProtine"  style=" width:30%;" disabled/> 
+							<input type="text" class="xdTextBox" ng-model="feeds[$index].feedType"  style=" width:30%;" disabled/> 
 							&nbsp;&nbsp;
 							<br><br>
 							<span> SKUID</span>

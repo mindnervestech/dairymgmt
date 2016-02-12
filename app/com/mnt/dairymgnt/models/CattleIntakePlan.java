@@ -21,7 +21,44 @@ public class CattleIntakePlan extends Model{
 	public String feedPlanName;
 	public String feedPlanStartDate;
 	public String feedPlanEndDate;
-	public float quantity;
+	public String quantity;
+	public String feedName;
+	public String feedType;
+	public String skuId;
+	public String actualQuantity;
+	public String expectedQuantity;
+    public int id;
+	public String getSkuId() {
+		return skuId;
+	}
+	public void setSkuId(String skuId) {
+		this.skuId = skuId;
+	}
+	public String getActualQuantity() {
+		return actualQuantity;
+	}
+	public void setActualQuantity(String actualQuantity) {
+		this.actualQuantity = actualQuantity;
+	}
+	public String getExpectedQuantity() {
+		return expectedQuantity;
+	}
+	public void setExpectedQuantity(String expectedQuantity) {
+		this.expectedQuantity = expectedQuantity;
+	}
+	public String getFeedName() {
+		return feedName;
+	}
+	public void setFeedName(String feedName) {
+		this.feedName = feedName;
+	}
+	public String getFeedType() {
+		return feedType;
+	}
+	public void setFeedType(String feedType) {
+		feedType = feedType;
+	}
+
 	public int feedMasterId;
 	
 	public int getFeedMasterId() {
@@ -30,10 +67,10 @@ public class CattleIntakePlan extends Model{
 	public void setFeedMasterId(int feedMasterId) {
 		this.feedMasterId = feedMasterId;
 	}
-	public float getQuantity() {
+	public String getQuantity() {
 		return quantity;
 	}
-	public void setQuantity(float quantity) {
+	public void setQuantity(String quantity) {
 		this.quantity = quantity;
 	}
 	public Long getFeedPlanId() {

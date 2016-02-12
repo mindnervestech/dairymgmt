@@ -306,6 +306,7 @@ public class Application extends Controller {
 			cvm.quantityofVitamins = u.quantityofVitamins;
 			cvm.skuId = u.skuId;
 			cvm.price = u.price;
+		    cvm.feedType = u.feedType;
 			cmvm.add(cvm);
 			//cvm.dateofBirth = u.dateofBirth;
 		}	
@@ -335,6 +336,9 @@ public class Application extends Controller {
 			cvm.feedVitamins = u.feedVitamins;
 			cvm.quantityofProtine = u.quantityofProtine;
 			cvm.skuId = u.skuId;
+			 cvm.feedType = u.feedType;
+			 cvm.quantityofWater = u.quantityofWater;
+			
 			cmvm.add(cvm);
 			//cvm.dateofBirth = u.dateofBirth;
 		}	
@@ -616,6 +620,7 @@ public class Application extends Controller {
 			cfvm.users = u.users;
 			cfvm.SKUId = u.SKUId;
 			cfvm.Stage = u.Stage;
+			cfvm.feedPlanName = u.feedPlanName;
 			cfvm.oraganization = u.oraganization;
 			cmvm.add(cfvm);
 		}
@@ -1823,6 +1828,7 @@ public static Result getMonthlyCattleOutputReport(){
 				u.setQuantityofProtine(uvm.quantityofProtine);
 				u.setQuantityofVitamins(uvm.quantityofVitamins);
 				u.setQuantityofWater(uvm.quantityofWater);
+				u.setFeedType(uvm.feedType);
 				u.setPrice(uvm.price);
 				
 				u.lastUpdateDateTime = new Date();
@@ -1845,6 +1851,7 @@ public static Result getMonthlyCattleOutputReport(){
 				u.setPrice(uvm.price);
 				u.lastUpdateDateTime = new Date();
 				//u.setLastDelivery(uvm.lastDelivery);
+				u.setFeedType(uvm.feedType);
 				u.setSkuId(uvm.skuId);
 				u.save();
 
@@ -2355,9 +2362,7 @@ public static Result getMonthlyCattleOutputReport(){
 				}
 				
 				//u  = new CattleFeedMaster();
-                u.setQuantity(uvm.quantity);
-				u.setFeedName(uvm.feedName);
-				u.setFeedType(uvm.feedType);
+               
 				if(uvm.Breed.matches("\\d+")){
 					Breeds b = Breeds.getBreedsById(uvm.Breed);
 					u.setBreed(b.breedName);
@@ -2367,9 +2372,12 @@ public static Result getMonthlyCattleOutputReport(){
 				}
 				
 				
-			
-				u.setStage(uvm.Stage);
+				u.setFeedType(uvm.feedType);
+				u.setFeedName(uvm.feedName);
 				u.setSKUId(uvm.SKUId);
+				u.setQuantity(uvm.quantity);
+				u.setStage(uvm.Stage);
+				
 				u.setSubBreed(uvm.SubBreed);
 				u.setMealType(uvm.MealType);
 				u.setFeedPlanName(uvm.feedPlanName);
@@ -2399,6 +2407,7 @@ public static Result getMonthlyCattleOutputReport(){
 						        c.skuId = uv.get(i).skuId;
 						        c.quantity = uv.get(i).quantity;
 						        c.feedFiber = 	uv.get(i).feedFiber;
+						        c.feedType	=	uv.get(i).feedType;
 						        c.feedName = uv.get(i).feedName;
 						        c.feedId = uvm.feedId;
 						        System.out.println("save ");
@@ -2450,9 +2459,7 @@ public static Result getMonthlyCattleOutputReport(){
 			}else{
 				
 				u  = new CattleFeedMaster();
-				u.setQuantity(uvm.quantity);
-				u.setFeedName(uvm.feedName);
-				u.setFeedType(uvm.feedType);
+				
 				//Breeds b = Breeds.getBreedsById(uvm.Breed);
 				//u.setBreed(b.breedName);
 				//u.setBreed(uvm.Breed);
@@ -2465,7 +2472,10 @@ public static Result getMonthlyCattleOutputReport(){
 				}
 				
 				u.setStage(uvm.Stage);
+				u.setFeedType(uvm.feedType);
+				u.setFeedName(uvm.feedName);
 				u.setSKUId(uvm.SKUId);
+				u.setQuantity(uvm.quantity);
 				u.setSubBreed(uvm.SubBreed);
 				u.setFeedPlanName(uvm.feedPlanName);
 				u.setMealType(uvm.MealType);
@@ -2527,6 +2537,7 @@ public static Result getMonthlyCattleOutputReport(){
 						        c.quantity = uv.get(i).quantity;
 						        c.feedFiber = 	uv.get(i).feedFiber;
 						        c.feedName = uv.get(i).feedName;
+						        c.feedType = uv.get(i).feedType;
 						        c.feedId = u.feedId;
 						        System.out.println("save ");
 						        c.save();
@@ -2588,6 +2599,7 @@ public static Result getMonthlyCattleOutputReport(){
 			}
 		}
 	
+	@JsonIgnoreProperties(ignoreUnknown = true)
 	public static Result updateCattleIntakeProfileByAdmin(){
 		JsonNode json = request().body().asJson();
 		System.out.println("com.mnt.dairymgnt.controllers.Application.");
@@ -2670,10 +2682,18 @@ public static Result getMonthlyCattleOutputReport(){
 						if(uv.size() != 0){
 							for(int i=0 ;i <uv.size();i++){
 								CattleIntakePlan c =  new CattleIntakePlan();
-						        c.feedPlanEndDate = uv.get(i).feedPlanEndDate;
-						        c.feedPlanStartDate = uv.get(i).feedPlanStartDate;
-						        c.feedPlanName = 	uv.get(i).feedPlanName;
-						        c.quantity = 	uv.get(i).quantity;
+						        //c.feedPlanEndDate = uv.get(i).feedPlanEndDate;
+						        //c.feedPlanStartDate = uv.get(i).feedPlanStartDate;
+						       // c.feedPlanName = 	uv.get(i).feedPlanName;
+						       // c.quantity = uv.get(i).quantity;
+						        c.actualQuantity=uv.get(i).quantity;
+						        c.expectedQuantity=uv.get(i).quantity;
+						      //  c.actualQuantity=uv.get(i).actualQuantity;
+						       // c.expectedQuantity=uv.get(i).expectedQuantity;
+						        c.skuId=uv.get(i).skuId;
+						        c.feedName=uv.get(i).feedName;
+						        c.feedType=uv.get(i).feedType;
+						       // c.quantity=uv.get(i).quantity;
 						        c.feedMasterId = u.cattleId;
 						        System.out.println("save ");
 						        c.save();
@@ -2714,11 +2734,17 @@ public static Result getMonthlyCattleOutputReport(){
 						if(uv.size() != 0){
 							for(int i=0 ;i <uv.size();i++){
 								CattleIntakePlan c =  new CattleIntakePlan();
-						        c.feedPlanEndDate = uv.get(i).feedPlanEndDate;
-						        c.feedPlanStartDate = uv.get(i).feedPlanStartDate;
-						        c.feedPlanName = 	uv.get(i).feedPlanName;
+						       //c.feedPlanEndDate = uv.get(i).feedPlanEndDate;
+						       // c.feedPlanStartDate = uv.get(i).feedPlanStartDate;
+						       // c.feedPlanName = 	uv.get(i).feedPlanName;
 						        c.feedMasterId = u.cattleId;
-						        c.quantity = 	uv.get(i).quantity;
+						       // c.quantity = 	uv.get(i).quantity;
+						        c.actualQuantity=uv.get(i).quantity;
+						        c.expectedQuantity=uv.get(i).quantity;
+						        c.skuId=uv.get(i).skuId;
+						        c.feedName=uv.get(i).feedName;
+						        c.feedType=uv.get(i).feedType;
+						       // c.quantity=uv.get(i).quantity;
 						        System.out.println("save ");
 						        c.save();
 							}
@@ -2894,6 +2920,18 @@ public static Result getMonthlyCattleOutputReport(){
     
     }
 	
+	public static Result getPlanDetails()
+    {
+    	DynamicForm df=Form.form().bindFromRequest();
+    	System.out.println(df.get("id"));
+    	Long id = Long.parseLong(df.get("id"));
+    	List<CattleFeeds> list= CattleFeeds.findByFeedPlanId(id);
+    	return ok(Json.toJson(list));
+    	
+    
+    }
+	
+	
 	public static Result getUserPermissions(){
 		HashMap<String,Object>  map  = new HashMap<>(); 
 		String  email = 	session().get("email");
@@ -3056,23 +3094,23 @@ public static Result getMonthlyCattleOutputReport(){
 	    for(CattleFeedMaster c: cfm){
 	    	
 	    	CattleIntakePlanVM v = new CattleIntakePlanVM();
-	    	v.feedPlanName = c.feedPlanName;
+	    	//v.feedPlanName = c.feedPlanName;
 	    	
 	    	if(c.feedPlanStartDate != null){
 				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
 		        String date = DATE_FORMAT.format(c.feedPlanStartDate);
-				v.feedPlanStartDate = date;
+				//v.feedPlanStartDate = date;
 			}else{
-				v.feedPlanStartDate = "";
+				//v.feedPlanStartDate = "";
 			}
 			if(c.feedPlanEndDate != null){
 				SimpleDateFormat DATE_FORMAT1 = new SimpleDateFormat("dd-MMMM-yyyy");
 		        String date = DATE_FORMAT1.format(c.feedPlanEndDate);
-				v.feedPlanEndDate = date;
+			//	v.feedPlanEndDate = date;
 			}else{
-				v.feedPlanEndDate = "";
+		//		v.feedPlanEndDate = "";
 			}
-	    	v.quantity = c.quantity;
+	 //   	v.quantity = c.quantity;
 	    	cattleIntakePlans.add(v);
 	    	
 	    }

@@ -46,7 +46,14 @@ public class FeedMaster extends Model
 	public String quantityofVitamins;
 	public Date lastUpdateDateTime;
 	public Float price;
+	public String feedType;
 	
+	public String getFeedType() {
+		return feedType;
+	}
+	public void setFeedType(String feedType) {
+		this.feedType = feedType;
+	}
 	public Float getPrice() {
 		return price;
 	}

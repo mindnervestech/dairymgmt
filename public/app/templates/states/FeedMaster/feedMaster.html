@@ -226,6 +226,11 @@ function isNumber(evt) {
 						</div> -->
 						
 						<div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr"> Feed Fiber</label>
+  							<input type="text" ng-model = "feed.feedFiber" class="form-control" maxlength="80"   id="firstname" onkeypress="return onlyAlphabets(event,this);">
+						</div>
+						
+						<div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr"> Feed Vitamins</label>
   							<input type="text" ng-model = "feed.feedVitamins" class="form-control" maxlength="80"   id="firstname" onkeypress="return onlyAlphabets(event,this);">
 						</div>
@@ -238,6 +243,10 @@ function isNumber(evt) {
 						</div>
 					<div class = "col-md-6	">
 						
+						<div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr">Price</label>
+  							<input type="text" ng-model = "feed.price" maxlength="10" class="form-control" id="firstname"  onkeypress="return isNumber(event)">
+						</div>	
 						
 						<!--  <div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
 		                <label class="control-label col-md-8">Select Sub Breed name</label>
@@ -265,10 +274,10 @@ function isNumber(evt) {
 	            		</div>   
 	            	</div>-->
 	            	
-	            <!-- 	<div class="col-md-12" style = "margin-top: 5%;">
+	             	<div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr">Quantity Of Protine(%) </label>
   							<input type="text" ng-model = "feed.quantityofProtine" maxlength="80" class="form-control" id="firstname" onkeypress="return isNumber(event)">
-						</div>	 -->
+						</div>	 
 						
 	            	<!--  <div class="col-md-12">
 										<div class="">
@@ -326,11 +335,12 @@ function isNumber(evt) {
   							<label for="usr">Quantity Of Vitamins(%) </label>
   							<input type="text" ng-model = "feed.quantityofVitamins" maxlength="80" class="form-control" id="firstname" onkeypress="return isNumber(event)">
 						</div>
+						<div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr">Feed Type </label>
+  							<input type="text" ng-model = "feed.feedType" maxlength="80" class="form-control" id="firstname"  onkeypress="return onlyAlphabets(event,this);">
+						</div>
 					
-							<div class="col-md-12" style = "margin-top: 5%;">
-  							<label for="usr">Price</label>
-  							<input type="text" ng-model = "feed.price" maxlength="10" class="form-control" id="firstname"  onkeypress="return isNumber(event)">
-						</div>	
+								
 						
 	            	</div>
 	            	</div>
@@ -417,11 +427,11 @@ function isNumber(evt) {
 	            		</div>   
 	            	</div>-->
 	            	
-	            	<!-- 
+	            	 
 						<div class="col-md-12">
   							<label for="usr" style = "margin-top: 5%;"> Feed Fiber</label>
   							<input type="text" ng-model = "feed.feedFiber" class="form-control" maxlength="80" id="firstname" onkeypress="return onlyAlphabets(event,this);">
-						</div> -->
+						</div> 
 	            		<!--  <div class="col-md-12">
 										<div class="">
 											<div class="">
@@ -470,7 +480,10 @@ function isNumber(evt) {
 									</div>
 					</div>-->
 					
-					
+						<div class="col-md-12">
+  							<label for="usr" style = "margin-top: 5%;">Price</label>
+  							<input type="text" ng-model = "feed.price" class="form-control" maxlength="10" id="firstname" onkeypress="return isNumber(event)">
+						</div>
 					<!--  <div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
 		              <label class="control-label col-md-8">Select Sub Breed name</label>
 		              <div class="col-md-12" > 
@@ -480,10 +493,10 @@ function isNumber(evt) {
 	            		</div>   
 	            	</div>-->
 	            	
-	            <!-- 	<div class="col-md-12">
+	             	<div class="col-md-12">
   							<label for="usr" style = "margin-top: 5%;"> Quantity Of Protine(%)</label>
   							<input type="text" ng-model = "feed.quantityofProtine" class="form-control" maxlength="80" id="firstname" onkeypress="return isNumber(event)">
-						</div>	 -->
+						</div>	 
 						
 						<div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr">Qantity Of Water(%) </label>
@@ -503,10 +516,12 @@ function isNumber(evt) {
   							<input type="text" ng-model = "feed.quantityofVitamins" maxlength="80" class="form-control" id="firstname" onkeypress="return isNumber(event)">
 						</div>	
 						
-						<div class="col-md-12">
-  							<label for="usr" style = "margin-top: 5%;">Price</label>
-  							<input type="text" ng-model = "feed.price" class="form-control" maxlength="10" id="firstname" onkeypress="return isNumber(event)">
-						</div>
+						<div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr">Feed Type </label>
+  							<input type="text" ng-model = "feed.feedType" maxlength="80" class="form-control" id="firstname"  onkeypress="return onlyAlphabets(event,this);">
+						</div>	
+						
+					
 						
 						<!--  <div class="col-md-12">
 										<div class="">

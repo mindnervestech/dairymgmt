@@ -28,7 +28,15 @@ public class CattleFeeds extends Model{
 	public String feedWaterContent;
 	public String feedFiber;
 	public String feedName;
+	public String feedType;
 	public String quantity;
+	public String getFeedType() {
+		return feedType;
+	}
+
+	public void setFeedType(String feedType) {
+		this.feedType = feedType;
+	}
 	
 	public String getQuantity() {
 		return quantity;
@@ -129,9 +137,16 @@ public class CattleFeeds extends Model{
 	public CattleFeedMaster getCattleFeedMaster() {
 		return cattleFeedMaster;
 	}
-
+	
+	public static List <CattleFeeds> findByFeedPlanId(long Id){
+		return find.where().eq("feedId", Id).findList();
+		
+	}
+	
 	public void setCattleFeedMaster(CattleFeedMaster cattleFeedMaster) {
 		this.cattleFeedMaster = cattleFeedMaster;
 	}
+	
+	
 	
 }
