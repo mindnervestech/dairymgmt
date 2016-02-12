@@ -64,5 +64,10 @@ GET      /getDailyMilkReport/:pageno                    com.mnt.dairymgnt.contro
 POST		/getsubBreed									com.mnt.dairymgnt.controllers.Application.getsubBreedlist()
 POST        /getAllSubBreedsByName                           com.mnt.dairymgnt.controllers.Application.getAllSubBreedsByName()
 GET         /getAllOnlyFeedMaster/                        com.mnt.dairymgnt.controllers.Application.getAllOnlyFeedMaster()
+POST		/getPlanDetails									com.mnt.dairymgnt.controllers.Application.getPlanDetails()
+
+
+POST        /checkDuplicateFeedName                           com.mnt.dairymgnt.controllers.Application.checkDuplicateFeedName()
+GET         /getAllOnlyFedPlanId                               com.mnt.dairymgnt.controllers.Application.getAllOnlyFedPlanId() 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               					controllers.Assets.at(path="/public", file)
