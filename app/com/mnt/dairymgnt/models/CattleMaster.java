@@ -214,10 +214,11 @@ public class CattleMaster extends Model {
 	public static List<CattleMaster> getAllOnlyCattleMaster(){
 		return find.all();
 	}
-
+	
 	public static CattleMaster getUserByCattleId(int cattleId){
 		return find.where().eq("cattleId", cattleId).findUnique();
 	}
+	
 
 	public static void update(CattleMaster ud) {
 		Ebean.update(ud);

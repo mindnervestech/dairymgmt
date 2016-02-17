@@ -10824,7 +10824,7 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope,$fi
 
 
 
-App.controller('ViewAllUsersController', function ($scope, $rootScope, $routeParams, $http, $upload){
+App.controller('ViewAllUsersController', function ($scope, $rootScope, $routeParams, $http, $upload ,Flash){
 
 	
 	// get all users applied jobs to admin
@@ -11065,6 +11065,18 @@ App.controller('ViewAllUsersController', function ($scope, $rootScope, $routePar
 	$scope.org;
 	$scope.users;
 	$scope.updateUserProfileByAdmin = function(){
+		$scope.doberror = false;
+		$scope.emptyFieldsError = false;
+		if(angular.isUndefined($scope.user.userId)  || ( $scope.user.userId == "" )|| ($scope.user.userId == null)  ||
+				angular.isUndefined($scope.user.password) || ($scope.user.password == "") || ($scope.user.password == null )||
+				angular.isUndefined($scope.user.firstname) || ($scope.user.firstname == "") || ($scope.user.firstname  == null) 
+		)
+		{
+			$scope.emptyFieldsError = true;
+		}
+		else
+		{
+			$scope.emptyFieldsError = false;
 			$http.post('/updateUserProfileByAdmin?d='+Math.random(),{user:$scope.user,permList:$scope.permList,org:$scope.org})
 			.success(function(data){
 				//console.log("success");
@@ -11076,13 +11088,28 @@ App.controller('ViewAllUsersController', function ($scope, $rootScope, $routePar
 					.success(function(data) {
 						$scope.users = data.users;
 						$scope.update =  true;
+						var message = '<strong> Well done!</strong>  You successfully Update the record.';
+					    Flash.create('success', message, 'custom-class');
 						
 					});
 			});
+		}
 	}
 
 	$scope.addUserProfileByAdmin = function(){
 		if($scope.userIdExit != true){
+			$scope.doberror = false;
+			$scope.emptyFieldsError = false;
+			if(angular.isUndefined($scope.user.userId)  || ( $scope.user.userId == "" )|| ($scope.user.userId == null)  ||
+					angular.isUndefined($scope.user.password) || ($scope.user.password == "") || ($scope.user.password == null )||
+					angular.isUndefined($scope.user.firstname) || ($scope.user.firstname == "") || ($scope.user.firstname  == null) 
+			)
+			{
+				$scope.emptyFieldsError = true;
+			}
+			else
+			{
+				$scope.emptyFieldsError = false;
 			$http.post('/updateUserProfileByAdmin?d='+Math.random(),{user:$scope.user,permList:$scope.permList,org:$scope.org})
 			.success(function(data){
 				//console.log("success");
@@ -11093,8 +11120,12 @@ App.controller('ViewAllUsersController', function ($scope, $rootScope, $routePar
 						$scope.users = data.users;
 						$scope.user = "";
 						$scope.add =  true;
+						var message = '<strong> Well done!</strong>  You successfully Added the record.';
+					    Flash.create('success', message, 'custom-class');
+					    //$scope.cat={};
 					});
 			});
+		}
 		}
 }
 	

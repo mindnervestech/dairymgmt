@@ -49,8 +49,9 @@
 			</div>
 			
 			<div class="portlet-body" ng-init="init();" style="overflow-x: auto;">
-			<span ng-if="add == true" style="color:green;">Record Added Successfully.</span>
-			<span ng-if="update == true" style="color:green;">Record Updated  Successfully.</span>
+			<!--  <span ng-if="add == true" style="color:green;">Record Added Successfully.</span>
+			<span ng-if="update == true" style="color:green;">Record Updated  Successfully.</span> -->
+			<span flash-message="5000"  style="float:right;width:40%;" ></span>
 			
 				<div class="row mbm">
 					<div class="col-lg-12">
@@ -135,6 +136,7 @@
 				<h4 class="modal-title" id="myModalLabel">Edit User</h4>
 			</div>
 			<div class="modal-body">
+			<span ng-if = "emptyFieldsError == true"><code> Please fill all fields!!!</code></span>
 				<div class = "col-md-12">
 				<div class = "col-md-6">
 				<div class="col-md-12" style="margin-top:5%;margin-left:-4%">
@@ -214,6 +216,7 @@
 			</div>
 			<div class="modal-body">
 			<span ng-if="userIdExit == true"><code >UserId already exit, Please choose another one</code></span>
+			<span ng-if = "emptyFieldsError == true"><code> Please fill all fields!!!</code></span>	
 					<div class = "col-md-12">
 
 						<div class = "col-md-6">
