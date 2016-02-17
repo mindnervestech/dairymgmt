@@ -37,6 +37,7 @@ public class CattleIntakePlanVM {
 	public String feedType;
 	public List<CattleFeedsVM> cattleFeeds;
 	public String quantity;
+	public String MealType;
 	
 	// public int quantity;
 }

@@ -27,7 +27,15 @@ public class CattleIntakePlan extends Model{
 	public String skuId;
 	public String actualQuantity;
 	public String expectedQuantity;
-    public int id;
+	public String MealType;
+    public String getMealType() {
+		return MealType;
+	}
+	public void setMealType(String mealType) {
+		MealType = mealType;
+	}
+
+	public int id;
 	public String getSkuId() {
 		return skuId;
 	}
@@ -106,5 +114,8 @@ public class CattleIntakePlan extends Model{
 	
 	}
 	
+	public static CattleIntakePlan findById(Long id) {
+		return find.byId(id);
+	}
 	
 }

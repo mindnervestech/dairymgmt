@@ -6593,6 +6593,10 @@ App.controller('ViewAllOrgController', function ($scope, $rootScope, $routeParam
 				$rootScope.cattleMaster = true;
 				
 				}
+			if(data.user.permissions[i].permissionName == "Feed_Master"){
+				$rootScope.FeedMaster = true;
+				
+				}
 			
 			if(data.user.permissions[i].permissionName == "Orgnization"){
 				$rootScope.Orgnization = true;
@@ -6869,6 +6873,10 @@ App.controller('ViewAllPregnantCattleController', function ($scope, $rootScope, 
 				if(data.user.permissions[i].permissionName == "Cattle_Master"){
 					console.log("Catle_master");
 					$rootScope.cattleMaster = true;
+					
+					}
+				if(data.user.permissions[i].permissionName == "Feed_Master"){
+					$rootScope.FeedMaster = true;
 					
 					}
 				
@@ -7251,6 +7259,11 @@ App.controller('ViewAllCattleChildMasterController', function ($scope, $rootScop
 					
 					}
 				
+				if(data.user.permissions[i].permissionName == "Feed_Master"){
+					$rootScope.FeedMaster = true;
+					
+					}
+				
 				if(data.user.permissions[i].permissionName == "Orgnization"){
 					$rootScope.Orgnization = true;
 					
@@ -7580,6 +7593,11 @@ App.controller('ViewReportMasterController', function ($scope, $rootScope, $rout
 				if(data.user.permissions[i].permissionName == "Cattle_Master"){
 					console.log("Catle_master");
 					$rootScope.cattleMaster = true;
+					
+					}
+				
+				if(data.user.permissions[i].permissionName == "Feed_Master"){
+					$rootScope.FeedMaster = true;
 					
 					}
 				
@@ -7978,6 +7996,12 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 					$rootScope.cattleMaster = true;
 					
 					}
+				if(data.user.permissions[i].permissionName == "Feed_Master"){
+					$rootScope.FeedMaster = true;
+					
+					}
+				
+				
 				
 				if(data.user.permissions[i].permissionName == "Orgnization"){
 					$rootScope.Orgnization = true;
@@ -8372,6 +8396,11 @@ App.controller('ViewAllFeedMasterController', function ($scope, $rootScope, $rou
 					
 					}
 				
+				if(data.user.permissions[i].permissionName == "Feed_Master"){
+					$rootScope.FeedMaster = true;
+					
+					}
+				
 				if(data.user.permissions[i].permissionName == "Orgnization"){
 					$rootScope.Orgnization = true;
 					
@@ -8722,7 +8751,11 @@ App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope
 				
 				if(data.user.permissions[i].permissionName == "Cattle_Master"){
 					console.log("Catle_master");
-					$rootScope.cattleMaster = true;
+					$rootScope.cattleMaster = true;	
+					}
+				
+				if(data.user.permissions[i].permissionName == "Feed_Master"){
+					$rootScope.FeedMaster = true;
 					
 					}
 				
@@ -9321,6 +9354,10 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 				if(data.user.permissions[i].permissionName == "Cattle_Master"){
 					console.log("Catle_master");
 					$rootScope.cattleMaster = true;
+					
+					}
+				if(data.user.permissions[i].permissionName == "Feed_Master"){
+					$rootScope.FeedMaster = true;
 					
 					}
 				
@@ -10097,7 +10134,10 @@ App.controller('ViewAllCattleOutputController', function ($scope, $rootScope, $r
 				
 				if(data.user.permissions[i].permissionName == "Cattle_Master"){
 					console.log("Catle_master");
-					$rootScope.cattleMaster = true;
+					$rootScope.cattleMaster = true;					
+					}
+				if(data.user.permissions[i].permissionName == "Feed_Master"){
+					$rootScope.FeedMaster = true;
 					
 					}
 				
@@ -10309,7 +10349,7 @@ App.controller('ViewAllCattleOutputController', function ($scope, $rootScope, $r
 });
 
 
-App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope, $routeParams, $http, $upload,Flash){
+App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope,$filter, $routeParams, $http, $upload,Flash){
 	// get all Cattle master to admin
 	$scope.email;
 	 $scope.pageno = 0;
@@ -10440,6 +10480,10 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope, $r
 				if(data.user.permissions[i].permissionName == "Cattle_Master"){
 					console.log("Catle_master");
 					$rootScope.cattleMaster = true;
+					
+					}
+				if(data.user.permissions[i].permissionName == "Feed_Master"){
+					$rootScope.FeedMaster = true;
 					
 					}
 				
@@ -10588,15 +10632,7 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope, $r
 	
 		$scope.doberror = false;
 		$scope.emptyFieldsError = false;
-		if(     angular.isUndefined($scope.cat.deviceID)  || ( $scope.cat.deviceID == "" )|| ($scope.cat.deviceID == null)  ||
-				angular.isUndefined($scope.cat.dateOfBirth) || ($scope.cat.dateOfBirth == "") || ($scope.cat.dateOfBirth == null)
-	){
-			    $scope.emptyFieldsError = true;
-			}
-		else
-			{
-			
-			 $scope.emptyFieldsError = false;
+	
 		
 			$http.post('/updateCattleIntakeProfileByAdmin?d='+Math.random(),{cat:$scope.cat,userId:$scope.userId,org:$scope.org,feedId:$scope.feedId,catersIds:$scope.catersIds,pregIds:$scope.pregIds,cattleIntakefeedsPlan:$scope.PlanData})
 			.success(function(data){
@@ -10613,22 +10649,14 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope, $r
 					    Flash.create('success', message, 'custom-class');
 					});
 			});
-			}
+			
 	}
 	
 	$scope.addCattleIntakeProfileByAdmin = function(cat){
 		$scope.cat = cat;
 		$scope.doberror = false;
 		$scope.emptyFieldsError = false;
-		if(     angular.isUndefined($scope.cat.deviceID)  || ( $scope.cat.deviceID == "" )|| ($scope.cat.deviceID == null)  ||
-				angular.isUndefined($scope.cat.dateOfBirth) || ($scope.cat.dateOfBirth == "") || ($scope.cat.dateOfBirth == null)
-	){
-			    $scope.emptyFieldsError = true;
-			}
-		else
-			{
-			
-			 $scope.emptyFieldsError = false;
+		
 		
 		$http.post('/updateCattleIntakeProfileByAdmin?d='+Math.random(),{cat:$scope.cat,userId:$scope.userId,org:$scope.org,feedId:$scope.feedId,catersIds:$scope.catersIds,pregIds:$scope.pregIds,cattleIntakefeedsPlan:$scope.PlanData})
 		.success(function(data){
@@ -10643,7 +10671,7 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope, $r
 				    Flash.create('success', message, 'custom-class');
 				});
 		});
-	}
+	
 }
 
 	  
@@ -10752,6 +10780,25 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope, $r
  		});
 	 };
 	 
+	 
+	 $scope.getCattleMasterDobDetails = function(id){
+		 console.log(id);
+		 console.log("in function");
+		 for (var i=0; i<$scope.caters.length; i++) {
+			 
+			 if($scope.caters[i].cattleId == id){
+				 
+				 $scope.cat=$scope.caters[i];
+				 //$scope.cat.dateOfBirth= $filter('date')($scope.cat.dateOfBirth, 'dd/MM/yyyy');
+				// console.log($filter('date')(date[ $scope.cat.dateOfBirth, "dd/MM/yyyy"]));
+				// $scope.cat.dateofBirth= $filter('date')(date[ $scope.cat.DateofBirth, "dd/MM/yyyy"]);
+				 
+				 console.log($scope.cat);
+			 }
+		 }
+	 };
+	 
+	 
 		$scope.gridOptions = {};
 		$scope.gridOptions.data={};
 		
@@ -10760,6 +10807,7 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope, $r
 			                 {field: 'feedName', displayName: 'Feed Name',enableCellEdit:false},
 			                 {field: 'feedType', displayName: 'Feed Type',enableCellEdit:false},
 			                 {field: 'skuId', displayName: 'SkuId',enableCellEdit:false},
+			                 {field: 'MealType', displayName: 'Meal Type',enableCellEdit:false}, 
 			                 {field: 'quantity', displayName: 'Expected Quantity',enableCellEdit:false},
 			                 {field: 'quantity', displayName: 'Actual Quantity',enableCellEdit:true}
 			                 
@@ -10918,6 +10966,11 @@ App.controller('ViewAllUsersController', function ($scope, $rootScope, $routePar
 				
 				if(data.user.permissions[i].permissionName == "Orgnization"){
 					$rootScope.Orgnization = true;
+					
+					}
+				
+				if(data.user.permissions[i].permissionName == "Feed_Master"){
+					$rootScope.FeedMaster = true;
 					
 					}
 

@@ -423,7 +423,7 @@ public class Application extends Controller {
 			cvm.breed = u.breed;
 			cvm.cattleId = u.cattleId;
 			cvm.cattleIdentificationMark =    u.cattleIdentificationMark;
-			cvm.dateofBirth = u.dateofBirth;
+			//cvm.dateofBirth = u.dateofBirth;
 			cvm.gender  = u.gender;
 			cvm.name = u.name;
 			cvm.users = u.users;
@@ -432,6 +432,14 @@ public class Application extends Controller {
 			cvm.parentId  =u.parentId; 
 			
 			cvm.lastUpdateDateTime = u.lastUpdateDateTime;
+
+			if(u.dateofBirth != null){
+				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT.format(u.dateofBirth);
+				cvm.dateofBirthVM = date;
+			}else{
+				cvm.dateofBirthVM = "";
+			}
 			cmvm.add(cvm);
 		}
 
@@ -740,6 +748,7 @@ public class Application extends Controller {
 		for(CattleIntake u : cattleIntake){
 			CattleIntakeVM cfvm = new CattleIntakeVM();
 			cfvm.dateOfBirth = u.dateOfBirth;
+			System.out.println(u.dateOfBirth);
 			cfvm.deviceID = u.deviceID;
 			cfvm.quantity = u.quantity;
 			cfvm.lastUpdateDateTime =  u.lastUpdateDateTime;
@@ -1503,9 +1512,11 @@ public static Result getMonthlyCattleOutputReport(){
 					    if(p != null){
 					    	 u.permissions.add(p);
 					    }
-				u.update();
-			}
+				
+			     }
 				}
+				
+				u.update();
 			}
 		} catch (JsonParseException e1) {
 			// TODO Auto-generated catch block
@@ -2693,6 +2704,7 @@ public static Result getMonthlyCattleOutputReport(){
 						        c.skuId=uv.get(i).skuId;
 						        c.feedName=uv.get(i).feedName;
 						        c.feedType=uv.get(i).feedType;
+						        c.MealType=uv.get(i).MealType;
 						       // c.quantity=uv.get(i).quantity;
 						        c.feedMasterId = u.cattleId;
 						        System.out.println("save ");
@@ -2744,13 +2756,13 @@ public static Result getMonthlyCattleOutputReport(){
 						        c.skuId=uv.get(i).skuId;
 						        c.feedName=uv.get(i).feedName;
 						        c.feedType=uv.get(i).feedType;
+						        c.MealType=uv.get(i).MealType;
 						       // c.quantity=uv.get(i).quantity;
 						        System.out.println("save ");
 						        c.save();
 							}
 						}
 					}
-				
 
 				JsonNode org = json.path("org");
 				System.out.println(org);
@@ -2925,8 +2937,26 @@ public static Result getMonthlyCattleOutputReport(){
     	DynamicForm df=Form.form().bindFromRequest();
     	System.out.println(df.get("id"));
     	Long id = Long.parseLong(df.get("id"));
+    	CattleIntakePlan plan = CattleIntakePlan.findById(id);
+    	CattleFeedMaster feedMaster = CattleFeedMaster.getUserByfeedId(plan.getFeedMasterId());
+    	System.out.println(plan);
     	List<CattleFeeds> list= CattleFeeds.findByFeedPlanId(id);
-    	return ok(Json.toJson(list));
+    	List<CattleFeedsVM> feedsVMs = new ArrayList<CattleFeedsVM>(list.size());
+    	for(CattleFeeds cattleFeed : list) {
+    		CattleFeedsVM feedsVM = new CattleFeedsVM();
+    		feedsVM.feedName=cattleFeed.feedName;
+    		feedsVM.feedType=cattleFeed.feedType;
+    		feedsVM.skuId=cattleFeed.skuId;
+    		feedsVM.quantity=cattleFeed.quantity;
+    		if(feedMaster!=null)
+    		{
+    			feedsVM.MealType=feedMaster.getMealType();
+    		}
+    		
+    		
+    		feedsVMs.add(feedsVM);
+    	}
+    	return ok(Json.toJson(feedsVMs));
     	
     
     }

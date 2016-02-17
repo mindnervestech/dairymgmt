@@ -133,7 +133,7 @@
 						
 	            	 <div class="col-md-12" style="margin-top:5%;">
 		              <label class=" col-md-0">Cattle Master </label> 
-			                <select id = "feed"  data-ng-model="catersIds"  class = "col-md-5 form-control"  style="    width: 100%; ">
+			                <select id = "feed"  data-ng-model="catersIds"  class = "col-md-5 form-control"  style="    width: 100%; " ng-change="getCattleMasterDobDetails(catersIds)">
 			                 <option ng-repeat="f in caters" value="{{f.cattleId}}"   ng-selected="f.isSelect  == true">{{f.name}}</option>
 			                </select>
 	            		</div>  
@@ -147,28 +147,23 @@
 			                </select>   
 	            	</div> 
 	            	</div>
-	            	<div class = "col-md-6">
-						
-						<div class="col-md-12" style="margin-top:5%;">
-										<div class="">
-											<div class="">
-											<div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>
-											<span>Date of Birth</span>
-												<div class="input-group col-md-12"style="margin-top:2%;">
-													 <input type="text" ng-model="cat.dateOfBirth"
-														name="dob" class="form-control " id="dob"
-														 ng-click="initempDatepicker();"
-														style="font-size: 12px; width:  100%;" required>
-														
+	         		<div class = "col-md-6	">
+					  <div class="col-md-12"  style="margin-top:5%;">
+										
+											
+												<div class="input-group col-md-12" >
+												<span>Date Of Birth</span>
+													 <input type="text"  ng-model="cat.dateofBirthVM"
+														name="dobnew" class="form-control " 
+														style="font-size: 12px;  width: 100%; margin-top:1%;" disabled>
 												</div>
-											</div>
-									</div>
-					</div>
+						</div>
+						
 					
-					<div class="col-md-12" style="margin-top:5%;>
+				<!--  	<div class="col-md-12" style="margin-top:5%;>
   							<label for="usr">Device Id </label>
   							<input type="text" ng-model = "cat.deviceID" style="margin-top:2%;"class="form-control" id="firstname">
-						</div>
+						</div> -->
 						
 						<!--  <div class="col-md-12" style="margin-top:5%;">
   							<label for="usr">Quantity </label>
@@ -255,7 +250,7 @@
 	            	
 					 <div class="col-md-12" style="margin-top:5%;">
 		              <label class=" col-md-0">Cattle Master </label> 
-			                <select id = "feed"  data-ng-model="catersIds"  class = "col-md-5 form-control"  style="    width: 100%; ">
+			                <select id = "feed"  data-ng-model="catersIds"  class = "col-md-5 form-control"  style="    width: 100%; " ng-change="getCattleMasterDobDetails(catersIds)">
 			                 <option ng-repeat="f in caters" value="{{f.cattleId}}"   ng-selected="f.isSelect  == true">{{f.name}}</option>
 			                </select>
 	            		</div>   
@@ -272,28 +267,43 @@
 	            	
 	            	<div class = "col-md-6">
 	            		
-	            		<div class="col-md-12"  style="margin-top:5%;">
+	            		<!--  <div class="col-md-12"  style="margin-top:5%;">
 										<div class="">
 											<div class="" >
 											<div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>
 												<div class="input-group col-md-12" >
-												<span>Date Of Birth</span>
-													 <input type="text"  ng-model="cat.dateOfBirth"
+												<span>Date Of Birth</span>{{cat.dateofBirth}}
+													 <input type="text"  ng-model="cat.dateofBirth"
 														name="dobnew" class="form-control " id="dobnew"
 														 ng-click="initempDatepickerAddnew();"
 														style="font-size: 12px;  width: 100%; margin-top:1%;" required>
-														<!--  <div class="input-group-addon">
-														<i class="fa fa-calendar"></i>
-														</div>-->
+														
 												</div>
 											</div>
 									</div>
-					</div>
+					</div>-->
 					
-					<div class="col-md-12"  style="margin-top:5%;">
+					  <div class="col-md-12"  style="margin-top:5%;">
+										
+											
+												<div class="input-group col-md-12" >
+												<span>Date Of Birth</span>
+													 <input type="text"  ng-model="cat.dateofBirthVM"
+														name="dobnew" class="form-control " 
+														style="font-size: 12px;  width: 100%; margin-top:1%;" disabled>
+														
+											
+									</div>
+					</div>
+										
+					<!-- <div class="col-md-12"  style="margin-top:5%;">
+  							<label for="usr">Date of birth </label>
+  							<input type="text" ng-model = "cat.dateofBirthVM" class="form-control" id="firstname" date-parser="dd.MM.yyyy HH:mm" disabled>
+						</div>  --> 
+				<!--  	<div class="col-md-12"  style="margin-top:5%;">
   							<label for="usr">Device Id </label>
   							<input type="text" ng-model = "cat.deviceID" class="form-control" id="firstname">
-						</div>
+						</div> -->
 	            	
 	            	
 	            	

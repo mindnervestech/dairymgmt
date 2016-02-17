@@ -179,7 +179,12 @@ function isNumber(evt) {
 						
 						<div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr"> Feed Protine</label>
-  							<input type="text" ng-model = "feed.feedProtine" class="form-control" maxlength="80"   id="firstname" onkeypress="return onlyAlphabets(event,this);">
+  						<!--  	<input type="text" ng-model = "feed.feedProtine" class="form-control" maxlength="80"   id="firstname" onkeypress="return onlyAlphabets(event,this);"> -->
+							<select id = "use"  ng-model="feed.feedProtine" class= "form-control" ng-change="" style="    width: 100%;">
+			                <option value="" disabled>--- Select ---</option>
+			                <option value="Yes" >Yes</option>
+    						<option value="No">No</option>
+			                </select>
 						</div>
 						<!--  <div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
 		              <label class="control-label col-md-8">Select parent name</label>
@@ -208,7 +213,11 @@ function isNumber(evt) {
 					</div>-->
 					<div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr"> Feed Water Content</label>
-  							<input type="text" ng-model = "feed.feedWaterContent" class="form-control" maxlength="80"   id="firstname" onkeypress="return onlyAlphabets(event,this);">
+  							<select id = "use"  ng-model="feed.feedWaterContent" class= "form-control" ng-change="" style="    width: 100%;">
+			                <option value="" disabled >--- Select ---</option>
+			                <option value="Yes" >Yes</option>
+    						<option value="No">No</option>
+			                </select>
 						</div>
 						
 						<!--  <div class="col-md-12" style = "margin-top: 5%;">
@@ -227,7 +236,11 @@ function isNumber(evt) {
 						
 						<div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr"> Feed Fiber</label>
-  							<input type="text" ng-model = "feed.feedFiber" class="form-control" maxlength="80"   id="firstname" onkeypress="return onlyAlphabets(event,this);">
+  							<select id = "use"  ng-model="feed.feedFiber" class= "form-control" ng-change="" style="    width: 100%;">
+			                <option value="" disabled>--- Select ---</option>
+			                <option value="Yes" >Yes</option>
+    						<option value="No">No</option>
+			                </select>						
 						</div>
 						
 						<div class="col-md-12" style = "margin-top: 5%;">
@@ -244,7 +257,7 @@ function isNumber(evt) {
 					<div class = "col-md-6	">
 						
 						<div class="col-md-12" style = "margin-top: 5%;">
-  							<label for="usr">Price</label>
+  							<label for="usr">Price(/kg)</label>
   							<input type="text" ng-model = "feed.price" maxlength="10" class="form-control" id="firstname"  onkeypress="return isNumber(event)">
 						</div>	
 						
@@ -402,8 +415,11 @@ function isNumber(evt) {
 	            	
 	            	<div class="col-md-12">
   							<label for="usr" style = "margin-top: 5%;"> Feed Protine</label>
-  							<input type="text" ng-model = "feed.feedProtine" class="form-control" maxlength="80" id="firstname" onkeypress="return onlyAlphabets(event,this);">
-						</div>
+  							<select id = "use"  ng-model="feed.feedProtine" class= "form-control" ng-change="" style="    width: 100%;">
+			                <option value="" disabled>--- Select ---</option>
+			                <option value="Yes" >Yes</option>
+    						<option value="No">No</option>
+			                </select></div>
 					
 						<!--  <div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr">Gender </label>
@@ -415,8 +431,11 @@ function isNumber(evt) {
 						
 						<div class="col-md-12">
   							<label for="usr" style = "margin-top: 5%;"> Feed Water Content</label>
-  							<input type="text" ng-model = "feed.feedWaterContent" class="form-control" maxlength="80" id="firstname" onkeypress="return onlyAlphabets(event,this);">
-						</div>
+  							<select id = "use"  ng-model="feed.feedWaterContent" class= "form-control" ng-change="" style="    width: 100%;">
+			                <option value="" disabled >--- Select ---</option>
+			                <option value="Yes" >Yes</option>
+    						<option value="No">No</option>
+			                </select></div>
 						
 						<!--  <div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
 		              <label class="control-label col-md-8">Select parent name</label>
@@ -430,8 +449,11 @@ function isNumber(evt) {
 	            	 
 						<div class="col-md-12">
   							<label for="usr" style = "margin-top: 5%;"> Feed Fiber</label>
-  							<input type="text" ng-model = "feed.feedFiber" class="form-control" maxlength="80" id="firstname" onkeypress="return onlyAlphabets(event,this);">
-						</div> 
+  							<select id = "use"  ng-model="feed.feedFiber" class= "form-control" ng-change="" style="    width: 100%;">
+			                <option value="" disabled>--- Select ---</option>
+			                <option value="Yes" >Yes</option>
+    						<option value="No">No</option>
+			                </select></div> 
 	            		<!--  <div class="col-md-12">
 										<div class="">
 											<div class="">
@@ -451,7 +473,7 @@ function isNumber(evt) {
 					</div>	-->
 						<div class="col-md-12">
   							<label for="usr" style = "margin-top: 5%;"> Feed Vitamins</label>
-  							<input type="text" ng-model = "feed.feedVitamins" class="form-control" maxlength="80" id="firstname">
+  							<input type="text" ng-model = "feed.feedVitamins" class="form-control" maxlength="80" id="firstname" onkeypress="return onlyAlphabets(event,this);">
 						</div>
 						
 						<div class="col-md-12">
@@ -481,7 +503,7 @@ function isNumber(evt) {
 					</div>-->
 					
 						<div class="col-md-12">
-  							<label for="usr" style = "margin-top: 5%;">Price</label>
+  							<label for="usr" style = "margin-top: 5%;">Price(/kg)</label>
   							<input type="text" ng-model = "feed.price" class="form-control" maxlength="10" id="firstname" onkeypress="return isNumber(event)">
 						</div>
 					<!--  <div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
