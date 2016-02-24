@@ -34,7 +34,18 @@ public class CattleOutput extends Model {
 	
    	public Date LastUpdateDateTime;
 	public String date;
+	public Date time;
 	
+	
+	public Date getTime() {
+		return time;
+	}
+
+	public void setTime(Date time) {
+		this.time = time;
+	}
+
+
 	public int quantity;
 	public int fatContent;
 	public int SNFContent;

@@ -16,6 +16,7 @@ public class CattleOutputVM {
 	public int cattleId;	
    	public Date lastUpdateDateTime;
 	public String date;
+	public String time;
 	public int quantity;
 	public int fatContent;
 	public int SNFContent;

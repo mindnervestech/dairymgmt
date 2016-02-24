@@ -25,9 +25,9 @@
 				<div class="caption">All Cattle Output</div>
 			</div>
 			<div class="portlet-body" ng-init="init();" style="overflow-x: auto;">
-				<span ng-if="add == true" style="color:green;">Record Added Successfully.</span>
-			<span ng-if="update == true" style="color:green;">Record Updated  Successfully.</span>
-			
+				<!--  x<span ng-if="add == true" style="color:green;">Record Added Successfully.</span>
+			<span ng-if="update == true" style="color:green;">Record Updated  Successfully.</span> -->
+			<span flash-message="5000"  style="float:right;width:40%;" ></span> 
 				<div class="row mbm">
 					<div class="col-lg-12">
 						<!-- {{jobs}} -->
@@ -120,51 +120,70 @@
 				<div class = "col-md-12">
 				<div class = "col-md-6">
 				
-					<div class="col-md-12">
-  							<label for="usr">Fat Content </label>
+					 <div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
+		              <label class="control-label col-md-8">Cattle Name </label>
+		              <div class="col-md-12"> 
+			                <select id = "feed"  data-ng-model="catersIds" class = "col-md-5 form-control"  style="    width: 110%;">
+			                 <option ng-repeat="f in caters" value="{{f.cattleId}}"   ng-selected="f.isSelect  == true">{{f.name}}</option>
+			                </select>
+	            		</div>   
+	            	</div>
+					<div class="col-md-12" style="margin-top:5%;">
+  							<label for="usr">Fat Content(%)</label>
   							<input type="text" ng-model = "cat.fatContent" class="form-control" onkeypress="return isNumber(event)"  id="fatContent">
 						</div>	
 				
-				<div class="col-md-12">
-  							<label for="usr">SNF Content</label>
+				<div class="col-md-12" style="margin-top:5%;">
+  							<label for="usr">SNF Content(%)</label>
   							<input type="text" ng-model = "cat.SNFContent" onkeypress="return isNumber(event)" class="form-control" id="SNFContent">
 						</div>
 				
-						<div class="col-md-12">
-  							<label for="usr">Device Id </label>
-  							<input type="text" ng-model = "cat.deviceID"  class="form-control" id="firstname">
-						</div>
-							<div class="col-md-12">
+							<!--  <div class="col-md-12">
   							<label for="usr">Actual Milk Quantity </label>
   							<input type="text" ng-model = "cat.quantity" onkeypress="return isNumber(event)"  class="form-control" id="firstname">
-						</div>	
+						</div>	-->
 						
-							<div class="col-md-12">
-										<div class="">
-											<div class="">
-												<div class="input-group">
-												<span>Date </span>
-													 <input type="text" ng-model="cat.date"
-														name="dob" class="form-control " id="dobnew"
-														 ng-click="initempDatepickerAddnew();"
-														style="font-size: 12px;" required>
-														<div class="input-group-addon">
-														<i class="fa fa-calendar"></i>
-														</div>
-												</div>
-											</div>
-									</div>
-					</div>
-
+							
  				
 
 						</div>
 						<div class = "col-md-6	">
 					
+						<div class="col-md-12" style= "margin-top:5%; ">
+  							<label for="usr">Device Id </label>
+  							<input type="text" ng-model = "cat.deviceID"  class="form-control" id="firstname">
+						</div>
+						
 						<div class="col-md-12">
+										<div class="">
+											<div class="">
+												<div class="input-group col-md-12" style = "margin-top: 5%;">
+												<label for="usr">Date </label>
+													 <input type="text" ng-model="cat.date"
+														name="dob" class="form-control " id="dobnew"
+														 ng-click="initempDatepickerAddnew();"
+														style="font-size: 12px;" required>
+														
+												</div>
+											</div>
+									</div>
+						</div>
+						
+						<div class="col-md-12" style= "margin-top:5%; ">
+						<input type="text" dn-timepicker="h:mm a" min-time="00:00" max-time="23:59" step="15" ng-model="timepicker.model" />
+						</div>
+						
+						
+						<input type="text" dn-timepicker ng-model="time" min-time="9:00" max-time="17:00" step="10m" />
+						
+						<div class="col-md-12" style=" margin-top:5%;">
+  							<label for="usr">Time</label>
+  							<input type="time" id="exampleInput" name="input" ng-model="cat.time" placeholder="HH:mm:ss" style = "margin-top: 5%; width: 100%; height:  20%;" required />
+						</div>
+						<!--  <div class="col-md-12">
   							<label for="usr">Expected Milk Quantity </label>
   							<input type="text" ng-model = "cat.expectedMilkQuantity" onkeypress="return isNumber(event)"  class="form-control" id="expectedMilkQuantity">
-						</div>	
+						</div> -->	
 						
 						<!-- <div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
 		              <label class="control-label col-md-8">Select Orgnization</label>
@@ -175,31 +194,24 @@
 	            		</div>   
 	            	</div> -->
 	            	
-	            	 <div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
-		              <label class="control-label col-md-10">Cattle Master </label>
-		              <div class="col-md-12"> 
-			                <select id = "feed"  data-ng-model="catersIds" class = "col-md-5"  style="    width: 110%;">
-			                 <option ng-repeat="f in caters" value="{{f.cattleId}}"   ng-selected="f.isSelect  == true">{{f.name}}</option>
-			                </select>
-	            		</div>   
-	            	</div> 
-	            	<div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
+	            	 
+	            	<!--  <div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
 		              <label class="control-label col-md-10">Select  Pregnant Name   </label>
 		              <div class="col-md-12"> 
 			                <select id = "feed"  data-ng-model="pregIds" class = "col-md-5"  style="    width: 110%;">
 			                 <option ng-repeat="f in pregnant" value="{{f.pregnancyId}}"   ng-selected="f.isSelect  == true">{{f.pregnancyId}}/{{f.name}}</option>
 			                </select>
 	            		</div>   
-	            	</div> 
+	            	</div> --> 
 	            	
-						<div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
+					<!--  	<div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
 		              <label class="control-label col-md-8">Select User Id</label>
 		              <div class="col-md-12">
 			                <select id = "use"  data-ng-model="userId" class = "col-md-5"style="width:110%;">
 			                 <option ng-repeat="u in users" value="{{u.userId}}"   ng-selected="u.isSelect  == true">{{u.userId}}</option>
 			                </select>
 	            		</div>   
-	            	</div>
+	            	</div> -->
 	            	</div>
 	            	</div>
 						<div class="form-actions">
@@ -236,50 +248,79 @@
 				<div class = "col-md-12">
 				<div class = "col-md-6">
 				
-					<div class="col-md-12">
-  							<label for="usr">Fat quantity </label>
+					 <div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
+		              <label class="control-label col-md-8">Cattle Name </label>
+		              <div class="col-md-12"> 
+			                <select id = "feed"  data-ng-model="catersIds" class = "col-md-5 form-control"  style="    width: 110%;">
+			                 <option ng-repeat="f in caters" value="{{f.cattleId}}"   ng-selected="f.isSelect  == true">{{f.name}}</option>
+			                </select>
+	            		</div>   
+	            	</div> 
+				
+					<div class="col-md-12" style=" margin-top:5%;">
+  							<label for="usr">Fat quantity(%) </label>
   							<input type="text" ng-model = "cat.fatContent"  onkeypress="return isNumber(event)" class="form-control" id="fatContent">
 						</div>	
 				
-					<div class="col-md-12">
-  							<label for="usr">SNF quantity</label>
+					<div class="col-md-12" style=" margin-top:5%;">
+  							<label for="usr">SNF quantity(%)</label>
   							<input type="text" ng-model = "cat.SNFContent" onkeypress="return isNumber(event)" class="form-control" id="SNFContent">
 						</div>
 				
-						<div class="col-md-12">
+						
+						
+						<!--  <div class="col-md-12">
+  							<label for="usr">Actual Milk Quantity </label>
+  							<input type="text" ng-model = "cat.quantity" onkeypress="return isNumber(event)" class="form-control" id="firstname">
+						</div> -->
+						 
+						
+				
+						</div>
+						<div class = "col-md-6	">
+						
+						
+						
+						<div class="col-md-12" style = "margin-top: 5%;" >
   							<label for="usr">Device Id </label>
   							<input type="text" ng-model = "cat.deviceID" class="form-control" id="firstname">
 						</div>
 						
 						<div class="col-md-12">
-  							<label for="usr">Actual Milk Quantity </label>
-  							<input type="text" ng-model = "cat.quantity" onkeypress="return isNumber(event)" class="form-control" id="firstname">
-						</div>
-						
-				<div class="col-md-12">
 										<div class="">
 											<div class="">
-												<div class="input-group">
-												<span>Date </span>
+												<div class="input-group col-md-12" style = "margin-top: 5%;">
+												<label for="usr">Date </label>
 													 <input type="text" ng-model="cat.date"
-														name="dob" class="form-control " id="dob"
+														name="dob" class=" form-control " id="dob"
 														 ng-click="initempDatepicker();"
 														style="font-size: 12px;" required>
-														<div class="input-group-addon">
-														<i class="fa fa-calendar"></i>
-														</div>
+														
 												</div>
 											</div>
 									</div>
 					</div>
-
-						</div>
-						<div class = "col-md-6	">
 						
-						<div class="col-md-12">
+						<div class="col-md-12" style=" margin-top:5%;">
+						<label for="usr">Time</label>
+						<ng-timepicker  show-meridian="true"   ng-model="cat.time" style=" width: 100%;"></ng-timepicker>
+						</div>
+						
+						  <div class="col-md-12" style=" margin-top:5%;">
+  							<label for="usr">Time</label>
+  							<input type="time" id="exampleInput" name="input" ng-model="cat.time" placeholder="HH:mm:ss" style = "margin-top: 5%; width: 100%; height:  10%;" required />
+						</div> 
+							
+						
+						
+						
+						<div class="demo-section k-content">
+      
+						
+						<!--  <div class="col-md-12">
   							<label for="usr">Expected Milk Quantity </label>
   							<input type="text" ng-model = "cat.expectedMilkQuantity" onkeypress="return isNumber(event)" class="form-control" id="expectedMilkQuantity">
-						</div>
+						</div> -->
 								
 					
 						<!-- 
@@ -291,31 +332,24 @@
 			                </select>
 	            		</div>   
 	            	</div> -->
-	            		<div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
+	            		<!--  <div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
 		              <label class="control-label col-md-10">Select  Pregnant Name   </label>
 		              <div class="col-md-12"> 
 			                <select id = "feed"  data-ng-model="pregIds" class = "col-md-5"  style="    width: 110%;">
 			                 <option ng-repeat="f in pregnant" value="{{f.pregnancyId}}"   ng-selected="f.isSelect  == true">{{f.pregnancyId}}/{{f.name}}</option>
 			                </select>
 	            		</div>   
-	            	</div>
-	            	 <div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
-		              <label class="control-label col-md-10">Cattle Master </label>
-		              <div class="col-md-12"> 
-			                <select id = "feed"  data-ng-model="catersIds" class = "col-md-5"  style="    width: 110%;">
-			                 <option ng-repeat="f in caters" value="{{f.cattleId}}"   ng-selected="f.isSelect  == true">{{f.name}}</option>
-			                </select>
-	            		</div>   
-	            	</div> 
+	            	</div>-->
 	            	
-						<div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
+	            	
+						 <!--  <div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
 		              <label class="control-label col-md-8">Select User Id</label>
 		              <div class="col-md-12">
 			                <select id = "use"  data-ng-model="userId" class = "col-md-5"style="width:110%;">
 			                 <option ng-repeat="u in users" value="{{u.userId}}"   ng-selected="u.isSelect  == true">{{u.userId}}</option>
 			                </select>
 	            		</div>   
-	            	</div>
+	            	</div> -->
 	            	</div>
 	            	</div>
 						<div class="form-actions">

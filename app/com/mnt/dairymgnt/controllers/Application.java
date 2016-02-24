@@ -2,6 +2,7 @@ package com.mnt.dairymgnt.controllers;
 
 import java.io.BufferedReader;
 
+
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -22,7 +23,6 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-
 
 
 
@@ -66,6 +66,8 @@ import com.mnt.dairymgnt.VM.KPIMasterVM;
 import com.mnt.dairymgnt.VM.OrgnizationVM;
 import com.mnt.dairymgnt.VM.PregnancyCattleVM;
 import com.mnt.dairymgnt.VM.UserVM;
+import com.mnt.dairymgnt.VM.VaccinationPlanVM;
+
 import com.mnt.dairymgnt.models.Breeds;
 import com.mnt.dairymgnt.models.CattleFeedMaster;
 import com.mnt.dairymgnt.models.CattleFeeds;
@@ -83,6 +85,7 @@ import com.mnt.dairymgnt.models.Oraganization;
 import com.mnt.dairymgnt.models.Permissions;
 import com.mnt.dairymgnt.models.PregnantCattle;
 import com.mnt.dairymgnt.models.Subbreed;
+import com.mnt.dairymgnt.models.VaccinationPlan;
 //import com.itextpdf.text.List;;
 import com.mnt.dairymgnt.models.Users;
 
@@ -318,6 +321,36 @@ public class Application extends Controller {
 		
 	}
 	
+	public static Result getAllVaccinationPlan(int pageNo){
+		int count  = 0;
+		List<VaccinationPlan> vaccinationPlans = VaccinationPlan.getAllVaccinationPlan(pageNo,10);
+        ArrayList<VaccinationPlanVM> cmvm = new ArrayList<>();
+		count = CattleMaster.getAllCattleMasterCount(pageNo);
+		
+		for(VaccinationPlan u : vaccinationPlans){
+			VaccinationPlanVM cvm = new VaccinationPlanVM();
+			cvm.companyName=u.companyName;
+			cvm.doctorName=u.doctorName;
+			cvm.elapsedDays=u.elapsedDays;
+			cvm.vaccineName=u.vaccineName;
+			cvm.vaccineType=u.vaccineType;
+			cvm.vaccinationPlanId = u.vaccinationPlanId;;
+			cvm.breed=u.breed;
+			cvm.subBreed=u.subBreed;
+			cvm.vaccinationPlanId=u.vaccinationPlanId;
+			cvm.cattleMaster=u.CattleMaster;
+			
+			cmvm.add(cvm);
+			//cvm.dateofBirth = u.dateofBirth;
+		}	
+		HashMap  <String ,Object> hm = new HashMap();
+		hm.put("caters",cmvm);
+		hm.put("userCount", count);
+		
+		return  ok(Json.toJson(hm));
+		
+	}
+	
 	public static Result getAllOnlyFeedMaster(){
 		int count  = 0;
 		List<FeedMaster> feedMasters = FeedMaster.getAllOnlyFeedMaster();
@@ -346,6 +379,34 @@ public class Application extends Controller {
 		hm.put("caters",cmvm);
 		return  ok(Json.toJson(hm));
 	}
+	public static Result getAllOnlyVaccinationPlan(){
+		int count  = 0;
+		List<VaccinationPlan> vaccinationPlans = VaccinationPlan.getAllOnlyVaccinationPlan();
+        ArrayList<VaccinationPlanVM> cmvm = new ArrayList<>();
+		
+		for(VaccinationPlan u : vaccinationPlans){
+			VaccinationPlanVM cvm = new VaccinationPlanVM();
+			//cvm.feedId = u.feedId;
+			cvm.companyName=u.companyName;
+			cvm.doctorName=u.doctorName;
+			cvm.elapsedDays=u.elapsedDays;
+			cvm.vaccineType=u.vaccineType;
+			cvm.vaccineName=u.vaccineName;
+			cvm.vaccinationPlanId=u.vaccinationPlanId;
+			cvm.breed=u.breed;
+			cvm.subBreed=u.subBreed;
+			cvm.cattleMaster=u.CattleMaster;
+			
+			
+			cmvm.add(cvm);
+			//cvm.dateofBirth = u.dateofBirth;
+		}	
+		HashMap  <String ,Object> hm = new HashMap();
+		hm.put("caters",cmvm);
+		return  ok(Json.toJson(hm));
+	}
+	
+	
 	
 	public static Result getAllCattleMasterReport(int pageNo){
 		int count  = 0;
@@ -782,6 +843,15 @@ public class Application extends Controller {
 		for(CattleOutput u : cattleOutput){
 			CattleOutputVM cfvm = new CattleOutputVM();
 			cfvm.date = u.date;
+			
+			
+			if(u.time != null){
+				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT.format(u.time);
+				cfvm.time = date;
+			}else{
+				cfvm.time = "";
+			}
 			cfvm.deviceID = u.deviceID;
 			cfvm.quantity = u.quantity;
 			cfvm.lastUpdateDateTime =  u.LastUpdateDateTime;
@@ -1797,6 +1867,142 @@ public static Result getMonthlyCattleOutputReport(){
 		return ok("");
 	}
 	
+	
+	
+	@JsonIgnoreProperties(ignoreUnknown = true)
+	public static Result updateVaccinationPlanProfileByAdmin(){
+		
+		JsonNode json = request().body().asJson();
+		JsonNode feedJson = json.get("cat");
+		System.out.println(feedJson);
+		System.out.println(json);
+		ObjectMapper userinfoMapper = new ObjectMapper();
+		try {
+			VaccinationPlanVM uvm = userinfoMapper.readValue(feedJson.traverse(),VaccinationPlanVM.class);
+			System.out.println(json.get("companyName"));
+			VaccinationPlan u = VaccinationPlan.getUserByfeedId(uvm.vaccinationPlanId);
+			if(u !=  null){
+				
+				JsonNode org = json.path("org");
+				System.out.println(org);
+				if(org.toString() != ""){
+					Oraganization    orgni = Oraganization.getOrgById(Integer.parseInt(org.toString().replace("\"", "")));
+					if(orgni != null){
+						u.setOraganization(orgni);
+					}
+				}
+				
+				JsonNode userId = json.path("userId");
+				System.out.println(userId);
+				if(userId.toString() != ""){
+					Users    uId = null;	
+					uId = Users.getUserByEmail(userId.toString().replace("\"", ""));
+					if(uId != null){
+						u.setUsers(uId);
+					}
+					
+				}
+			
+				/*JsonNode catersIds = json.path("catersIds");
+				System.out.println(catersIds);
+				if(catersIds.toString() != ""){
+					CattleMaster    uId = null;
+				    uId = CattleMaster.getUserByCattleId(Integer.parseInt(catersIds.toString().replace("\"", "")));
+					if(uId != null){
+						u.setCattleMaster(uId);
+					}
+				}
+				*/
+				
+				
+				u.setCompanyName(uvm.companyName);
+				u.setDoctorName( uvm.doctorName);
+				u.setElapsedDays(uvm.elapsedDays);
+				u.setVaccineName(uvm.vaccineName);
+				u.setVaccineType(uvm.vaccineType);
+				u.lastUpdateDateTime = new Date();
+				
+				if(uvm.breed.matches("\\d+")){
+					Breeds b = Breeds.getBreedsById(uvm.breed);
+					u.setBreed(b.breedName);
+				}else{
+					Breeds b = Breeds.getBreedsByName(uvm.breed);
+					u.setBreed(b.breedName);	
+				}
+				u.setSubBreed(uvm.subBreed);
+				u.update();
+			
+
+			}else{
+					
+				
+				
+				u  = new VaccinationPlan();
+				
+				u.setCompanyName(uvm.companyName);
+				u.setDoctorName(uvm.doctorName);
+				u.setElapsedDays(uvm.elapsedDays);
+				u.setVaccineName(uvm.vaccineName);
+				u.setVaccineType(uvm.vaccineType);
+				u.lastUpdateDateTime = new Date();
+				
+				if(uvm.breed.matches("\\d+")){
+					Breeds b = Breeds.getBreedsById(uvm.breed);
+					u.setBreed(b.breedName);
+				}else{
+					Breeds b = Breeds.getBreedsByName(uvm.breed);
+					u.setBreed(b.breedName);	
+				}
+				u.setSubBreed(uvm.subBreed);;
+				u.save();
+				
+				
+				JsonNode org = json.path("org");
+				System.out.println(org);
+				if(org.toString() != ""){
+					Oraganization    orgni = Oraganization.getOrgById(Integer.parseInt(org.toString().replace("\"", "")));
+					if(orgni != null){
+						u.setOraganization(orgni);
+					}
+					
+				}
+				
+				JsonNode userId = json.path("userId");
+				System.out.println(userId);
+				if(userId.toString() != ""){
+					Users    uId = null;
+				    uId = Users.getUserByEmail(userId.toString().replace("\"", ""));
+					if(uId != null){
+						u.setUsers(uId);
+					}
+					
+				}
+				
+				JsonNode catersIds = json.path("catersIds");
+				System.out.println(catersIds);
+				if(catersIds.toString() != ""){
+					CattleMaster    uId = null;
+				    uId = CattleMaster.getUserByCattleId(Integer.parseInt(catersIds.toString().replace("\"", "")));
+					if(uId != null){
+						u.setCattleMaster(uId);
+					}
+				}
+				u.update();
+				//u.update(u);
+			}
+		} catch (JsonParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (JsonMappingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		return ok("");
+	}
 	@JsonIgnoreProperties(ignoreUnknown = true)
 	public static Result updateFeedProfileByAdmin(){
 		
@@ -2260,6 +2466,25 @@ public static Result getMonthlyCattleOutputReport(){
 				}
 				
 				u.setDate(uvm.date);
+				SimpleDateFormat format1 = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d2 = null;
+				try {
+					if(uvm.time != null){
+						if(uvm.time.contains("\"")){
+							d2 = format1.parse(uvm.time.replaceAll("\"", ""));
+						}else{
+							d2 = format1.parse(uvm.time);
+						}
+					}	
+							
+					//in milliseconds
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				u.setTime(d2);
+				//u.setTime(uvm.time);
+				
 				u.setFatContent(uvm.fatContent);
 				u.setSNFContent(uvm.SNFContent);
 				u.setDeviceID(uvm.deviceID);
@@ -2273,6 +2498,23 @@ public static Result getMonthlyCattleOutputReport(){
 				
 				u  = new CattleOutput();
 				u.setDate(uvm.date);
+				SimpleDateFormat format1 = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d2 = null;
+				try {
+					if(uvm.time != null){
+						if(uvm.time.contains("\"")){
+							d2 = format1.parse(uvm.time.replaceAll("\"", ""));
+						}else{
+							d2 = format1.parse(uvm.time);
+						}
+					}	
+							
+					//in milliseconds
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				u.setTime(d2);
 				u.setFatContent(uvm.fatContent);
 				u.setSNFContent(uvm.SNFContent);
 				u.setDeviceID(uvm.deviceID);
@@ -2937,7 +3179,9 @@ public static Result getMonthlyCattleOutputReport(){
     	DynamicForm df=Form.form().bindFromRequest();
     	System.out.println(df.get("id"));
     	Long id = Long.parseLong(df.get("id"));
+    	
     	CattleIntakePlan plan = CattleIntakePlan.findById(id);
+    	System.out.println("i m here");
     	CattleFeedMaster feedMaster = CattleFeedMaster.getUserByfeedId(plan.getFeedMasterId());
     	System.out.println(plan);
     	List<CattleFeeds> list= CattleFeeds.findByFeedPlanId(id);
