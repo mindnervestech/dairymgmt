@@ -181,15 +181,14 @@ function isNumber(evt) {
 						   
 						
 						  
-						  <div class="col-md-12" style = "margin-top: 5%;" ng-init="findBreed()">
-  							<div class="col-md-0" ng-init="findBreed()">
-  							<label for="usr">Breed </label>
-							<select id = "use"  data-ng-model="cat.breed" class= "col-md-5 form-control"  style="    width: 100%;" ng-change="getsubBreedById(cat.Breed)" style="    width: 110%;">
-			                 <option value="" disabled>--- Select ---</option>
-			                 <option ng-repeat="u in breeds" value="{{u.id}}"   ng-selected="u.breedName  == cat.Breed">{{u.breedName}}</option>
+							<div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
+		             	 	<label class="control-label col-md-8">Select Breed name</label>
+		              		<div class="col-md-12"> 
+			                <select id = "use"  data-ng-model="cat.breed" class= "col-md-5 form-control" ng-change="getsubBreedById(cat.breed)" style="    width: 110%;">
+			                 <option ng-repeat="u in breeds" value="{{u.id}}"   ng-selected="u.breedName  == cat.breed">{{u.breedName}}</option>
 			                </select>
-							</div>	
-						</div>
+	            			</div>   
+	            			</div>
 						
 
 						<div class="col-md-12">
@@ -213,13 +212,14 @@ function isNumber(evt) {
   							<input type="text" ng-model = "cat.elapsedDays" class="form-control" maxlength="80" id="firstname" onkeypress="return isNumber(event)">
 						</div>
 						
-						 <div class="col-md-12" style = "margin-top: 5%;">
-  							<label for="usr">Sub Breed</label>
-  							<select ng-model = "cat.SubBreed" class="form-control" id="SubBreed" ng-change="" >
-								<option value="" disabled>--- Select ---</option>
-								<option ng-repeat="item in subBreeds" value="{{item.sub_breed}}" style="    width: 100%;" ng-selected="item.sub_breed  == cat.SubBreed">{{item.sub_breed}}</option>
-							</select>
-						</div>	
+						 <div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
+		              	<label class="control-label col-md-8">Select Sub Breed name</label>
+		             	 <div class="col-md-12" > 
+			                <select id = "use"  data-ng-model="cat.subBreed" class= "col-md-5 form-control"  style="    width: 110%;">
+			                 <option ng-repeat="u in subBreeds" value="{{u.id}}"   ng-selected="u.sub_breed  == cat.subBreed">{{u.sub_breed}}</option>
+			                </select>
+	            		</div>   
+	            		</div>
 						
 						<div class="col-md-12">
   							<label for="usr" style = "margin-top: 5%;">Company Name</label>
@@ -284,13 +284,14 @@ function isNumber(evt) {
 	            		</div>   
 	            	</div>
 				 		 
-						  <div class="col-md-12" style = "margin-top: 5%;" ng-init="findBreed()">
-  							<label for="usr">Breed </label>	
-							<select id = "use"  data-ng-model="cat.breed" class= "col-md-5 form-control" style="    width: 100%;" ng-change="getsubBreedById(cat.Breed)" >
-			                <option value="" disabled>--- Select ---</option>
-			                <option ng-repeat="u in breeds" value="{{u.id}}"   ng-selected="u.breedName  == cat.breed">{{u.breedName}}</option>
+						  <div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
+		             	 	<label class="control-label col-md-8">Select Breed name</label>
+		              		<div class="col-md-12"> 
+			                <select id = "use"  data-ng-model="cat.breed" class= "col-md-5 form-control" ng-change="getsubBreedById(cat.breed)" style="    width: 110%;">
+			                 <option ng-repeat="u in breeds" value="{{u.id}}"   ng-selected="u.breedName  == cat.breed">{{u.breedName}}</option>
 			                </select>
-						</div>
+	            			</div>   
+	            			</div>
 						
 						<div class="col-md-12">
   							<label for="usr" style = "margin-top: 5%;"> Doctor Name</label>
@@ -318,13 +319,14 @@ function isNumber(evt) {
 						</div>
 						
 						 
-           				<div class="col-md-12" style = "margin-top: 5%;">
-  							<label for="usr">Sub Breed</label>
-  							<select ng-model = "cat.SubBreed" class="form-control" style="    width: 100%;" id="SubBreed" ng-change="" >
-								<option value="" disabled>--- Select ---</option>
-								<option ng-repeat="item in subBreeds" value="{{item.sub_breed}}">{{item.sub_breed}}</option>
-							</select>
-						</div>	
+           				<div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
+		              <label class="control-label col-md-8">Select Sub Breed name</label>
+		              <div class="col-md-12" > 
+			                <select id = "use"  data-ng-model="cat.subBreed" class= "col-md-5 form-control"  style="    width: 110%;">
+			                 <option ng-repeat="u in subBreeds" value="{{u.id}}"   ng-selected="u.sub_breed  == cat.subbreed">{{u.sub_breed}}</option>
+			                </select>
+	            		</div>   
+	            	</div>	
 						 
 						<div class="col-md-12">
   							<label for="usr" style = "margin-top: 5%;">Company Name</label>

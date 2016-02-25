@@ -9747,6 +9747,15 @@ App.controller('ViewAllVaccinationPlanController', function ($scope, $rootScope,
 	 $scope.doberror = false;
 	 
 	
+	 $scope.getsubBreedById = function(id){
+		 console.log(id);
+		 console.log("in function");
+   	  $http.post('/getsubBreed',{id:id}
+ 		).then(function(res){
+ 			console.log(res);
+ 			$scope.subBreeds = res.data;
+ 		});
+	 };
 	 
 	 $scope.vaccinationPlans = "";
 	 
@@ -9925,12 +9934,12 @@ App.controller('ViewAllVaccinationPlanController', function ($scope, $rootScope,
 						};
 			});
 		
-		 $http.post('/getAllSubBreedsByName',{breed:$scope.cat.Breed}).then(function(res){
+		 $http.post('/getAllSubBreedsByName',{breed:$scope.cat.breed}).then(function(res){
 	 			console.log(res);
 	 			$scope.subBreeds = res.data;
-	 			console.log($scope.cat.SubBreed);
+	 			console.log($scope.cat.subbreed);
 	 			angular.forEach($scope.subBreeds, function(obj, index){
-					if ((obj.sub_breed == $scope.cat.SubBreed)) {
+					if ((obj.sub_breed == $scope.cat.subBreed)) {
 						obj.isSelect = true;
 						console.log("in true");
 						//$scope.userExperience = obj.experianceLevel;
@@ -9952,6 +9961,21 @@ App.controller('ViewAllVaccinationPlanController', function ($scope, $rootScope,
 	$scope.updateCattleProfileByAdmin = function(cat){
 		$scope.cat = cat;
 		console.log(cat);
+		$scope.doberror = false;
+		$scope.emptyFieldsError = false;
+		if(     angular.isUndefined($scope.cat.vaccineName)  || ( $scope.cat.vaccineName == "" )|| ($scope.cat.vaccineName == null)  ||
+				angular.isUndefined($scope.cat.vaccineType)  || ( $scope.cat.vaccineType == "" )|| ($scope.cat.vaccineType == null)  ||
+				angular.isUndefined($scope.cat.doctorName)  || ( $scope.cat.doctorName == "" )|| ($scope.cat.doctorName == null)  ||
+				angular.isUndefined($scope.cat.companyName)  || ( $scope.cat.companyName == "" )|| ($scope.cat.companyName == null)  ||
+				angular.isUndefined($scope.cat.elapsedDays) ||   ($scope.cat.elapsedDays == "") ||  ($scope.cat.elapsedDays == null)
+			){
+			    $scope.emptyFieldsError = true;
+			}
+		else
+			{
+			
+			 $scope.emptyFieldsError = false;
+			 
 			$http.post('/updateVaccinationPlanProfileByAdmin?d='+Math.random(),{cat:$scope.cat,userId:$scope.userId,catersIds:$scope.catersIds,org:$scope.org,parentId:$scope.parentId})
 			.success(function(data){
 				//console.log("success");
@@ -9968,12 +9992,27 @@ App.controller('ViewAllVaccinationPlanController', function ($scope, $rootScope,
 					    Flash.create('success', message, 'custom-class');
 					});
 			});
-			
+			}
 	}
 
 	$scope.addCattleProfileByAdmin = function(cat){
 		$scope.cat = cat;
 		console.log(cat);
+		$scope.doberror = false;
+		$scope.emptyFieldsError = false;
+		if(     angular.isUndefined($scope.cat.vaccineName)  || ( $scope.cat.vaccineName == "" )|| ($scope.cat.vaccineName == null)  ||
+				angular.isUndefined($scope.cat.vaccineType)  || ( $scope.cat.vaccineType == "" )|| ($scope.cat.vaccineType == null)  ||
+				angular.isUndefined($scope.cat.doctorName)  || ( $scope.cat.doctorName == "" )|| ($scope.cat.doctorName == null)  ||
+				angular.isUndefined($scope.cat.companyName)  || ( $scope.cat.companyName == "" )|| ($scope.cat.companyName == null)  ||
+				angular.isUndefined($scope.cat.elapsedDays) ||   ($scope.cat.elapsedDays == "") ||  ($scope.cat.elapsedDays == null)
+			){
+			    $scope.emptyFieldsError = true;
+			}
+		else
+			{
+			
+			 $scope.emptyFieldsError = false;
+		
 			$http.post('/updateVaccinationPlanProfileByAdmin?d='+Math.random(),{cat:$scope.cat,userId:$scope.userId,org:$scope.org,catersIds:$scope.catersIds,parentId:$scope.parentId})
 			.success(function(data){
 				//console.log("success");
@@ -9989,7 +10028,8 @@ App.controller('ViewAllVaccinationPlanController', function ($scope, $rootScope,
 						var message = '<strong> Well done!</strong>  You successfully added the record.';
 					    Flash.create('success', message, 'custom-class');
 					});
-			});	
+			});
+			}
 		}
 
 	
@@ -10041,17 +10081,8 @@ App.controller('ViewAllVaccinationPlanController', function ($scope, $rootScope,
 		
 		$http.get('/getAllBreeds/?d='+Math.random()).success(function(data) {
 	    	$scope.breeds = data.breeds;
-					if ((obj.breedName == $scope.cat.breed)) {
-						obj.isSelect = true;
-						};
+					
 			});
-		
-		 $http.post('/getAllSubBreedsByName',{breed:$scope.cat.breed}).then(function(res){
-	 			console.log(res);
-	 			$scope.subBreeds = res.data;
-	 			
-		 
-		 });
 		 $("#addnewCattle").modal('show');
 		
 	}
@@ -10072,15 +10103,7 @@ App.controller('ViewAllVaccinationPlanController', function ($scope, $rootScope,
 		});
 		
 	}
-	$scope.getsubBreedById = function(id){
-		 console.log(id);
-		 console.log("in function");
-  	  $http.post('/getsubBreed',{id:id}
-		).then(function(res){
-			console.log(res);
-			$scope.subBreeds = res.data;
-		});
-	 };
+	
 	
 });
 

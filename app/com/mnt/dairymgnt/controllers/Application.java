@@ -1922,14 +1922,37 @@ public static Result getMonthlyCattleOutputReport(){
 				u.setVaccineType(uvm.vaccineType);
 				u.lastUpdateDateTime = new Date();
 				
-				if(uvm.breed.matches("\\d+")){
+				/*if(uvm.breed.matches("\\d+")){
 					Breeds b = Breeds.getBreedsById(uvm.breed);
 					u.setBreed(b.breedName);
 				}else{
 					Breeds b = Breeds.getBreedsByName(uvm.breed);
 					u.setBreed(b.breedName);	
 				}
-				u.setSubBreed(uvm.subBreed);
+				u.setSubBreed(uvm.subBreed);*/
+				if(uvm.breed != null){
+					if(uvm.breed.matches("[\\d+]")){
+						Breeds b = Breeds.getBreedsById(uvm.breed);
+						u.setBreed(b.breedName);
+					}else{
+						u.setBreed(uvm.breed);
+					}
+					
+				}else{
+					//Breeds b = Breeds.getBreedsById(uvm.breed);
+					u.setBreed("");
+				}
+				
+				if(uvm.subBreed != null){
+					if(uvm.subBreed.matches("[\\d+]")){
+						 List<Subbreed> subreeds = Subbreed.getSunBreedById(uvm.subBreed);	
+						 u.setSubBreed(subreeds.get(0).sub_breed);
+					}else{
+						 u.setSubBreed(uvm.subBreed);
+					}
+				}else{
+					 u.setSubBreed("");
+				}
 				u.update();
 			
 
@@ -1946,14 +1969,28 @@ public static Result getMonthlyCattleOutputReport(){
 				u.setVaccineType(uvm.vaccineType);
 				u.lastUpdateDateTime = new Date();
 				
-				if(uvm.breed.matches("\\d+")){
+				/*if(uvm.breed.matches("\\d+")){
 					Breeds b = Breeds.getBreedsById(uvm.breed);
 					u.setBreed(b.breedName);
 				}else{
 					Breeds b = Breeds.getBreedsByName(uvm.breed);
 					u.setBreed(b.breedName);	
 				}
-				u.setSubBreed(uvm.subBreed);;
+				u.setSubBreed(uvm.subBreed);;*/
+				if(uvm.breed != null){
+					Breeds b = Breeds.getBreedsById(uvm.breed);
+					u.setBreed(b.breedName);
+				}else{
+					//Breeds b = Breeds.getBreedsById(uvm.breed);
+					u.setBreed("");
+				}
+				
+				if(uvm.subBreed != null){
+					 List<Subbreed> subreeds = Subbreed.getSunBreedById(uvm.subBreed);	
+					 u.setSubBreed(subreeds.get(0).sub_breed);
+				}else{
+					 u.setSubBreed("");
+				}
 				u.save();
 				
 				
