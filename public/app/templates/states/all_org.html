@@ -112,8 +112,43 @@
 				<h4 class="modal-title" id="myModalLabel">Edit Organization</h4>
 			</div>
 			<div class="modal-body">
-				<div class="portlet-body">
+			<div class = "col-md-12">
+				<div class = "col-md-6">
+				
+						<div class="col-md-12" style = "margin-top: 5%;">
+							<label for="usr">  Name</label> 
+							<input id="inputName" type="text" id="name" ng-model="org.name" name="name" placeholder="Name" class="form-control" maxlength="80">
+						</div>
+						
+						<div class="col-md-12" style = "margin-top: 5%;">
+							<label for="usr">Address Line 1</label> 
+							<input	id="inputName" type="text" id="addressline1" ng-model="org.addressLine1" name="addressline1" placeholder="Address Line 1"  class="form-control" maxlength="80">
+						</div>
+						
+						<div class="col-md-12" style = "margin-top: 5%;">
+							<label for="usr">Address Line 2</label>
+							 <input	id="inputName" type="text" id="addressline2" ng-model="org.addressLine2" name="addressline1" placeholder="Address Line 2" class="form-control" maxlength="80">
+						</div>
+					</div>
 					<div class="col-md-6">
+							<div class="col-md-12" style = "margin-top: 5%;">
+							<label for="usr">City</label>
+							 <input	id="inputName" type="text" id="city" ng-model="org.city" name="city" placeholder="City"  class="form-control"maxlength="80">
+							</div>
+						 
+							<div class="col-md-12" style = "margin-top: 5%;">
+							<label for="usr">Pincode</label> 
+							<input	id="pincode" type="text" id="pincode" ng-model="org.pincode" name="pincode" placeholder="Pincode"  class="form-control" onkeypress="return isNumber(event)">
+							</div>
+						
+								<div class="col-md-12" style = "margin-top: 5%;">
+								<label for="usr">State</label> 
+								<input id="state" type="text" id="state" ng-model="org.state" name="state" placeholder="state"  class="form-control" maxlength="80">
+								</div>
+					</div>
+				</div>
+				
+					<!-- <div class="col-md-6">
 							<label class="col-md-6 control-label">Name</label> <input
 								id="inputName" type="text" id="name"
 								ng-model="org.name" name="name" placeholder="Name"
@@ -154,6 +189,8 @@
 								ng-model="org.state" name="state" placeholder="state"
 								style="font-size: 12px;" class="form-control" maxlength="80">
 						</div>
+					 -->	
+						
 						
 						
 						<div class="form-actions" >
@@ -167,7 +204,7 @@
 								<!-- <button type="button" class="btn btn-default">Cancel</button> -->
 							</div>
 						</div>
-				</div>
+				
 
 			</div>
 		</div>
@@ -189,48 +226,42 @@
 				<h4 class="modal-title" id="myModalLabel">Add Organization</h4>
 			</div>
 			<div class="modal-body">
-				<div class="portlet-body">
+				 <!-- <div class="portlet-body"> -->
+				<div class = "col-md-12">
+				<div class = "col-md-6">
+				
+						<div class="col-md-12" style = "margin-top: 5%;">
+							<label for="usr">  Name</label> 
+							<input id="inputName" type="text" id="name" ng-model="org.name" name="name" placeholder="Name" class="form-control" maxlength="80">
+						</div>
+						
+						<div class="col-md-12" style = "margin-top: 5%;">
+							<label for="usr">Address Line 1</label> 
+							<input	id="inputName" type="text" id="addressline1" ng-model="org.addressLine1" name="addressline1" placeholder="Address Line 1"  class="form-control" maxlength="80">
+						</div>
+						
+						<div class="col-md-12" style = "margin-top: 5%;">
+							<label for="usr">Address Line 2</label>
+							 <input	id="inputName" type="text" id="addressline2" ng-model="org.addressLine2" name="addressline1" placeholder="Address Line 2" class="form-control" maxlength="80">
+						</div>
+					</div>
 					<div class="col-md-6">
-							<label class="col-md-6 control-label">Name</label> <input
-								id="inputName" type="text" id="name"
-								ng-model="org.name" name="name" placeholder="Name"
-								style="font-size: 12px;" class="form-control" maxlength="80">
-						</div>
+							<div class="col-md-12" style = "margin-top: 5%;">
+							<label for="usr">City</label>
+							 <input	id="inputName" type="text" id="city" ng-model="org.city" name="city" placeholder="City"  class="form-control"maxlength="80">
+							</div>
+						 
+							<div class="col-md-12" style = "margin-top: 5%;">
+							<label for="usr">Pincode</label> 
+							<input	id="pincode" type="text" id="pincode" ng-model="org.pincode" name="pincode" placeholder="Pincode"  class="form-control" onkeypress="return isNumber(event)">
+							</div>
 						
-						<div class="col-md-6">
-							<label class="col-md-6 control-label">Address Line 1</label> <input
-								id="inputName" type="text" id="addressline1"
-								ng-model="org.addressLine1" name="addressline1" placeholder="Address Line 1"
-								style="font-size: 12px;" class="form-control" maxlength="80">
-						</div>
-						
-						<div class="col-md-6">
-							<label class="col-md-6 control-label">Address Line 2</label> <input
-								id="inputName" type="text" id="addressline2"
-								ng-model="org.addressLine2" name="addressline1" placeholder="Address Line 2"
-								style="font-size: 12px;" class="form-control" maxlength="80">
-						</div>
-						
-						<div class="col-md-6">
-							<label class="col-md-6 control-label">City</label> <input
-								id="inputName" type="text" id="city"
-								ng-model="org.city" name="city" placeholder="City"
-								style="font-size: 12px;" class="form-control"maxlength="80">
-						</div>
-						
-						<div class="col-md-6">
-							<label class="col-md-6 control-label">Pincode</label> <input
-								id="pincode" type="text" id="pincode"
-								ng-model="org.pincode" name="pincode" placeholder="Pincode"
-								style="font-size: 12px;" class="form-control" onkeypress="return isNumber(event)">
-						</div>
-						
-						<div class="col-md-6">
-							<label class="col-md-6 control-label">State</label> <input
-								id="state" type="text" id="state"
-								ng-model="org.state" name="state" placeholder="state"
-								style="font-size: 12px;" class="form-control" maxlength="80">
-						</div>
+								<div class="col-md-12" style = "margin-top: 5%;">
+								<label for="usr">State</label> 
+								<input id="state" type="text" id="state" ng-model="org.state" name="state" placeholder="state"  class="form-control" maxlength="80">
+								</div>
+					</div>
+				</div>
 						
 						<div class="form-actions" >
 						
@@ -246,7 +277,7 @@
 						</div>
 				</div>
 
-			</div>
+			<!-- </div> -->
 		</div>
 
 	</div>
