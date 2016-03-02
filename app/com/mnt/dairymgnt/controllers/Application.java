@@ -52,6 +52,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 import com.mnt.dairymgnt.VM.CattleFeedMasterVM;
 import com.mnt.dairymgnt.VM.CattleFeedsVM;
+import com.mnt.dairymgnt.VM.CattleHealthMasterVM;
 import com.mnt.dairymgnt.VM.CattleHealthVM;
 import com.mnt.dairymgnt.VM.CattleIntakePlanVM;
 import com.mnt.dairymgnt.VM.CattleIntakeVM;
@@ -72,6 +73,7 @@ import com.mnt.dairymgnt.models.Breeds;
 import com.mnt.dairymgnt.models.CattleFeedMaster;
 import com.mnt.dairymgnt.models.CattleFeeds;
 import com.mnt.dairymgnt.models.CattleHealth;
+import com.mnt.dairymgnt.models.CattleHealthMaster;
 import com.mnt.dairymgnt.models.CattleIntake;
 import com.mnt.dairymgnt.models.CattleIntakePlan;
 import com.mnt.dairymgnt.models.CattleMaster;
@@ -602,7 +604,53 @@ public class Application extends Controller {
 		hm.put("userCount", count);
 		return ok(Json.toJson(hm));
 	}
-	
+	public static Result getAllCattleHealthMaster(int pageno){
+		List<CattleHealthMaster> cattleHealthMasters = CattleHealthMaster.getAllCattleHealthMaster(pageno,10);
+        int count  = 0;
+       // count  = CattleFeedMaster.getAllFeedCattleMasterCount(pageno);
+        count = CattleMaster.getAllCattleMasterCount(pageno);
+		ArrayList<CattleHealthMasterVM> cmvm = new ArrayList<>();
+		
+		for(CattleHealthMaster u : cattleHealthMasters){
+			CattleHealthMasterVM cfvm = new CattleHealthMasterVM();
+			cfvm.duration = u.duration;
+			cfvm.frequency = u.frequency;
+			cfvm.medicationName =    u.medicationName;
+			cfvm.medicationType = u.medicationType;
+			cfvm.healthPlanId = u.healthPlanId;
+			cfvm.oraganization=u.oraganization;
+			cfvm.users=u.users;
+			if(u.medicationEndDate != null){
+				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT.format(u.medicationEndDate);
+				cfvm.medicationEndDateVM = date;
+			}else{
+				cfvm.medicationEndDateVM = "";
+			}
+			if(u.medicationStartDate != null){
+				SimpleDateFormat DATE_FORMAT1 = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT1.format(u.medicationStartDate);
+				cfvm.medicationStartDateVM = date;
+			}else{
+				cfvm.medicationStartDateVM = "";
+			}
+			if(u.medicationNextDate != null){
+				SimpleDateFormat DATE_FORMAT1 = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT1.format(u.medicationNextDate);
+				cfvm.medicationNextDateVM = date;
+			}else{
+				cfvm.medicationNextDateVM = "";
+			}
+
+			/*List <CattleFeeds> cfs = CattleFeeds.getCatleFeedsById(cfvm.feedId);
+			cfvm.cattleFeeds = cfs;*/
+			cmvm.add(cfvm);
+		}
+		HashMap  <String ,Object> hm = new HashMap();
+		hm.put("feedcaters",cmvm);
+		//hm.put("userCount", count);
+		return ok(Json.toJson(hm));
+	}
 	
 	public static Result getDailyMilkReport(int pageno){
 		Date strdate  = null;
@@ -691,6 +739,28 @@ public class Application extends Controller {
 			cfvm.Stage = u.Stage;
 			cfvm.feedPlanName = u.feedPlanName;
 			cfvm.oraganization = u.oraganization;
+			cmvm.add(cfvm);
+		}
+		
+		HashMap  <String ,Object> hm = new HashMap();
+		hm.put("feedcaters",cmvm);
+		return ok(Json.toJson(hm));
+	}
+	public static Result getAllOnlyCattleHealthMaster(){
+		List<CattleHealthMaster> cattleHealthMasters = CattleHealthMaster.getAllOnlyCattleHealthMaster();
+        
+		ArrayList<CattleHealthMasterVM> cmvm = new ArrayList<>();
+		
+		for(CattleHealthMaster u : cattleHealthMasters){
+			CattleHealthMasterVM cfvm = new CattleHealthMasterVM();
+			cfvm.healthPlanId = u.healthPlanId;
+			cfvm.medicationName = u.medicationName;
+			cfvm.medicationType =    u.medicationType;
+			cfvm.frequency = u.frequency;
+			cfvm.duration = u.duration;
+			cfvm.users = u.users;
+			cfvm.oraganization = u.oraganization;
+			cfvm.lastUpdateDateTime =  u.lastUpdateDateTime;
 			cmvm.add(cfvm);
 		}
 		
@@ -2617,7 +2687,216 @@ public static Result getMonthlyCattleOutputReport(){
 		return ok("");
 	}
 	
-	
+	public static Result updateCattleHealthMasterProfileByAdmin(){
+		JsonNode json = request().body().asJson();
+		System.out.println("com.mnt.dairymgnt.controllers.Application.");
+		
+		JsonNode catJson = json.get("cat");
+		System.out.println(json);
+		ObjectMapper userinfoMapper = new ObjectMapper();
+		try {
+			CattleHealthMasterVM uvm = userinfoMapper.readValue(catJson.traverse(),CattleHealthMasterVM.class);
+			CattleHealthMaster u = CattleHealthMaster.getUserByhealthPlanId(uvm.healthPlanId);
+			if(u !=  null){
+				JsonNode org = json.path("org");
+				System.out.println(org);
+				if(org.toString() != ""){
+					Oraganization    orgni = Oraganization.getOrgById(Integer.parseInt(org.toString().replace("\"", "")));
+					if(orgni != null){
+						u.setOraganization(orgni);
+					}
+				}
+				
+				JsonNode userId = json.path("userId");
+				System.out.println(userId);
+				if(userId.toString() != ""){
+					Users    uId = null;	
+					uId = Users.getUserByEmail(userId.toString().replace("\"", ""));
+					if(uId != null){
+						u.setUsers(uId);
+					}
+					
+				}
+				
+				//u  = new CattleFeedMaster();
+               
+				
+				
+				
+				u.setDuration(uvm.duration);
+				u.setFrequency(uvm.frequency);
+				u.setMedicationName(uvm.medicationName);
+				u.setMedicationType(uvm.medicationType);
+			
+				
+					u.setLastUpdateDateTime(new Date());
+			
+
+				SimpleDateFormat format = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d1 = null;
+				try {
+					if(uvm.medicationStartDateVM !=null){
+						if(uvm.medicationStartDateVM.contains("\"")){
+							d1 = format.parse(uvm.medicationStartDateVM.replaceAll("\"", ""));
+						}else{
+							d1 = format.parse(uvm.medicationStartDateVM);
+						}
+					}	
+							
+					//in milliseconds
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				u.setMedicationStartDate(d1);
+				//end date
+				SimpleDateFormat format1 = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d2 = null;
+				try {
+					if(uvm.medicationEndDateVM != null){
+						if(uvm.medicationEndDateVM.contains("\"")){
+							d2 = format.parse(uvm.medicationEndDateVM.replaceAll("\"", ""));
+						}else{
+							d2 = format.parse(uvm.medicationEndDateVM);
+						}
+					}	
+							
+					//in milliseconds
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				u.setMedicationEndDate(d2);
+				//next date
+				SimpleDateFormat format2 = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d3 = null;
+				try {
+					if(uvm.medicationNextDateVM !=null){
+						if(uvm.medicationNextDateVM.contains("\"")){
+							d3 = format2.parse(uvm.medicationNextDateVM.replaceAll("\"", ""));
+						}else{
+							d3 = format2.parse(uvm.medicationNextDateVM);
+						}
+					}	
+							
+					//in milliseconds
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				u.setMedicationNextDate(d3);
+				
+				u.update();
+
+			}else{
+				
+				u  = new CattleHealthMaster();
+				
+				//Breeds b = Breeds.getBreedsById(uvm.Breed);
+				//u.setBreed(b.breedName);
+				//u.setBreed(uvm.Breed);
+				
+				
+				u.setDuration(uvm.duration);
+				u.setFrequency(uvm.frequency);
+				u.setMedicationName(uvm.medicationName);
+				u.setMedicationType(uvm.medicationType);
+				u.setLastUpdateDateTime(new Date());
+				
+				SimpleDateFormat format = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d1 = null;
+				try {
+					if(uvm.medicationStartDateVM !=null){
+						if(uvm.medicationStartDateVM.contains("\"")){
+							d1 = format.parse(uvm.medicationStartDateVM.replaceAll("\"", ""));
+						}else{
+							d1 = format.parse(uvm.medicationStartDateVM);
+						}
+					}	
+							
+					//in milliseconds
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				u.setMedicationStartDate(d1);
+				//end date
+				SimpleDateFormat format1 = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d2 = null;
+				try {
+					if(uvm.medicationEndDateVM != null){
+						if(uvm.medicationEndDateVM.contains("\"")){
+							d2 = format.parse(uvm.medicationEndDateVM.replaceAll("\"", ""));
+						}else{
+							d2 = format.parse(uvm.medicationEndDateVM);
+						}
+					}	
+							
+					//in milliseconds
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				u.setMedicationEndDate(d2);
+				//next date
+				SimpleDateFormat format2 = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d3 = null;
+				try {
+					if(uvm.medicationNextDateVM !=null){
+						if(uvm.medicationNextDateVM.contains("\"")){
+							d3 = format2.parse(uvm.medicationNextDateVM.replaceAll("\"", ""));
+						}else{
+							d3 = format2.parse(uvm.medicationNextDateVM);
+						}
+					}	
+							
+					//in milliseconds
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				u.setMedicationNextDate(d3);
+
+				
+				u.save();
+				
+				
+				JsonNode org = json.path("org");
+				System.out.println(org);
+				if(org.toString() != ""){
+					Oraganization    orgni = Oraganization.getOrgById(Integer.parseInt(org.toString().replace("\"", "")));
+					if(orgni != null){
+						u.setOraganization(orgni);
+					}
+					
+				}
+				
+				JsonNode userId = json.path("userId");
+				System.out.println(userId);
+				if(userId.toString() != ""){
+					Users    uId = null;
+				    uId = Users.getUserByEmail(userId.toString().replace("\"", ""));
+					if(uId != null){
+						u.setUsers(uId);
+					}
+					
+				}
+			u.update();
+
+			}
+		} catch (JsonParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (JsonMappingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		return ok("");
+	}
 	
 	
 	

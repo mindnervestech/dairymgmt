@@ -36,6 +36,11 @@ POST	/updateVaccinationPlanProfileByAdmin			 com.mnt.dairymgnt.controllers.Appli
 GET		/getAllOnlyVaccinationPlan								 com.mnt.dairymgnt.controllers.Application.getAllOnlyVaccinationPlan()
 GET    /getAllVaccinationPlan/:pageNo                        com.mnt.dairymgnt.controllers.Application.getAllVaccinationPlan(pageNo: Integer)
 
+POST	/updateCattleHealthMasterProfileByAdmin			 com.mnt.dairymgnt.controllers.Application.updateCattleHealthMasterProfileByAdmin()
+GET    /getAllCattleHealthMaster/:pageNo                 com.mnt.dairymgnt.controllers.Application.getAllCattleHealthMaster(pageNo: Integer)
+GET		/getAllOnlyCattleHealthMaster								 com.mnt.dairymgnt.controllers.Application.getAllOnlyCattleHealthMaster()
+
+
 POST   /updatefeedCattleProfileByAdmin                  com.mnt.dairymgnt.controllers.Application.updatefeedCattleProfileByAdmin()
 GET    /getAllCattleIntake/:pageno                      com.mnt.dairymgnt.controllers.Application.getAllCattleIntake(pageno : Integer)
 GET    /getAllOnlyCattleIntake/                         com.mnt.dairymgnt.controllers.Application.getAllOnlyCattleIntake()

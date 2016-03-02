@@ -113,6 +113,8 @@ App.config(function ($routeProvider) {
        	
        .when('/allFeedMaster', { templateUrl: 'assets/app/templates/states/FeedMaster/feedMaster.html', controller: 'ViewAllFeedMasterController'})
        .when('/allVaccinationPlan', { templateUrl: 'assets/app/templates/states/VaccinationPlan/vaccinationPlan.html', controller: 'ViewAllVaccinationPlanController'})
+       .when('/allCattleHealthMaster', { templateUrl: 'assets/app/templates/states/CattleHealthMaster/cattleHealthMaster.html', controller: 'ViewAllCattleHealthMasterController'})
+
         
         .when('/allFeedCattleMaster', { templateUrl: 'assets/app/templates/states/feedCattleMaster.html', controller: 'ViewAllFeedCattleMasterController'})
         .when('/allCattleIntake', { templateUrl: 'assets/app/templates/states/cattleIntake.html', controller: 'ViewAllCattleIntakeController'})
@@ -6470,7 +6472,7 @@ App.controller('ExtraLockScreenController', function ($scope, $routeParams){
 
 
 
-App.controller('ViewAllOrgController', function ($scope, $rootScope, $routeParams, $http, $upload){
+App.controller('ViewAllOrgController', function ($scope, $rootScope, $routeParams, $http, $upload, Flash){
 	
 	// get all  Org  to admin
 	 $scope.pageno = 0;
@@ -6652,7 +6654,8 @@ App.controller('ViewAllOrgController', function ($scope, $rootScope, $routeParam
 				.success(function(data) {
 					$scope.orgs = data.orgs;
 					$scope.update =  true;
-					
+					var message = '<strong> Well done!</strong>  You successfully update the record.';
+				    Flash.create('success', message, 'custom-class');
 				});
 		});
 	}
@@ -6677,6 +6680,8 @@ App.controller('ViewAllOrgController', function ($scope, $rootScope, $routeParam
 					$scope.org = [];
 					
 					$scope.add =  true;
+					var message = '<strong> Well done!</strong>  You successfully Added the record.';
+				    Flash.create('success', message, 'custom-class');
 				});
 		});
 	}
@@ -8589,12 +8594,457 @@ App.controller('ViewAllFeedMasterController', function ($scope, $rootScope, $rou
 
 
 
+App.controller('ViewAllCattleHealthMasterController', function ($scope, $rootScope, $routeParams, $http, $upload,Flash){
+	// get all Cattle master to admin
+	$scope.email;
+	 $scope.pageno = 0;
+	 $scope.activeusercount = 0;
+	 $scope.update =  false;
+		$scope.add =  false;
+		
+		$scope.initStartDatepickerNew = function(){
+			 $('#startDateAddNew').datepicker({
+				    format: 'dd-MM-yyyy'
+			});
+			 
+			 $('#startDateNew').datepicker({
+				    format: 'dd-MM-yyyy'
+			});
+			 
+		 }
+		
+		$scope.initEndDatepickerNew = function(){
+			 $('#endDateAddNew').datepicker({
+				    format: 'dd-MM-yyyy'
+			});
+			 
+			 $('#endDateNew').datepicker({
+				    format: 'dd-MM-yyyy'
+			});
+			 
+		 }
+		$scope.initNextDatepickerNew = function(){
+			 $('#nextDateAddNew').datepicker({
+				    format: 'dd-MM-yyyy'
+			});
+			 
+			 $('#nextDateNew').datepicker({
+				    format: 'dd-MM-yyyy'
+			});
+			 
+		 }
+		
+	$scope.getAllFeedCattleMaster = function(){
+
+		$http.get('/getAllCattleHealthMaster/'+$scope.pageno)
+		.success(function(data){
+			if(data) {
+				$scope.feedcaters = data.feedcaters;
+				console.log("data is coming")
+				console.log($scope.feedcaters);
+				if(data.userCount <= 10){
+					$('#next1').hide();
+					$('#next').hide();
+				}else{
+					$('#next1').show();
+					$('#next').show();
+				}
+			} 
+		});
+		
+		if($scope.pageno <= 0){
+			$('#pre').hide();
+			$('#pre1').hide();
+		}else{
+			$('#pre').show();
+			$('#pre1').show();
+		}
+	}
+
+	$scope.clickNext = function() {
+		//console.log("nexdt");
+			  $scope.pageno++;
+			 // $scope.nextCount = parseInt( $scope.nextCount) + 10;
+			 // var count= 0;
+			  $http.get('/getAllCattleHealthMaster/'+$scope.pageno)
+				.success(function(data) {
+					$scope.feedcaters = data.feedcaters;
+						if(data.userCount <= 10){
+						$('#next1').hide();
+						$('#next').hide();
+						//$scope.JobPre  = parseInt($scope.totalJobs);
+					}else{
+						$('#next1').show();
+						$('#next').show();
+					//	$scope.JobPre= 10;
+						
+					}
+				});
+			  
+				if($scope.pageno <= 0){
+					$('#pre').hide();
+					$('#pre1').hide();
+				}else{
+					$('#pre').show();
+					$('#pre1').show();
+				}
+			 
+		  }
+		
+	/*$scope.feedPlanNameDup = false;
+	$scope.checkDuplicateFeedName = function(checkDuplicateFeedName){
+		$scope.feedPlanNameDup = false;
+		console.log("cat......."+checkDuplicateFeedName);
+		$http.post('/checkDuplicateFeedName?d='+Math.random(),{cat:checkDuplicateFeedName })
+		.success(function(data){
+			console.log("success: "+data);
+            if(data  == ""){
+            	$scope.feedPlanNameDup = true;
+            }else{
+            	$scope.feedPlanNameDup = false;
+            }
+			//$scope.updateSuccess = true;
+			console.log("feedPlanNameDup: "+feedPlanNameDup);
+		});
+		
+		}	*/ 
+	 $scope.clickPre = function() {
+	      $scope.pageno--;
+		  $http.get('/getAllCattleHealthMaster/'+$scope.pageno)
+			.success(function(data) {
+				$scope.feedcaters = data.feedcaters;
+				if(data.userCount <= 10){
+					$('#next').hide();
+					$('#next1').hide();
+				}else{
+					$('#next').show();
+					$('#next1').show();
+				}
+				
+			});
+			if($scope.pageno <= 0){
+				$('#pre').hide();
+				$('#pre1').hide();
+			}else{
+				$('#pre').show();
+				$('#pre1').show();
+			}
+		  }
+ 
+
+		$http.get('/getUserPermissions?d='+Math.random())
+		.success(function(data) {
+		// $scope.userData = data;
+			$rootScope.cattleFeedMaster = false;
+			$rootScope.cattleIntake = false;
+			$rootScope.Users = false;
+			$rootScope.cattleMaster = false;
+			$rootScope.Orgnization = false;
+			$rootScope.CattleOutput = false;
+			$rootScope.CattleHealth = false;
+			
+			$rootScope.username = data.user.userId;
+			console.log("per: "+JSON.stringify(data.user.permissions));
+			for(var i = 0; i < data.user.permissions.length ; i++){
+				if(data.user.permissions[i].permissionName == "Catle_feed_master"){
+					console.log("Catle_feed_master");
+					$rootScope.cattleFeedMaster = true;
+					}
+				
+				if(data.user.permissions[i].permissionName == "Cattle_intake"){
+					$rootScope.cattleIntake = true;
+					
+					}
+				
+				if(data.user.permissions[i].permissionName == "Users"){
+					$rootScope.Users = true;
+					
+					}
+				
+				if(data.user.permissions[i].permissionName == "Cattle_Master"){
+					console.log("Catle_master");
+					$rootScope.cattleMaster = true;	
+					}
+				
+				if(data.user.permissions[i].permissionName == "Feed_Master"){
+					$rootScope.FeedMaster = true;
+					
+					}
+				
+				if(data.user.permissions[i].permissionName == "Orgnization"){
+					$rootScope.Orgnization = true;
+					
+					}
+
+				if(data.user.permissions[i].permissionName == "Cattle_Output"){
+					$rootScope.CattleOutput = true;
+					
+					}
+				if(data.user.permissions[i].permissionName == "Cattle_Health"){
+					$rootScope.CattleHealth = true;
+					
+					}
+			}
+			
+		});
+	
+	// check for gthe admin when page refresh
+	$http.get('checkForadmin?d='+Math.random())
+	.success(function(data){
+		if(data == 'notAdmin') {
+			$rootScope.isUser = true;
+			$rootScope.isAdmin = false;
+		}else{
+			$rootScope.isAdmin = true;
+			$rootScope.isUser = false;
+		} 
+	});
+	
+	
+	
+	$scope.user;
+	$scope.permList;
+	$scope.editfeedCatdersDetails = function(cat){
+		$scope.cat = cat;
+		$scope.update =  false;
+		$scope.add =  false;
+		
+		console.log(cat);
+		$http.get('/getAllOnlyUsers/?d='+Math.random()).success(function(data) {
+	    	$scope.users = data.users;
+	    	console.log("user s: "+data.users +"$scope.cat.users.userId"+$scope.cat.users.userId);
+			angular.forEach($scope.users, function(obj, index){
+					if ((obj.userId == $scope.cat.users.userId)) {
+						obj.isSelect = true;
+						};
+				});
+			});
+		
+		$http.get('/getAllOnlyOrg/?d='+Math.random()).success(function(data) {
+	    	$scope.orgs = data.orgs;
+	    	console.log("orgs: " + $scope.orgs);
+			angular.forEach($scope.orgs, function(obj, index){
+				console.log("user  org:  "+$scope.cat.oraganization.orgId);
+					if ((obj.orgId == $scope.cat.oraganization.orgId)) {
+						obj.isSelect = true;
+						};
+				});
+			});
 
 
+		/*$http.get('/getAllOnlyFeedMaster/?d='+Math.random()).success(function(data) {
+	    	$scope.mastersFeed = data.caters;
+	    	console.log("$scope.mastersFeed: "+$scope.mastersFeed);
+			
+	    });
+		
+		
+		$scope.feeds = $scope.cat.cattleFeeds;
+		
+		console.log("$scope.feeds ");
+		console.log($scope.feeds );
+		if($scope.feeds.length == 0){
+			 $scope.feeds = [
+			                 { feedId:'',feedName: '', feedType: '', quantity: '',skuId:''}
+			    ];
+		}*/
+			
+		$('#editfeedCatdersDetails').modal();
+	
+		$('#endDateNew').datepicker({
+		    format: 'dd-MM-yyyy'
+		});
+		$('#startDateNew').datepicker({
+		    format: 'dd-MM-yyyy'
+		});
+		$('#nextDateNew').datepicker({
+		    format: 'dd-MM-yyyy'
+		});
+		
+	}
+	
+		
+	$scope.permList;
+	$scope.updateSuccess = false;
+	$scope.org;
+	$scope.users;
+	$scope.userId;
+	$scope.updateCattleHealthMasterProfileByAdmin = function(cat){
+		$scope.cat = cat;
+		$scope.doberror = false;
+		$scope.emptyFieldsError = false;
+		if(     angular.isUndefined($scope.cat.medicationName)  || ( $scope.cat.medicationName == "" )|| ($scope.cat.medicationName == null)  ||
+				angular.isUndefined($scope.cat.duration)  || ( $scope.cat.duration == "" )|| ($scope.cat.duration == null)  ||
+				angular.isUndefined($scope.cat.frequency)  || ( $scope.cat.frequency == "" )|| ($scope.cat.frequency == null)  ||
+				angular.isUndefined($scope.cat.medicationType) || ($scope.cat.medicationType == "") || ($scope.cat.medicationType == null)
+	){
+			    $scope.emptyFieldsError = true;
+			}
+		else
+			{
+			
+			 $scope.emptyFieldsError = false;
+		
+			$http.post('/updateCattleHealthMasterProfileByAdmin?d='+Math.random(),{cat:$scope.cat,userId:$scope.userId,org:$scope.org})
+			.success(function(data){
+				//console.log("success");
+				$scope.updateSuccess = true;
+				$('#editfeedCatdersDetails').modal('hide');
+				$http.get('/getAllCattleHealthMaster/'+$scope.pageno)
+					.success(function(data) {
+						$scope.feedcaters = data.feedcaters;
+						console.log("data is coming");
+						console.log($scope.feedcaters);
+						$scope.update =  true;
+						var message = '<strong> Well done!</strong>  You successfully update the record.';
+					    Flash.create('success', message, 'custom-class');
+					    console.log("Clear ...........");
+					    $scope.cat={};
+					});
+			});
+		}
+	}
 
-
-
-
+	$scope.addCattleHealthMasterProfileByAdmin = function(cat){
+		$scope.cat = cat;
+		console.log(cat);
+		$scope.doberror = false;
+		$scope.emptyFieldsError = false;
+		if(     angular.isUndefined($scope.cat.medicationName)  || ( $scope.cat.medicationName == "" )|| ($scope.cat.medicationName == null)  ||
+				angular.isUndefined($scope.cat.duration)  || ( $scope.cat.duration == "" )|| ($scope.cat.duration == null)  ||
+				angular.isUndefined($scope.cat.frequency)  || ( $scope.cat.frequency == "" )|| ($scope.cat.frequency == null)  ||
+				angular.isUndefined($scope.cat.medicationType) || ($scope.cat.medicationType == "") || ($scope.cat.medicationType == null)
+	){
+			    $scope.emptyFieldsError = true;
+			}
+		else
+			{
+			
+			 $scope.emptyFieldsError = false;
+		
+		$http.post('/updateCattleHealthMasterProfileByAdmin?d='+Math.random(),{cat:$scope.cat,userId:$scope.userId,org:$scope.org})
+		.success(function(data){
+			//console.log("success");
+			$scope.updateSuccess = true;
+			$('#addnewfeedCattle').modal('hide');
+			$http.get('/getAllCattleHealthMaster/'+$scope.pageno)
+				.success(function(data) {
+					$scope.feedcaters = data.feedcaters;
+					console.log("data is coming");
+					console.log($scope.feedcaters);
+					$scope.add =  true;
+					var message = '<strong> Well done!</strong>  You successfully Added the record.';
+				    Flash.create('success', message, 'custom-class');
+				});
+		});
+	}
+		
+}
+	$scope.feeds = {};
+	$scope.addnewfeedCattle = function(){
+		$scope.feeds.feedType = {};
+		$scope.feeds.skuId = {};
+		$scope.cat = {};
+		
+		$scope.update =  false;
+		$scope.add =  false;
+		
+		$http.get('/getuserId/?d='+Math.random()).success(function(data) {
+			$scope.userId = data;
+			
+			});
+		
+		
+		
+		$http.get('/getAllOnlyUsers/?d='+Math.random()).success(function(data) {
+	    	$scope.users = data.users;
+	    	console.log("user s: "+data.users);
+			angular.forEach($scope.users, function(obj, index){
+					if ((obj.userId == $scope.userId)) {
+						obj.isSelect = true;
+						console.log(" users  in true");
+						//$scope.userExperience = obj.experianceLevel;
+						};
+				});
+			});
+		
+		$http.get('/getAllOnlyOrg/?d='+Math.random()).success(function(data) {
+	    	$scope.orgs = data.orgs;
+			angular.forEach($scope.orgs, function(obj, index){
+				console.log("user  org:  "+$scope.cat.oraganization.orgId);
+					if ((obj.orgId == $scope.cat.oraganization.orgId)) {
+						obj.isSelect = true;
+						};
+				});
+			});
+		
+		/*$http.get('/getAllOnlyFeedMaster/?d='+Math.random()).success(function(data) {
+	    	$scope.mastersFeed = data.caters;
+	    	console.log("$scope.mastersFeed: "+$scope.mastersFeed);
+			
+	    });*/
+		
+		
+		/*$http.get('/getAllBreeds/?d='+Math.random()).success(function(data) {
+	    	$scope.breeds = data.breeds;
+					if ((obj.breedName == $scope.cat.breed)) {
+						obj.isSelect = true;
+						};
+			});
+		
+		 $http.post('/getAllSubBreedsByName',{breed:$scope.cat.breed}).then(function(res){
+	 			console.log(res);
+	 			$scope.subBreeds = res.data;
+	 			
+		 
+		 });*/
+		$("#addnewfeedCattle").modal('show');
+			
+		$('#startDateAddNew').datepicker({
+		    format: 'dd-MM-yyyy'
+		});
+		$('#endDateAddNew').datepicker({
+		    format: 'dd-MM-yyyy'
+		});
+		$('#nextDateAddNew').datepicker({
+		    format: 'dd-MM-yyyy'
+		});
+	}
+	
+	 /*$scope.feeds = [
+	                 { feedId:'',feedName: '', feedType: '', quantity: '',skuId:''}
+	    ];
+	    
+	    $scope.addFields = function (feed) {  
+	    	//$scope.feeds.length + 1;
+	    	$scope.feeds.push({feedId:'',feedName: '', feedType: '', quantity: '',skuId:''});
+	    }
+	    
+	    $scope.deleteFeed = function(index){
+	    	//$scope.feeds.length - 1;
+	    	$scope.feeds.splice(index,1);
+	        console.log(index);
+	        
+	    }*/	
+	   
+	    /*$scope.assignFeedValue = function(o,index){
+	    	var oo = JSON.parse(o)
+	    	console.log(oo);
+	    	var obj = {feedId:oo.feedId,feedName:oo.feedName, feedType:oo.feedType,skuId:oo.skuId}
+	    	$scope.feeds[index] = obj;
+	    	
+	    }
+	    $scope.getsubBreedById = function(id){
+			 console.log(id);
+			 console.log("in function");
+	   	  $http.post('/getsubBreed',{id:id}
+	 		).then(function(res){
+	 			console.log(res);
+	 			$scope.subBreeds = res.data;
+	 		});
+		 };*/
+	
+});
 App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope, $routeParams, $http, $upload,Flash){
 	// get all Cattle master to admin
 	$scope.email;

@@ -1,0 +1,468 @@
+<style>
+.Color {
+	color: green
+}
+
+.redColor {
+	color: red
+}
+
+.btn-success-custom {
+	color: white;
+	background-color: #21205f;
+}
+
+.btn-success-custom:hover {
+	color: white;
+	background-color: #999999;
+}
+</style>
+
+<!-- <script type="text/javascript">
+function isChar(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 65 || charCode > 90) && (charCode < 97 || charCode > 122)) {
+        return false;
+    }
+    return true;
+}
+</script> -->
+ 
+<script type="text/javascript">
+function isNumber(evt) {
+    evt = (evt) ? evt : window.event;
+    var charCode = (evt.which) ? evt.which : evt.keyCode;
+    if (charCode > 31 && (charCode < 48 || charCode > 57)) {
+        return false;
+    }
+    return true;
+}
+</script>
+<script language="Javascript" type="text/javascript">
+
+function onlyAlphabets(e, t) {
+    try {
+        if (window.event) {
+            var charCode = window.event.keyCode;
+        }
+        else if (e) {
+            var charCode = e.which;
+        }
+        else { return true; }
+        if ((charCode > 64 && charCode < 91) || (charCode > 96 && charCode < 123))
+            return true;
+        else
+            return false;
+    }
+    catch (err) {
+        alert(err.Description);
+    }
+}
+
+</script>
+
+<div class="row">
+	<div class="col-lg-12">
+		<div class="portlet box" style="min-height: 500px;">
+			<div class="portlet-header">
+				<div class="caption">All Cattle Health Master</div>
+			</div>
+			<div class="portlet-body" ng-init="init();" style="overflow-x: auto;">
+			<!-- 	<span ng-if="add == true" style="color:green;">Record Added Successfully.</span>
+			<span ng-if="update == true" style="color:green;">Record Updated  Successfully.</span> -->
+			<span flash-message="5000"  style="float:right;width:40%;" ></span> 
+			
+				<div class="row mbm">
+					<div class="col-lg-12">
+						<!-- {{jobs}} -->
+						<div>
+							 <div class="pull-left">
+								<span>
+									<button class="btn btn-success-custom" data-toggle="tooltip"
+			
+										data-placement="bottom" title="Add new  feed Cattle"
+										ng-click="addnewfeedCattle();" ng-if="cattleFeedMaster == true">Add </button>
+								</span>
+
+							</div>
+							<!-- <div class="pull-right">
+								<label>Active Users:</label>&nbsp;&nbsp; <small><strong>{{activeusercount}}</strong></small>
+							</div> -->
+						</div>
+						<div class="pull-right"></div>
+						
+						<div ng-init="getAllFeedCattleMaster()" class="table-responsive">
+							<div class="page-header">
+								<table id="table_id"
+									class="table table-hover table-striped table-bordered table-advanced tablesorter display">
+									<tbody>
+										<tr>
+											 <th>Health Plan Id</th>
+											<!-- <th>Feed Name</th>
+											<th>Feed Type</th>
+											<th>Meal Type </th>
+											<th>Date of Birth</th>
+											<th>Quantity</th> -->
+											<th>Medication Name</th>
+											<th>Medication type</th>
+											<th>Medication Start Date </th>
+											<th>Medication End Date</th>
+											<!-- <th>Breed</th>
+											<th>SubBreed</th>
+											<th> Stage</th>
+											<th>MealType</th>
+											 -->
+											
+										<!-- 	<th>SKUId</th> -->
+											<!--  <th>Last Update Date Time</th>-->
+											<th>Details</th>
+										</tr>
+										<tr data-ng-repeat="cat in feedcaters"
+											style="background-color: #fff !important; left: -900">
+											<td ng-click="" data-toggle="tooltip" data-placement="bottom"
+												title="Send to mail to user"> <a
+												 href="mailto:{{user.email}}">{{cat.healthPlanId}}</a></td> 
+											<!-- <td ng-click="">{{cat.feedName}}</td>
+											<td ng-click="">{{cat.feedType}}</td>
+											<td ng-click="">{{cat.MealType}}</td> -->
+											<!-- <td>{{cat.dateofBirth | date:'yyyy-MM-dd HH:mm:ss '}}</td>
+											 -->
+											 <!-- <td ng-click="">{{cat.quantity}}</td> -->	
+											 
+											<td ng-click="">{{cat.medicationName}}</td>
+											<td ng-click="">{{cat.medicationType}}</td>
+											
+											<td ng-click="">{{cat.medicationStartDateVM}}</td>
+											<td ng-click="">{{cat.medicationEndDateVM}}</td>
+											<!-- <td ng-click="">{{cat.Breed}}</td>
+											<td ng-click="">{{cat.SubBreed}}</td>
+											<td ng-click="">{{cat.Stage}}</td>
+											<td ng-click="">{{cat.MealType}}</td>
+											 -->
+											<!-- <td ng-click="">{{cat.SKUId}}</td> -->
+											<!--  <td> {{cat.lastUpdateDateTime | date:'yyyy-MM-dd HH:mm:ss '}}</td> -->
+											<td><button class="btn btn-success-custom"
+													ng-click="editfeedCatdersDetails(cat);" data-toggle="tooltip"
+													data-placement="bottom" title="View Feed Caters  details">
+													<i data-toggle="modal" class="glyphicon glyphicon-eye-open"></i>
+											    </button>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+							 <div class="pull-right">
+								<button id="pre" type="button" ng-click="clickPre()"
+									class="btn btn-success-custom">
+									<i class="glyphicon glyphicon-arrow-left"></i>
+								</button>
+								&nbsp;
+								<button id="next" type="button" ng-click="clickNext()"
+									class="btn btn-success-custom">
+									<i class="glyphicon glyphicon-arrow-right"></i>
+								</button>
+							</div> 
+						</div>
+					</div>
+
+				</div>
+			</div>
+		</div>
+	</div>
+	
+</div>
+
+<!-- Modal Edit user details-->
+<div class="modal fade" id="editfeedCatdersDetails" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Edit Cattle Health Master</h4>
+			</div>
+			<div class="modal-body">
+			<span ng-if = "emptyFieldsError == true"><code> Please fill all fields!!!</code></span>
+			
+				<!-- <div class = "col-md-12	">
+				<div class = "col-md-6	">
+						<span ng-if = "feedPlanNameDup == true"> <code>Feed Plan name is present please use another one!!</code></span>
+							 
+							<div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr">Feed Plan Name</label>
+  							<input type="text" ng-model = "cat.feedPlanName" ng-blur="checkDuplicateFeedName(cat.feedPlanName)" class="form-control" id="Stage" onkeypress="return onlyAlphabets(event,this);">
+						</div>
+							
+					</div>				
+					</div>-->
+					
+				<div class = "col-md-12">
+				<div class = "col-md-6"  >
+				
+				<div class="col-md-12">
+  							<label for="usr" style = "margin-top: 5%;"> Medication Name</label>
+  							<input type="text" ng-model = "cat.medicationName" class="form-control" maxlength="80" id="firstname" onkeypress="return onlyAlphabets(event,this);">
+				</div>
+				
+				<div class="col-md-12">
+  							<label for="usr" style = "margin-top: 5%;">Frequency</label>
+  							<input type="text" ng-model = "cat.frequency" class="form-control" maxlength="80" id="firstname" onkeypress="return isNumber(event)">
+				</div>
+				
+				<div class="col-md-12" >
+										<div class="">
+											<div class="">
+											<!--  <div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>-->
+												<div class="input-group col-md-12" style = "margin-top: 5%;">
+												<!-- <span> Medication Start Date</span> -->
+												<label for="usr">Medication Start Date </label>
+													 <input type="text" ng-model="cat.medicationStartDateVM"
+														name="startDate" class="form-control " id="startDateNew"
+														 ng-click="initStartDatepickerNew();"
+														style="font-size: 12px;  width: 100%;" required>
+														<!--  <div class="input-group-addon">
+														<i class="fa fa-calendar"></i>
+														</div>-->
+												</div>
+											</div>
+									</div>
+					      </div>
+						
+						<div class="col-md-12" >
+										<div class="">
+											<div class="">
+											<!--  <div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>-->
+												<div class="input-group col-md-12" style = "margin-top: 5%;">
+												<!-- <span> Medication Next Date</span> -->
+												<label for="usr">Medication Next Date </label>
+													 <input type="text" ng-model="cat.medicationNextDateVM"
+														name="startDate" class="form-control " id="nextDateNew"
+														 ng-click="initStartDatepickerNew();"
+														style="font-size: 12px;  width: 100%;" required>
+														<!--  <div class="input-group-addon">
+														<i class="fa fa-calendar"></i>
+														</div>-->
+												</div>
+											</div>
+									</div>
+					      </div>										
+					</div>	
+					
+           			<div class = "col-md-6">
+           			
+           			<div class="col-md-12">
+  							<label for="usr" style = "margin-top: 5%;"> Medication Type</label>
+  							<input type="text" ng-model = "cat.medicationType" class="form-control" maxlength="80" id="firstname" onkeypress="return onlyAlphabets(event,this);">
+					</div>
+					
+					<div class="col-md-12">
+  							<label for="usr" style = "margin-top: 5%;">Duration</label>
+  							<input type="text" ng-model = "cat.duration" class="form-control" maxlength="80" id="firstname" onkeypress="return isNumber(event)">
+					</div>
+					
+           			<div class="col-md-12" >
+										<div class="">
+											<div class="">
+											<!-- <div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div> -->
+												<div class="input-group col-md-12" style = "margin-top: 5%;">
+												<!-- <span>Medication End Date</span> -->
+												<label for="usr">Medication End Date </label>
+													 <input type="text" ng-model="cat.medicationEndDateVM"
+														name="dob" class="form-control " id="endDateNew"
+														 ng-click="initEndDatepickerNew();"
+														style="font-size: 12px;  width:   100%;" required>
+														
+												</div>
+											</div>
+									</div>
+					      </div>
+           				
+           								      	
+           			</div>
+				</div>
+						<div class="form-actions">
+							<div class="pull-right" style="margin-top:2%;">
+								<button type="submit" ng-click="updateCattleHealthMasterProfileByAdmin(cat);"
+									class="btn btn-success-custom" ng-if= "cattleFeedMaster == true">Update</button>
+								&nbsp;
+								<button type="button" class="btn btn-success-custom"
+									data-dismiss="modal">Close</button>
+								&nbsp;
+								<!-- <button type="button" class="btn btn-default">Cancel</button> -->
+							</div>
+						</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+<form>
+<!-- Add new user model  -->
+<div class="modal fade" id="addnewfeedCattle" tabindex="-1" role="dialog"
+	aria-labelledby="myModalLabel" aria-hidden="true"  ng-form="myForm">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title" id="myModalLabel">Add Feed Cattle Master</h4>
+			</div>
+			<div class="modal-body">
+			<span ng-if = "emptyFieldsError == true"><code> Please fill all fields!!!</code></span>
+			
+				<!-- <div class = "col-md-12	">
+				<div class = "col-md-6	">
+						<span ng-if = "feedPlanNameDup == true"> <code>Feed Plan name is present please use another one!!</code></span>
+							 
+							 <div class="col-md-12" style = "margin-top: 5%;">
+  							 <label for="usr">Feed Plan Name</label>
+  							 <input type="text" ng-model = "cat.feedPlanName" ng-blur="checkDuplicateFeedName(cat.feedPlanName)" class="form-control" id="Stage"  onkeypress="return onlyAlphabets(event,this);">
+						</div>
+							
+					</div>				
+					</div> -->
+				<div class = "col-md-12">
+				<div class = "col-md-6	">
+						
+						 <div class="col-md-12">
+  							<label for="usr" style = "margin-top: 5%;"> Medication Name</label>
+  							<input type="text" ng-model = "cat.medicationName" class="form-control" maxlength="80" id="firstname" onkeypress="return onlyAlphabets(event,this);">
+						</div>
+				
+						<div class="col-md-12">
+  							<label for="usr" style = "margin-top: 5%;">Frequency</label>
+  							<input type="text" ng-model = "cat.frequency" class="form-control" maxlength="80" id="firstname" onkeypress="return isNumber(event)">
+						</div>
+				
+						<div class="col-md-12" >
+										<div class="">
+											<div class="">
+											<!--  <div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>-->
+												<div class="input-group col-md-12" style = "margin-top: 5%;">
+												<!-- <span> Medication Start Date</span> -->
+												<label for="usr">Medication Start Date </label>
+													 <input type="text" ng-model="cat.medicationStartDateVM"
+														name="startDate" class="form-control " id="startDateAddNew"
+														 ng-click="initStartDatepickerNew();"
+														style="font-size: 12px;  width: 100%;" required>
+														<!--  <div class="input-group-addon">
+														<i class="fa fa-calendar"></i>
+														</div>-->
+												</div>
+											</div>
+									</div>
+					      </div>
+						
+						<div class="col-md-12" >
+										<div class="">
+											<div class="">
+											<!--  <div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>-->
+												<div class="input-group col-md-12" style = "margin-top: 5%;">
+												<!-- <span> Medication Next Date</span> -->
+												<label for="usr">Medication Next Date </label>
+													 <input type="text" ng-model="cat.medicationNextDateVM"
+														name="startDate" class="form-control " id="nextDateAddNew"
+														 ng-click="initNextDatepickerNew();"
+														style="font-size: 12px;  width: 100%;" required>
+														<!--  <div class="input-group-addon">
+														<i class="fa fa-calendar"></i>
+														</div>-->
+												</div>
+											</div>
+									</div>
+					      </div>				
+					</div>
+					    
+				    <div class = "col-md-6	">
+				    	<div class="col-md-12">
+  							<label for="usr" style = "margin-top: 5%;"> Medication Type</label>
+  							<input type="text" ng-model = "cat.medicationType" class="form-control" maxlength="80" id="firstname" onkeypress="return onlyAlphabets(event,this);">
+					</div>
+					
+					<div class="col-md-12">
+  							<label for="usr" style = "margin-top: 5%;">Duration</label>
+  							<input type="text" ng-model = "cat.duration" class="form-control" maxlength="80" id="firstname" onkeypress="return isNumber(event)">
+					</div>
+					
+           			<div class="col-md-12" >
+										<div class="">
+											<div class="">
+											<!-- <div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div> -->
+												<div class="input-group col-md-12" style = "margin-top: 5%;">
+												<!-- <span>Medication End Date</span> -->
+												<label for="usr">Medication End Date </label>
+													 <input type="text" ng-model="cat.medicationEndDateVM"
+														name="dob" class="form-control " id="endDateAddNew"
+														 ng-click="initEndDatepickerNew();"
+														style="font-size: 12px;  width:   100%;" required>
+														
+												</div>
+											</div>
+									</div>
+					      </div>
+			           
+			           
+				</div>
+			</div>
+						<div class="form-actions">
+							<div class="pull-right" style="margin-top:2%;">
+								<button type="submit" ng-click="addCattleHealthMasterProfileByAdmin(cat);"
+									class="btn btn-success-custom" ng-if="cattleFeedMaster == true">Add</button>
+								&nbsp;
+								<button type="button" class="btn btn-success-custom"
+									data-dismiss="modal">Close</button>
+								&nbsp;
+								<!-- <button type="button" class="btn btn-default">Cancel</button> -->
+							</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+</div>
+
+</form>
+<style type="text/css">
+.modal .modal-dialog {
+	width: 70%;
+}
+
+.modal .modal-body {
+	max-height: 500px;
+	overflow-y: auto;
+}
+
+fieldset.scheduler-border {
+	border: 1px groove !important;
+	padding: 0 1.4em 1.4em 1.4em !important;
+	margin: 0 0 1.5em 0 !important;
+	-webkit-box-shadow: 0px 0px 0px 0px #000;
+	box-shadow: 0px 0px 0px 0px #000;
+	border-color: #darkgrey;
+}
+
+legend.scheduler-border {
+	font-size: 1.0em !important;
+	text-align: left !important;
+	width: inherit;
+	padding: 0 10px;
+	border-bottom: none;
+	color: darkgray;
+}
+
+.clsDatePicker {
+	z-index: 100000;
+}
+</style>
+
+<style>
+.datepicker {
+	z-index: 1151 !important;
+}
+</style>
