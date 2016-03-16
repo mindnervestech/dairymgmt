@@ -15,6 +15,7 @@ public class CattleHealthMasterVM
 	public String medicationEndDateVM;
 	public String medicationNextDateVM;
 	public String frequency;
+	public String frequencyType;
 	public String duration;
 	public Oraganization oraganization;
 	public Users users;

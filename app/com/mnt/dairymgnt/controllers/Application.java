@@ -484,6 +484,7 @@ public class Application extends Controller {
 		for(CattleMaster u : cattleMasters){
 			CattleMasterVM cvm = new CattleMasterVM();
 			cvm.breed = u.breed;
+			cvm.subbreed=u.subBreed;
 			cvm.cattleId = u.cattleId;
 			cvm.cattleIdentificationMark =    u.cattleIdentificationMark;
 			//cvm.dateofBirth = u.dateofBirth;
@@ -615,6 +616,7 @@ public class Application extends Controller {
 			CattleHealthMasterVM cfvm = new CattleHealthMasterVM();
 			cfvm.duration = u.duration;
 			cfvm.frequency = u.frequency;
+			cfvm.frequencyType=u.frequencyType;
 			cfvm.medicationName =    u.medicationName;
 			cfvm.medicationType = u.medicationType;
 			cfvm.healthPlanId = u.healthPlanId;
@@ -760,6 +762,7 @@ public class Application extends Controller {
 			cfvm.duration = u.duration;
 			cfvm.users = u.users;
 			cfvm.oraganization = u.oraganization;
+			cfvm.frequencyType=u.frequencyType;
 			cfvm.lastUpdateDateTime =  u.lastUpdateDateTime;
 			cmvm.add(cfvm);
 		}
@@ -1437,7 +1440,7 @@ public static Result getMonthlyCattleOutputReport(){
 			CattleHealthVM cfvm = new CattleHealthVM();
 			cfvm.duedate = u.duedate;
 			cfvm.lastDelivaerydate = u.lastDelivaerydate;
-			cfvm.medicationEnddate = u.medicationEnddate;
+			cfvm.medicationEndDate = u.medicationEndDate;
 			cfvm.medicationStartDate  = u.medicationStartDate;
 			cfvm.medicationName = u.medicationName;
 			cfvm.medicationType = u.medicationType;
@@ -2432,7 +2435,7 @@ public static Result getMonthlyCattleOutputReport(){
 	
 	public static Result updateCattleHealthProfileByAdmin(){
 		JsonNode json = request().body().asJson();
-		
+		System.out.println("function is called");
 		JsonNode catJson = json.get("cat");
 		ObjectMapper userinfoMapper = new ObjectMapper();
 		try {
@@ -2456,11 +2459,27 @@ public static Result getMonthlyCattleOutputReport(){
 					}
 					
 				}
+				JsonNode catersIds = json.path("catersIds");
+				System.out.println("catersIds: "+catersIds);
+				if(catersIds.toString() != ""){
+					CattleMaster    uId = null;
+				    uId = CattleMaster.getUserByCattleId(Integer.parseInt(catersIds.toString().replace("\"", "")));
+					if(uId != null){
+						u.setCattleMaster(uId);
+					}
+				}
 				
-				u.setDuedate(uvm.duedate);
-				u.setLastDelivaerydate(uvm.lastDelivaerydate);
-				u.setMedicationEnddate(uvm.medicationEnddate);
-				u.setMedicationName(uvm.medicationName);
+				//u.setDuedate(uvm.duedate);
+				//u.setLastDelivaerydate(uvm.lastDelivaerydate);
+				u.setMedicationEndDate(uvm.medicationEndDate);
+				u.setMedicationStartDate(uvm.medicationStartDate);
+				u.setBreed(uvm.breed);
+				u.setSubbreed(uvm.subbreed);
+				u.setVaccination(uvm.vaccination);
+				u.setVaccinationActualDate(uvm.vaccinationActualDate);
+				u.setVaccinationName(uvm.vaccinationName);
+				u.setVaccinationPlannedDate(uvm.vaccinationPlannedDate);
+				u.setVaccinationType(uvm.vaccinationType);
 				u.setMedicationStartDate(uvm.medicationStartDate);
 				u.setMedicationType(uvm.medicationType);
 				u.setPregnancyDate(uvm.pregnancyDate);
@@ -2473,10 +2492,17 @@ public static Result getMonthlyCattleOutputReport(){
 			}else{
 				
 				u  = new CattleHealth();
-				u.setDuedate(uvm.duedate);
-				u.setLastDelivaerydate(uvm.lastDelivaerydate);
-				u.setMedicationEnddate(uvm.medicationEnddate);
-				u.setMedicationName(uvm.medicationName);
+				//u.setDuedate(uvm.duedate);
+				//u.setLastDelivaerydate(uvm.lastDelivaerydate);
+				u.setMedicationEndDate(uvm.medicationEndDate);
+				u.setMedicationStartDate(uvm.medicationStartDate);
+				u.setBreed(uvm.breed);
+				u.setSubbreed(uvm.subbreed);
+				u.setVaccination(uvm.vaccination);
+				u.setVaccinationActualDate(uvm.vaccinationActualDate);
+				u.setVaccinationName(uvm.vaccinationName);
+				u.setVaccinationPlannedDate(uvm.vaccinationPlannedDate);
+				u.setVaccinationType(uvm.vaccinationType);
 				u.setMedicationStartDate(uvm.medicationStartDate);
 				u.setMedicationType(uvm.medicationType);
 				u.setPregnancyDate(uvm.pregnancyDate);
@@ -2502,6 +2528,15 @@ public static Result getMonthlyCattleOutputReport(){
 				    uId = Users.getUserByEmail(userId.toString().replace("\"", ""));
 					if(uId != null){
 						u.setUsers(uId);
+					}
+				}
+				JsonNode catersIds = json.path("catersIds");
+				System.out.println("catersIds: "+catersIds);
+				if(catersIds.toString() != ""){
+					CattleMaster    uId = null;
+				    uId = CattleMaster.getUserByCattleId(Integer.parseInt(catersIds.toString().replace("\"", "")));
+					if(uId != null){
+						u.setCattleMaster(uId);
 					}
 				}
 			u.update(u);
@@ -2727,6 +2762,7 @@ public static Result getMonthlyCattleOutputReport(){
 				u.setFrequency(uvm.frequency);
 				u.setMedicationName(uvm.medicationName);
 				u.setMedicationType(uvm.medicationType);
+				u.setFrequencyType(uvm.frequencyType);
 			
 				
 					u.setLastUpdateDateTime(new Date());
@@ -2799,6 +2835,7 @@ public static Result getMonthlyCattleOutputReport(){
 				
 				u.setDuration(uvm.duration);
 				u.setFrequency(uvm.frequency);
+				u.setFrequencyType(uvm.frequencyType);
 				u.setMedicationName(uvm.medicationName);
 				u.setMedicationType(uvm.medicationType);
 				u.setLastUpdateDateTime(new Date());

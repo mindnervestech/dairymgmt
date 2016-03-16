@@ -105,7 +105,10 @@ function onlyAlphabets(e, t) {
 											<th>Date of Birth</th>
 											<th>Quantity</th> -->
 											<th>Medication Name</th>
-											<th>Medication type</th>
+											<th>Medication Type</th>
+											<th>Frequency</th>
+											<th>Frequency Type</th>
+											<th>Duration</th>
 											<th>Medication Start Date </th>
 											<th>Medication End Date</th>
 											<!-- <th>Breed</th>
@@ -132,6 +135,9 @@ function onlyAlphabets(e, t) {
 											 
 											<td ng-click="">{{cat.medicationName}}</td>
 											<td ng-click="">{{cat.medicationType}}</td>
+											<td ng-click="">{{cat.frequency}}</td>
+											<td ng-click="">{{cat.frequencyType}}</td>
+											<td ng-click="">{{cat.duration}}</td>
 											
 											<td ng-click="">{{cat.medicationStartDateVM}}</td>
 											<td ng-click="">{{cat.medicationEndDateVM}}</td>
@@ -203,16 +209,25 @@ function onlyAlphabets(e, t) {
 				<div class = "col-md-12">
 				<div class = "col-md-6"  >
 				
-				<div class="col-md-12">
-  							<label for="usr" style = "margin-top: 5%;"> Medication Name</label>
+				<div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr" > Medication Name</label>
   							<input type="text" ng-model = "cat.medicationName" class="form-control" maxlength="80" id="firstname" onkeypress="return onlyAlphabets(event,this);">
 				</div>
 				
-				<div class="col-md-12">
-  							<label for="usr" style = "margin-top: 5%;">Frequency</label>
+				<div class="col-md-6" style = "margin-top: 5%;">
+  							<label for="usr" >Frequency</label>
   							<input type="text" ng-model = "cat.frequency" class="form-control" maxlength="80" id="firstname" onkeypress="return isNumber(event)">
 				</div>
 				
+				<div class="col-md-6" style = "margin-top: 5%;>
+  							<label for="usr" >Frequency Type</label>
+  							<select id = "use"  ng-model="cat.frequencyType" class= "form-control" ng-change="" style="    width: 100%; margin-top: 4px;"">
+			                <option value="">--- Select ---</option>
+			                <option value="Daily" >Daily</option>
+    						<option value="Weekly">Weekly</option>
+    						<option value="Monthly">Monthly</option>
+			                </select>
+						</div>
 				<div class="col-md-12" >
 										<div class="">
 											<div class="">
@@ -241,7 +256,7 @@ function onlyAlphabets(e, t) {
 												<label for="usr">Medication Next Date </label>
 													 <input type="text" ng-model="cat.medicationNextDateVM"
 														name="startDate" class="form-control " id="nextDateNew"
-														 ng-click="initStartDatepickerNew();"
+														 ng-click="initNextDatepickerNew();"
 														style="font-size: 12px;  width: 100%;" required>
 														<!--  <div class="input-group-addon">
 														<i class="fa fa-calendar"></i>
@@ -254,13 +269,13 @@ function onlyAlphabets(e, t) {
 					
            			<div class = "col-md-6">
            			
-           			<div class="col-md-12">
-  							<label for="usr" style = "margin-top: 5%;"> Medication Type</label>
+           			<div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr" > Medication Type</label>
   							<input type="text" ng-model = "cat.medicationType" class="form-control" maxlength="80" id="firstname" onkeypress="return onlyAlphabets(event,this);">
 					</div>
 					
-					<div class="col-md-12">
-  							<label for="usr" style = "margin-top: 5%;">Duration</label>
+					<div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr" >Duration</label>
   							<input type="text" ng-model = "cat.duration" class="form-control" maxlength="80" id="firstname" onkeypress="return isNumber(event)">
 					</div>
 					
@@ -330,14 +345,24 @@ function onlyAlphabets(e, t) {
 				<div class = "col-md-12">
 				<div class = "col-md-6	">
 						
-						 <div class="col-md-12">
-  							<label for="usr" style = "margin-top: 5%;"> Medication Name</label>
+						 <div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr" > Medication Name</label>
   							<input type="text" ng-model = "cat.medicationName" class="form-control" maxlength="80" id="firstname" onkeypress="return onlyAlphabets(event,this);">
 						</div>
 				
-						<div class="col-md-12">
-  							<label for="usr" style = "margin-top: 5%;">Frequency</label>
+						<div class="col-md-6" style = "margin-top: 5%;">
+  							<label for="usr" >Frequency</label>
   							<input type="text" ng-model = "cat.frequency" class="form-control" maxlength="80" id="firstname" onkeypress="return isNumber(event)">
+						</div>
+						
+						<div class="col-md-6" style = "margin-top: 5%;>
+  							<label for="usr" >Frequency Type</label>
+  							<select id = "use"  ng-model="cat.frequencyType" class= "form-control" ng-change="" style="    width: 100%; margin-top: 4px;">
+			                <option value="">--- Select ---</option>
+			                <option value="Daily" >Daily</option>
+    						<option value="Weekly">Weekly</option>
+    						<option value="Monthly">Monthly</option>
+			                </select>
 						</div>
 				
 						<div class="col-md-12" >
@@ -380,13 +405,13 @@ function onlyAlphabets(e, t) {
 					</div>
 					    
 				    <div class = "col-md-6	">
-				    	<div class="col-md-12">
-  							<label for="usr" style = "margin-top: 5%;"> Medication Type</label>
+				    	<div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr" > Medication Type</label>
   							<input type="text" ng-model = "cat.medicationType" class="form-control" maxlength="80" id="firstname" onkeypress="return onlyAlphabets(event,this);">
 					</div>
 					
-					<div class="col-md-12">
-  							<label for="usr" style = "margin-top: 5%;">Duration</label>
+					<div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr" >Duration</label>
   							<input type="text" ng-model = "cat.duration" class="form-control" maxlength="80" id="firstname" onkeypress="return isNumber(event)">
 					</div>
 					

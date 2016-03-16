@@ -30,7 +30,7 @@ public class CattleHealth  extends Model{
     public String medicationType;
     public String medicationName;
     public String medicationStartDate;
-    public String medicationEnddate;
+    public String medicationEndDate;
     public boolean  pregnant;
     public String pregnancyDate;
     public String   lastDelivaerydate;
@@ -41,10 +41,25 @@ public class CattleHealth  extends Model{
 	public String attrib4;
 	public String attrib5;
 	
+	public String vaccinationType;
+	public String vaccinationName;
+	public String vaccinationPlannedDate;
+	public String vaccinationActualDate;
+	public String breed;
+	public String subbreed;
+	public String vaccination;
 	
 	
     
-    public int getCattleId() {
+    public String getVaccination() {
+		return vaccination;
+	}
+
+	public void setVaccination(String vaccination) {
+		this.vaccination = vaccination;
+	}
+
+	public int getCattleId() {
 		return cattleId;
 	}
 
@@ -84,12 +99,12 @@ public class CattleHealth  extends Model{
 		this.medicationStartDate = medicationStartDate;
 	}
 
-	public String getMedicationEnddate() {
-		return medicationEnddate;
+	public String getMedicationEndDate() {
+		return medicationEndDate;
 	}
 
-	public void setMedicationEnddate(String medicationEnddate) {
-		this.medicationEnddate = medicationEnddate;
+	public void setMedicationEndDate(String medicationEndDate) {
+		this.medicationEndDate = medicationEndDate;
 	}
 
 	public boolean isPregnant() {
@@ -190,6 +205,68 @@ public class CattleHealth  extends Model{
 
 	public void setUsers(Users users) {
 		this.users = users;
+	}
+	
+	public String getVaccinationType() {
+		return vaccinationType;
+	}
+
+	public void setVaccinationType(String vaccinationType) {
+		this.vaccinationType = vaccinationType;
+	}
+
+	public String getVaccinationName() {
+		return vaccinationName;
+	}
+
+	public void setVaccinationName(String vaccinationName) {
+		this.vaccinationName = vaccinationName;
+	}
+
+	public String getVaccinationPlannedDate() {
+		return vaccinationPlannedDate;
+	}
+
+	public void setVaccinationPlannedDate(String vaccinationPlannedDate) {
+		this.vaccinationPlannedDate = vaccinationPlannedDate;
+	}
+
+	public String getVaccinationActualDate() {
+		return vaccinationActualDate;
+	}
+
+	public void setVaccinationActualDate(String vaccinationActualDate) {
+		this.vaccinationActualDate = vaccinationActualDate;
+	}
+
+	public String getBreed() {
+		return breed;
+	}
+
+	public void setBreed(String breed) {
+		this.breed = breed;
+	}
+
+	public String getSubbreed() {
+		return subbreed;
+	}
+
+	public void setSubbreed(String subbreed) {
+		subbreed = subbreed;
+	}
+
+
+
+	@JsonIgnore
+	@OneToOne(cascade = CascadeType.ALL)
+	public CattleMaster CattleMaster;
+	
+	public CattleMaster getCattleMaster() {
+		return CattleMaster;
+	}
+
+	public void setCattleMaster(CattleMaster cattleMaster) {
+		CattleMaster = cattleMaster;
 	}
 	
 	public static Finder<Long, CattleHealth> find = new Finder<Long, CattleHealth>(

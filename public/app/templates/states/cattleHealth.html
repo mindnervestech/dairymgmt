@@ -141,7 +141,188 @@
 				<h4 class="modal-title" id="myModalLabel">Edit  Cattle Health</h4>
 			</div>
 			<div class="modal-body">
+			<div class = "col-md-12">
+				<div class = "col-md-6">
+				
+				
+				<div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
+		              <label class="control-label col-md-8">Cattle Name </label>
+		              <div class="col-md-12"> 
+			                <select id = "feed"  data-ng-model="catersIds" class = "col-md-5 form-control"  style="    width: 110%;" ng-change="getAllCattleMasterDeatails(catersIds)">
+			                 <option ng-repeat="f in caters" value="{{f.cattleId}}"   ng-selected="f.isSelect  == true">{{f.name}}</option>
+			                </select>
+	            		</div>   
+	            	</div>
+	            	<div class="col-md-12"  style="margin-top:5%;">
+										
+											
+												<div class="input-group col-md-12" >
+												<span>Breed</span>
+													 <input type="text"  ng-model="cat.breed"
+														name="dobnew" class="form-control " 
+														style="font-size: 12px;  width: 100%; margin-top:1%;" disabled>
+														
+											
+												</div>
+								</div>
+					
+					
+						
+					
+						
+						</div>
+						<div class = "col-md-6">
+						<div class = "col-md-12" style="margin-top:5%;">
+						<label for="usr">Select Health Type </label>
+						</div>
+    					<div class="col-md-6"  style="margin-top:2%;">
+  						<input type="radio" ng-model="cat.vaccination" value="vaccination" ng-click="addnewvaccinationplan();">   Vaccination
+						</div>
+						<div class="col-md-6" style="margin-top:2%;">
+  						<input type="radio" ng-model="cat.vaccination" value="medication" ng-click="addnewmedicationplan();">   Medication
+						</div>
+						
+						<div class="col-md-12"  style="margin-top:5%;">
+										
+											
+												<div class="input-group col-md-12" >
+												<span>Sub Breed</span>
+													 <input type="text"  ng-model="cat.subbreed"
+														name="dobnew" class="form-control " 
+														style="font-size: 12px;  width: 100%; margin-top:1%;" disabled>
+														
+											
+												</div>
+								</div>
+						
+						
+						
+						
+				
+						
+					
+						
+	            	</div>
+	            	</div>
+	            <div class="modal-body" ng-show="cat.vaccination == 'vaccination'">
 				<div class = "col-md-12">
+				<div class = "col-md-6">
+				
+				
+				
+					
+										
+						<div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
+		              	<label class="control-label col-md-8">Vaccination Type </label>
+		              	<div class="col-md-12"> 
+			                <select id = "feed"  data-ng-model="cat.vaccinationType" class = "col-md-5 form-control"  style="    width: 110%;">
+			                 <option ng-repeat="f in vaccinecaters" value="{{f.vaccinationPlanId}}"   ng-selected="f.isSelect  == true">{{f.vaccineType}}</option>
+			                </select>
+	            		</div>   
+	            		</div>		
+							
+						
+							  <div class="col-md-12">
+										<div class="">
+											<div class="">
+												<div class="input-group col-md-12" style = "margin-top: 5%;">
+												<span>vaccination Planned Date </span>
+													 <input type="text" ng-model="cat.vaccinationPlannedDate"
+														name="dob" class="form-control " id="vaccinationPlannedDateAdd"
+														 ng-click="vaccinationPlannedDatepickerNew();"
+														style="font-size: 12px; width: 100%;"" required>
+												</div>
+											</div>
+									</div>
+							  </div> 
+					</div>
+					<div class = "col-md-6">
+						    <div class="col-md-12" style="margin-top:5%;">
+  							<label for="usr">Vaccination Name</label>
+  							<input type="text" ng-model = "cat.vaccinationName" class="form-control" id="medicationName">
+						    </div>
+						    
+							 <div class="col-md-12">
+										<div class="">
+											<div class="">
+												<div class="input-group col-md-12" style = "margin-top: 5%;">
+												<span>Vaccination Actual Date </span>
+													 <input type="text" ng-model="cat.vaccinationActualDate"
+														name="dob" class="form-control " id="vaccinationActualDateAdd"
+														 ng-click="vaccinationActualDatepickerNew"
+														style="font-size: 12px; width:100%;" required>
+												</div>
+											</div>
+									</div>
+							  </div>
+					
+	            	</div>
+	            	</div>
+						
+				</div>
+				
+				<div class="modal-body" ng-show="cat.vaccination == 'medication'">
+				<div class = "col-md-12">
+				<div class = "col-md-6">
+				
+				
+				
+						<div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
+		              	<label class="control-label col-md-8">Medication Type </label>
+		              	<div class="col-md-12"> 
+			                <select id = "feed"  data-ng-model="cat.medicationType" class = "col-md-5 form-control"  style="    width: 110%;" ng-change="getAllMedicationDetails(medicationType)">
+			                 <option ng-repeat="f in feedcaters" value="{{f.healthPlanId}}"   ng-selected="f.isSelect  == true">{{f.medicationType}}</option>
+			                </select>
+	            		</div>   
+	            		</div>
+					
+							
+				
+						
+				
+									<div class="col-md-12">
+										<div class="">
+											<div class="">
+												<div class="input-group col-md-12" style="margin-top:5%;">
+												<span>Medication Start Date </span>
+													 <input type="text" ng-model="cat.medicationStartDate"
+														name="dob" class="form-control " id="medicationStartDateAdd"
+														 ng-click="medicationStartDatepickerNew();"
+														style="font-size: 12px; width:100%;" required>
+												</div>
+											</div>
+									</div>
+									</div>
+							
+						
+						</div>
+						<div class = "col-md-6	">
+						 
+    					<div class="col-md-12" style="margin-top:5%;">
+  							<label for="usr">Medication Name</label>
+  							<input type="text" ng-model = "cat.medicationName" class="form-control" id="medicationName">
+						</div>
+						 <div class="col-md-12">
+										<div class="">
+											<div class="">
+												<div class="input-group col-md-12" style="margin-top:5%;">
+												<span>Medication End Date </span>
+													 <input type="text" ng-model="cat.medicationEndDate"
+														name="dob" class="form-control " id="medicationEndDateAdd"
+														 ng-click="medicationEndDatepickerNew();"
+														style="font-size: 12px; width:100%" required>
+												</div>
+											</div>
+									</div>
+						</div>
+						
+						
+						
+	            	</div>
+	            	</div>
+						
+				</div>
+				<!-- <div class = "col-md-12">
 				<div class = "col-md-6">
 					
 						<div class="col-md-10">
@@ -167,11 +348,11 @@
 											</div>
 									</div>
 					</div>
-						<!-- <div class="col-md-12">
+						<div class="col-md-12">
   							<label for="usr">Medication Start Date </label>
   							<input type="text" ng-model = "cat.medicationStartDate" class="form-control" id="medicationStartDate">
 						</div>
-						 -->
+						
 						
 						<div class="col-md-10">
 										<div class="">
@@ -186,16 +367,16 @@
 											</div>
 									</div>
 					</div>
-					<!-- 	<div class="col-md-12">
+						<div class="col-md-12">
   							<label for="usr">Medication End Date </label>
   							<input type="text" ng-model = "cat.medicationEnddate" class="form-control" id="medicationEnddate">
-						</div>	 -->
+						</div>	
 						
-						<!-- <div class="col-md-12">
+						<div class="col-md-12">
   							<label for="usr">Pregnant </label>
   							<input type="text" ng-model = "cat.pregnant" class="form-control" id="pregnant">
 						</div>	
-						 -->
+						
 						
 						<div class="col-md-10" style="margin-top:1%;margin-left: -4%;">
 		              <label class="control-label col-md-8">Pregnant</label>
@@ -210,11 +391,11 @@
 						</div>
 						<div class = "col-md-6	">
 						
-						<!-- <div class="col-md-12">
+						<div class="col-md-12">
   							<label for="usr">Pregnancy Date </label>
   							<input type="text" ng-model = "cat.pregnancyDate" class="form-control" id="pregnancyDate">
 						</div>	
-						 -->
+						
 						<div class="col-md-10">
 										<div class="">
 											<div class="">
@@ -229,10 +410,10 @@
 									</div>
 					</div>
 						
-						<!-- <div class="col-md-12">
+						<div class="col-md-12">
   							<label for="usr">Last Delivaery date </label>
   							<input type="text" ng-model = "cat.lastDelivaerydate" class="form-control" id="lastDelivaerydate">
-						</div>	 -->	
+						</div>		
 					
 					<div class="col-md-9">
 										<div class="">
@@ -249,11 +430,11 @@
 					</div>
 					
 					
-				<!-- 	
+					
 					<div class="col-md-12">
   							<label for="usr">Due Date </label>
   							<input type="text" ng-model = "cat.duedate" class="form-control" id="duedate">
-						</div>	 -->
+						</div>	
 						
 					<div class="col-md-10">
 										<div class="">
@@ -268,14 +449,14 @@
 											</div>
 									</div>
 					</div>
-						<!-- <div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
+						<div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
 		              <label class="control-label col-md-8">Select Orgnization</label>
 		              <div class="col-md-12"> 
 			                <select id = "org"  data-ng-model="org" class="col-md-5" style="width:110%;">
 			                 <option ng-repeat="o in orgs" value="{{o.orgId}}"   ng-selected="o.isSelect  == true">{{o.name}}</option>
 			                </select>
 	            		</div>   
-	            	</div> -->
+	            	</div>
 						<div class="col-md-10" style="margin-top:1%;margin-left:-4%;">
 		              <label class="control-label col-md-8">Select User Id</label>
 		              <div class="col-md-11">
@@ -285,7 +466,7 @@
 	            		</div>   
 	            	</div>
 	            	</div>
-	            	</div>
+	            	</div> -->
 						<div class="form-actions">
 							<div class="pull-right">
 								<button type="submit" ng-click="updateCattleHealthProfileByAdmin(cat);"
@@ -319,60 +500,40 @@
 			<div class="modal-body">
 				<div class = "col-md-12">
 				<div class = "col-md-6">
+				
+				
+				<div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
+		              <label class="control-label col-md-8">Cattle Name </label>
+		              <div class="col-md-12"> 
+			                <select id = "feed"  data-ng-model="catersIds" class = "col-md-5 form-control"  style="    width: 110%;" ng-change="getAllCattleMasterDeatails(catersIds)">
+			                 <option ng-repeat="f in caters" value="{{f.cattleId}}"   ng-selected="f.isSelect  == true">{{f.name}}</option>
+			                </select>
+	            		</div>   
+	            	</div>
 					
-						<div class="col-md-10">
-  							<label for="usr">Medication Type </label>
-  							<input type="text" ng-model = "cat.medicationType" class="form-control" id="medicationType">
-						</div>	
-				
-						<div class="col-md-10">
-  							<label for="usr">Medication Name</label>
-  							<input type="text" ng-model = "cat.medicationName" class="form-control" id="medicationName">
-						</div>
-				
-					<div class="col-md-10">
-										<div class="">
-											<div class="">
-												<div class="input-group">
-												<span>Medication Start Date </span>
-													 <input type="text" ng-model="cat.medicationStartDate"
-														name="dob" class="form-control " id="medicationStartDatenew"
-														 ng-focus="medicationStartDatepickernew();"
-														style="font-size: 12px;" required>
+					 <div class="col-md-12"  style="margin-top:5%;">
+										
+											
+												<div class="input-group col-md-12" >
+												<span>Breed</span>
+													 <input type="text"  ng-model="cat.breed"
+														name="dobnew" class="form-control " 
+														style="font-size: 12px;  width: 100%; margin-top:1%;" disabled>
+														
+											
 												</div>
-											</div>
-									</div>
-					</div>
-						<!-- <div class="col-md-12">
-  							<label for="usr">Medication Start Date </label>
-  							<input type="text" ng-model = "cat.medicationStartDate" class="form-control" id="medicationStartDate">
-						</div>
-						 -->
+								</div>
 						
-						<div class="col-md-10">
-										<div class="">
-											<div class="">
-												<div class="input-group">
-												<span>Medication End Date </span>
-													 <input type="text" ng-model="cat.medicationEnddate"
-														name="dob" class="form-control " id="medicationEnddatenew"
-														 ng-focus="medicationEnddatepickernew();"
-														style="font-size: 12px;" required>
-												</div>
-											</div>
-									</div>
-					</div>
-					<!-- 	<div class="col-md-12">
-  							<label for="usr">Medication End Date </label>
-  							<input type="text" ng-model = "cat.medicationEnddate" class="form-control" id="medicationEnddate">
-						</div>	 -->
+						
+						
+						
 						
 						<!-- <div class="col-md-12">
   							<label for="usr">Pregnant </label>
   							<input type="text" ng-model = "cat.pregnant" class="form-control" id="pregnant">
 						</div> -->
 						
-						<div class="col-md-10" style="margin-top:1%;margin-left: -4%;">
+						<!-- <div class="col-md-10" style="margin-top:1%;margin-left: -4%;">
 		              <label class="control-label col-md-8">Pregnant</label>
 		              <div class="col-md-12">
 			                <select id = "use"  data-ng-model="cat.pregnant" class = "col-md-5"  style="    width: 110%;">
@@ -380,17 +541,39 @@
 			                  <option value="false"  ng-selected = "cat.pregnant == false">N</option>
 			                </select>
 	            		</div>   
-	            	</div>	
+	            	</div> -->	
 						
 						</div>
-						<div class = "col-md-6	">
+						<div class = "col-md-6">
+						<div class = "col-md-12" style="margin-top:5%;">
+						<label for="usr">Select Health Type </label>
+						</div>
+    					<div class="col-md-6"  style="margin-top:2%;">
+  						<input type="radio" ng-model="cat.vaccination" value="vaccination" ng-click="addnewvaccinationplan();">   Vaccination
+						</div>
+						<div class="col-md-6" style="margin-top:2%;">
+  						<input type="radio" ng-model="cat.vaccination" value="medication" ng-click="addnewmedicationplan();">   Medication
+						</div>
 						
+						
+						 <div class="col-md-12"  style="margin-top:5%;">
+										
+											
+												<div class="input-group col-md-12" >
+												<span>Sub Breed</span>
+													 <input type="text"  ng-model="cat.subbreed"
+														name="dobnew" class="form-control " 
+														style="font-size: 12px;  width: 100%; margin-top:1%;" disabled>
+														
+											
+												</div>
+								</div>
 						<!-- <div class="col-md-12">
   							<label for="usr">Pregnancy Date </label>
   							<input type="text" ng-model = "cat.pregnancyDate" class="form-control" id="pregnancyDate">
 						</div>	
 						 -->
-						<div class="col-md-12">
+						<!-- <div class="col-md-12">
 										<div class="">
 											<div class="">
 												<div class="input-group ">
@@ -402,7 +585,7 @@
 												</div>
 											</div>
 									</div>
-					</div>
+					</div> -->
 						
 						
 						<!-- <div class="col-md-12">
@@ -410,7 +593,7 @@
   							<input type="text" ng-model = "cat.lastDelivaerydate" class="form-control" id="lastDelivaerydate">
 						</div>	 -->	
 					
-					<div class="col-md-9">
+					<!-- <div class="col-md-9">
 										<div class="">
 											<div class="">
 												<div class="input-group"  style="    width: 102%;">
@@ -422,7 +605,7 @@
 												</div>
 											</div>
 									</div>
-					</div>
+					</div> -->
 					
 				<!-- 	
 					<div class="col-md-12">
@@ -430,7 +613,7 @@
   							<input type="text" ng-model = "cat.duedate" class="form-control" id="duedate">
 						</div>	 -->
 						
-					<div class="col-md-10">
+					<!-- <div class="col-md-10">
 										<div class="">
 											<div class="">
 												<div class="input-group col-md-11">
@@ -442,22 +625,125 @@
 												</div>
 											</div>
 									</div>
+					</div> -->
+						
+						
+	            	</div>
+	            	</div>
+	            <div class="modal-body" ng-show="cat.vaccination == 'vaccination'">
+				<div class = "col-md-12">
+				<div class = "col-md-6">
+				
+				
+				
+					
+										
+						<div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
+		              	<label class="control-label col-md-8">Vaccination Type </label>
+		              	<div class="col-md-12"> 
+			                <select id = "feed"  data-ng-model="cat.vaccinationType" class = "col-md-5 form-control"  style="    width: 110%;">
+			                 <option ng-repeat="f in vaccinecaters" value="{{f.vaccinationPlanId}}"   ng-selected="f.isSelect  == true">{{f.vaccineType}}</option>
+			                </select>
+	            		</div>   
+	            		</div>		
+							
+						
+							  <div class="col-md-12">
+										<div class="">
+											<div class="">
+												<div class="input-group col-md-12" style = "margin-top: 5%;">
+												<span>Vaccination Planned Date </span>
+													 <input type="text" ng-model="cat.vaccinationPlannedDate"
+														name="dob" class="form-control " id="vaccinationPlannedDateAddNew"
+														 ng-click="vaccinationPlannedDatepickerNew();"
+														style="font-size: 12px; width: 100%;"" required>
+												</div>
+											</div>
+									</div>
+							  </div> 
 					</div>
-						<!-- <div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
-		              <label class="control-label col-md-8">Select Orgnization</label>
-		              <div class="col-md-12"> 
-			                <select id = "org"  data-ng-model="org" class="col-md-5" style="width:110%;">
-			                 <option ng-repeat="o in orgs" value="{{o.orgId}}"   ng-selected="o.isSelect  == true">{{o.name}}</option>
+					<div class = "col-md-6">
+						    <div class="col-md-12" style="margin-top:5%;">
+  							<label for="usr">Vaccination Name</label>
+  							<input type="text" ng-model = "cat.vaccinationName" class="form-control" id="vaccinationName">
+						    </div>
+						    
+							 <div class="col-md-12">
+										<div class="">
+											<div class="">
+												<div class="input-group col-md-12" style = "margin-top: 5%;">
+												<span>Vaccination Actual Date </span>
+													 <input type="text" ng-model="cat.vaccinationActualDate"
+														name="dob" class="form-control " id="vaccinationActualDateAddNew"
+														 ng-click="vaccinationActualDatepickerNew();"
+														style="font-size: 12px; width:100%;" required>
+												</div>
+											</div>
+									</div>
+							  </div>
+					
+	            	</div>
+	            	</div>
+						
+				</div>
+				
+				<div class="modal-body" ng-show="cat.vaccination == 'medication'">
+				<div class = "col-md-12">
+				<div class = "col-md-6">
+				
+				
+				
+						<div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
+		              	<label class="control-label col-md-8">Medication Type </label>
+		              	<div class="col-md-12"> 
+			                <select id = "feed"  data-ng-model="cat.medicationType" class = "col-md-5 form-control"  style="    width: 110%;" ng-change="getAllMedicationDetails(cat.medicationType)">
+			                 <option ng-repeat="f in feedcaters" value="{{f.healthPlanId}}"   ng-selected="f.isSelect  == true">{{f.medicationType}}</option>
 			                </select>
 	            		</div>   
-	            	</div> -->
-						<div class="col-md-10" style="margin-top:1%;margin-left:-4%;">
-		              <label class="control-label col-md-8">Select User Id</label>
-		              <div class="col-md-11">
-			                <select id = "use"  data-ng-model="userId" class="col-md-5" style="width:110%;">
-			                 <option ng-repeat="u in users" value="{{u.userId}}"   ng-selected="u.isSelect  == true">{{u.userId}}</option>
-			                </select>
-	            		</div>   
+	            		</div>
+					
+							
+				
+						
+				
+									<div class="col-md-12">
+										<div class="">
+											<div class="">
+												<div class="input-group col-md-12" style="margin-top:5%;">
+												<span>Medication Start Date </span>
+													 <input type="text" ng-model="cat.medicationStartDate"
+														name="dob" class="form-control " id="medicationStartDateAddNew"
+														 ng-click="medicationStartDatepickerNew();"
+														style="font-size: 12px; width:100%;" required>
+												</div>
+											</div>
+									</div>
+									</div>
+							
+						
+						</div>
+						<div class = "col-md-6	">
+						 
+    					<div class="col-md-12" style="margin-top:5%;">
+  							<label for="usr">Medication Name</label>
+  							<input type="text" ng-model = "cat.medicationName" class="form-control" id="medicationName">
+						</div>
+						 <div class="col-md-12">
+										<div class="">
+											<div class="">
+												<div class="input-group col-md-12" style="margin-top:5%;">
+												<span>Medication End Date </span>
+													 <input type="text" ng-model="cat.medicationEndDateVM"
+														name="dob" class="form-control " id="medicationEndDateAddNew"
+														 ng-click="medicationEndDatepickerNew();"
+														style="font-size: 12px; width:100%" required>
+												</div>
+											</div>
+									</div>
+						</div>
+						
+						
+						
 	            	</div>
 	            	</div>
 	            	</div>

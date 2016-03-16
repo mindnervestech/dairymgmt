@@ -9615,21 +9615,42 @@ App.controller('ViewAllDailyMilkReportController', function ($scope, $rootScope,
 App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $routeParams, $http, $upload){
 	
 	 
-	 $scope.medicationEnddatepicker = function(){
+	$scope.medicationStartDatepickerNew = function(){
+		 $('#medicationStartDateAddNew').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+		 $('#medicationStartDateAdd').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+	 }
+	 $scope.medicationEndDatepickerNew = function(){
 
-		$('#medicationEnddate').datepicker({
+		$('#medicationEndDateAddNew').datepicker({
 			    format: 'dd-MM-yyyy'
 		});
-		
-	 }
-	 
-	 $scope.medicationStartDatepicker = function(){
-		 $('#medicationStartDate').datepicker({
-			    format: 'dd-MM-yyyy'
+		$('#medicationEndDateAdd').datepicker({
+		    format: 'dd-MM-yyyy'
 		});
 	 }
-	 
-	 $scope.duedatepicker = function(){
+	 $scope.vaccinationPlannedDatepickerNew = function(){
+		 $('#vaccinationPlannedDateAddNew').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+		 $('#vaccinationPlannedDateAdd').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+		 
+	 }
+	 $scope.vaccinationActualDatepickerNew = function(){
+		 $('#vaccinationActualDateAddNew').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+		 $('#vaccinationActualDateAdd').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+		 
+	 }
+	/* $scope.duedatepicker = function(){
 		 $('#duedate').datepicker({
 			    format: 'dd-MM-yyyy'
 		});
@@ -9645,11 +9666,11 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 		 $('#lastDelivaerydate').datepicker({
 			    format: 'dd-MM-yyyy'
 		});
-	 }
+	 }*/
 	 
 	 
 	 
-	 $scope.medicationEnddatepickernew = function(){
+	/* $scope.medicationEnddatepickernew = function(){
 
 			$('#medicationEnddatenew').datepicker({
 				    format: 'dd-MM-yyyy'
@@ -9679,7 +9700,7 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 				    format: 'dd-MM-yyyy'
 			});
 		 }
-	 
+*/	 
 	//Get all Cattle master to admin
 	 $scope.email;
 	 $scope.pageno = 0;
@@ -9849,6 +9870,18 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 		
 		$scope.cat = cat;
 		console.log(cat);
+		
+		$http.get('/getAllOnlyCattleMaster/?d='+Math.random()).success(function(data) {
+	    	$scope.caters = data.caters;
+	    	console.log("caters: " + $scope.feedcaters);
+			angular.forEach($scope.caters, function(obj, index){
+				console.log("user  caters:  "+$scope.cat.cattleMaster.cattleId);
+					if ((obj.cattleId == $scope.cat.cattleMaster.cattleId)) {
+						obj.isSelect = true;
+						$scope.catersIds = obj.cattleId;
+						};
+				});
+			});
 		$http.get('/getAllOnlyUsers/?d='+Math.random()).success(function(data) {
 	    	$scope.users = data.users;
 	    	console.log("user s: "+data.users);
@@ -9871,7 +9904,8 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 			});
 
 		$('#editfeedCatdersDetails').modal();
-		$('#medicationEnddate').datepicker({
+		
+	/*$('#medicationEnddate').datepicker({
 		    format: 'dd-MM-yyyy'
 	});
 	
@@ -9886,9 +9920,19 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 	});
 	 $('#lastDelivaerydate').datepicker({
 		    format: 'dd-MM-yyyy'
-	});
-		
-		
+	});*/
+		$('#vaccinationPlannedDateAdd').datepicker({
+		    format: 'dd-MM-yyyy'
+		});
+		$('#vaccinationActualDateAdd').datepicker({
+		    format: 'dd-MM-yyyy'
+		});
+		$('#medicationStartDateAdd').datepicker({
+		    format: 'dd-MM-yyyy'
+		});
+		$('#medicationEndDateAdd').datepicker({
+		    format: 'dd-MM-yyyy'
+		});
 		
 	}
 	
@@ -9901,7 +9945,7 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 	
 	$scope.updateCattleHealthProfileByAdmin = function(cat){
 		$scope.cat = cat;
-			$http.post('/updateCattleHealthProfileByAdmin?d='+Math.random(),{cat:$scope.cat,userId:$scope.userId,org:$scope.org})
+			$http.post('/updateCattleHealthProfileByAdmin?d='+Math.random(),{cat:$scope.cat,userId:$scope.userId,org:$scope.org,catersIds:$scope.catersIds})
 			.success(function(data){
 				//console.log("success");
 				$scope.updateSuccess = true;
@@ -9918,7 +9962,9 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 
 	$scope.addCattleHealthProfileByAdmin = function(cat){
 		$scope.cat = cat;
-		$http.post('/updateCattleHealthProfileByAdmin?d='+Math.random(),{cat:$scope.cat,userId:$scope.userId,org:$scope.org})
+		console.log($scope.cat);
+		console.log( cat);
+		$http.post('/updateCattleHealthProfileByAdmin?d='+Math.random(),{cat:$scope.cat,userId:$scope.userId,org:$scope.org,catersIds:$scope.catersIds})
 		.success(function(data){
 			//console.log("success");
 			$scope.updateSuccess = true;
@@ -9955,6 +10001,17 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 						};
 				});
 			});
+		$http.get('/getAllOnlyVaccinationPlan?d='+Math.random()).success(function(data) {
+	    	$scope.vaccinecaters = data.caters;
+	    	console.log("$scope.caters: "+$scope.caters);
+			
+	    });
+		
+		$http.get('/getAllOnlyCattleHealthMaster?d='+Math.random()).success(function(data) {
+	    	$scope.feedcaters = data.feedcaters;
+	    	console.log("$scope.feedcaters: "+$scope.feedcaters);
+			
+	    });
 		
 		$http.get('/getAllOnlyOrg/?d='+Math.random()).success(function(data) {
 	    	$scope.orgs = data.orgs;
@@ -9965,11 +10022,15 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 						};
 				});
 			});
+		$http.get('/getAllOnlyCattleMaster/?d='+Math.random()).success(function(data) {
+	    	$scope.caters = data.caters;
+	    	console.log("caters: " + $scope.feedcaters);
+			});
 		
 		$("#addnewfeedCattle").modal('show');
 		
 		
-		$('#medicationEnddate').datepicker({
+	/*$('#medicationEnddate').datepicker({
 		    format: 'dd-MM-yyyy'
 	});
 	
@@ -9984,8 +10045,161 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 	});
 	 $('#lastDelivaerydatenew').datepicker({
 		    format: 'dd-MM-yyyy'
-	});
+	});*/
+		 $('#vaccinationPlannedDateAddNew').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+		 $('#vaccinationActualDateAddNew').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+		
+		 $('#medicationStartDateAddNew').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+		 $('#medicationEndDateAddNew').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
 	}
+	 $scope.getAllMedicationDetails = function(id){
+		 console.log(id);
+		 console.log("in function");
+		 for (var i=0; i<$scope.feedcaters.length; i++) {
+			 
+			 if($scope.feedcaters[i].healthPlanId == id){
+				 
+				 $scope.cat=$scope.feedcaters[i];
+				 //$scope.cat.dateOfBirth= $filter('date')($scope.cat.dateOfBirth, 'dd/MM/yyyy');
+				// console.log($filter('date')(date[ $scope.cat.dateOfBirth, "dd/MM/yyyy"]));
+				// $scope.cat.dateofBirth= $filter('date')(date[ $scope.cat.DateofBirth, "dd/MM/yyyy"]);
+				 
+				 console.log($scope.cat);
+			 }
+		 }
+	 };
+	
+/*$scope.addnewvaccinationplan = function(){
+		
+		$scope.update =  false;
+		$scope.add =  false;
+		
+		$scope.cat = {};
+		$http.get('/getuserId/?d='+Math.random()).success(function(data) {
+			$scope.userId = data;
+			
+			});
+		
+		
+		$http.get('/getAllOnlyUsers/?d='+Math.random()).success(function(data) {
+	    	$scope.users = data.users;
+	    	console.log("user s: "+data.users);
+			angular.forEach($scope.users, function(obj, index){
+					if ((obj.userId == $scope.userId)) {
+						obj.isSelect = true;
+						console.log(" users  in true");
+						//$scope.userExperience = obj.experianceLevel;
+						};
+				});
+			});
+		
+		$http.get('/getAllOnlyOrg/?d='+Math.random()).success(function(data) {
+	    	$scope.orgs = data.orgs;
+			angular.forEach($scope.orgs, function(obj, index){
+				console.log("user  org:  "+$scope.cat.oraganization.orgId);
+					if ((obj.orgId == $scope.cat.oraganization.orgId)) {
+						obj.isSelect = true;
+						};
+				});
+			});
+		$http.get('/getAllOnlyVaccinationPlan/?d='+Math.random()).success(function(data) {
+	    	$scope.caters = data.caters;
+	    	console.log("$scope.caters: "+$scope.caters);
+			
+	    });
+		
+		
+		$("#addnewvaccinationplan").modal('show');
+		
+		
+	$('#vaccinationPlannedDateAddNew').datepicker({
+		    format: 'dd-MM-yyyy'
+	});
+	
+	 $('#vaccinationActualDateAddNew').datepicker({
+		    format: 'dd-MM-yyyy'
+	});
+}
+	
+
+$scope.addnewmedicationplan = function(){
+	
+	$scope.update =  false;
+	$scope.add =  false;
+	
+	$scope.cat = {};
+	$http.get('/getuserId/?d='+Math.random()).success(function(data) {
+		$scope.userId = data;
+		
+		});
+	
+	
+	$http.get('/getAllOnlyUsers/?d='+Math.random()).success(function(data) {
+    	$scope.users = data.users;
+    	console.log("user s: "+data.users);
+		angular.forEach($scope.users, function(obj, index){
+				if ((obj.userId == $scope.userId)) {
+					obj.isSelect = true;
+					console.log(" users  in true");
+					//$scope.userExperience = obj.experianceLevel;
+					};
+			});
+		});
+	
+	$http.get('/getAllOnlyOrg/?d='+Math.random()).success(function(data) {
+    	$scope.orgs = data.orgs;
+		angular.forEach($scope.orgs, function(obj, index){
+			console.log("user  org:  "+$scope.cat.oraganization.orgId);
+				if ((obj.orgId == $scope.cat.oraganization.orgId)) {
+					obj.isSelect = true;
+					};
+			});
+		});
+	
+	$http.get('/getAllOnlyCattleHealthMaster/?d='+Math.random()).success(function(data) {
+    	$scope.feedcaters = data.feedcaters;
+    	console.log("$scope.feedcaters: "+$scope.feedcaters);
+		
+    });
+	$http.get('/getAllOnlyCattleMaster/?d='+Math.random()).success(function(data) {
+    	$scope.caters = data.caters;
+    	console.log("caters: " + $scope.feedcaters);
+		});
+	
+	$("#addnewmedicationplan").modal('show');
+	
+	
+	$('#medicationStartDateAddNew').datepicker({
+	    format: 'dd-MM-yyyy'
+	});
+
+	$('#medicationEndDateAddNew').datepicker({
+	    format: 'dd-MM-yyyy'
+	});
+	
+	}*/
+	 
+	 $scope.getAllCattleMasterDeatails = function(id){
+		 console.log(id);
+		 console.log("in function");
+		 for (var i=0; i<$scope.caters.length; i++) {
+			 
+			 if($scope.caters[i].cattleId == id){
+				 
+				 $scope.cat=$scope.caters[i];
+				
+				 console.log($scope.cat);
+			 }
+		 }
+	 };
 	
 });
 

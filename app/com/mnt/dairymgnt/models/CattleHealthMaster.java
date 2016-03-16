@@ -27,9 +27,17 @@ public class CattleHealthMaster extends Model
 	public Date medicationNextDate;
 	public String frequency;
 	public String duration;
+	public String frequencyType;
+	
 	
 	public long getHealthPlanId() {
 		return healthPlanId;
+	}
+	public String getFrequencyType() {
+		return frequencyType;
+	}
+	public void setFrequencyType(String frequencyType) {
+		this.frequencyType = frequencyType;
 	}
 	public void setHealthPlanId(long healthPlanId) {
 		this.healthPlanId = healthPlanId;

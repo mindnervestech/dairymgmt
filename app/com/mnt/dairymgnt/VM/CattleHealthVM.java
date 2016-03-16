@@ -2,9 +2,12 @@ package com.mnt.dairymgnt.VM;
 
 import java.util.Date;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.mnt.dairymgnt.models.CattleMaster;
 import com.mnt.dairymgnt.models.Oraganization;
 import com.mnt.dairymgnt.models.Users;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class CattleHealthVM {
 
 	
@@ -13,7 +16,7 @@ public class CattleHealthVM {
     public String medicationType;
     public String medicationName;
     public String medicationStartDate;
-    public String medicationEnddate;
+    public String medicationEndDate;
     public boolean  pregnant;
     public String pregnancyDate;
     public String   lastDelivaerydate;
@@ -26,6 +29,15 @@ public class CattleHealthVM {
 	
 	public Oraganization oraganization;
 	public Users users;
+	public CattleMaster cattleMaster;
+	
+	public String vaccinationType;
+	public String vaccinationName;
+	public String vaccinationPlannedDate;
+	public String vaccinationActualDate;
+	public String breed;
+	public String subbreed;
+	public String vaccination;
 
 	
 }
