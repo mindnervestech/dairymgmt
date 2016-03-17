@@ -1438,18 +1438,26 @@ public static Result getMonthlyCattleOutputReport(){
 		
 		for(CattleHealth u : cattleHealth){
 			CattleHealthVM cfvm = new CattleHealthVM();
-			cfvm.duedate = u.duedate;
-			cfvm.lastDelivaerydate = u.lastDelivaerydate;
+			//cfvm.duedate = u.duedate;
+			//cfvm.lastDelivaerydate = u.lastDelivaerydate;
 			cfvm.medicationEndDate = u.medicationEndDate;
 			cfvm.medicationStartDate  = u.medicationStartDate;
 			cfvm.medicationName = u.medicationName;
 			cfvm.medicationType = u.medicationType;
-			cfvm.pregnancyDate = u.pregnancyDate;
-			cfvm.pregnant = u.pregnant;
+			
+			//cfvm.pregnancyDate = u.pregnancyDate;
+			//cfvm.pregnant = u.pregnant;
 			cfvm.lastUpdateDateTime =  u.lastUpdateDateTime;
 			cfvm.users = u.users;
 			cfvm.oraganization = u.oraganization;
 			cfvm.cattleId = u.cattleId;
+			cfvm.healthType=u.healthType;
+			cfvm.vaccinationActualDate=u.vaccinationActualDate;
+			cfvm.vaccinationName=u.vaccinationName;
+			cfvm.vaccinationPlannedDate=u.vaccinationPlannedDate;
+			cfvm.vaccinationType=u.vaccinationType;
+			cfvm.breed=u.breed;
+			cfvm.subBreed=u.subBreed;
 			cmvm.add(cfvm);
 		}
 
@@ -2473,15 +2481,19 @@ public static Result getMonthlyCattleOutputReport(){
 				//u.setLastDelivaerydate(uvm.lastDelivaerydate);
 				u.setMedicationEndDate(uvm.medicationEndDate);
 				u.setMedicationStartDate(uvm.medicationStartDate);
+				u.setMedicationName(uvm.medicationName);
+				u.setMedicationType(uvm.medicationType);
+				
 				u.setBreed(uvm.breed);
-				u.setSubbreed(uvm.subbreed);
-				u.setVaccination(uvm.vaccination);
+				u.setSubBreed(uvm.subBreed);
+				u.setHealthType(uvm.healthType);
+				
 				u.setVaccinationActualDate(uvm.vaccinationActualDate);
 				u.setVaccinationName(uvm.vaccinationName);
 				u.setVaccinationPlannedDate(uvm.vaccinationPlannedDate);
 				u.setVaccinationType(uvm.vaccinationType);
-				u.setMedicationStartDate(uvm.medicationStartDate);
-				u.setMedicationType(uvm.medicationType);
+				//u.setMedicationStartDate(uvm.medicationStartDate);
+				
 				u.setPregnancyDate(uvm.pregnancyDate);
 				u.setPregnant(uvm.pregnant);
 				
@@ -2496,15 +2508,20 @@ public static Result getMonthlyCattleOutputReport(){
 				//u.setLastDelivaerydate(uvm.lastDelivaerydate);
 				u.setMedicationEndDate(uvm.medicationEndDate);
 				u.setMedicationStartDate(uvm.medicationStartDate);
-				u.setBreed(uvm.breed);
-				u.setSubbreed(uvm.subbreed);
-				u.setVaccination(uvm.vaccination);
-				u.setVaccinationActualDate(uvm.vaccinationActualDate);
-				u.setVaccinationName(uvm.vaccinationName);
-				u.setVaccinationPlannedDate(uvm.vaccinationPlannedDate);
-				u.setVaccinationType(uvm.vaccinationType);
-				u.setMedicationStartDate(uvm.medicationStartDate);
 				u.setMedicationType(uvm.medicationType);
+				u.setMedicationName(uvm.medicationName);
+				
+				u.setBreed(uvm.breed);
+				u.setSubBreed(uvm.subBreed);
+				u.setHealthType(uvm.healthType);
+				
+				u.setVaccinationType(uvm.vaccinationType);
+				u.setVaccinationName(uvm.vaccinationName);
+				u.setVaccinationActualDate(uvm.vaccinationActualDate);
+				u.setVaccinationPlannedDate(uvm.vaccinationPlannedDate);
+				
+				//u.setMedicationStartDate(uvm.medicationStartDate);
+				
 				u.setPregnancyDate(uvm.pregnancyDate);
 				u.setPregnant(uvm.pregnant);
 				

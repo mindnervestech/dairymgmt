@@ -46,17 +46,19 @@ public class CattleHealth  extends Model{
 	public String vaccinationPlannedDate;
 	public String vaccinationActualDate;
 	public String breed;
-	public String subbreed;
-	public String vaccination;
+	public String subBreed;
+	public String healthType;
 	
 	
     
-    public String getVaccination() {
-		return vaccination;
+   
+
+	public String getHealthType() {
+		return healthType;
 	}
 
-	public void setVaccination(String vaccination) {
-		this.vaccination = vaccination;
+	public void setHealthType(String healthType) {
+		this.healthType = healthType;
 	}
 
 	public int getCattleId() {
@@ -247,12 +249,16 @@ public class CattleHealth  extends Model{
 		this.breed = breed;
 	}
 
-	public String getSubbreed() {
-		return subbreed;
+	
+
+
+
+	public String getSubBreed() {
+		return subBreed;
 	}
 
-	public void setSubbreed(String subbreed) {
-		subbreed = subbreed;
+	public void setSubBreed(String subBreed) {
+		this.subBreed = subBreed;
 	}
 
 

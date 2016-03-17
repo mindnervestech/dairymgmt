@@ -36,8 +36,9 @@ public class CattleHealthVM {
 	public String vaccinationPlannedDate;
 	public String vaccinationActualDate;
 	public String breed;
-	public String subbreed;
-	public String vaccination;
+	public String subBreed;
+
+	public String healthType;
 
 	
 }

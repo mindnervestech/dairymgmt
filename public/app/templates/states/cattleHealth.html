@@ -26,8 +26,9 @@
 			</div>
 			
 			<div class="portlet-body" ng-init="init();" style="overflow-x: auto;">
-				<span ng-if="add == true" style="color:green;">Record Added Successfully.</span>
-			<span ng-if="update == true" style="color:green;">Record Updated  Successfully.</span>
+			<div flash-message="5000"  style="float:right; width:40%;" ></div>
+				<!-- <span ng-if="add == true" style="color:green;">Record Added Successfully.</span>
+			<span ng-if="update == true" style="color:green;">Record Updated  Successfully.</span> -->
 			
 				<div class="row mbm">
 					<div class="col-lg-12">
@@ -54,13 +55,15 @@
 											<th>Cattle Id</th>
 											<th>Medication Type</th>
 											<th>Medication Name</th>
-											<th>Medication Start Date</th>
+											<th>Vaccination Type</th>
+											<th>Vaccination Name</th>											
+											<!-- <th>Medication Start Date</th>
 											<th>Medication End date</th>
 											<th>Pregnant</th>
 											<th>Pregnancy Date</th>
 											<th>Last Delivaery date</th>
 											<th>Due date</th>
-											<th>Last Update Date Time</th>
+											 --><th>Last Update Date Time</th>
 											<th>Details</th>
 										</tr>
 										<tr data-ng-repeat="cat in catershealth"
@@ -71,13 +74,15 @@
 											
 											<td ng-click="">{{cat.medicationType}}</td>
 											<td ng-click="">{{cat.medicationName}}</td>
-											<td ng-click="">{{cat.medicationStartDate | date:'yyyy-MM-dd HH:mm:ss '}}</td>
+											<td ng-click="">{{cat.vaccinationType}}</td>
+											<td ng-click="">{{cat.vaccinationName}}</td>
+											<!-- <td ng-click="">{{cat.medicationStartDate | date:'yyyy-MM-dd HH:mm:ss '}}</td>
 											<td ng-click="">{{cat.medicationEnddate | date:'yyyy-MM-dd HH:mm:ss '}}</td>
 											<td ng-click="" > <span ng-if ="cat.pregnant == true">Yes</span><span ng-if ="cat.pregnant == false">No</span></td>
 											<td ng-click="">{{cat.pregnancyDate | date:'yyyy-MM-dd HH:mm:ss '}}</td>
 											<td ng-click="">{{cat.lastDelivaerydate | date:'yyyy-MM-dd HH:mm:ss '}}</td>
 											<td ng-click="">{{cat.duedate | date:'yyyy-MM-dd HH:mm:ss '}}</td>
-											<!-- <td>  <div class="col-md-4">
+										 -->	<!-- <td>  <div class="col-md-4">
 																<div class="">
 																	<div class="">
 																		<div class="input-group">
@@ -176,18 +181,18 @@
 						<label for="usr">Select Health Type </label>
 						</div>
     					<div class="col-md-6"  style="margin-top:2%;">
-  						<input type="radio" ng-model="cat.vaccination" value="vaccination" ng-click="addnewvaccinationplan();">   Vaccination
+  						<input type="radio" ng-model="cat.healthType" value="vaccination" ng-click="addnewvaccinationplan();">   Vaccination
 						</div>
 						<div class="col-md-6" style="margin-top:2%;">
-  						<input type="radio" ng-model="cat.vaccination" value="medication" ng-click="addnewmedicationplan();">   Medication
+  						<input type="radio" ng-model="cat.healthType" value="medication" ng-click="addnewmedicationplan();">   Medication
 						</div>
 						
-						<div class="col-md-12"  style="margin-top:5%;">
+						<div class="col-md-12"  style="margin-top:6%;">
 										
 											
 												<div class="input-group col-md-12" >
 												<span>Sub Breed</span>
-													 <input type="text"  ng-model="cat.subbreed"
+													 <input type="text"  ng-model="cat.subBreed"
 														name="dobnew" class="form-control " 
 														style="font-size: 12px;  width: 100%; margin-top:1%;" disabled>
 														
@@ -204,7 +209,7 @@
 						
 	            	</div>
 	            	</div>
-	            <div class="modal-body" ng-show="cat.vaccination == 'vaccination'">
+	            <div class="modal-body" ng-show="cat.healthType == 'vaccination'">
 				<div class = "col-md-12">
 				<div class = "col-md-6">
 				
@@ -215,7 +220,7 @@
 						<div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
 		              	<label class="control-label col-md-8">Vaccination Type </label>
 		              	<div class="col-md-12"> 
-			                <select id = "feed"  data-ng-model="cat.vaccinationType" class = "col-md-5 form-control"  style="    width: 110%;">
+			                <select id = "feed"  data-ng-model="cat.vaccinationType" class = "col-md-5 form-control"  style="    width: 110%;" ng-change="getAllVaccinationPlanDetails(cat.vaccinationType)">
 			                 <option ng-repeat="f in vaccinecaters" value="{{f.vaccinationPlanId}}"   ng-selected="f.isSelect  == true">{{f.vaccineType}}</option>
 			                </select>
 	            		</div>   
@@ -239,7 +244,7 @@
 					<div class = "col-md-6">
 						    <div class="col-md-12" style="margin-top:5%;">
   							<label for="usr">Vaccination Name</label>
-  							<input type="text" ng-model = "cat.vaccinationName" class="form-control" id="medicationName">
+  							<input type="text" ng-model = "cat.vaccinationName" class="form-control" id="medicationName" Disabled>
 						    </div>
 						    
 							 <div class="col-md-12">
@@ -261,7 +266,7 @@
 						
 				</div>
 				
-				<div class="modal-body" ng-show="cat.vaccination == 'medication'">
+				<div class="modal-body" ng-show="cat.healthType== 'medication'">
 				<div class = "col-md-12">
 				<div class = "col-md-6">
 				
@@ -270,7 +275,7 @@
 						<div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
 		              	<label class="control-label col-md-8">Medication Type </label>
 		              	<div class="col-md-12"> 
-			                <select id = "feed"  data-ng-model="cat.medicationType" class = "col-md-5 form-control"  style="    width: 110%;" ng-change="getAllMedicationDetails(medicationType)">
+			                <select id = "feed"  data-ng-model="cat.medicationType" class = "col-md-5 form-control"  style="    width: 110%;" ng-change="getAllMedicationDetails(cat.medicationType)">
 			                 <option ng-repeat="f in feedcaters" value="{{f.healthPlanId}}"   ng-selected="f.isSelect  == true">{{f.medicationType}}</option>
 			                </select>
 	            		</div>   
@@ -300,7 +305,7 @@
 						 
     					<div class="col-md-12" style="margin-top:5%;">
   							<label for="usr">Medication Name</label>
-  							<input type="text" ng-model = "cat.medicationName" class="form-control" id="medicationName">
+  							<input type="text" ng-model = "cat.medicationName" class="form-control" id="medicationName" Disabled>
 						</div>
 						 <div class="col-md-12">
 										<div class="">
@@ -549,19 +554,19 @@
 						<label for="usr">Select Health Type </label>
 						</div>
     					<div class="col-md-6"  style="margin-top:2%;">
-  						<input type="radio" ng-model="cat.vaccination" value="vaccination" ng-click="addnewvaccinationplan();">   Vaccination
+  						<input type="radio" ng-model="cat.healthType" value="vaccination" ng-click="addnewvaccinationplan();">   Vaccination
 						</div>
 						<div class="col-md-6" style="margin-top:2%;">
-  						<input type="radio" ng-model="cat.vaccination" value="medication" ng-click="addnewmedicationplan();">   Medication
+  						<input type="radio" ng-model="cat.healthType" value="medication" ng-click="addnewmedicationplan();">   Medication
 						</div>
 						
 						
-						 <div class="col-md-12"  style="margin-top:5%;">
+						 <div class="col-md-12"  style="margin-top:6%;">
 										
 											
 												<div class="input-group col-md-12" >
 												<span>Sub Breed</span>
-													 <input type="text"  ng-model="cat.subbreed"
+													 <input type="text"  ng-model="cat.subBreed"
 														name="dobnew" class="form-control " 
 														style="font-size: 12px;  width: 100%; margin-top:1%;" disabled>
 														
@@ -630,7 +635,7 @@
 						
 	            	</div>
 	            	</div>
-	            <div class="modal-body" ng-show="cat.vaccination == 'vaccination'">
+	            <div class="modal-body" ng-show="cat.healthType == 'vaccination'">
 				<div class = "col-md-12">
 				<div class = "col-md-6">
 				
@@ -641,7 +646,7 @@
 						<div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
 		              	<label class="control-label col-md-8">Vaccination Type </label>
 		              	<div class="col-md-12"> 
-			                <select id = "feed"  data-ng-model="cat.vaccinationType" class = "col-md-5 form-control"  style="    width: 110%;">
+			                <select id = "feed"  data-ng-model="cat.vaccinationType" class = "col-md-5 form-control"  style="    width: 110%;"  ng-change="getAllVaccinationPlanDetails(cat.vaccinationType)">
 			                 <option ng-repeat="f in vaccinecaters" value="{{f.vaccinationPlanId}}"   ng-selected="f.isSelect  == true">{{f.vaccineType}}</option>
 			                </select>
 	            		</div>   
@@ -665,7 +670,7 @@
 					<div class = "col-md-6">
 						    <div class="col-md-12" style="margin-top:5%;">
   							<label for="usr">Vaccination Name</label>
-  							<input type="text" ng-model = "cat.vaccinationName" class="form-control" id="vaccinationName">
+  							<input type="text" ng-model = "cat.vaccinationName" class="form-control" id="vaccinationName" Disabled>
 						    </div>
 						    
 							 <div class="col-md-12">
@@ -687,7 +692,7 @@
 						
 				</div>
 				
-				<div class="modal-body" ng-show="cat.vaccination == 'medication'">
+				<div class="modal-body" ng-show="cat.healthType == 'medication'">
 				<div class = "col-md-12">
 				<div class = "col-md-6">
 				
@@ -726,14 +731,14 @@
 						 
     					<div class="col-md-12" style="margin-top:5%;">
   							<label for="usr">Medication Name</label>
-  							<input type="text" ng-model = "cat.medicationName" class="form-control" id="medicationName">
+  							<input type="text" ng-model = "cat.medicationName" class="form-control" id="medicationName" Disabled>
 						</div>
 						 <div class="col-md-12">
 										<div class="">
 											<div class="">
 												<div class="input-group col-md-12" style="margin-top:5%;">
 												<span>Medication End Date </span>
-													 <input type="text" ng-model="cat.medicationEndDateVM"
+													 <input type="text" ng-model="cat.medicationEndDate"
 														name="dob" class="form-control " id="medicationEndDateAddNew"
 														 ng-click="medicationEndDatepickerNew();"
 														style="font-size: 12px; width:100%" required>
