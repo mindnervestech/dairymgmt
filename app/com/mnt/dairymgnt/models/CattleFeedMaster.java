@@ -12,6 +12,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
 import com.avaje.ebean.Ebean;
+import com.avaje.ebean.annotation.Where;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import play.db.ebean.Model;
@@ -91,14 +92,14 @@ public class CattleFeedMaster extends Model {
 		this.lastUpdateDateTime = lastUpdateDateTime;
 	}
 
-	public String Breed;
+	public String breed;
 	public String getBreed() {
-		return Breed;
+		return breed;
 	}
 
 
 	public void setBreed(String breed) {
-		Breed = breed;
+		breed = breed;
 	}
 
 
@@ -236,6 +237,27 @@ public class CattleFeedMaster extends Model {
 	public static List<CattleFeedMaster> getAllOnlyFeedCattleMaster(){
 		return find.all();
 	}
+	
+	@JsonIgnore
+	public static CattleFeedMaster findById(Long id){
+		return find.byId(id);
+	}
+	
+	/*public static List <CattleFeedMaster> getAllDetailsbyBreed(Long id){
+		CattleMaster cattleMaster = CattleMaster.getUserByCattleId(id);
+		find.where().eq("", "").eq("", "").findList();
+		find.where().and(eq("breed", cattleMaster.getBreed())
+		String sqlQuery = "SELECT feedPlanName FROM CattleHealthMaster " +
+				"WHERE breed=(select breed from CattleMaster where cattleId=id ) " +
+				"and subBreed=(select subBreed From CattleMaster where cattleId=id ) " +
+				"and (select feedPlanName Form CattleFeedMaster where CURDATE() between feedPlanStartDate and feedPlanEndDate )";
+	    //Long resultId = CattleFeedMaster.find(sqlQuery).first();
+		
+     //   List<CattleFeedMaster> item = CattleFeedMaster.find("SELECT feedPlanName FROM CattleFeedMaster WHERE breed=() and subBreed = () ").fetch();
+    // return find.("SELECT feedPlanName FROM CattleFeedMaster WHERE breed=() and subBreed =() ");
+		return find.all();
+		
+	}*/
 
 	@JsonIgnore
 	public static List<CattleFeedMaster> getAllFeedCattleMaster(int pageNumber,int rowperpage){
@@ -243,11 +265,21 @@ public class CattleFeedMaster extends Model {
 				.findList();
 	}
 	
+	
+	
 	@JsonIgnore
 	public static int getAllFeedCattleMasterCount(int pageNumber) {
 		// TODO Auto-generated method stub
 		return find.setFirstRow(pageNumber * 10)
 				.setMaxRows(CattleFeedMaster.find.findRowCount()).findList().size();
 	}
+
+
+
+	public static List<CattleFeedMaster> findByBreeAndSubBreed(String breed2,
+			String subBreed2) {
+		return find.where().eq("breed", breed2).eq("sub_breed", subBreed2).findList();
+	}
+	
 	
 }

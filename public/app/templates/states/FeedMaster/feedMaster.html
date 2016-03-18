@@ -348,11 +348,22 @@ function isNumber(evt) {
   							<label for="usr">Quantity Of Vitamins(%) </label>
   							<input type="text" ng-model = "feed.quantityofVitamins" maxlength="80" class="form-control" id="firstname" onkeypress="return isNumber(event)">
 						</div>
-						<div class="col-md-12" style = "margin-top: 5%;">
+						<!-- <div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr">Feed Type </label>
   							<input type="text" ng-model = "feed.feedType" maxlength="80" class="form-control" id="firstname"  onkeypress="return onlyAlphabets(event,this);">
-						</div>
+						</div> -->
 					
+					<div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr">Feed Type</label>
+  							<select id = "use"  ng-model="feed.feedType" class= "form-control" ng-change="" style="    width: 100%;">
+			                <option value="" disabled>--- Select ---</option>
+			                <option value="Veg" >Veg</option>
+    						<option value="Non Veg">Non Veg</option>
+    						<option value="Mixed">Mixed</option>
+			                </select>
+			           </div>
+			           
+			           
 								
 						
 	            	</div>
@@ -538,12 +549,20 @@ function isNumber(evt) {
   							<input type="text" ng-model = "feed.quantityofVitamins" maxlength="80" class="form-control" id="firstname" onkeypress="return isNumber(event)">
 						</div>	
 						
-						<div class="col-md-12" style = "margin-top: 5%;">
+					<!-- 	<div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr">Feed Type </label>
   							<input type="text" ng-model = "feed.feedType" maxlength="80" class="form-control" id="firstname"  onkeypress="return onlyAlphabets(event,this);">
-						</div>	
+						</div> -->	
 						
-					
+					<div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr"> Feed Typer</label>
+  							<select id = "use"  ng-model="feed.feedType" class= "form-control" ng-change="" style="    width: 100%;">
+			                <option value="" disabled>--- Select ---</option>
+			                <option value="Veg" >Veg</option>
+    						<option value="Non Veg">Non Veg</option>
+    						<option value="Mixed">MIxed</option>
+			                </select>						
+						</div>
 						
 						<!--  <div class="col-md-12">
 										<div class="">

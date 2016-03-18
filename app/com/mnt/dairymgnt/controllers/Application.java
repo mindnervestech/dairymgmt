@@ -571,7 +571,7 @@ public class Application extends Controller {
 			//cfvm.feedType = u.feedType;
 			cfvm.MealType = u.MealType;
 			cfvm.quantity = u.quantity;
-			cfvm.Breed = u.Breed;
+			cfvm.Breed = u.breed;
 			cfvm.SubBreed = u.SubBreed;
 			cfvm.lastUpdateDateTime =  u.lastUpdateDateTime;
 			cfvm.users = u.users;
@@ -733,7 +733,7 @@ public class Application extends Controller {
 			//cfvm.feedType = u.feedType;
 			cfvm.MealType = u.MealType;
 			cfvm.quantity = u.quantity;
-			cfvm.Breed = u.Breed;
+			cfvm.Breed = u.breed;
 			cfvm.SubBreed = u.SubBreed;
 			cfvm.lastUpdateDateTime =  u.lastUpdateDateTime;
 			cfvm.users = u.users;
@@ -3761,6 +3761,47 @@ public static Result getMonthlyCattleOutputReport(){
 		
 		return ok(Json.toJson(cattleIntakePlans));
 	}
+	public static  Result getFeedCattleMasterDetails()
+	{
+
+    	DynamicForm df=Form.form().bindFromRequest();
+    	System.out.println(df.get("id"));
+    	Long id = Long.parseLong(df.get("id"));
+    	CattleMaster obj = CattleMaster.findById(id);
+    	String breed = obj.getBreed();
+    	String subBreed = obj.getSubBreed();
+    	Date crDate = new Date();
+    	List<CattleFeedMasterVM> vmList = new ArrayList<>();
+    	if(obj !=null){
+    		List<CattleFeedMaster> objList = CattleFeedMaster.findByBreeAndSubBreed(obj.getBreed(), obj.getSubBreed());
+    		for (CattleFeedMaster ob : objList) {
+    			if((crDate.after(ob.feedPlanStartDate) && crDate.before(ob.feedPlanEndDate)) || crDate.equals(ob.feedPlanStartDate) || crDate.equals(ob.feedPlanEndDate)){
+    				CattleFeedMasterVM vm = new CattleFeedMasterVM();
+    				vm.feedId = ob.getFeedId();
+    				vm.feedPlanName = ob.getFeedPlanName();
+    				vmList.add(vm);
+    			}
+    		}
+    	}
+    	
+    	
+    	/*CattleMaster details = CattleMaster.findById(id);
+		List <CattleFeedMaster> list = CattleFeedMaster.
+		CattleFeedMaster details1 = (CattleFeedMaster) CattleFeedMaster.getAllOnlyFeedCattleMaster();
+    	System.out.println("i m here");
+    	System.out.println("i m here");
+    	
+    	if(details.breed==details1.Breed & details.subBreed == details1.SubBreed ){
+    		System.out.println("working");
+    		
+    		
+    	}
+    	
+    	return ok(Json.toJson(feedsVMs));*/
+		return ok(Json.toJson(vmList));
+	}
+	
+	
 }
 	
 

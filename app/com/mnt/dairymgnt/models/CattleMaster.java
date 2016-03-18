@@ -287,6 +287,8 @@ public class CattleMaster extends Model {
 	public void setLastDelivery(Date lastDelivery) {
 		this.lastDelivery = lastDelivery;
 	}
-	
+	public static CattleMaster findById(Long id) {
+		return find.byId(id);
+	}
 	
 }

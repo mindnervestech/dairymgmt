@@ -10095,7 +10095,7 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 		 console.log("in function");
 		 for (var i=0; i<$scope.feedcaters.length; i++) {
 			 
-			 if($scope.feedcaters[i].healthPlanId == id){
+			 if($scope.feedcaters[i].medicationType == id){
 				 
 				 $scope.cat.medicationName=$scope.feedcaters[i].medicationName;
 				 //$scope.cat.dateOfBirth= $filter('date')($scope.cat.dateOfBirth, 'dd/MM/yyyy');
@@ -10109,8 +10109,8 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 		 console.log(id);
 		 console.log("in function");
 		 for (var i=0; i<$scope.vaccinecaters.length; i++) {
-			 
-			 if($scope.vaccinecaters[i].vaccinationPlanId == id){
+			 console.log(id);
+			 if($scope.vaccinecaters[i].vaccineType == id){
 				 
 				 $scope.cat.vaccinationName =$scope.vaccinecaters[i].vaccineName;
 				 //$scope.cat.dateOfBirth= $filter('date')($scope.cat.dateOfBirth, 'dd/MM/yyyy');
@@ -11779,6 +11779,15 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope,$fi
 				 console.log($scope.cat);
 			 }
 		 }
+		 $http.post('/getFeedCattleMasterDetails',{id:id}
+	 		).then(function(res){
+	 			console.log(res);
+	 			$scope.PlanData = res.data;
+	 			$scope.feedcaters = res.data;
+	 			//console.log(PlanData);
+	 			
+	 		});
+		 
 	 };
 	 
 	 
