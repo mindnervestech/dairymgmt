@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 import com.avaje.ebean.Ebean;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -27,25 +28,27 @@ public class PregnantCattle extends Model {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	public int pregnancyId;
 	
-	public String lastDeliveryDate;
-	public  String expectedPregnancyDate;
-	public String firstInseminationDate;
-	public String secondInseminationDate;
-	public String thirdInseminationDate;
-	public String actualPregnancyDate;
-	public Date expectedDeliveryDate;
+	public Date lastDeliveryDate;
+	
+	public Date firstInseminationDate;
+	public Date secondInseminationDate;
+	public Date thirdInseminationDate;
+	public Date forthInseminationDate;
+	public Date plannedFirstInseminationDate;
+	public Date plannedSecondInseminationDate;
+	public Date plannedThirdInseminationDate;
+	public Date plannedForthInseminationDate;
+	public Date pregnacyDate;
+	public Date dueDate;
+	public Date successDate;
 	
 
 
-	public String milkingStoppingDate;
+	
 	public int cattleId;
 	
 	public int getCattleId() {
 		return cattleId;
-	}
-
-	public void setExpectedDeliveryDate(Date expectedDeliveryDate) {
-		this.expectedDeliveryDate = expectedDeliveryDate;
 	}
 	
 	public void setCattleId(int cattleId) {
@@ -60,64 +63,132 @@ public class PregnantCattle extends Model {
 		this.pregnancyId = pregnancyId;
 	}
 
-	public String getLastDeliveryDate() {
+	public Date getLastDeliveryDate() {
 		return lastDeliveryDate;
 	}
 
-	public void setLastDeliveryDate(String lastDeliveryDate) {
+	public void setLastDeliveryDate(Date lastDeliveryDate) {
 		this.lastDeliveryDate = lastDeliveryDate;
 	}
 
-	public String getExpectedPregnancyDate() {
-		return expectedPregnancyDate;
-	}
+	
 
-	public void setExpectedPregnancyDate(String expectedPregnancyDate) {
-		this.expectedPregnancyDate = expectedPregnancyDate;
-	}
+	
 
-	public String getFirstInseminationDate() {
+	public Date getFirstInseminationDate() {
 		return firstInseminationDate;
 	}
 
-	public void setFirstInseminationDate(String firstInseminationDate) {
+	public void setFirstInseminationDate(Date firstInseminationDate) {
 		this.firstInseminationDate = firstInseminationDate;
 	}
 
-	public String getSecondInseminationDate() {
+	public Date getSecondInseminationDate() {
 		return secondInseminationDate;
 	}
 
-	public void setSecondInseminationDate(String secondInseminationDate) {
+	public void setSecondInseminationDate(Date secondInseminationDate) {
 		this.secondInseminationDate = secondInseminationDate;
 	}
 
-	public String getThirdInseminationDate() {
+	public Date getThirdInseminationDate() {
 		return thirdInseminationDate;
 	}
 
-	public void setThirdInseminationDate(String thirdInseminationDate) {
+	public void setThirdInseminationDate(Date thirdInseminationDate) {
 		this.thirdInseminationDate = thirdInseminationDate;
 	}
 
-	public String getActualPregnancyDate() {
-		return actualPregnancyDate;
+	public Date getForthInseminationDate() {
+		return forthInseminationDate;
 	}
 
-	public void setActualPregnancyDate(String actualPregnancyDate) {
-		this.actualPregnancyDate = actualPregnancyDate;
+	public void setForthInseminationDate(Date forthInseminationDate) {
+		this.forthInseminationDate = forthInseminationDate;
+	}
+
+	public Date getPlannedFirstInseminationDate() {
+		return plannedFirstInseminationDate;
+	}
+
+	public void setPlannedFirstInseminationDate(Date plannedFirstInseminationDate) {
+		this.plannedFirstInseminationDate = plannedFirstInseminationDate;
+	}
+
+	public Date getPlannedSecondInseminationDate() {
+		return plannedSecondInseminationDate;
+	}
+
+	public void setPlannedSecondInseminationDate(Date plannedSecondInseminationDate) {
+		this.plannedSecondInseminationDate = plannedSecondInseminationDate;
+	}
+
+	public Date getPlannedThirdInseminationDate() {
+		return plannedThirdInseminationDate;
+	}
+
+	public void setPlannedThirdInseminationDate(Date plannedThirdInseminationDate) {
+		this.plannedThirdInseminationDate = plannedThirdInseminationDate;
+	}
+
+	public Date getPlannedForthInseminationDate() {
+		return plannedForthInseminationDate;
+	}
+
+	public void setPlannedForthInseminationDate(Date plannedForthInseminationDate) {
+		this.plannedForthInseminationDate = plannedForthInseminationDate;
+	}
+
+	public Date getPregnacyDate() {
+		return pregnacyDate;
+	}
+
+	public void setPregnacyDate(Date pregnacyDate) {
+		this.pregnacyDate = pregnacyDate;
+	}
+
+	public Date getDueDate() {
+		return dueDate;
+	}
+
+	public void setDueDate(Date dueDate) {
+		this.dueDate = dueDate;
+	}
+
+	public Date getSuccessDate() {
+		return successDate;
+	}
+
+	public void setSuccessDate(Date successDate) {
+		this.successDate = successDate;
 	}
 	
-	public String getMilkingStoppingDate() {
-		return milkingStoppingDate;
-	}
-
-	public void setMilkingStoppingDate(String milkingStoppingDate) {
-		this.milkingStoppingDate = milkingStoppingDate;
-	}
-
-
+	@JsonIgnore
+	@OneToOne(cascade = CascadeType.ALL)
+	public Oraganization oraganization;
 	
+	
+	
+	public Oraganization getOraganization() {
+		return oraganization;
+	}
+
+	public void setOraganization(Oraganization oraganization) {
+		this.oraganization = oraganization;
+	}
+
+	@JsonIgnore
+	@OneToOne(cascade = CascadeType.ALL)
+	public Users users;
+	
+	
+	public Users getUsers() {
+		return users;
+	}
+
+	public void setUsers(Users users) {
+		this.users = users;
+	}
 
 	public PregnantCattle() {
 

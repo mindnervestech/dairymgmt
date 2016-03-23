@@ -40,6 +40,10 @@ POST	/updateCattleHealthMasterProfileByAdmin			 com.mnt.dairymgnt.controllers.Ap
 GET    /getAllCattleHealthMaster/:pageNo                 com.mnt.dairymgnt.controllers.Application.getAllCattleHealthMaster(pageNo: Integer)
 GET		/getAllOnlyCattleHealthMaster								 com.mnt.dairymgnt.controllers.Application.getAllOnlyCattleHealthMaster()
 
+POST	/updateCattleFeedInventoryProfileByAdmin			 com.mnt.dairymgnt.controllers.Application.updateCattleFeedInventoryProfileByAdmin()
+GET    /getAllCattleFeedInventory/:pageNo                 com.mnt.dairymgnt.controllers.Application.getAllCattleFeedInventory(pageNo: Integer)
+GET		/getAllOnlyCattleFeedInventory								 com.mnt.dairymgnt.controllers.Application.getAllOnlyCattleFeedInventory()
+
 
 POST   /updatefeedCattleProfileByAdmin                  com.mnt.dairymgnt.controllers.Application.updatefeedCattleProfileByAdmin()
 GET    /getAllCattleIntake/:pageno                      com.mnt.dairymgnt.controllers.Application.getAllCattleIntake(pageno : Integer)

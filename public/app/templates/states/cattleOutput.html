@@ -131,12 +131,17 @@
 					<div class="col-md-12" style="margin-top:5%;">
   							<label for="usr">Fat Content(%)</label>
   							<input type="text" ng-model = "cat.fatContent" class="form-control" onkeypress="return isNumber(event)"  id="fatContent">
-						</div>	
+					</div>	
 				
-				<div class="col-md-12" style="margin-top:5%;">
+					<div class="col-md-12" style="margin-top:5%;">
   							<label for="usr">SNF Content(%)</label>
   							<input type="text" ng-model = "cat.SNFContent" onkeypress="return isNumber(event)" class="form-control" id="SNFContent">
-						</div>
+					</div>
+					
+					<div class="col-md-12" style="margin-top:5%;">
+							<label for="user"> Quantity(In Liters)</label>	
+							<input type="text" ng-model = "cat.quantity" onkeypress="return isNumber(event)" class="form-control" id="SNFContent">					
+					</div>
 				
 							<!--  <div class="col-md-12">
   							<label for="usr">Actual Milk Quantity </label>
@@ -161,14 +166,14 @@
 												<label for="usr">Date </label>
 													 <input type="text" ng-model="cat.date"
 														name="dob" class="form-control " id="dobnew"
-														 ng-click="initempDatepickerAddnew();"
+														 ng-click="initempDatepicker();"
 														style="font-size: 12px;" required>
 														
 												</div>
 											</div>
 									</div>
 						</div>
-						
+						<!-- 
 						<div class="col-md-12" style= "margin-top:5%; ">
 						<input type="text" dn-timepicker="h:mm a" min-time="00:00" max-time="23:59" step="15" ng-model="timepicker.model" />
 						</div>
@@ -179,7 +184,18 @@
 						<div class="col-md-12" style=" margin-top:5%;">
   							<label for="usr">Time</label>
   							<input type="time" id="exampleInput" name="input" ng-model="cat.time" placeholder="HH:mm:ss" style = "margin-top: 5%; width: 100%; height:  20%;" required />
-						</div>
+						</div> -->
+					<div class="col-md-12">
+          				<div class=" input-group col-md-12" style = "margin-top: 5%;">
+          					<label for="usr">Time </label>
+                		 	<div class="input-group bootstrap-timepicker"> 
+                			 	 <input id="timepicker2" type="text" ng-click="addTimepicker()" 
+	                 			 ng-model = "cat.time"  class="form-control"  data-minute-step="1" 
+	                 			 style="font-size: 12px;  width:   205%;" >
+							</div>
+               			</div>
+					</div>
+       
 						<!--  <div class="col-md-12">
   							<label for="usr">Expected Milk Quantity </label>
   							<input type="text" ng-model = "cat.expectedMilkQuantity" onkeypress="return isNumber(event)"  class="form-control" id="expectedMilkQuantity">
@@ -242,7 +258,7 @@
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title" id="myModalLabel">Edit  Cattle Output</h4>
+				<h4 class="modal-title" id="myModalLabel">Add  Cattle Output</h4>
 			</div>
 			<div class="modal-body">
 				<div class = "col-md-12">
@@ -258,17 +274,19 @@
 	            	</div> 
 				
 					<div class="col-md-12" style=" margin-top:5%;">
-  							<label for="usr">Fat quantity(%) </label>
+  							<label for="usr">Fat Content(%) </label>
   							<input type="text" ng-model = "cat.fatContent"  onkeypress="return isNumber(event)" class="form-control" id="fatContent">
 						</div>	
 				
 					<div class="col-md-12" style=" margin-top:5%;">
-  							<label for="usr">SNF quantity(%)</label>
+  							<label for="usr">SNF Content(%)</label>
   							<input type="text" ng-model = "cat.SNFContent" onkeypress="return isNumber(event)" class="form-control" id="SNFContent">
 						</div>
 				
-						
-						
+					<div class="col-md-12" style="margin-top:5%;">
+							<label for="user"> Quantity(In Liters)</label>	
+							<input type="text" ng-model = "cat.quantity" onkeypress="return isNumber(event)" class="form-control" id="SNFContent">					
+					</div>
 						<!--  <div class="col-md-12">
   							<label for="usr">Actual Milk Quantity </label>
   							<input type="text" ng-model = "cat.quantity" onkeypress="return isNumber(event)" class="form-control" id="firstname">
@@ -299,9 +317,9 @@
 												</div>
 											</div>
 									</div>
-					</div>
+						</div>
 						
-						<div class="col-md-12" style=" margin-top:5%;">
+						<!-- <div class="col-md-12" style=" margin-top:5%;">
 						<label for="usr">Time</label>
 						<ng-timepicker  show-meridian="true"   ng-model="cat.time" style=" width: 100%;"></ng-timepicker>
 						</div>
@@ -314,9 +332,24 @@
 						
 						
 						
-						<div class="demo-section k-content">
-      
-						
+						<div class="demo-section k-content"> -->
+  
+					
+					
+					
+				
+				<div class="col-md-12">
+          			<div class=" input-group col-md-12" style = "margin-top: 5%;">
+          			<label for="usr">Time </label>
+                	 <div class="input-group bootstrap-timepicker"> 
+                	
+	                  <input id="timepicker1" type="text" ng-click="addTimepicker()" 
+	                  ng-model = "cat.time"  class="form-control"  data-minute-step="1" 
+	                  style="font-size: 12px;  width:   205%;" >
+					</div>
+               		</div>
+				</div>
+       
 						<!--  <div class="col-md-12">
   							<label for="usr">Expected Milk Quantity </label>
   							<input type="text" ng-model = "cat.expectedMilkQuantity" onkeypress="return isNumber(event)" class="form-control" id="expectedMilkQuantity">

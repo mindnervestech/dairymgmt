@@ -50,6 +50,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
+import com.mnt.dairymgnt.VM.CattleFeedInventoryVM;
 import com.mnt.dairymgnt.VM.CattleFeedMasterVM;
 import com.mnt.dairymgnt.VM.CattleFeedsVM;
 import com.mnt.dairymgnt.VM.CattleHealthMasterVM;
@@ -70,6 +71,7 @@ import com.mnt.dairymgnt.VM.UserVM;
 import com.mnt.dairymgnt.VM.VaccinationPlanVM;
 
 import com.mnt.dairymgnt.models.Breeds;
+import com.mnt.dairymgnt.models.CattleFeedInventory;
 import com.mnt.dairymgnt.models.CattleFeedMaster;
 import com.mnt.dairymgnt.models.CattleFeeds;
 import com.mnt.dairymgnt.models.CattleHealth;
@@ -653,7 +655,53 @@ public class Application extends Controller {
 		//hm.put("userCount", count);
 		return ok(Json.toJson(hm));
 	}
-	
+
+	public static Result getAllCattleFeedInventory(int pageno){
+		List<CattleFeedInventory> cattleFeedInventories = CattleFeedInventory.getAllCattleFeedInventory(pageno,10);
+        int count  = 0;
+       // count  = CattleFeedMaster.getAllFeedCattleMasterCount(pageno);
+        count = CattleMaster.getAllCattleMasterCount(pageno);
+		ArrayList<CattleFeedInventoryVM> cmvm = new ArrayList<>();
+		
+		for(CattleFeedInventory u : cattleFeedInventories){
+			CattleFeedInventoryVM cfvm = new CattleFeedInventoryVM();
+			cfvm.cattleFeedInventoryId=u.cattleFeedInventoryId;
+			cfvm.feedName = u.feedName;
+			cfvm.feedType = u.feedType;
+			cfvm.remark=u.remark;
+			cfvm.stockBalance = u.stockBalance;
+			cfvm.stockInQuantity = u.stockInQuantity;
+			cfvm.stockOutQuantity = u.stockOutQuantity;
+			cfvm.oraganization=u.oraganization;
+			cfvm.users=u.users;
+			cfvm.cattleMaster=u.CattleMaster;
+			cfvm.stockPerviousBalance=u.stockPerviousBalance;
+
+			if(u.stockInDate != null){
+				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT.format(u.stockInDate);
+				cfvm.stockInDate = date;
+			}else{
+				cfvm.stockInDate = "";
+			}
+			if(u.stockOutDate != null){
+				SimpleDateFormat DATE_FORMAT1 = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT1.format(u.stockOutDate);
+				cfvm.stockOutDate = date;
+			}else{
+				cfvm.stockOutDate = "";
+			}
+			
+			/*List <CattleFeeds> cfs = CattleFeeds.getCatleFeedsById(cfvm.feedId);
+			cfvm.cattleFeeds = cfs;*/
+			cmvm.add(cfvm);
+		}
+		HashMap  <String ,Object> hm = new HashMap();
+		hm.put("feedcaters",cmvm);
+		//hm.put("userCount", count);
+		return ok(Json.toJson(hm));
+	}
+
 	public static Result getDailyMilkReport(int pageno){
 		Date strdate  = null;
 		Calendar cal = Calendar.getInstance();
@@ -771,7 +819,47 @@ public class Application extends Controller {
 		hm.put("feedcaters",cmvm);
 		return ok(Json.toJson(hm));
 	}
+	
+	public static Result getAllOnlyCattleFeedInventory(){
+		List<CattleFeedInventory> cattleFeedInventories = CattleFeedInventory.getAllOnlyCattleFeedInventory();
+        
+		ArrayList<CattleFeedInventoryVM> cmvm = new ArrayList<>();
 		
+		for(CattleFeedInventory u : cattleFeedInventories){
+			CattleFeedInventoryVM cfvm = new CattleFeedInventoryVM();
+			cfvm.cattleFeedInventoryId=u.cattleFeedInventoryId;
+			cfvm.feedName = u.feedName;
+			cfvm.feedType = u.feedType;
+			cfvm.remark=u.remark;
+			cfvm.stockBalance = u.stockBalance;
+			cfvm.stockInQuantity = u.stockInQuantity;
+			cfvm.stockOutQuantity = u.stockOutQuantity;
+			cfvm.oraganization=u.oraganization;
+			cfvm.users=u.users;
+			cfvm.cattleMaster=u.CattleMaster;
+			cfvm.stockPerviousBalance=u.stockPerviousBalance;
+
+			if(u.stockInDate != null){
+				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT.format(u.stockInDate);
+				cfvm.stockInDate = date;
+			}else{
+				cfvm.stockInDate = "";
+			}
+			if(u.stockOutDate != null){
+				SimpleDateFormat DATE_FORMAT1 = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT1.format(u.stockOutDate);
+				cfvm.stockOutDate = date;
+			}else{
+				cfvm.stockOutDate = "";
+			}
+	cmvm.add(cfvm);
+		}
+		
+		HashMap  <String ,Object> hm = new HashMap();
+		hm.put("feedcaters",cmvm);
+		return ok(Json.toJson(hm));
+	}
 	
 	public static Result getAllPregnantCattle(int pregnant,int pageno){
 		List<PregnantCattle> pregnantCattle = PregnantCattle.getAllPregnantCattle(pregnant,pageno,10);
@@ -790,15 +878,117 @@ public class Application extends Controller {
 		     cfvm.dateofBirth = c.dateofBirth;
 		     cfvm.name = c.name;
 			}
+			//due date
+			if(u.dueDate != null){
+				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT.format(u.dueDate);
+				cfvm.dueDate = date;
+			}else{
+				cfvm.dueDate = "";
+			}
 			
-			cfvm.lastDeliveryDate =u.lastDeliveryDate ;
-			cfvm.expectedPregnancyDate = u.expectedPregnancyDate;
-			cfvm.firstInseminationDate = u.firstInseminationDate;
-			cfvm.secondInseminationDate = u.secondInseminationDate;
-			cfvm.thirdInseminationDate= u.thirdInseminationDate ;
-			cfvm.actualPregnancyDate = u.actualPregnancyDate;
-			cfvm.expectedDeliveryDateVM  = u.expectedDeliveryDate.toString();
-			cfvm.milkingStoppingDate = u.milkingStoppingDate;
+			//success date
+			if(u.successDate != null){
+				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT.format(u.successDate);
+				cfvm.successDate = date;
+			}else{
+				cfvm.successDate = "";
+			}
+			
+			//last delilery date
+			if(u.lastDeliveryDate != null){
+				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT.format(u.lastDeliveryDate);
+				cfvm.lastDeliveryDate = date;
+			}else{
+				cfvm.lastDeliveryDate = "";
+			}
+			
+			//pregnancy date
+			if(u.pregnacyDate != null){
+				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT.format(u.pregnacyDate);
+				cfvm.pregnacyDate = date;
+			}else{
+				cfvm.pregnacyDate = "";
+			}
+			
+			//first insemination date
+			if(u.firstInseminationDate != null){
+				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT.format(u.firstInseminationDate);
+				cfvm.firstInseminationDate = date;
+			}else{
+				cfvm.firstInseminationDate = "";
+			}
+			
+			//second insemination date
+			if(u.secondInseminationDate != null){
+				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT.format(u.secondInseminationDate);
+				cfvm.secondInseminationDate = date;
+			}else{
+				cfvm.secondInseminationDate = "";
+			}
+			
+			//third insemination date
+			if(u.thirdInseminationDate != null){
+				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT.format(u.thirdInseminationDate);
+				cfvm.thirdInseminationDate = date;
+			}else{
+				cfvm.thirdInseminationDate = "";
+			}
+			
+			//forth insemination date
+			if(u.forthInseminationDate != null){
+				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT.format(u.forthInseminationDate);
+				cfvm.forthInseminationDate = date;
+			}else{
+				cfvm.forthInseminationDate = "";
+			}
+			
+			// planned first insemination date
+			if(u.plannedFirstInseminationDate != null){
+				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT.format(u.plannedFirstInseminationDate);
+				cfvm.plannedFirstInseminationDate = date;
+			}else{
+				cfvm.plannedFirstInseminationDate = "";
+			}
+			
+			// planned second insemination date
+			if(u.plannedSecondInseminationDate != null){
+				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
+				String date = DATE_FORMAT.format(u.plannedSecondInseminationDate);
+				cfvm.plannedSecondInseminationDate = date;
+			}else{
+				cfvm.plannedSecondInseminationDate = "";
+			}
+			
+			// planned third insemination date
+			if(u.plannedThirdInseminationDate != null){
+				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT.format(u.plannedThirdInseminationDate);
+		        cfvm.plannedThirdInseminationDate = date;
+			}else{
+				cfvm.plannedThirdInseminationDate = "";
+			}
+			
+			// planned forth insemination date
+			if(u.plannedForthInseminationDate != null){
+				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT.format(u.plannedForthInseminationDate);
+				cfvm.plannedForthInseminationDate = date;
+			}else{
+				cfvm.plannedForthInseminationDate = "";
+			}
+			
+			cfvm.users = u.users;
+			cfvm.oraganization = u.oraganization;
+			
 			cmvm.add(cfvm);
 		}
 
@@ -825,15 +1015,118 @@ public class Application extends Controller {
 		     cfvm.name = c.name;
 			}
 			
-			cfvm.lastDeliveryDate =u.lastDeliveryDate ;
-			cfvm.expectedPregnancyDate = u.expectedPregnancyDate;
-			cfvm.firstInseminationDate = u.firstInseminationDate;
-			cfvm.secondInseminationDate = u.secondInseminationDate;
-			cfvm.thirdInseminationDate= u.thirdInseminationDate ;
-			cfvm.actualPregnancyDate = u.actualPregnancyDate;
-			cfvm.expectedDeliveryDate  = u.expectedDeliveryDate;
-			cfvm.milkingStoppingDate = u.milkingStoppingDate;
-			cmvm.add(cfvm);
+			//cfvm.lastDeliveryDate =u.lastDeliveryDate ;
+			//due date
+			if(u.dueDate != null){
+				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT.format(u.dueDate);
+				cfvm.dueDate = date;
+			}else{
+				cfvm.dueDate = "";
+			}
+			
+			//success date
+			if(u.successDate != null){
+				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT.format(u.successDate);
+				cfvm.successDate = date;
+			}else{
+				cfvm.successDate = "";
+			}
+			
+			//last delilery date
+			if(u.lastDeliveryDate != null){
+				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT.format(u.lastDeliveryDate);
+				cfvm.lastDeliveryDate = date;
+			}else{
+				cfvm.lastDeliveryDate = "";
+			}
+			
+			//pregnancy date
+			if(u.pregnacyDate != null){
+				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT.format(u.pregnacyDate);
+				cfvm.pregnacyDate = date;
+			}else{
+				cfvm.pregnacyDate = "";
+			}
+			
+			//first insemination date
+			if(u.firstInseminationDate != null){
+				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT.format(u.firstInseminationDate);
+				cfvm.firstInseminationDate = date;
+			}else{
+				cfvm.firstInseminationDate = "";
+			}
+			
+			//second insemination date
+			if(u.secondInseminationDate != null){
+				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT.format(u.secondInseminationDate);
+				cfvm.secondInseminationDate = date;
+			}else{
+				cfvm.secondInseminationDate = "";
+			}
+			
+			//third insemination date
+			if(u.thirdInseminationDate != null){
+				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT.format(u.thirdInseminationDate);
+				cfvm.thirdInseminationDate = date;
+			}else{
+				cfvm.thirdInseminationDate = "";
+			}
+			
+			//forth insemination date
+			if(u.forthInseminationDate != null){
+				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT.format(u.forthInseminationDate);
+				cfvm.forthInseminationDate = date;
+			}else{
+				cfvm.forthInseminationDate = "";
+			}
+			
+			// planned first insemination date
+			if(u.plannedFirstInseminationDate != null){
+				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT.format(u.plannedFirstInseminationDate);
+				cfvm.plannedFirstInseminationDate = date;
+			}else{
+				cfvm.plannedFirstInseminationDate = "";
+			}
+			
+			// planned second insemination date
+			if(u.plannedSecondInseminationDate != null){
+				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
+				String date = DATE_FORMAT.format(u.plannedSecondInseminationDate);
+				cfvm.plannedSecondInseminationDate = date;
+			}else{
+				cfvm.plannedSecondInseminationDate = "";
+			}
+			
+			// planned third insemination date
+			if(u.plannedThirdInseminationDate != null){
+				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT.format(u.plannedThirdInseminationDate);
+		        cfvm.plannedThirdInseminationDate = date;
+			}else{
+				cfvm.plannedThirdInseminationDate = "";
+			}
+			
+			// planned forth insemination date
+			if(u.plannedForthInseminationDate != null){
+				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT.format(u.plannedForthInseminationDate);
+				cfvm.plannedForthInseminationDate = date;
+			}else{
+				cfvm.plannedForthInseminationDate = "";
+			}
+			
+			cfvm.users = u.users;
+			cfvm.oraganization = u.oraganization;
+cmvm.add(cfvm);
 		}
 
 		HashMap  <String ,Object> hm = new HashMap();
@@ -915,16 +1208,22 @@ public class Application extends Controller {
 		
 		for(CattleOutput u : cattleOutput){
 			CattleOutputVM cfvm = new CattleOutputVM();
-			cfvm.date = u.date;
-			
-			
-			if(u.time != null){
+			if(u.date != null){
+				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
+		        String date = DATE_FORMAT.format(u.date);
+				cfvm.date = date;
+			}else{
+				cfvm.date = "";
+			}
+			//cfvm.date = u.date;
+			/*if(u.time != null){
 				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
 		        String date = DATE_FORMAT.format(u.time);
 				cfvm.time = date;
 			}else{
 				cfvm.time = "";
-			}
+			}*/
+			cfvm.time= u.time;
 			cfvm.deviceID = u.deviceID;
 			cfvm.quantity = u.quantity;
 			cfvm.lastUpdateDateTime =  u.LastUpdateDateTime;
@@ -2243,79 +2542,454 @@ public static Result getMonthlyCattleOutputReport(){
 			PregnancyCattleVM uvm = userinfoMapper.readValue(catJson.traverse(),PregnancyCattleVM.class);
 			PregnantCattle u = PregnantCattle.getPregnantCattleByCattleId(uvm.pregnancyId);
 			if(u !=  null){
-				u.setActualPregnancyDate(uvm.actualPregnancyDate);
-				u.setCattleId(uvm.cattleId);
 				
-				SimpleDateFormat format = new SimpleDateFormat("dd-MMMM-yyyy");
-				Date d1 = null;
-				//System.out.println(" dfgfd gdfgd fgf"+uvm.expectedDeliveryDate);
-				try {
-					
-				if(uvm.expectedDeliveryDateVM !=null){
-					if(uvm.expectedDeliveryDateVM.contains("\"")){
-						d1 = format.parse(uvm.expectedDeliveryDateVM.replaceAll("\"", ""));
-					}else{
-						d1 = format.parse(uvm.expectedDeliveryDateVM);
+				JsonNode org = json.path("org");
+				System.out.println(org);
+				if(org.toString() != ""){
+					Oraganization    orgni = Oraganization.getOrgById(Integer.parseInt(org.toString().replace("\"", "")));
+					if(orgni != null){
+						u.setOraganization(orgni);
+					}
+				}
+				
+				JsonNode userId = json.path("userId");
+				System.out.println(userId);
+				if(userId.toString() != ""){
+					Users    uId = null;	
+					uId = Users.getUserByEmail(userId.toString().replace("\"", ""));
+					if(uId != null){
+						u.setUsers(uId);
 					}
 					
-				}	
-					//in milliseconds
+				}
+				
+				u.setCattleId(uvm.cattleId);
+				
+				//due date
+				SimpleDateFormat format1 = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d1 = null;
+				try {
+					if(uvm.dueDate !=null){
+						if(uvm.dueDate.contains("\"")){
+							d1 = format1.parse(uvm.dueDate.replaceAll("\"", ""));
+						}else{
+							d1 = format1.parse(uvm.dueDate);
+						}
+					}					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+				u.setDueDate(d1);
 				
-				//System.out.println("d1" +d1);
+				//first Insemination date
+				SimpleDateFormat format2 = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d2 = null;
+				try {
+					if(uvm.firstInseminationDate !=null){
+						if(uvm.firstInseminationDate.contains("\"")){
+							d2 = format2.parse(uvm.firstInseminationDate.replaceAll("\"", ""));
+						}else{
+							d2 = format2.parse(uvm.firstInseminationDate);
+						}
+					}					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				u.setFirstInseminationDate(d2);
 				
-				u.setExpectedDeliveryDate(d1);
-				u.setFirstInseminationDate(uvm.firstInseminationDate);
-				u.setSecondInseminationDate(uvm.secondInseminationDate);
-				u.setLastDeliveryDate(uvm.lastDeliveryDate);
-				u.setMilkingStoppingDate(uvm.milkingStoppingDate);
-				u.setPregnancyId(uvm.pregnancyId);
-				u.setSecondInseminationDate(uvm.secondInseminationDate);
-				u.setThirdInseminationDate(uvm.thirdInseminationDate);
-			
+				//Second Insemination date
+				SimpleDateFormat format3 = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d3 = null;
+				try {
+					if(uvm.secondInseminationDate !=null){
+						if(uvm.secondInseminationDate.contains("\"")){
+							d3 = format3.parse(uvm.secondInseminationDate.replaceAll("\"", ""));
+						}else{
+							d3 = format3.parse(uvm.secondInseminationDate);
+						}
+					}					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				u.setSecondInseminationDate(d3);
+				
+				//third Insemination date
+				SimpleDateFormat format4 = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d4 = null;
+				try {
+					if(uvm.thirdInseminationDate !=null){
+						if(uvm.thirdInseminationDate.contains("\"")){
+							d4 = format4.parse(uvm.thirdInseminationDate.replaceAll("\"", ""));
+						}else{
+							d4 = format4.parse(uvm.thirdInseminationDate);
+						}
+					}					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				u.setThirdInseminationDate(d4);
+				
+				//forth Insemination date
+				SimpleDateFormat format5 = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d5 = null;
+				try {
+					if(uvm.forthInseminationDate !=null){
+						if(uvm.forthInseminationDate.contains("\"")){
+							d5 = format5.parse(uvm.forthInseminationDate.replaceAll("\"", ""));
+						}else{
+							d5 = format5.parse(uvm.forthInseminationDate);
+						}
+					}					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				u.setForthInseminationDate(d5);
+				
+				//planned first Insemination date
+				SimpleDateFormat format6 = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d6 = null;
+				try {
+					if(uvm.plannedFirstInseminationDate !=null){
+						if(uvm.plannedFirstInseminationDate.contains("\"")){
+							d6 = format6.parse(uvm.plannedFirstInseminationDate.replaceAll("\"", ""));
+						}else{
+							d6 = format6.parse(uvm.plannedFirstInseminationDate);
+						}
+					}					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				u.setPlannedFirstInseminationDate(d6);
+				
+				//planned second Insemination date
+				SimpleDateFormat format7 = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d7 = null;
+				try {
+					if(uvm.plannedSecondInseminationDate !=null){
+						if(uvm.plannedSecondInseminationDate.contains("\"")){
+							d7 = format7.parse(uvm.plannedSecondInseminationDate.replaceAll("\"", ""));
+						}else{
+							d7 = format7.parse(uvm.plannedSecondInseminationDate);
+						}
+					}					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				u.setPlannedSecondInseminationDate(d7);
+				
+				
+				//planned third Insemination date
+				SimpleDateFormat format8 = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d8 = null;
+				try {
+					if(uvm.plannedThirdInseminationDate !=null){
+						if(uvm.plannedThirdInseminationDate.contains("\"")){
+							d8 = format8.parse(uvm.plannedThirdInseminationDate.replaceAll("\"", ""));
+						}else{
+							d8 = format8.parse(uvm.plannedThirdInseminationDate);
+						}
+					}					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				u.setPlannedFirstInseminationDate(d8);
+				
+				//planned Forth Insemination date
+				SimpleDateFormat format9 = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d9 = null;
+				try {
+					if(uvm.plannedForthInseminationDate !=null){
+						if(uvm.plannedForthInseminationDate.contains("\"")){
+							d9 = format9.parse(uvm.plannedForthInseminationDate.replaceAll("\"", ""));
+						}else{
+							d9 = format9.parse(uvm.plannedForthInseminationDate);
+						}
+					}					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				u.setPlannedForthInseminationDate(d9);
+				
+				//success date
+				SimpleDateFormat format10 = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d10 = null;
+				try {
+					if(uvm.successDate !=null){
+						if(uvm.successDate.contains("\"")){
+							d10 = format10.parse(uvm.successDate.replaceAll("\"", ""));
+						}else{
+							d10 = format10.parse(uvm.successDate);
+						}
+					}					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				u.setSuccessDate(d10);
+				
+				//pregnancy Date
+				SimpleDateFormat format11 = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d11 = null;
+				try {
+					if(uvm.pregnacyDate !=null){
+						if(uvm.pregnacyDate.contains("\"")){
+							d11 = format11.parse(uvm.pregnacyDate.replaceAll("\"", ""));
+						}else{
+							d11 = format11.parse(uvm.pregnacyDate);
+						}
+					}					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				u.setPregnacyDate(d11);
+				
+				
+				//last Delivery date
+				SimpleDateFormat format12 = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d12 = null;
+				try {
+					if(uvm.lastDeliveryDate !=null){
+						if(uvm.lastDeliveryDate.contains("\"")){
+							d12 = format12.parse(uvm.lastDeliveryDate.replaceAll("\"", ""));
+						}else{
+							d12 = format12.parse(uvm.lastDeliveryDate);
+						}
+					}					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				u.setLastDeliveryDate(d12);
+				
+				
+				
+				
 				u.update(u);
 
 			}else{
 				
 				u  = new PregnantCattle();
-				u.setActualPregnancyDate(uvm.actualPregnancyDate);
+				
 				u.setCattleId(uvm.cattleId);
 				
-				
-				
-				SimpleDateFormat format = new SimpleDateFormat("dd-MMMM-yyyy");
+				//due date
+				SimpleDateFormat format1 = new SimpleDateFormat("dd-MMMM-yyyy");
 				Date d1 = null;
-				//System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa "+uvm.expectedDeliveryDate);
 				try {
-					
-					if(uvm.expectedDeliveryDateVM !=null){
-						if(uvm.expectedDeliveryDateVM.contains("\"")){
-							d1 = format.parse(uvm.expectedDeliveryDateVM.replaceAll("\"", ""));
+					if(uvm.dueDate !=null){
+						if(uvm.dueDate.contains("\"")){
+							d1 = format1.parse(uvm.dueDate.replaceAll("\"", ""));
 						}else{
-							d1 = format.parse(uvm.expectedDeliveryDateVM);
+							d1 = format1.parse(uvm.dueDate);
 						}
-						
-					}	
-							
-					//in milliseconds
+					}					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
+				u.setDueDate(d1);
 				
-				//System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaa" +d1);
-				u.setExpectedDeliveryDate(d1);
+				//first Insemination date
+				SimpleDateFormat format2 = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d2 = null;
+				try {
+					if(uvm.firstInseminationDate !=null){
+						if(uvm.firstInseminationDate.contains("\"")){
+							d2 = format2.parse(uvm.firstInseminationDate.replaceAll("\"", ""));
+						}else{
+							d2 = format2.parse(uvm.firstInseminationDate);
+						}
+					}					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				u.setFirstInseminationDate(d2);
+				
+				//Second Insemination date
+				SimpleDateFormat format3 = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d3 = null;
+				try {
+					if(uvm.secondInseminationDate !=null){
+						if(uvm.secondInseminationDate.contains("\"")){
+							d3 = format3.parse(uvm.secondInseminationDate.replaceAll("\"", ""));
+						}else{
+							d3 = format3.parse(uvm.secondInseminationDate);
+						}
+					}					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				u.setSecondInseminationDate(d3);
+				
+				//third Insemination date
+				SimpleDateFormat format4 = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d4 = null;
+				try {
+					if(uvm.thirdInseminationDate !=null){
+						if(uvm.thirdInseminationDate.contains("\"")){
+							d4 = format4.parse(uvm.thirdInseminationDate.replaceAll("\"", ""));
+						}else{
+							d4 = format4.parse(uvm.thirdInseminationDate);
+						}
+					}					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				u.setThirdInseminationDate(d4);
+				
+				//forth Insemination date
+				SimpleDateFormat format5 = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d5 = null;
+				try {
+					if(uvm.forthInseminationDate !=null){
+						if(uvm.forthInseminationDate.contains("\"")){
+							d5 = format5.parse(uvm.forthInseminationDate.replaceAll("\"", ""));
+						}else{
+							d5 = format5.parse(uvm.forthInseminationDate);
+						}
+					}					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				u.setForthInseminationDate(d5);
+				
+				//planned first Insemination date
+				SimpleDateFormat format6 = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d6 = null;
+				try {
+					if(uvm.plannedFirstInseminationDate !=null){
+						if(uvm.plannedFirstInseminationDate.contains("\"")){
+							d6 = format6.parse(uvm.plannedFirstInseminationDate.replaceAll("\"", ""));
+						}else{
+							d6 = format6.parse(uvm.plannedFirstInseminationDate);
+						}
+					}					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				u.setPlannedFirstInseminationDate(d6);
+				
+				//planned second Insemination date
+				SimpleDateFormat format7 = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d7 = null;
+				try {
+					if(uvm.plannedSecondInseminationDate !=null){
+						if(uvm.plannedSecondInseminationDate.contains("\"")){
+							d7 = format7.parse(uvm.plannedSecondInseminationDate.replaceAll("\"", ""));
+						}else{
+							d7 = format7.parse(uvm.plannedSecondInseminationDate);
+						}
+					}					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				u.setPlannedSecondInseminationDate(d7);
+				
+				
+				//planned third Insemination date
+				SimpleDateFormat format8 = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d8 = null;
+				try {
+					if(uvm.plannedThirdInseminationDate !=null){
+						if(uvm.plannedThirdInseminationDate.contains("\"")){
+							d8 = format8.parse(uvm.plannedThirdInseminationDate.replaceAll("\"", ""));
+						}else{
+							d8 = format8.parse(uvm.plannedThirdInseminationDate);
+						}
+					}					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				u.setPlannedFirstInseminationDate(d8);
+				
+				//planned Forth Insemination date
+				SimpleDateFormat format9 = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d9 = null;
+				try {
+					if(uvm.plannedForthInseminationDate !=null){
+						if(uvm.plannedForthInseminationDate.contains("\"")){
+							d9 = format9.parse(uvm.plannedForthInseminationDate.replaceAll("\"", ""));
+						}else{
+							d9 = format9.parse(uvm.plannedForthInseminationDate);
+						}
+					}					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				u.setPlannedForthInseminationDate(d9);
+				
+				//success date
+				SimpleDateFormat format10 = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d10 = null;
+				try {
+					if(uvm.successDate !=null){
+						if(uvm.successDate.contains("\"")){
+							d10 = format10.parse(uvm.successDate.replaceAll("\"", ""));
+						}else{
+							d10 = format10.parse(uvm.successDate);
+						}
+					}					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				u.setSuccessDate(d10);
+				
+				//pregnancy Date
+				SimpleDateFormat format11 = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d11 = null;
+				try {
+					if(uvm.pregnacyDate !=null){
+						if(uvm.pregnacyDate.contains("\"")){
+							d11 = format11.parse(uvm.pregnacyDate.replaceAll("\"", ""));
+						}else{
+							d11 = format11.parse(uvm.pregnacyDate);
+						}
+					}					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				u.setPregnacyDate(d11);
+				
+				
+				//last Delivery date
+				SimpleDateFormat format12 = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d12 = null;
+				try {
+					if(uvm.lastDeliveryDate !=null){
+						if(uvm.lastDeliveryDate.contains("\"")){
+							d12 = format12.parse(uvm.lastDeliveryDate.replaceAll("\"", ""));
+						}else{
+							d12 = format12.parse(uvm.lastDeliveryDate);
+						}
+					}					
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				u.setLastDeliveryDate(d12);
 				
 			     //u.setExpectedDeliveryDate(uvm.expectedDeliveryDate);
-				u.setFirstInseminationDate(uvm.firstInseminationDate);
-				u.setSecondInseminationDate(uvm.secondInseminationDate);
-				u.setLastDeliveryDate(uvm.lastDeliveryDate);
-				u.setMilkingStoppingDate(uvm.milkingStoppingDate);
-				u.setSecondInseminationDate(uvm.secondInseminationDate);
-				u.setThirdInseminationDate(uvm.thirdInseminationDate);
 				u.save();
 
+				JsonNode org = json.path("org");
+				System.out.println(org);
+				if(org.toString() != ""){
+					Oraganization    orgni = Oraganization.getOrgById(Integer.parseInt(org.toString().replace("\"", "")));
+					if(orgni != null){
+						u.setOraganization(orgni);
+					}
+					
+				}
+				
+				JsonNode userId = json.path("userId");
+				System.out.println(userId);
+				if (userId.toString() != "") {
+					Users uId = null;
+					uId = Users.getUserByEmail(userId.toString().replace("\"",
+							""));
+					if (uId != null) {
+						u.setUsers(uId);
+					}
+					
+				}
+				
+				u.update();
 				
 			}
 		} catch (JsonParseException e1) {
@@ -2624,8 +3298,24 @@ public static Result getMonthlyCattleOutputReport(){
 					}
 				}
 				
-				u.setDate(uvm.date);
-				SimpleDateFormat format1 = new SimpleDateFormat("dd-MMMM-yyyy");
+				
+				SimpleDateFormat format = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d1 = null;
+				try {
+					if(uvm.date !=null){
+						if(uvm.date.contains("\"")){
+							d1 = format.parse(uvm.date.replaceAll("\"", ""));
+						}else{
+							d1 = format.parse(uvm.date);
+						}
+					}	
+							
+					//in milliseconds
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				u.setDate(d1);
+				/*SimpleDateFormat format1 = new SimpleDateFormat("dd-MMMM-yyyy");
 				Date d2 = null;
 				try {
 					if(uvm.time != null){
@@ -2642,7 +3332,8 @@ public static Result getMonthlyCattleOutputReport(){
 				}
 				
 				u.setTime(d2);
-				//u.setTime(uvm.time);
+				*/
+				u.setTime(uvm.time);
 				
 				u.setFatContent(uvm.fatContent);
 				u.setSNFContent(uvm.SNFContent);
@@ -2656,8 +3347,23 @@ public static Result getMonthlyCattleOutputReport(){
 			}else{
 				
 				u  = new CattleOutput();
-				u.setDate(uvm.date);
-				SimpleDateFormat format1 = new SimpleDateFormat("dd-MMMM-yyyy");
+				SimpleDateFormat format = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d1 = null;
+				try {
+					if(uvm.date !=null){
+						if(uvm.date.contains("\"")){
+							d1 = format.parse(uvm.date.replaceAll("\"", ""));
+						}else{
+							d1 = format.parse(uvm.date);
+						}
+					}	
+							
+					//in milliseconds
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				u.setDate(d1);
+				/*SimpleDateFormat format1 = new SimpleDateFormat("dd-MMMM-yyyy");
 				Date d2 = null;
 				try {
 					if(uvm.time != null){
@@ -2671,9 +3377,10 @@ public static Result getMonthlyCattleOutputReport(){
 					//in milliseconds
 				} catch (Exception e) {
 					e.printStackTrace();
-				}
+				}*/
 				
-				u.setTime(d2);
+				//u.setTime(d2);
+				u.setTime(uvm.time);
 				u.setFatContent(uvm.fatContent);
 				u.setSNFContent(uvm.SNFContent);
 				u.setDeviceID(uvm.deviceID);
@@ -2952,6 +3659,195 @@ public static Result getMonthlyCattleOutputReport(){
 		return ok("");
 	}
 	
+	
+	
+	
+	public static Result updateCattleFeedInventoryProfileByAdmin(){
+		JsonNode json = request().body().asJson();
+		System.out.println("com.mnt.dairymgnt.controllers.Application.");
+		
+		JsonNode catJson = json.get("cat");
+		System.out.println(json);
+		ObjectMapper userinfoMapper = new ObjectMapper();
+		try {
+			CattleFeedInventoryVM uvm = userinfoMapper.readValue(catJson.traverse(),CattleFeedInventoryVM.class);
+			CattleFeedInventory u = CattleFeedInventory.getAllByCattleFeedInventoryId(uvm.cattleFeedInventoryId);
+			if(u !=  null){
+				JsonNode org = json.path("org");
+				System.out.println(org);
+				if(org.toString() != ""){
+					Oraganization    orgni = Oraganization.getOrgById(Integer.parseInt(org.toString().replace("\"", "")));
+					if(orgni != null){
+						u.setOraganization(orgni);
+					}
+				}
+				
+				JsonNode userId = json.path("userId");
+				System.out.println(userId);
+				if(userId.toString() != ""){
+					Users    uId = null;	
+					uId = Users.getUserByEmail(userId.toString().replace("\"", ""));
+					if(uId != null){
+						u.setUsers(uId);
+					}
+					
+				}
+				
+				//u  = new CattleFeedMaster();
+               
+				
+				
+				u.setFeedName(uvm.feedName);
+				u.setFeedType(uvm.feedType);
+				u.setRemark(uvm.remark);
+				u.setStockBalance(uvm.stockBalance);
+				u.setStockInQuantity(uvm.stockInQuantity);
+				u.setStockOutQuantity(uvm.stockOutQuantity);
+				u.setStockPerviousBalance(uvm.stockPerviousBalance);
+				
+			
+				
+					u.setLastUpdateDateTime(new Date());
+			
+
+				SimpleDateFormat format = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d1 = null;
+				try {
+					if(uvm.stockInDate !=null){
+						if(uvm.stockInDate.contains("\"")){
+							d1 = format.parse(uvm.stockInDate.replaceAll("\"", ""));
+						}else{
+							d1 = format.parse(uvm.stockInDate);
+						}
+					}	
+							
+					//in milliseconds
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				u.setStockInDate(d1);
+				//end date
+				SimpleDateFormat format1 = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d2 = null;
+				try {
+					if(uvm.stockOutDate != null){
+						if(uvm.stockOutDate.contains("\"")){
+							d2 = format.parse(uvm.stockOutDate.replaceAll("\"", ""));
+						}else{
+							d2 = format.parse(uvm.stockOutDate);
+						}
+					}	
+							
+					//in milliseconds
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				u.setStockOutDate(d2);
+				//next date
+				
+				u.update();
+
+			}else{
+				
+				u  = new CattleFeedInventory();
+				
+				//Breeds b = Breeds.getBreedsById(uvm.Breed);
+				//u.setBreed(b.breedName);
+				//u.setBreed(uvm.Breed);
+				
+				
+				u.setFeedName(uvm.feedName);
+				u.setFeedType(uvm.feedType);
+				u.setRemark(uvm.remark);
+				u.setStockBalance(uvm.stockBalance);
+				u.setStockInQuantity(uvm.stockInQuantity);
+				u.setStockOutQuantity(uvm.stockOutQuantity);
+				u.setStockPerviousBalance(uvm.stockPerviousBalance);
+				
+			
+				
+					u.setLastUpdateDateTime(new Date());
+			
+
+				SimpleDateFormat format = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d1 = null;
+				try {
+					if(uvm.stockInDate !=null){
+						if(uvm.stockInDate.contains("\"")){
+							d1 = format.parse(uvm.stockInDate.replaceAll("\"", ""));
+						}else{
+							d1 = format.parse(uvm.stockInDate);
+						}
+					}	
+							
+					//in milliseconds
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				u.setStockInDate(d1);
+				//end date
+				SimpleDateFormat format1 = new SimpleDateFormat("dd-MMMM-yyyy");
+				Date d2 = null;
+				try {
+					if(uvm.stockOutDate != null){
+						if(uvm.stockOutDate.contains("\"")){
+							d2 = format.parse(uvm.stockOutDate.replaceAll("\"", ""));
+						}else{
+							d2 = format.parse(uvm.stockOutDate);
+						}
+					}	
+							
+					//in milliseconds
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				
+				u.setStockOutDate(d2);
+				//next date
+				
+				
+				u.save();
+				
+				
+				JsonNode org = json.path("org");
+				System.out.println(org);
+				if(org.toString() != ""){
+					Oraganization    orgni = Oraganization.getOrgById(Integer.parseInt(org.toString().replace("\"", "")));
+					if(orgni != null){
+						u.setOraganization(orgni);
+					}
+					
+				}
+				
+				JsonNode userId = json.path("userId");
+				System.out.println(userId);
+				if(userId.toString() != ""){
+					Users    uId = null;
+				    uId = Users.getUserByEmail(userId.toString().replace("\"", ""));
+					if(uId != null){
+						u.setUsers(uId);
+					}
+					
+				}
+			u.update();
+
+			}
+		} catch (JsonParseException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (JsonMappingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		
+		return ok("");
+	}
 	
 	
 	public static Result updatefeedCattleProfileByAdmin(){

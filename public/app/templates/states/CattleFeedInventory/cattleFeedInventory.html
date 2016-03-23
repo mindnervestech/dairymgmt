@@ -66,7 +66,7 @@ function onlyAlphabets(e, t) {
 	<div class="col-lg-12">
 		<div class="portlet box" style="min-height: 500px;">
 			<div class="portlet-header">
-				<div class="caption">All Cattle Health Master</div>
+				<div class="caption">All Cattle Feed Inventory</div>
 			</div>
 			<div class="portlet-body" ng-init="init();" style="overflow-x: auto;">
 			<!-- 	<span ng-if="add == true" style="color:green;">Record Added Successfully.</span>
@@ -98,34 +98,22 @@ function onlyAlphabets(e, t) {
 									class="table table-hover table-striped table-bordered table-advanced tablesorter display">
 									<tbody>
 										<tr>
-											 <th>Health Plan Id</th>
-											<!-- <th>Feed Name</th>
-											<th>Feed Type</th>
-											<th>Meal Type </th>
-											<th>Date of Birth</th>
-											<th>Quantity</th> -->
-											<th>Medication Name</th>
-											<th>Medication Type</th>
-											<th>Frequency</th>
-											<th>Frequency Type</th>
-											<th>Duration</th>
-											<th>Medication Start Date </th>
-											<th>Medication End Date</th>
-											<!-- <th>Breed</th>
-											<th>SubBreed</th>
-											<th> Stage</th>
-											<th>MealType</th>
-											 -->
-											
-										<!-- 	<th>SKUId</th> -->
-											<!--  <th>Last Update Date Time</th>-->
+											 <th>Cattle Feed Inventory Id</th>
+											<th>Stock Balance</th>
+											<th>Stock In Date</th>
+											<th>Stock Out Date</th>
+											<th>Stock in Quantity</th>
+											<th>Stock Out Quantity</th>
+											<th>Feed Name </th>
+											<th>Feed Type</th>										
+									<!--  <th>Last Update Date Time</th>-->
 											<th>Details</th>
 										</tr>
 										<tr data-ng-repeat="cat in feedcaters"
 											style="background-color: #fff !important; left: -900">
 											<td ng-click="" data-toggle="tooltip" data-placement="bottom"
 												title="Send to mail to user"> <a
-												 href="mailto:{{user.email}}">{{cat.healthPlanId}}</a></td> 
+												 href="mailto:{{user.email}}">{{cat.cattleFeedInventoryId}}</a></td> 
 											<!-- <td ng-click="">{{cat.feedName}}</td>
 											<td ng-click="">{{cat.feedType}}</td>
 											<td ng-click="">{{cat.MealType}}</td> -->
@@ -133,20 +121,14 @@ function onlyAlphabets(e, t) {
 											 -->
 											 <!-- <td ng-click="">{{cat.quantity}}</td> -->	
 											 
-											<td ng-click="">{{cat.medicationName}}</td>
-											<td ng-click="">{{cat.medicationType}}</td>
-											<td ng-click="">{{cat.frequency}}</td>
-											<td ng-click="">{{cat.frequencyType}}</td>
-											<td ng-click="">{{cat.duration}}</td>
+											<td ng-click="">{{cat.stockBalance}}</td>
+											<td ng-click="">{{cat.stockInDate}}</td>
+											<td ng-click="">{{cat.stockOutDate}}</td>
+											<td ng-click="">{{cat.stockInQuantity}}</td>
+											<td ng-click="">{{cat.stockOutQuantity}}</td>
 											
-											<td ng-click="">{{cat.medicationStartDateVM}}</td>
-											<td ng-click="">{{cat.medicationEndDateVM}}</td>
-											<!-- <td ng-click="">{{cat.Breed}}</td>
-											<td ng-click="">{{cat.SubBreed}}</td>
-											<td ng-click="">{{cat.Stage}}</td>
-											<td ng-click="">{{cat.MealType}}</td>
-											 -->
-											<!-- <td ng-click="">{{cat.SKUId}}</td> -->
+											<td ng-click="">{{cat.feedName}}</td>
+											<td ng-click="">{{cat.feedType}}</td>
 											<!--  <td> {{cat.lastUpdateDateTime | date:'yyyy-MM-dd HH:mm:ss '}}</td> -->
 											<td><button class="btn btn-success-custom"
 													ng-click="editfeedCatdersDetails(cat);" data-toggle="tooltip"
@@ -189,7 +171,7 @@ function onlyAlphabets(e, t) {
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title" id="myModalLabel">Edit Cattle Health Master</h4>
+				<h4 class="modal-title" id="myModalLabel">Edit Cattle Feed Inventory</h4>
 			</div>
 			<div class="modal-body">
 			<span ng-if = "emptyFieldsError == true"><code> Please fill all fields!!!</code></span>
@@ -210,34 +192,27 @@ function onlyAlphabets(e, t) {
 				<div class = "col-md-6"  >
 				
 				<div class="col-md-12" style = "margin-top: 5%;">
-  							<label for="usr" > Medication Name</label>
-  							<input type="text" ng-model = "cat.medicationName" class="form-control" maxlength="80" id="firstname" onkeypress="return onlyAlphabets(event,this);">
-				</div>
-				
-				<div class="col-md-6" style = "margin-top: 5%;">
-  							<label for="usr" >Frequency</label>
-  							<input type="text" ng-model = "cat.frequency" class="form-control" maxlength="80" id="firstname" onkeypress="return isNumber(event)">
-				</div>
-				
-				<div class="col-md-6" style = "margin-top: 5%;>
-  							<label for="usr" >Frequency Type</label>
-  							<select id = "use"  ng-model="cat.frequencyType" class= "form-control" ng-change="" style="    width: 100%; margin-top: 4px;"">
-			                <option value="">--- Select ---</option>
-			                <option value="Daily" >Daily</option>
-    						<option value="Weekly">Weekly</option>
-    						<option value="Monthly">Monthly</option>
-			                </select>
+  							<label for="usr" >Stock Balance</label>
+  							<input type="text" ng-model = "cat.stockBalance" class="form-control" maxlength="80" id="firstname" onkeypress="return isNumber(event)">
 						</div>
-				<div class="col-md-12" >
+						<div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr" >Stock In Quantity</label>
+  							<input type="text" ng-model = "cat.stockInQuantity" class="form-control" maxlength="80" id="firstname" onkeypress="return isNumber(event)">
+						</div>
+						
+						 
+						
+				
+						<div class="col-md-12" >
 										<div class="">
 											<div class="">
 											<!--  <div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>-->
 												<div class="input-group col-md-12" style = "margin-top: 5%;">
 												<!-- <span> Medication Start Date</span> -->
-												<label for="usr">Medication Start Date </label>
-													 <input type="text" ng-model="cat.medicationStartDateVM"
-														name="startDate" class="form-control " id="startDateNew"
-														 ng-click="initStartDatepickerNew();"
+												<label for="usr">Stock In Date </label>
+													 <input type="text" ng-model="cat.stockInDate"
+														name="startDate" class="form-control " id="stockInDateAdd"
+														 ng-click="initStockInDatepickerNew();"
 														style="font-size: 12px;  width: 100%;" required>
 														<!--  <div class="input-group-addon">
 														<i class="fa fa-calendar"></i>
@@ -247,37 +222,28 @@ function onlyAlphabets(e, t) {
 									</div>
 					      </div>
 						
-						<div class="col-md-12" >
-										<div class="">
-											<div class="">
-											<!--  <div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>-->
-												<div class="input-group col-md-12" style = "margin-top: 5%;">
-												<!-- <span> Medication Next Date</span> -->
-												<label for="usr">Medication Next Date </label>
-													 <input type="text" ng-model="cat.medicationNextDateVM"
-														name="startDate" class="form-control " id="nextDateNew"
-														 ng-click="initNextDatepickerNew();"
-														style="font-size: 12px;  width: 100%;" required>
-														<!--  <div class="input-group-addon">
-														<i class="fa fa-calendar"></i>
-														</div>-->
-												</div>
-											</div>
-									</div>
-					      </div>										
+						<div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr" >Feed Name</label>
+  							<input type="text" ng-model = "cat.feedName" class="form-control" maxlength="80" id="firstname" onkeypress="return onlyAlphabets(event,this);">
+						</div>
+						<div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr" >Remark</label>
+  							<textarea id="text" cols="40" rows="3"  class="form-control" my-maxlength="5" ng-model="remark"></textarea>
+						</div>										
 					</div>	
 					
            			<div class = "col-md-6">
            			
            			<div class="col-md-12" style = "margin-top: 5%;">
-  							<label for="usr" > Medication Type</label>
-  							<input type="text" ng-model = "cat.medicationType" class="form-control" maxlength="80" id="firstname" onkeypress="return onlyAlphabets(event,this);">
-					</div>
+  							<label for="usr" >Stock Previous Balance </label>
+  							<input type="text" ng-model = "cat.stockPerviousBalance" class="form-control" maxlength="80" id="firstname" onkeypress="return isNumber(event)">
+						</div>
 					
-					<div class="col-md-12" style = "margin-top: 5%;">
-  							<label for="usr" >Duration</label>
-  							<input type="text" ng-model = "cat.duration" class="form-control" maxlength="80" id="firstname" onkeypress="return isNumber(event)">
-					</div>
+						<div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr" >Stock Out Quantity </label>
+  							<input type="text" ng-model = "cat.stockOutQuantity" class="form-control" maxlength="80" id="firstname" onkeypress="return isNumber(event)" >
+						</div>
+										    
 					
            			<div class="col-md-12" >
 										<div class="">
@@ -285,16 +251,22 @@ function onlyAlphabets(e, t) {
 											<!-- <div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div> -->
 												<div class="input-group col-md-12" style = "margin-top: 5%;">
 												<!-- <span>Medication End Date</span> -->
-												<label for="usr">Medication End Date </label>
-													 <input type="text" ng-model="cat.medicationEndDateVM"
-														name="dob" class="form-control " id="endDateNew"
-														 ng-click="initEndDatepickerNew();"
+												<label for="usr">Stock Out Date </label>
+													 <input type="text" ng-model="cat.stockOutDate"
+														name="dob" class="form-control " id="StockOutDateAdd"
+														 ng-click="initStockOutDatepickerNew();"
 														style="font-size: 12px;  width:   100%;" required>
 														
 												</div>
 											</div>
 									</div>
-					      </div>
+				      </div>
+					      
+					      <div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr" > Feed Type</label>
+  							<input type="text" ng-model = "cat.feedType" class="form-control" maxlength="80" id="firstname" onkeypress="return onlyAlphabets(event,this);">
+						</div>
+			           
            				
            								      	
            			</div>
@@ -326,7 +298,7 @@ function onlyAlphabets(e, t) {
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title" id="myModalLabel">Add Cattle Health Master</h4>
+				<h4 class="modal-title" id="myModalLabel">Add Cattle Feed Inventory</h4>
 			</div>
 			<div class="modal-body">
 			<span ng-if = "emptyFieldsError == true"><code> Please fill all fields!!!</code></span>
@@ -344,26 +316,18 @@ function onlyAlphabets(e, t) {
 					</div> -->
 				<div class = "col-md-12">
 				<div class = "col-md-6	">
-						
-						 <div class="col-md-12" style = "margin-top: 5%;">
-  							<label for="usr" > Medication Name</label>
-  							<input type="text" ng-model = "cat.medicationName" class="form-control" maxlength="80" id="firstname" onkeypress="return onlyAlphabets(event,this);">
-						</div>
 				
-						<div class="col-md-6" style = "margin-top: 5%;">
-  							<label for="usr" >Frequency</label>
-  							<input type="text" ng-model = "cat.frequency" class="form-control" maxlength="80" id="firstname" onkeypress="return isNumber(event)">
+						<div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr" >Stock Balance</label>
+  							<input type="text" ng-model = "cat.stockBalance" class="form-control" maxlength="80" id="firstname" onkeypress="return isNumber(event)">
+						</div>
+						<div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr" >Stock In Quantity</label>
+  							<input type="text" ng-model = "cat.stockInQuantity" class="form-control" maxlength="80" id="firstname" onkeypress="return isNumber(event)">
 						</div>
 						
-						<div class="col-md-6" style = "margin-top: 5%;>
-  							<label for="usr" >Frequency Type</label>
-  							<select id = "use"  ng-model="cat.frequencyType" class= "form-control" ng-change="" style="    width: 100%; margin-top: 4px;">
-			                <option value="">--- Select ---</option>
-			                <option value="Daily" >Daily</option>
-    						<option value="Weekly">Weekly</option>
-    						<option value="Monthly">Monthly</option>
-			                </select>
-						</div>
+						 
+						
 				
 						<div class="col-md-12" >
 										<div class="">
@@ -371,10 +335,10 @@ function onlyAlphabets(e, t) {
 											<!--  <div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>-->
 												<div class="input-group col-md-12" style = "margin-top: 5%;">
 												<!-- <span> Medication Start Date</span> -->
-												<label for="usr">Medication Start Date </label>
-													 <input type="text" ng-model="cat.medicationStartDateVM"
-														name="startDate" class="form-control " id="startDateAddNew"
-														 ng-click="initStartDatepickerNew();"
+												<label for="usr">Stock In Date </label>
+													 <input type="text" ng-model="cat.stockInDate"
+														name="startDate" class="form-control " id="stockInDateAddNew"
+														 ng-click="initStockInDatepickerNew();"
 														style="font-size: 12px;  width: 100%;" required>
 														<!--  <div class="input-group-addon">
 														<i class="fa fa-calendar"></i>
@@ -384,36 +348,31 @@ function onlyAlphabets(e, t) {
 									</div>
 					      </div>
 						
-						<div class="col-md-12" >
-										<div class="">
-											<div class="">
-											<!--  <div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>-->
-												<div class="input-group col-md-12" style = "margin-top: 5%;">
-												<!-- <span> Medication Next Date</span> -->
-												<label for="usr">Medication Next Date </label>
-													 <input type="text" ng-model="cat.medicationNextDateVM"
-														name="startDate" class="form-control " id="nextDateAddNew"
-														 ng-click="initNextDatepickerNew();"
-														style="font-size: 12px;  width: 100%;" required>
-														<!--  <div class="input-group-addon">
-														<i class="fa fa-calendar"></i>
-														</div>-->
-												</div>
-											</div>
-									</div>
-					      </div>				
+						<div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr" >Feed Name</label>
+  							<input type="text" ng-model = "cat.feedName" class="form-control" maxlength="80" id="firstname" onkeypress="return onlyAlphabets(event,this);">
+						</div>
+						<div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr" >Remark</label>
+  							<textarea id="text" cols="40" rows="3"  class="form-control" my-maxlength="5" ng-model="remark"></textarea>
+						</div>
+				
+									
 					</div>
+					 
 					    
 				    <div class = "col-md-6	">
+				    
 				    	<div class="col-md-12" style = "margin-top: 5%;">
-  							<label for="usr" > Medication Type</label>
-  							<input type="text" ng-model = "cat.medicationType" class="form-control" maxlength="80" id="firstname" onkeypress="return onlyAlphabets(event,this);">
-					</div>
+  							<label for="usr" >Stock Previous Balance </label>
+  							<input type="text" ng-model = "cat.stockPerviousBalance" class="form-control" maxlength="80" id="firstname" onkeypress="return isNumber(event)" disabled>
+						</div>
 					
-					<div class="col-md-12" style = "margin-top: 5%;">
-  							<label for="usr" >Duration</label>
-  							<input type="text" ng-model = "cat.duration" class="form-control" maxlength="80" id="firstname" onkeypress="return isNumber(event)">
-					</div>
+						<div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr" >Stock Out Quantity </label>
+  							<input type="text" ng-model = "cat.stockOutQuantity" class="form-control" maxlength="80" id="firstname" onkeypress="return isNumber(event)" >
+						</div>
+										    
 					
            			<div class="col-md-12" >
 										<div class="">
@@ -421,16 +380,21 @@ function onlyAlphabets(e, t) {
 											<!-- <div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div> -->
 												<div class="input-group col-md-12" style = "margin-top: 5%;">
 												<!-- <span>Medication End Date</span> -->
-												<label for="usr">Medication End Date </label>
-													 <input type="text" ng-model="cat.medicationEndDateVM"
-														name="dob" class="form-control " id="endDateAddNew"
-														 ng-click="initEndDatepickerNew();"
+												<label for="usr">Stock Out Date </label>
+													 <input type="text" ng-model="cat.stockOutDate"
+														name="dob" class="form-control " id="stockOutDateAddNew"
+														 ng-click="initStockOutDatepickerNew();"
 														style="font-size: 12px;  width:   100%;" required>
 														
 												</div>
 											</div>
 									</div>
-					      </div>
+				      </div>
+					      
+					      <div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr" > Feed Type</label>
+  							<input type="text" ng-model = "cat.feedType" class="form-control" maxlength="80" id="firstname" onkeypress="return onlyAlphabets(event,this);">
+						</div>
 			           
 			           
 				</div>

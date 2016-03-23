@@ -33,15 +33,15 @@ public class CattleOutput extends Model {
 	public int cattleId;	
 	
    	public Date LastUpdateDateTime;
-	public String date;
-	public Date time;
+	public Date date;
+	public String time;
 	
 	
-	public Date getTime() {
+	public String getTime() {
 		return time;
 	}
 
-	public void setTime(Date time) {
+	public void setTime(String time) {
 		this.time = time;
 	}
 
@@ -74,11 +74,11 @@ public class CattleOutput extends Model {
 		LastUpdateDateTime = lastUpdateDateTime;
 	}
 
-	public String getDate() {
+	public Date getDate() {
 		return date;
 	}
 
-	public void setDate(String date) {
+	public void setDate(Date date) {
 		this.date = date;
 	}
 
