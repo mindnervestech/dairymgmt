@@ -25,8 +25,9 @@
 				<div class="caption">All Pregnant Cattle </div>
 			</div>
 			<div class="portlet-body" ng-init="init();" style="overflow-x: auto;">
-					<span ng-if="add == true" style="color:green;">Record Added Successfully.</span>
-					<span ng-if="update == true" style="color:green;">Record Updated  Successfully.</span>
+			<span flash-message="5000"  style="float:right;width:40%;" ></span>
+					<!-- <span ng-if="add == true" style="color:green;">Record Added Successfully.</span>
+					<span ng-if="update == true" style="color:green;">Record Updated  Successfully.</span> -->
 				<div class="row mbm">
 					<div class="col-lg-12">
 						<!-- {{jobs}} -->
@@ -44,7 +45,7 @@
 								<label>Active Users:</label>&nbsp;&nbsp; <small><strong>{{activeusercount}}</strong></small>
 							</div> -->
 						</div>
-						<div class="pull-left">
+						<!-- <div class="pull-left">
 						<div class="col-md-12" style="margin-top:-3%;margin-bottom:2%;; margin-left:24%;">
 		              				<label class="control-label col-md-8">Select Cattle Name</label>
 		              					<div class="col-md-12"> 
@@ -54,7 +55,7 @@
 			                				</select>
 	            						</div>   
 	            		   </div>	
-						</div>
+						</div> -->
 						
 						<div ng-init="getAllPregnantCattle()" class="table-responsive">
 							<div class="page-header">
@@ -64,16 +65,20 @@
 									<tbody>
 										<tr>
 											<th>Pregnant Id</th>
-											<th>Cattle name</th>
+											<!-- <th>Cattle name</th> -->
 											<!-- <th>Parent Name </th> -->
 											<th>Last Delivery Date</th>
-											<th>Expected Pregnancy Date</th>
+											<th>Pregnancy Date</th>
+											<th>Success Date</th>
+											<th>Due Date</th>
 											<th>First Insemination Date</th>
 											<th>Second Insemination Date</th>
 											<th>Third Insemination Date</th>
-											<th>Actual Pregnancy Date</th>
-											<th>Expected Delivery Date</th>
-											<th>Milking Stopping Date</th>
+											<th>Forth Insemination Date</th>
+											<th>Planned First Insemination Date</th>
+											<th>Planned Second Insemination Date</th>
+											<th>Planned Third Insemination Date</th>
+											<th>Planned Forth Insemination Date</th>
 											 <th>Details</th>
 												 
 										</tr>
@@ -82,18 +87,21 @@
 											<td ng-click="" data-toggle="tooltip" data-placement="bottom"
 												title="Send to mail to user"><a
 												href="mailto:{{user.email}}">{{cat.pregnancyId}}</a></td>
-											<td ng-click="">{{cat.cattleId}}/{{cat.name}}</td>
+											<!-- <td ng-click="">{{cat.cattleId}}/{{cat.name}}</td> -->
 											<td ng-click="">{{cat.lastDeliveryDate}}</td>
 												<!-- <td ng-click="" >{{cat.cattleMaster.cattleId}}/ ({{cat.cattleMaster.name}})</td> -->
-											<td ng-click="">{{cat.expectedPregnancyDate}}</td>
+											<td ng-click="">{{cat.pregnancyDate}}</td>
+											<td ng-click="">{{cat.successDate}}</td>
+											<td ng-click="">{{cat.dueDate}}</td>
 											<td ng-click="">{{cat.firstInseminationDate}}</td>
 											<!-- <td>{{cat.dateofBirth | date:'yyyy-MM-dd HH:mm:ss '}}</td>
 											 --><td ng-click="">{{cat.secondInseminationDate}}</td>
 											<td ng-click="">{{cat.thirdInseminationDate}}</td>
-												<td ng-click="">{{cat.actualPregnancyDate}}</td>
-													<td ng-click="">{{cat.expectedDeliveryDateVM}}</td>
-														<td ng-click="">{{cat.milkingStoppingDate}}</td>
-														
+											<td ng-click="">{{cat.forthInseminationDate}}</td>
+												<td ng-click="">{{cat.plannedFirstInseminationDate}}</td>
+													<td ng-click="">{{cat.plannedSecondInseminationDate}}</td>
+														<td ng-click="">{{cat.plannedThirdInseminationDate}}</td>
+														<td ng-click="">{{cat.plannedForthInseminationDate}}</td>
 											 <td><button class="btn btn-success-custom"
 													ng-click="editCatdersDetails(cat);" data-toggle="tooltip"
 													data-placement="bottom" title="View Caters  details">
@@ -154,7 +162,6 @@
 					</div>
 				<div class = "col-md-12">
 				<div class = "col-md-6">
-					 <div class="col-md-12" style="margin-top:5%;margin-left:-4%;"> 
 		            
 		             <!--  <div class="col-md-12">
 		              		 <label>Select Cattle to add pregnancy</label>
@@ -162,7 +169,7 @@
 			                 <option ng-repeat="u in cattle" value="{{u.cattleId}}"   >{{u.name}}</option>
 			                </select>
 	            	 </div>  -->   
-	            	</div>	
+	            		
 						<!-- <div class="col-md-12">
   							<label for="usr">Catttle Name</label>
   							<input type="text" ng-model = "cat.name" class="form-control" maxlength="80" id="firstname">

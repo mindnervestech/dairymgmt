@@ -30,7 +30,7 @@ public class CattleOutputVM {
 	public Oraganization oraganization;
 	public Users users;
 	public CattleMaster cattleMaster;
-	public PregnantCattle pregnantCattle;
+	/*public PregnantCattle pregnantCattle;*/
 	
 	
 }

@@ -25,7 +25,7 @@ public class CattleIntakeVM {
 	public Oraganization oraganization;
 	public Users users;
 	public CattleFeedMaster cattleFeedMaster;
-	public PregnantCattle pregnantCattle;
+//	public PregnantCattle pregnantCattle;
 	public CattleMaster cattleMaster;
 	public Long FeedPlanId;
 	public Long feedId;

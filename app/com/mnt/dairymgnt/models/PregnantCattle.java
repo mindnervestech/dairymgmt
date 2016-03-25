@@ -38,7 +38,7 @@ public class PregnantCattle extends Model {
 	public Date plannedSecondInseminationDate;
 	public Date plannedThirdInseminationDate;
 	public Date plannedForthInseminationDate;
-	public Date pregnacyDate;
+	public Date pregnancyDate;
 	public Date dueDate;
 	public Date successDate;
 	
@@ -139,12 +139,12 @@ public class PregnantCattle extends Model {
 		this.plannedForthInseminationDate = plannedForthInseminationDate;
 	}
 
-	public Date getPregnacyDate() {
-		return pregnacyDate;
+	public Date getPregnancyDate() {
+		return pregnancyDate;
 	}
 
-	public void setPregnacyDate(Date pregnacyDate) {
-		this.pregnacyDate = pregnacyDate;
+	public void setPregnancyDate(Date pregnancyDate) {
+		this.pregnancyDate = pregnancyDate;
 	}
 
 	public Date getDueDate() {

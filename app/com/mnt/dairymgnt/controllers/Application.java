@@ -906,12 +906,12 @@ public class Application extends Controller {
 			}
 			
 			//pregnancy date
-			if(u.pregnacyDate != null){
+			if(u.pregnancyDate != null){
 				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
-		        String date = DATE_FORMAT.format(u.pregnacyDate);
-				cfvm.pregnacyDate = date;
+		        String date = DATE_FORMAT.format(u.pregnancyDate);
+				cfvm.pregnancyDate = date;
 			}else{
-				cfvm.pregnacyDate = "";
+				cfvm.pregnancyDate = "";
 			}
 			
 			//first insemination date
@@ -1044,12 +1044,12 @@ public class Application extends Controller {
 			}
 			
 			//pregnancy date
-			if(u.pregnacyDate != null){
+			if(u.pregnancyDate != null){
 				SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd-MMMM-yyyy");
-		        String date = DATE_FORMAT.format(u.pregnacyDate);
-				cfvm.pregnacyDate = date;
+		        String date = DATE_FORMAT.format(u.pregnancyDate);
+				cfvm.pregnancyDate = date;
 			}else{
-				cfvm.pregnacyDate = "";
+				cfvm.pregnancyDate = "";
 			}
 			
 			//first insemination date
@@ -1144,7 +1144,7 @@ cmvm.add(cfvm);
 		
 		for(CattleIntake u : cattleIntake){
 			CattleIntakeVM cfvm = new CattleIntakeVM();
-			cfvm.dateOfBirth = u.dateOfBirth;
+			cfvm.dateOfBirth = u.dateOfBirth;		
 			cfvm.deviceID = u.deviceID;
 			cfvm.quantity = u.quantity;
 			cfvm.lastUpdateDateTime =  u.lastUpdateDateTime;
@@ -1154,7 +1154,7 @@ cmvm.add(cfvm);
 			cfvm.cattleId = u.cattleId;
 			cfvm.cattleMaster = u.CattleMaster;
 			cfvm.dateOfBirth = u.dateOfBirth;
-			cfvm.pregnantCattle = u.pregnantCattle;
+			//cfvm.pregnantCattle = u.pregnantCattle;
 			
 			List <CattleIntakePlan> cfs = CattleIntakePlan.getCatleFeedsById(cfvm.cattleId);
 			cfvm.cattleIntakeVM = cfs;
@@ -1185,7 +1185,7 @@ cmvm.add(cfvm);
 			cfvm.cattleId = u.cattleId;
 			cfvm.cattleMaster = u.CattleMaster;
 			cfvm.dateOfBirth = u.dateOfBirth;
-			cfvm.pregnantCattle = u.pregnantCattle;
+			//cfvm.pregnantCattle = u.pregnantCattle;
 //			cfvm.actualFeedType =  u.actualFeedType;
 //			cfvm.actualFeedName  =  u.actualFeedName;
 //			cfvm.expectedFeedType = u.expectedFeedType;
@@ -1233,7 +1233,7 @@ cmvm.add(cfvm);
 			cfvm.SNFContent = u.SNFContent;
 			cfvm.fatContent = u.fatContent;
 			cfvm.cattleMaster = u.CattleMaster;
-			cfvm.pregnantCattle = u.pregnantCattle;
+			/*cfvm.pregnantCattle = u.pregnantCattle;*/
 			cfvm.expectedMilkQuantity = u.expectedMilkQuantity; 
 			cmvm.add(cfvm);
 		}
@@ -2692,7 +2692,7 @@ public static Result getMonthlyCattleOutputReport(){
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				u.setPlannedFirstInseminationDate(d8);
+				u.setPlannedThirdInseminationDate(d8);
 				
 				//planned Forth Insemination date
 				SimpleDateFormat format9 = new SimpleDateFormat("dd-MMMM-yyyy");
@@ -2730,17 +2730,17 @@ public static Result getMonthlyCattleOutputReport(){
 				SimpleDateFormat format11 = new SimpleDateFormat("dd-MMMM-yyyy");
 				Date d11 = null;
 				try {
-					if(uvm.pregnacyDate !=null){
-						if(uvm.pregnacyDate.contains("\"")){
-							d11 = format11.parse(uvm.pregnacyDate.replaceAll("\"", ""));
+					if(uvm.pregnancyDate !=null){
+						if(uvm.pregnancyDate.contains("\"")){
+							d11 = format11.parse(uvm.pregnancyDate.replaceAll("\"", ""));
 						}else{
-							d11 = format11.parse(uvm.pregnacyDate);
+							d11 = format11.parse(uvm.pregnancyDate);
 						}
 					}					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				u.setPregnacyDate(d11);
+				u.setPregnancyDate(d11);
 				
 				
 				//last Delivery date
@@ -2897,7 +2897,7 @@ public static Result getMonthlyCattleOutputReport(){
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				u.setPlannedFirstInseminationDate(d8);
+				u.setPlannedThirdInseminationDate(d8);
 				
 				//planned Forth Insemination date
 				SimpleDateFormat format9 = new SimpleDateFormat("dd-MMMM-yyyy");
@@ -2935,17 +2935,17 @@ public static Result getMonthlyCattleOutputReport(){
 				SimpleDateFormat format11 = new SimpleDateFormat("dd-MMMM-yyyy");
 				Date d11 = null;
 				try {
-					if(uvm.pregnacyDate !=null){
-						if(uvm.pregnacyDate.contains("\"")){
-							d11 = format11.parse(uvm.pregnacyDate.replaceAll("\"", ""));
+					if(uvm.pregnancyDate !=null){
+						if(uvm.pregnancyDate.contains("\"")){
+							d11 = format11.parse(uvm.pregnancyDate.replaceAll("\"", ""));
 						}else{
-							d11 = format11.parse(uvm.pregnacyDate);
+							d11 = format11.parse(uvm.pregnancyDate);
 						}
 					}					
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
-				u.setPregnacyDate(d11);
+				u.setPregnancyDate(d11);
 				
 				
 				//last Delivery date
@@ -3703,7 +3703,7 @@ public static Result getMonthlyCattleOutputReport(){
 				u.setStockBalance(uvm.stockBalance);
 				u.setStockInQuantity(uvm.stockInQuantity);
 				u.setStockOutQuantity(uvm.stockOutQuantity);
-				u.setStockPerviousBalance(uvm.stockPerviousBalance);
+				u.setStockPerviousBalance(uvm.stockPerviousBalance+ uvm.stockBalance);
 				
 			
 				

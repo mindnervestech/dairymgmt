@@ -171,7 +171,7 @@ function onlyAlphabets(e, t) {
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title" id="myModalLabel">Edit Cattle Feed Inventory</h4>
+				<h4 class="modal-title" id="myModalLabel">Edit Cattle Feed Inventory Details</h4>
 			</div>
 			<div class="modal-body">
 			<span ng-if = "emptyFieldsError == true"><code> Please fill all fields!!!</code></span>
@@ -226,17 +226,14 @@ function onlyAlphabets(e, t) {
   							<label for="usr" >Feed Name</label>
   							<input type="text" ng-model = "cat.feedName" class="form-control" maxlength="80" id="firstname" onkeypress="return onlyAlphabets(event,this);">
 						</div>
-						<div class="col-md-12" style = "margin-top: 5%;">
-  							<label for="usr" >Remark</label>
-  							<textarea id="text" cols="40" rows="3"  class="form-control" my-maxlength="5" ng-model="remark"></textarea>
-						</div>										
+															
 					</div>	
 					
            			<div class = "col-md-6">
            			
            			<div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr" >Stock Previous Balance </label>
-  							<input type="text" ng-model = "cat.stockPerviousBalance" class="form-control" maxlength="80" id="firstname" onkeypress="return isNumber(event)">
+  							<input type="text" ng-model = "cat.stockPerviousBalance" class="form-control" maxlength="80" id="firstname" onkeypress="return isNumber(event)" disabled>
 						</div>
 					
 						<div class="col-md-12" style = "margin-top: 5%;">
@@ -271,6 +268,15 @@ function onlyAlphabets(e, t) {
            								      	
            			</div>
 				</div>
+				
+				<div class="col-md-12">
+				<div class="col-md-12">
+						<div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr" >Remark</label>
+  							<textarea id="text" cols="40" rows="3"  class="form-control" my-maxlength="5" ng-model="remark"></textarea>
+						</div>	
+				</div>
+				</div>
 						<div class="form-actions">
 							<div class="pull-right" style="margin-top:2%;">
 								<button type="submit" ng-click="updateCattleHealthMasterProfileByAdmin(cat);"
@@ -298,7 +304,7 @@ function onlyAlphabets(e, t) {
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title" id="myModalLabel">Add Cattle Feed Inventory</h4>
+				<h4 class="modal-title" id="myModalLabel">Add Cattle Feed Inventory Details</h4>
 			</div>
 			<div class="modal-body">
 			<span ng-if = "emptyFieldsError == true"><code> Please fill all fields!!!</code></span>
@@ -314,13 +320,19 @@ function onlyAlphabets(e, t) {
 							
 					</div>				
 					</div> -->
-				<div class = "col-md-12">
-				<div class = "col-md-6	">
-				
-						<div class="col-md-12" style = "margin-top: 5%;">
+					<div class="col-md-12">
+					<div class="col-md-6">
+							<div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr" >Stock Balance</label>
   							<input type="text" ng-model = "cat.stockBalance" class="form-control" maxlength="80" id="firstname" onkeypress="return isNumber(event)">
 						</div>
+					
+					</div>
+					</div>
+				<div class = "col-md-12">
+				<div class = "col-md-6	">
+				
+						
 						<div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr" >Stock In Quantity</label>
   							<input type="text" ng-model = "cat.stockInQuantity" class="form-control" maxlength="80" id="firstname" onkeypress="return isNumber(event)">
@@ -352,10 +364,7 @@ function onlyAlphabets(e, t) {
   							<label for="usr" >Feed Name</label>
   							<input type="text" ng-model = "cat.feedName" class="form-control" maxlength="80" id="firstname" onkeypress="return onlyAlphabets(event,this);">
 						</div>
-						<div class="col-md-12" style = "margin-top: 5%;">
-  							<label for="usr" >Remark</label>
-  							<textarea id="text" cols="40" rows="3"  class="form-control" my-maxlength="5" ng-model="remark"></textarea>
-						</div>
+						
 				
 									
 					</div>
@@ -363,10 +372,10 @@ function onlyAlphabets(e, t) {
 					    
 				    <div class = "col-md-6	">
 				    
-				    	<div class="col-md-12" style = "margin-top: 5%;">
+				    	<!-- <div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr" >Stock Previous Balance </label>
   							<input type="text" ng-model = "cat.stockPerviousBalance" class="form-control" maxlength="80" id="firstname" onkeypress="return isNumber(event)" disabled>
-						</div>
+						</div> -->
 					
 						<div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr" >Stock Out Quantity </label>
@@ -398,6 +407,14 @@ function onlyAlphabets(e, t) {
 			           
 			           
 				</div>
+			</div>
+			<div class="col-md-12">
+			<div class="col-md-12">
+						<div class="col-md-12" style = "margin-top: 3%;">
+  							<label for="usr" >Remark</label>
+  							<textarea id="text" cols="40" rows="3"  class="form-control" my-maxlength="5" ng-model="remark"></textarea>
+						</div>
+			</div>
 			</div>
 						<div class="form-actions">
 							<div class="pull-right" style="margin-top:2%;">

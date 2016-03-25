@@ -20,7 +20,7 @@ public class PregnancyCattleVM {
 	public String plannedSecondInseminationDate;
 	public String plannedThirdInseminationDate;
 	public String plannedForthInseminationDate;
-	public String pregnacyDate;
+	public String pregnancyDate;
 	public String dueDate;
 	public String successDate;
 	public int cattleId;

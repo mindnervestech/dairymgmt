@@ -6691,7 +6691,7 @@ App.controller('ViewAllOrgController', function ($scope, $rootScope, $routeParam
 
 
 
-App.controller('ViewAllPregnantCattleController', function ($scope, $rootScope, $routeParams, $http, $upload){
+App.controller('ViewAllPregnantCattleController', function ($scope, $rootScope, $routeParams, $http, $upload ,Flash){
 	// get all Cattle master to admin
 	$scope.email;
 	 $scope.pageno = 0;
@@ -7101,7 +7101,7 @@ App.controller('ViewAllPregnantCattleController', function ($scope, $rootScope, 
 	$scope.updateCattleProfileByAdmin = function(cat){
 		$scope.cat;
 		$scope.cat = cat;
-			$http.post('/updateCattleChildProfileByAdmin?d='+Math.random(),{cat:$scope.cat,userId:$scope.userId,org:$scope.org,parentId:$scope.parentId})
+			$http.post('/updateCattlePregnancyProfileByAdmin?d='+Math.random(),{cat:$scope.cat,userId:$scope.userId,org:$scope.org,parentId:$scope.parentId})
 			.success(function(data){
 				//console.log("success");
 				$scope.updateSuccess = true;
@@ -7110,6 +7110,8 @@ App.controller('ViewAllPregnantCattleController', function ($scope, $rootScope, 
 					.success(function(data) {
 						$scope.caters = data.caters;
 						$scope.update =  true;
+						var message = '<strong> Well done!</strong>  You successfully update the record.';
+					    Flash.create('success', message, 'custom-class');
 						
 					});
 			});
@@ -7127,6 +7129,8 @@ App.controller('ViewAllPregnantCattleController', function ($scope, $rootScope, 
 				.success(function(data) {
 					$scope.caters = data.caters;
 					$scope.add =  true;
+					var message = '<strong> Well done!</strong>  You successfully Added the record.';
+				    Flash.create('success', message, 'custom-class');
 				});
 		});
 
@@ -9479,11 +9483,12 @@ App.controller('ViewAllCattleFeedInventoryController', function ($scope, $rootSc
 	$scope.updateCattleHealthMasterProfileByAdmin = function(cat){
 		$scope.cat = cat;
 		$scope.doberror = false;
-		/*$scope.emptyFieldsError = false;
-		if(     angular.isUndefined($scope.cat.medicationName)  || ( $scope.cat.medicationName == "" )|| ($scope.cat.medicationName == null)  ||
-				angular.isUndefined($scope.cat.duration)  || ( $scope.cat.duration == "" )|| ($scope.cat.duration == null)  ||
-				angular.isUndefined($scope.cat.frequency)  || ( $scope.cat.frequency == "" )|| ($scope.cat.frequency == null)  ||
-				angular.isUndefined($scope.cat.medicationType) || ($scope.cat.medicationType == "") || ($scope.cat.medicationType == null)
+		$scope.emptyFieldsError = false;
+		if(     angular.isUndefined($scope.cat.stockBalance)  || ( $scope.cat.stockBalance == "" )|| ($scope.cat.stockBalance == null)  ||
+				angular.isUndefined($scope.cat.stockInQuantity)  || ( $scope.cat.stockInQuantity == "" )|| ($scope.cat.stockInQuantity == null)  ||
+				angular.isUndefined($scope.cat.stockOutQuantity)  || ( $scope.cat.stockOutQuantity == "" )|| ($scope.cat.stockOutQuantity == null)  ||
+				angular.isUndefined($scope.cat.feedName)  || ( $scope.cat.feedName == "" )|| ($scope.cat.feedName == null)  ||
+				angular.isUndefined($scope.cat.feedType) || ($scope.cat.feedType == "") || ($scope.cat.feedType == null)
 	){
 			    $scope.emptyFieldsError = true;
 			}
@@ -9491,7 +9496,7 @@ App.controller('ViewAllCattleFeedInventoryController', function ($scope, $rootSc
 			{
 			
 			 $scope.emptyFieldsError = false;
-		*/
+		
 			$http.post('/updateCattleFeedInventoryProfileByAdmin?d='+Math.random(),{cat:$scope.cat,userId:$scope.userId,org:$scope.org})
 			.success(function(data){
 				//console.log("success");
@@ -9509,25 +9514,27 @@ App.controller('ViewAllCattleFeedInventoryController', function ($scope, $rootSc
 					    $scope.cat={};
 					});
 			});
-	//	}
+		}
 	}
 
 	$scope.addCattleHealthMasterProfileByAdmin = function(cat){
 		$scope.cat = cat;
 		console.log(cat);
-		/*$scope.doberror = false;
+		$scope.doberror = false;
 		$scope.emptyFieldsError = false;
-		if(     angular.isUndefined($scope.cat.feedName)  || ( $scope.cat.feedName == "" )|| ($scope.cat.feedName == null)  ||
-				angular.isUndefined($scope.cat.feedType)  || ( $scope.cat.feedType == "" )|| ($scope.cat.feedType == null)  ||
+		if(     
 				angular.isUndefined($scope.cat.stockBalance)  || ( $scope.cat.stockBalance == "" )|| ($scope.cat.stockBalance == null)  ||
-				angular.isUndefined($scope.cat.stockPreviousBalance) || ($scope.cat.stockPreviousBalance == "") || ($scope.cat.stockPreviousBalance == null)
+				angular.isUndefined($scope.cat.stockInQuantity)  || ( $scope.cat.stockInQuantity == "" )|| ($scope.cat.stockInQuantity == null)  ||
+				angular.isUndefined($scope.cat.feedType)  || ( $scope.cat.feedType == "" )|| ($scope.cat.feedType == null)  ||
+				angular.isUndefined($scope.cat.feedName)  || ( $scope.cat.feedName == "" )|| ($scope.cat.feedName == null)  ||
+				angular.isUndefined($scope.cat.stockOutQuantity) || ($scope.cat.stockOutQuantity == "") || ($scope.cat.stockOutQuantity == null)
 	){
 			    $scope.emptyFieldsError = true;
 			}
 		else
 			{
 			
-			 $scope.emptyFieldsError = false;*/
+			 $scope.emptyFieldsError = false;
 		
 		$http.post('/updateCattleFeedInventoryProfileByAdmin?d='+Math.random(),{cat:$scope.cat,userId:$scope.userId,org:$scope.org})
 		.success(function(data){
@@ -9544,7 +9551,7 @@ App.controller('ViewAllCattleFeedInventoryController', function ($scope, $rootSc
 				    Flash.create('success', message, 'custom-class');
 				});
 		});
-	//}
+	}
 		
 }
 	$scope.feeds = {};

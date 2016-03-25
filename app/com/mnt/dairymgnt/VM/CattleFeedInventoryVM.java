@@ -11,10 +11,10 @@ public class CattleFeedInventoryVM
 	public long cattleFeedInventoryId;
 	public String feedName;
 	public String feedType;
-	public String stockBalance;
+	public int stockBalance;
 	public String stockInQuantity;
 	public String remark;
-	public String stockPerviousBalance;
+	public int stockPerviousBalance;
 	public String stockOutQuantity;
 	public String stockInDate;
 	public String stockOutDate;

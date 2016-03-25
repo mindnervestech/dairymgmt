@@ -168,7 +168,7 @@ function resetForm(form) {
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title" id="myModalLabel">Edit Cattle Master</h4>
+				<h4 class="modal-title" id="myModalLabel">Edit Cattle Master Details</h4>
 			</div>
 			<div class="modal-body">
 				<div class = "col-md-12">
@@ -187,6 +187,16 @@ function resetForm(form) {
 			                </select>
 	            		</div>   
 	            	</div>	
+					
+						<div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr">Gender </label>
+  						 		<!-- <input type="text"  class="form-control" > -->
+							<select ng-model = "cat.gender"  id="gender" ng-selected="cat.gender" class="form-control">
+  								<option value="Male">Male</option>
+  								<option value="Female">Female</option>
+							</select>
+					
+						</div>	
 						
 						<div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
 		              <label class="control-label col-md-12 ">Select parent name</label>
@@ -196,7 +206,27 @@ function resetForm(form) {
 			                </select>
 	            		</div>   
 	            	</div>		
-						  <div class="col-md-12">
+						  
+						<div class="col-md-12">
+										
+											<!-- <div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>
+											 --><div class="input-group col-md-12" style = "margin-top: 5%;">
+												<span>Last Delivery Date</span>
+													 <input type="text" ng-model="cat.lastDeliveryVM"
+														name="ld" class="form-control " id="dodelivery1"
+														 ng-click="initDeliveryDatepicker();"
+														style="font-size: 12px; width:  100%;" required>
+														<!--  <div class="input-group-addon">
+														<i class="fa fa-calendar"></i>
+														</div> -->
+												</div>
+											
+					</div>
+						
+						</div>
+						<div class = "col-md-6">
+						
+						<div class="col-md-12">
 										<div class="">
 											<div class="">
 											<div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>
@@ -212,49 +242,23 @@ function resetForm(form) {
 												</div>
 											</div>
 									</div>
-					</div>
-						<div class="col-md-12" style = "margin-top: 5%;">
-  							<label for="usr">Gender </label>
-  						 		<!-- <input type="text"  class="form-control" > -->
-							<select ng-model = "cat.gender"  id="gender" ng-selected="cat.gender" class="form-control">
-  								<option value="Male">Male</option>
-  								<option value="Female">Female</option>
-							</select>
-					
-						</div>	
-						
 						</div>
-						<div class = "col-md-6">
-						<div class="col-md-12" style = "margin-top: 5%;">
-  							<label for="usr">Cattle Identification Mark </label>
-  							<input type="text" ng-model = "cat.cattleIdentificationMark" maxlength="80" class="form-control" id="firstname" onkeypress="return onlyAlphabets(event,this);">
-						</div>	
 						
 						<div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
-		              <label class="control-label col-md-8">Select Sub Breed name</label>
-		              <div class="col-md-12" > 
+		              	<label class="control-label col-md-8">Select Sub Breed name</label>
+		             	 <div class="col-md-12" > 
 			                <select id = "use"  data-ng-model="cat.subbreed" class= "col-md-5 form-control"  style="    width: 110%;">
 			                 <option ng-repeat="u in subBreeds" value="{{u.id}}"   ng-selected="u.sub_breed  == cat.subbreed">{{u.sub_breed}}</option>
 			                </select>
 	            		</div>   
-	            	</div>
+	            		</div>
 						
 					
-	            	<div class="col-md-12">
-										
-											<!-- <div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>
-											 --><div class="input-group col-md-12" style = "margin-top: 5%;">
-												<span>Last Delivery Date</span>
-													 <input type="text" ng-model="cat.lastDeliveryVM"
-														name="ld" class="form-control " id="dodelivery1"
-														 ng-click="initDeliveryDatepicker();"
-														style="font-size: 12px; width:  100%;" required>
-														<!--  <div class="input-group-addon">
-														<i class="fa fa-calendar"></i>
-														</div> -->
-												</div>
-											
-					</div>
+	            		<div class="col-md-12" style = "margin-top: 5%;">
+  							<label for="usr">Cattle Identification Mark </label>
+  							<input type="text" ng-model = "cat.cattleIdentificationMark" maxlength="80" class="form-control" id="firstname" onkeypress="return onlyAlphabets(event,this);">
+						</div>	
+						
 					
 					<div class="col-md-12">
 										
@@ -306,7 +310,6 @@ function resetForm(form) {
 </div>
 
 <!-- Add new user model  -->
-<!-- Modal Edit user details-->
 <div class="modal fade" id="addnewCattle" tabindex="-1" role="dialog"
 	aria-labelledby="myModalLabel" aria-hidden="true">
 	<div class="modal-dialog">
@@ -316,7 +319,7 @@ function resetForm(form) {
 					aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
-				<h4 class="modal-title" id="myModalLabel">Add Cattle Master</h4>
+				<h4 class="modal-title" id="myModalLabel">Add Cattle Master Details</h4>
 			</div>
 			<div class="modal-body">
 				<div class = "col-md-12">

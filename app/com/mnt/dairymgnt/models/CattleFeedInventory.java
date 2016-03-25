@@ -24,10 +24,10 @@ public class CattleFeedInventory extends Model
 
 	public String feedName;
 	public String feedType;
-	public String stockBalance;
+	public int stockBalance;
 	public String stockInQuantity;
 	public String remark;
-	public String stockPerviousBalance;
+	public int stockPerviousBalance;
 	public String stockOutQuantity;
 	public Date stockInDate;
 	public Date stockOutDate;
@@ -58,10 +58,10 @@ public class CattleFeedInventory extends Model
 	public void setFeedType(String feedType) {
 		this.feedType = feedType;
 	}
-	public String getStockBalance() {
+	public int getStockBalance() {
 		return stockBalance;
 	}
-	public void setStockBalance(String stockBalance) {
+	public void setStockBalance(int stockBalance) {
 		this.stockBalance = stockBalance;
 	}
 	public String getStockInQuantity() {
@@ -76,10 +76,10 @@ public class CattleFeedInventory extends Model
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	public String getStockPerviousBalance() {
+	public int getStockPerviousBalance() {
 		return stockPerviousBalance;
 	}
-	public void setStockPerviousBalance(String stockPerviousBalance) {
+	public void setStockPerviousBalance(int stockPerviousBalance) {
 		this.stockPerviousBalance = stockPerviousBalance;
 	}
 	public String getStockOutQuantity() {
