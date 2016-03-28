@@ -6645,13 +6645,14 @@ App.controller('ViewAllOrgController', function ($scope, $rootScope, $routeParam
 	}
 	
 	$scope.updateOrgByAdmin = function(org){
+		console.log("i m in function");
 		$scope.org = org;
 		$http.post('/updateOrgByAdmin?d='+Math.random(),{org:$scope.org})
 		.success(function(data){
 			//console.log("success");
 			$scope.updateSuccess = true;
 			$('#editOrgDetails').modal('hide');
-			$http.get('/getAllOrg/'+$scope.pageno)
+			$http.get('/getAllOrgs/'+$scope.pageno)
 				.success(function(data) {
 					$scope.orgs = data.orgs;
 					$scope.update =  true;
@@ -6669,13 +6670,14 @@ App.controller('ViewAllOrgController', function ($scope, $rootScope, $routeParam
 	}
 
 	$scope.addOrgByAdmin = function(org){
+		console.log("i m in function");
 		$scope.org = org;
 		$http.post('/updateOrgByAdmin?d='+Math.random(),{org:$scope.org})
 		.success(function(data){
 			//console.log("success");
 			$scope.updateSuccess = true;
 			$('#openAddnewOrgPopup').modal('hide');
-			$http.get('/getAllOrg/'+$scope.pageno)
+			$http.get('/getAllOrgs/'+$scope.pageno)
 				.success(function(data) {
 					$scope.orgs = data.orgs;
 					$scope.org = [];
@@ -7098,7 +7100,8 @@ App.controller('ViewAllPregnantCattleController', function ($scope, $rootScope, 
 	$scope.org;
 	$scope.users;
 	$scope.userId;
-	$scope.updateCattleProfileByAdmin = function(cat){
+	$scope.updateCattlePregnancy = function(cat){
+		console.log("I Am In Function");
 		$scope.cat;
 		$scope.cat = cat;
 			$http.post('/updateCattlePregnancyProfileByAdmin?d='+Math.random(),{cat:$scope.cat,userId:$scope.userId,org:$scope.org,parentId:$scope.parentId})
@@ -7106,7 +7109,7 @@ App.controller('ViewAllPregnantCattleController', function ($scope, $rootScope, 
 				//console.log("success");
 				$scope.updateSuccess = true;
 				$('#editCatdersDetails').modal('hide');
-				$http.get('/getAllChildCattleMaster/'+$scope.parentId)
+				$http.get('/getAllPregnantCattle/'+$scope.parentId+'/'+$scope.pageno)
 					.success(function(data) {
 						$scope.caters = data.caters;
 						$scope.update =  true;
@@ -8277,6 +8280,9 @@ App.controller('ViewAllCattleMasterController', function ($scope, $rootScope, $r
 		});
 		 
 		 $('#dieondatenew').datepicker({
+			    format: 'dd-MM-yyyy'
+		});
+		 $('#dodelivery1').datepicker({
 			    format: 'dd-MM-yyyy'
 		});
 		 
