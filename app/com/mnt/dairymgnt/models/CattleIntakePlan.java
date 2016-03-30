@@ -118,4 +118,5 @@ public class CattleIntakePlan extends Model{
 		return find.byId(id);
 	}
 	
+	
 }

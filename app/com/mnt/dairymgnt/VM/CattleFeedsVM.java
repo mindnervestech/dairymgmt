@@ -16,3 +16,4 @@ public class CattleFeedsVM {
 	public List<CattleFeedsVM> cattleFeeds;
 	public String quantity;
 }
+

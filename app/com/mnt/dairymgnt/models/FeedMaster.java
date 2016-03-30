@@ -51,9 +51,11 @@ public class FeedMaster extends Model
 	public String getFeedType() {
 		return feedType;
 	}
+
 	public void setFeedType(String feedType) {
 		this.feedType = feedType;
 	}
+
 	public Float getPrice() {
 		return price;
 	}

@@ -37,6 +37,9 @@ public class CattleFeeds extends Model{
 	public void setFeedType(String feedType) {
 		this.feedType = feedType;
 	}
+
+
+
 	
 	public String getQuantity() {
 		return quantity;

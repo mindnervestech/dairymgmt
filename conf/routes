@@ -80,6 +80,11 @@ GET         /getAllOnlyFeedMaster/                        com.mnt.dairymgnt.cont
 POST		/getPlanDetails									com.mnt.dairymgnt.controllers.Application.getPlanDetails()
 POST			/getFeedCattleMasterDetails                      com.mnt.dairymgnt.controllers.Application.getFeedCattleMasterDetails()
 
+GET      /getAllFeedType/                                   com.mnt.dairymgnt.controllers.Application.getAllFeedType()
+GET      /getAllMealType/                                   com.mnt.dairymgnt.controllers.Application.getAllMealType()
+GET      /getAllStage/                                   com.mnt.dairymgnt.controllers.Application.getAllStage()
+
+
 POST        /checkDuplicateFeedName                           com.mnt.dairymgnt.controllers.Application.checkDuplicateFeedName()
 GET         /getAllOnlyFedPlanId                               com.mnt.dairymgnt.controllers.Application.getAllOnlyFedPlanId() 
 # Map static resources from the /public folder to the /assets URL path

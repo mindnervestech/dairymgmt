@@ -175,18 +175,19 @@ function resetForm(form) {
 				<div class = "col-md-6">
 						<span ng-if= "fnameError == true" style="color:red;"> Please enter value</span> 
 						<div class="col-md-12" style = "margin-top: 5%;">
+					
   							<label for="usr">Name</label>
   							<input type="text" ng-model = "cat.name" class="form-control" maxlength="80"   id="firstname"onkeypress="return onlyAlphabets(event,this);">
 						</div>
 
 						<div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
-		              <label class="control-label col-md-8">Select Breed name</label>
-		              <div class="col-md-12"> 
-			                <select id = "use"  data-ng-model="cat.breed" class= "col-md-5 form-control" ng-change="getsubBreedById(cat.breed)" style="    width: 110%;">
-			                 <option ng-repeat="u in breeds" value="{{u.id}}"   ng-selected="u.breedName  == cat.breed">{{u.breedName}}</option>
-			                </select>
-	            		</div>   
-	            	</div>	
+		             		<label class="control-label col-md-8">Select Breed name</label>
+		             		 <div class="col-md-12"> 
+			               		 <select id = "use"  data-ng-model="cat.breed" class= "col-md-5 form-control" ng-change="getsubBreedById(cat.breed)" style="    width: 110%;">
+			              	     <option ng-repeat="u in breeds" value="{{u.id}}"   ng-selected="u.breedName  == cat.breed">{{u.breedName}}</option>
+			               		 </select>
+	            			</div>   
+	            		</div>	
 					
 						<div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr">Gender </label>
@@ -199,30 +200,35 @@ function resetForm(form) {
 						</div>	
 						
 						<div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
-		              <label class="control-label col-md-12 ">Select parent name</label>
-		              <div class="col-md-12"> 
-			                <select id = "use"  data-ng-model="parentId" class= "col-md-5 form-control"  style="    width: 110%;">
-			                 <option ng-repeat="u in cattle" value="{{u.cattleId}}"   ng-selected="u.isSelect  == true">{{u.cattleId}}/{{u.name}}</option>
-			                </select>
-	            		</div>   
-	            	</div>		
+		             		<label class="control-label col-md-12 ">Select parent name</label>
+		              		<div class="col-md-12"> 
+			            	    <select id = "use"  data-ng-model="parentId" class= "col-md-5 form-control"  style="    width: 110%;">
+			             	 	<option value="" disabled> ---Select--- </option> 
+			               		 <option value="" > If Parent is not available Select This One...  </option>
+			             	    <option ng-repeat="u in cattle" value="{{u.cattleId}}"   ng-selected="u.isSelect  == true">{{u.cattleId}}/{{u.name}}</option>
+			              	  </select>
+	            			</div>   
+	            		</div>	
+	            	
+	            		<div class="col-md-12">
+							<label for="usr" style = "margin-top: 5%;">RFID</label>
+  							<input type="text" ng-model = "cat.RFID" class="form-control" maxlength="80" id="RFID" required>
+						</div>	
 						  
-						<div class="col-md-12">
-										
-											<!-- <div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>
-											 --><div class="input-group col-md-12" style = "margin-top: 5%;">
+						<!-- <div class="col-md-12">
+										<div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>
+											<div class="input-group col-md-12" style = "margin-top: 5%;">
 												<span>Last Delivery Date</span>
 													 <input type="text" ng-model="cat.lastDeliveryVM"
 														name="ld" class="form-control " id="dodelivery1"
 														 ng-click="initDeliveryDatepicker();"
 														style="font-size: 12px; width:  100%;" required>
-														<!--  <div class="input-group-addon">
+														 <div class="input-group-addon">
 														<i class="fa fa-calendar"></i>
-														</div> -->
+														</div>
 												</div>
-											
-					</div>
-						
+						</div>
+						 -->
 						</div>
 						<div class = "col-md-6">
 						
@@ -276,11 +282,7 @@ function resetForm(form) {
 										
 					</div>
 					
-					<div class="col-md-12">
-							
-  							<label for="usr" style = "margin-top: 5%;">RFID</label>
-  							<input type="text" ng-model = "cat.RFID" class="form-control" maxlength="80" id="RFID" required>
-						</div>
+						
 					
 					<!--  <div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr">Is Currently Pregnant </label>
@@ -358,11 +360,20 @@ function resetForm(form) {
 		              <label class="control-label col-md-8">Select parent name</label>
 		              <div class="col-md-12"> 
 			                <select id = "use"  data-ng-model="parentId" class= "col-md-5 form-control"  style="    width: 110%;">
+			               <option value="" disabled> ---Select--- </option> 
+			                <option value="" > If Parent is not available Select This One...  </option>
+			                
 			                 <option ng-repeat="u in cattle" value="{{u.cattleId}}"   ng-selected="u.isSelect  == true">{{u.cattleId}}/{{u.name}}</option>
 			                </select>
 	            		</div>   
 	            	</div>
-	            		<div class="col-md-12">
+	            	
+	            	
+	            	<div class="col-md-12">
+							<label for="usr" style = "margin-top: 5%;">RFID</label>
+  							<input type="text" ng-model = "cat.RFID" class="form-control" maxlength="80" id="RFID" required>
+							</div>
+	            		<!-- <div class="col-md-12">
 										<div class="">
 											<div class="">
 											<div ng-if="doberror == true" ><span style="color:red">Please enter DOB</span></div>
@@ -372,13 +383,13 @@ function resetForm(form) {
 														name="ld" class="form-control " id="dodelivery"
 														 ng-click="initDeliveryDatepicker();"
 														style="font-size: 12px; width: 100%;" required>
-														<!--  <div class="input-group-addon">
+														 <div class="input-group-addon">
 														<i class="fa fa-calendar"></i>
-														</div> -->
+														</div>
 												</div>
 											</div>
 									</div>
-					</div>	
+					</div> -->	
 					
 						</div>
 						<div class = "col-md-6	">
@@ -431,11 +442,7 @@ function resetForm(form) {
 									</div>
 					</div>
 
-							<div class="col-md-12">
 							
-  							<label for="usr" style = "margin-top: 5%;">RFID</label>
-  							<input type="text" ng-model = "cat.RFID" class="form-control" maxlength="80" id="RFID" required>
-						</div>
 						<!-- <div class="col-md-12" style="margin-top:1%;margin-left:-4%;">
 		              <label class="control-label col-md-8">Select Orgnization</label>
 		              <div class="col-md-12"> 
@@ -485,7 +492,7 @@ function resetForm(form) {
 }
 
 .modal .modal-body {
-	max-height: 500px;
+	max-height: 1000px;
 	overflow-y: auto;
 }
 
@@ -517,3 +524,4 @@ legend.scheduler-border {
 	z-index: 1151 !important;
 }
 </style>
+

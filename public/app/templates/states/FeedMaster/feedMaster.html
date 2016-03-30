@@ -56,6 +56,22 @@ function isNumber(evt) {
         }
 
     </script>
+    
+ <script  language="Javascript" type="text/javascript">
+function changetextbox()
+{
+	console.log("Disabled function is called");
+     if (document.getElementById("fv").value == "No") 
+     {
+        document.getElementById("qty").disabled='true';
+     }
+     else
+     {
+        document.getElementById("qty").disabled='';
+     }
+   
+}
+</script>
 <div class="row">
 	<div class="col-lg-12">
 		<div class="portlet box" style="min-height: 500px;">
@@ -158,7 +174,7 @@ function isNumber(evt) {
 				</button>
 				<h4 class="modal-title" id="myModalLabel">Edit Feed Master Details</h4>
 			</div>
-			<div class="modal-body">
+			<div class="modal-body" >
 			<span ng-if = "emptyFieldsError == true"><code> Please fill all fields!!!</code></span>
 				<div class = "col-md-12">
 				<div class = "col-md-6">
@@ -229,11 +245,6 @@ function isNumber(evt) {
 							</select>
 					
 						</div>-->	
-						<!-- <div class="col-md-12" style = "margin-top: 5%;">
-  							<label for="usr"> Feed Fiber</label>
-  							<input type="text" ng-model = "feed.feedFiber" class="form-control" maxlength="80"   id="firstname" onkeypress="return onlyAlphabets(event,this);">
-						</div> -->
-						
 						<div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr"> Feed Fiber</label>
   							<select id = "use"  ng-model="feed.feedFiber" class= "form-control" ng-change="" style="    width: 100%;">
@@ -243,10 +254,21 @@ function isNumber(evt) {
 			                </select>						
 						</div>
 						
-						<div class="col-md-12" style = "margin-top: 5%;">
+						 <div class="col-md-12">
+  							<label for="usr" style = "margin-top: 5%;"> Feed Vitamins</label>
+							<select id = "use"  ng-model="feed.feedVitamins" class= "form-control" ng-change="" style="    width: 100%;">
+			                 <option value="" disabled>--- Select ---</option> 
+			                <option value="Yes" >Yes</option>
+    						<option value="No">No</option>
+			                </select>					
+						</div>
+						
+						
+						
+						<!-- <div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr"> Feed Vitamins</label>
   							<input type="text" ng-model = "feed.feedVitamins" class="form-control" maxlength="80"   id="firstname" onkeypress="return onlyAlphabets(event,this);">
-						</div>
+						</div> -->
 					
 						<div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr">SKU Id </label>
@@ -289,7 +311,7 @@ function isNumber(evt) {
 	            	
 	             	<div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr">Quantity Of Protine(%) </label>
-  							<input type="text" ng-model = "feed.quantityofProtine" maxlength="80" class="form-control" id="firstname" onkeypress="return isNumber(event)">
+  							<input type="text" ng-disabled = "feed.feedProtine == 'No'" ng-model = "feed.quantityofProtine" maxlength="80" class="form-control" id="firstname" onkeypress="return isNumber(event)">
 						</div>	 
 						
 	            	<!--  <div class="col-md-12">
@@ -338,22 +360,22 @@ function isNumber(evt) {
 						
 						<div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr">Quantity Of Water(%) </label>
-  							<input type="text" ng-model = "feed.quantityofWater" maxlength="80" class="form-control" id="firstname" onkeypress="return isNumber(event)">
+  							<input type="text" ng-disabled="feed.feedWaterContent == 'No'" ng-model = "feed.quantityofWater" maxlength="80" class="form-control" id="firstname" onkeypress="return isNumber(event)">
 						</div>
 						<div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr">Quantity Of Fiber(%) </label>
-  							<input type="text" ng-model = "feed.quantityofFiber" maxlength="80" class="form-control" id="firstname" onkeypress="return isNumber(event)">
+  							<input type="text" ng-disabled="feed.feedFiber == 'No'" ng-model = "feed.quantityofFiber" maxlength="80" class="form-control" id="firstname" onkeypress="return isNumber(event)">
 						</div>
 						<div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr">Quantity Of Vitamins(%) </label>
-  							<input type="text" ng-model = "feed.quantityofVitamins" maxlength="80" class="form-control" id="firstname" onkeypress="return isNumber(event)">
+  							<input type="text" ng-disabled="feed.feedVitamins == 'No'" ng-model = "feed.quantityofVitamins" maxlength="80" class="form-control" id="firstname" onkeypress="return isNumber(event)">
 						</div>
 						<!-- <div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr">Feed Type </label>
   							<input type="text" ng-model = "feed.feedType" maxlength="80" class="form-control" id="firstname"  onkeypress="return onlyAlphabets(event,this);">
 						</div> -->
 					
-					<div class="col-md-12" style = "margin-top: 5%;">
+						<!-- <div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr">Feed Type</label>
   							<select id = "use"  ng-model="feed.feedType" class= "form-control" ng-change="" style="    width: 100%;">
 			                <option value="" disabled>--- Select ---</option>
@@ -361,9 +383,17 @@ function isNumber(evt) {
     						<option value="Non Veg">Non Veg</option>
     						<option value="Mixed">Mixed</option>
 			                </select>
-			           </div>
+			           </div> -->
 			           
-			           
+			           <div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
+		             		<label class="control-label col-md-8">Feed Type</label>
+		             		 <div class="col-md-12"> 
+			               		 <select id = "use"  data-ng-model="feed.feedType" class= "col-md-5 form-control" ng-change="" style="    width: 110%;">
+			               	     <option value="" disabled>--- Select ---</option>
+			              	     <option ng-repeat="u in feedTypes" value="{{u.feedType}}"   ng-selected="u.feedType  == feed.feedType">{{u.feedType}}</option>
+			               		 </select>
+	            			 </div>   
+	            		</div>
 								
 						
 	            	</div>
@@ -460,11 +490,21 @@ function isNumber(evt) {
 	            	 
 						<div class="col-md-12">
   							<label for="usr" style = "margin-top: 5%;"> Feed Fiber</label>
-  							<select id = "use"  ng-model="feed.feedFiber" class= "form-control" ng-change="" style="    width: 100%;">
+  							<select id = "fv1"  ng-model="feed.feedFiber" class= "form-control"  style="    width: 100%;" >
 			                <option value="" disabled>--- Select ---</option>
-			                <option value="Yes" >Yes</option>
+			                <option value="Yes">Yes</option>
     						<option value="No">No</option>
 			                </select></div> 
+			                
+			                <div class="col-md-12">
+  							<label for="usr" style = "margin-top: 5%;"> Feed Vitamins</label>
+							<select id = "fv"  ng-model="feed.feedVitamins" class= "form-control"  style="    width: 100%;" >
+			                <option value="" >--- Select ---</option>
+			                <option value="Yes" >Yes</option>
+    						<option value="No">No</option>
+			                </select>					
+						</div> 
+						
 	            		<!--  <div class="col-md-12">
 										<div class="">
 											<div class="">
@@ -482,10 +522,7 @@ function isNumber(evt) {
 											</div>
 									</div>
 					</div>	-->
-						<div class="col-md-12">
-  							<label for="usr" style = "margin-top: 5%;"> Feed Vitamins</label>
-  							<input type="text" ng-model = "feed.feedVitamins" class="form-control" maxlength="80" id="firstname" onkeypress="return onlyAlphabets(event,this);">
-						</div>
+						
 						
 						<div class="col-md-12">
   							<label for="usr" style = "margin-top: 5%;"> SKU Id</label>
@@ -528,33 +565,30 @@ function isNumber(evt) {
 	            	
 	             	<div class="col-md-12">
   							<label for="usr" style = "margin-top: 5%;"> Quantity Of Protine(%)</label>
-  							<input type="text" ng-model = "feed.quantityofProtine" class="form-control" maxlength="80" id="firstname" onkeypress="return isNumber(event)">
+  							<input type="text" ng-disabled = "feed.feedProtine == 'No'" ng-model = "feed.quantityofProtine" class="form-control" maxlength="80" id="firstname" onkeypress="return isNumber(event)">
 						</div>	 
 						
 						<div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr">Qantity Of Water(%) </label>
-  							<input type="text" ng-model = "feed.quantityofWater" maxlength="80" class="form-control" id="firstname" onkeypress="return isNumber(event)">
+  							<input type="text" ng-disabled="feed.feedWaterContent == 'No'" ng-model = "feed.quantityofWater" maxlength="80" class="form-control" id="firstname" onkeypress="return isNumber(event)">
 						</div>	
 						
 						<div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr">Qantity Of Fiber(%) </label>
-  							<input type="text" ng-model = "feed.quantityofFiber" maxlength="80" class="form-control" id="firstname" name="quantityofFiber" onkeypress="return isNumber(event)" required>
-  							<span style="color:red" ng-show="myForm.quantityofFiber.$dirty && myForm.quantityofFiber.$invalid">
-  							<span ng-show="myForm.quantityofFiber.$error.required">*Username is required.</span>
-  							</span>
+  							<input type="text" ng-disabled="feed.feedFiber == 'No'"  ng-model = "feed.quantityofFiber" maxlength="80" class="form-control" id="qty"  onkeypress="return isNumber(event)" required>
 						</div>	
 						
 						<div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr">Qantity Of Vitamins(%) </label>
-  							<input type="text" ng-model = "feed.quantityofVitamins" maxlength="80" class="form-control" id="firstname" onkeypress="return isNumber(event)">
-						</div>	
+  							<input type="text"  ng-disabled="feed.feedVitamins == 'No'"  ng-model = "feed.quantityofVitamins" maxlength="80" class="form-control" id="qty"  onkeypress="return isNumber(event)">
+						</div>
 						
 					<!-- 	<div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr">Feed Type </label>
   							<input type="text" ng-model = "feed.feedType" maxlength="80" class="form-control" id="firstname"  onkeypress="return onlyAlphabets(event,this);">
 						</div> -->	
 						
-					<div class="col-md-12" style = "margin-top: 5%;">
+						<!-- <div class="col-md-12" style = "margin-top: 5%;">
   							<label for="usr"> Feed Typer</label>
   							<select id = "use"  ng-model="feed.feedType" class= "form-control" ng-change="" style="    width: 100%;">
 			                <option value="" disabled>--- Select ---</option>
@@ -562,7 +596,16 @@ function isNumber(evt) {
     						<option value="Non Veg">Non Veg</option>
     						<option value="Mixed">MIxed</option>
 			                </select>						
-						</div>
+						</div> -->
+						<div class="col-md-12" style="margin-top:5%;margin-left:-4%;">
+		             		<label class="control-label col-md-8">Feed Type</label>
+		             		 <div class="col-md-12"> 
+			               		 <select id = "use"  data-ng-model="feed.feedType" class= "col-md-5 form-control" ng-change="" style="    width: 110%;">
+			               	     <option value="" disabled>--- Select ---</option>
+			              	     <option ng-repeat="u in feedTypes" value="{{u.feedType}}"   ng-selected="u.feedType  == feed.feedType">{{u.feedType}}</option>
+			               		 </select>
+	            			 </div>   
+	            		</div>
 						
 						<!--  <div class="col-md-12">
 										<div class="">
@@ -631,7 +674,7 @@ function isNumber(evt) {
 }
 
 .modal .modal-body {
-	max-height: 500px;
+	max-height: 1000px;
 	overflow-y: auto;
 }
 

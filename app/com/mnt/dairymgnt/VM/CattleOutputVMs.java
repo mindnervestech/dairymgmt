@@ -12,7 +12,7 @@ public class CattleOutputVMs {
 	public int expectedMilkQuantity; 
 	public int fatContent;
 	public int SNFContent;
-	public String date;
+	public Date date;
 	public int M1;
 	public int M2;
 	public int M3;

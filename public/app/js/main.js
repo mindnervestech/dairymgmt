@@ -5578,7 +5578,7 @@ App.controller('ChartsHighchartMoreController', function ($scope, $routeParams){
                                 .css({
                                     color: 'white',
                                     width: '100px'
-                                })
+                                 })
                                 .add()
                                 .shadow(true);
 
@@ -6478,6 +6478,7 @@ App.controller('ViewAllOrgController', function ($scope, $rootScope, $routeParam
 	// get all  Org  to admin
 	 $scope.pageno = 0;
 	 $scope.activeusercount = 0;
+	 
 	 $scope.update =  false;
 	 $scope.add =  false;
 	 
@@ -8613,6 +8614,14 @@ App.controller('ViewAllFeedMasterController', function ($scope, $rootScope, $rou
 		$scope.feed = cat;
 		console.log(cat);
 		
+		$http.get('/getAllFeedType/?d='+Math.random()).success(function(data) {
+	    	$scope.feedTypes = data.feedTypes;
+	    	if ((obj.feedType == $scope.cat.feedType)) {
+				obj.isSelect = true;
+				};
+					
+			});
+		
 		$('#editCatdersDetails').modal();
 	
 		 
@@ -8735,7 +8744,9 @@ App.controller('ViewAllFeedMasterController', function ($scope, $rootScope, $rou
 		});
 		
 		
-		
+		$http.get('/getAllFeedType/?d='+Math.random()).success(function(data) {
+	    	$scope.feedTypes = data.feedTypes;
+		});
 		$("#addnewCattle").modal('show');
 		
 		
@@ -9756,7 +9767,7 @@ App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope
 		$http.post('/checkDuplicateFeedName?d='+Math.random(),{cat:checkDuplicateFeedName })
 		.success(function(data){
 			console.log("success: "+data);
-            if(data  == ""){
+            if(data  == "error"){
             	$scope.feedPlanNameDup = true;
             }else{
             	$scope.feedPlanNameDup = false;
@@ -9929,6 +9940,21 @@ App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope
 				});
 		 
 		 });
+		 
+		 $http.get('/getAllMealType/?d='+Math.random()).success(function(data) {
+		    	$scope.mealTypes = data.mealTypes;
+		    	if ((obj.mealType == $scope.cat.MealType)) {
+					obj.isSelect = true;
+					};
+						
+				});
+		 $http.get('/getAllStage/?d='+Math.random()).success(function(data) {
+		    	$scope.stages = data.stages;
+						if ((obj.stage == $scope.cat.Stage)) {
+							obj.isSelect = true;
+							};
+				});
+		 
 		
 		$('#editfeedCatdersDetails').modal();
 	
@@ -10070,14 +10096,26 @@ App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope
 	 			
 		 
 		 });
+		 
+		 $http.get('/getAllMealType/?d='+Math.random()).success(function(data) {
+		    	$scope.mealTypes = data.mealTypes;
+		    }); 
+		 
+		 $http.get('/getAllStage/?d='+Math.random()).success(function(data) {
+		    	$scope.stages = data.stages;
+		    	console.log("objects"+stages);
+						if ((obj.stage == $scope.cat.Stage)) {
+							obj.isSelect = true;
+							};
+				}); 
 		$("#addnewfeedCattle").modal('show');
 			
 		$('#startDateAddNew').datepicker({
 		    format: 'dd-MM-yyyy'
-	});
+		});
 		$('#endDateAddNew').datepicker({
 		    format: 'dd-MM-yyyy'
-	});
+		});
 	
 	}
 	
@@ -10098,11 +10136,28 @@ App.controller('ViewAllFeedCattleMasterController', function ($scope, $rootScope
 	    }	
 	   
 	    $scope.assignFeedValue = function(o,index){
-	    	var oo = JSON.parse(o)
-	    	console.log(oo);
-	    	var obj = {feedId:oo.feedId,feedName:oo.feedName, feedType:oo.feedType,skuId:oo.skuId}
-	    	$scope.feeds[index] = obj;
 	    	
+	    	debugger;
+	    	for (var i=0; i<$scope.mastersFeed.length; i++) {
+				 
+				 if($scope.mastersFeed[i].feedId == parseInt(o)){
+					 
+					var obj = {feedId:o,feedName:$scope.mastersFeed[i].feedName, feedType:$scope.mastersFeed[i].feedType,skuId:$scope.mastersFeed[i].skuId}
+					$scope.feeds[index] = obj; 
+					//$scope._feeds= obj;
+					
+				 }
+			 }
+	    	
+	    	//debugger;
+	    	//console.log($scope.feeds[index]);
+	    	//debugger;
+	    	//var oo = JSON.parse(o)
+	    	//console.log(oo);
+	    	
+	    	//var obj = {feedId:o.feedId,feedName:oo.feedName, feedType:oo.feedType,skuId:oo.skuId}
+	    	//$scope.feeds[index] = obj;
+	    	//$scope._feeds obj;
 	    }
 	    $scope.getsubBreedById = function(id){
 			 console.log(id);
@@ -10720,6 +10775,7 @@ App.controller('ViewAllCattleHealthController', function ($scope, $rootScope, $r
 				 //$scope.cat.dateOfBirth= $filter('date')($scope.cat.dateOfBirth, 'dd/MM/yyyy');
 				// console.log($filter('date')(date[ $scope.cat.dateOfBirth, "dd/MM/yyyy"]));
 				// $scope.cat.dateofBirth= $filter('date')(date[ $scope.cat.DateofBirth, "dd/MM/yyyy"]);
+				 
 				 console.log($scope.cat);
 			 }
 		 }
@@ -11631,7 +11687,7 @@ App.controller('ViewAllCattleOutputController', function ($scope, $rootScope, $r
 			    format: 'hh-mm-a'
 			});
 	 }
-	 
+	
 	$scope.getAllCattleOutput = function(){
 
 		$http.get('/getAllCattleOutput/'+$scope.pageno)
@@ -12097,7 +12153,7 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope,$fi
 				$('#pre1').show();
 			}
 		  }
-
+	 
 		$http.get('/getUserPermissions?d='+Math.random())
 		.success(function(data) {
 		// $scope.userData = data;
@@ -12108,9 +12164,8 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope,$fi
 			$rootScope.Orgnization = false;
 			$rootScope.CattleOutput = false;
 			$rootScope.CattleHealth = false;
-			
-			
 			$rootScope.username = data.user.userId;
+
 			console.log("per: "+JSON.stringify(data.user.permissions));
 			for(var i = 0; i < data.user.permissions.length ; i++){
 				if(data.user.permissions[i].permissionName == "Catle_feed_master"){
@@ -12149,11 +12204,8 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope,$fi
 					}
 				if(data.user.permissions[i].permissionName == "Cattle_Health"){
 					$rootScope.CattleHealth = true;
-					
 					}
-			}
-		
-			
+				}
 		});
 	
 	// check for gthe admin when page refresh
@@ -12210,6 +12262,8 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope,$fi
 						};
 				});
 			});
+		
+		
 
 		$http.get('/getAllOnlyCattleMaster/?d='+Math.random()).success(function(data) {
 	    	$scope.caters = data.caters;
@@ -12347,6 +12401,7 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope,$fi
 	$scope.parentId = 0;
 	$scope.addnewfeedCattle = function(){
 		
+		
 		$scope.update =  false;
 		$scope.add =  false;
 		
@@ -12406,7 +12461,7 @@ App.controller('ViewAllCattleIntakeController', function ($scope, $rootScope,$fi
 			});
 		 
 		 $scope.cattleIntakefeedsPlan = [
-			                 { feedPlanId:'',feedPlanName: '', feedPlanStartDate: '', feedPlanEndDate: ''}
+			                 { feedPlanId:'',feedPlanName: '', feedPlanStartDate: '', feedPlanEndDate: ''	}
 		];
 			    
 		$("#addnewfeedCattle").modal('show');

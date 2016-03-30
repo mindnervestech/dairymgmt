@@ -49,6 +49,8 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+//import com.gargoylesoftware.htmlunit.javascript.host.Console;
+//import com.gargoylesoftware.htmlunit.javascript.host.Console;
 import com.itextpdf.text.pdf.PdfStructTreeController.returnType;
 import com.mnt.dairymgnt.VM.CattleFeedInventoryVM;
 import com.mnt.dairymgnt.VM.CattleFeedMasterVM;
@@ -83,11 +85,14 @@ import com.mnt.dairymgnt.models.CattleOutput;
 import com.mnt.dairymgnt.models.ChildCattle;
 import com.mnt.dairymgnt.models.Entities;
 import com.mnt.dairymgnt.models.FeedMaster;
+import com.mnt.dairymgnt.models.FeedType;
 import com.mnt.dairymgnt.models.KPIMaster;
 import com.mnt.dairymgnt.models.KPIName;
+import com.mnt.dairymgnt.models.MealType;
 import com.mnt.dairymgnt.models.Oraganization;
 import com.mnt.dairymgnt.models.Permissions;
 import com.mnt.dairymgnt.models.PregnantCattle;
+import com.mnt.dairymgnt.models.Stage;
 import com.mnt.dairymgnt.models.Subbreed;
 import com.mnt.dairymgnt.models.VaccinationPlan;
 //import com.itextpdf.text.List;;
@@ -116,7 +121,7 @@ public class Application extends Controller {
 		
 	}
 	
-	public static Result dashBoard() {
+public static Result dashBoard() {
 		return ok(index.render());
 	}
 
@@ -283,6 +288,7 @@ public class Application extends Controller {
 			cvm.subbreed = u.subBreed;
 			cvm.isPregnant = u.isPregnant;
 			cvm.lastUpdateDateTime = u.lastUpdateDateTime;
+			
 			cmvm.add(cvm);
 		}
 
@@ -1238,6 +1244,7 @@ cmvm.add(cfvm);
 			cmvm.add(cfvm);
 		}
 
+		
 		HashMap  <String ,Object> hm = new HashMap();
 		hm.put("catersoutput",cmvm);
 		hm.put("userCount", count);
@@ -2541,6 +2548,8 @@ public static Result getMonthlyCattleOutputReport(){
 		try {
 			PregnancyCattleVM uvm = userinfoMapper.readValue(catJson.traverse(),PregnancyCattleVM.class);
 			PregnantCattle u = PregnantCattle.getPregnantCattleByCattleId(uvm.pregnancyId);
+			/*PregnancyCattleVM uvm = userinfoMapper.readValue(catJson.traverse(),PregnancyCattleVM.class);
+			PregnantCattle u = PregnantCattle.getPregnantCattleByCattleId(uvm.pregnancyId);*/
 			if(u !=  null){
 				
 				JsonNode org = json.path("org");
@@ -3184,7 +3193,7 @@ public static Result getMonthlyCattleOutputReport(){
 				u.setMedicationStartDate(uvm.medicationStartDate);
 				u.setMedicationType(uvm.medicationType);
 				u.setMedicationName(uvm.medicationName);
-				
+			
 				u.setBreed(uvm.breed);
 				u.setSubBreed(uvm.subBreed);
 				u.setHealthType(uvm.healthType);
@@ -3198,7 +3207,6 @@ public static Result getMonthlyCattleOutputReport(){
 				
 				u.setPregnancyDate(uvm.pregnancyDate);
 				u.setPregnant(uvm.pregnant);
-				
 				u.setLastUpdateDateTime(new Date());
 				u.save();
 
@@ -3869,6 +3877,7 @@ public static Result getMonthlyCattleOutputReport(){
 						u.setOraganization(orgni);
 					}
 				}
+				
 				JsonNode userId = json.path("userId");
 				System.out.println(userId);
 				if(userId.toString() != ""){
@@ -4138,6 +4147,7 @@ public static Result getMonthlyCattleOutputReport(){
 						u.setOraganization(orgni);
 					}
 				}
+
 				JsonNode userId = json.path("userId");
 				System.out.println(userId);
 				if(userId.toString() != ""){
@@ -4193,7 +4203,7 @@ public static Result getMonthlyCattleOutputReport(){
 							c.delete();
 						}
 					}
-
+						
 						ObjectMapper mapper = new ObjectMapper();
 						List<CattleIntakePlanVM> uv  = mapper.convertValue(feeds, mapper.getTypeFactory()
 						.constructCollectionType(List.class, CattleIntakePlanVM.class));
@@ -4407,7 +4417,25 @@ public static Result getMonthlyCattleOutputReport(){
 		return ok(Json.toJson(hm));
 	}
 	
+	public static Result getAllFeedType(){
+		List<FeedType> feedTypes=FeedType.getAllFeedType();
+		HashMap<String, Object>hm=new HashMap<>();
+		hm.put("feedTypes", feedTypes);
+		return ok(Json.toJson(hm));
+	}
+	public static Result getAllMealType(){
+		List<MealType> mealTypes = MealType.gatAllMealType();
+		HashMap<String, Object> hm= new HashMap<>();
+		hm.put("mealTypes", mealTypes);
+		return ok(Json.toJson(hm));
+	}
 	
+	public static Result getAllStage(){
+		List<Stage> stages= Stage.getAllStage();
+		HashMap<String, Object> hm = new HashMap<>();
+		hm.put("stages", stages);
+		return ok(Json.toJson(hm));
+	}
 	public static  Result getAllSubBreedsByName(){
 		DynamicForm df=Form.form().bindFromRequest();
     	System.out.println(df.get("breed"));
@@ -4470,6 +4498,9 @@ public static Result getMonthlyCattleOutputReport(){
     	
     
     }
+	
+	
+	
 	
 	
 	public static Result getUserPermissions(){
@@ -4553,7 +4584,6 @@ public static Result getMonthlyCattleOutputReport(){
 	public static Result  checkDuplicateFeedName(){
 		JsonNode json = request().body().asJson();
 		System.out.println("com.mnt.dairymgnt.controllers.Application.");
-		
 		JsonNode feedPlanName = json.get("cat");
 		System.out.println("cat"+feedPlanName.toString());
     	
@@ -4564,11 +4594,12 @@ public static Result getMonthlyCattleOutputReport(){
 		System.out.println("i am in function");
 		List<CattleFeedMaster> cattleFeedMasters = CattleFeedMaster.getAllOnlyFeedCattleMaster();
 		for(CattleFeedMaster cfvm : cattleFeedMasters){
-			if(cfvm.getFeedPlanName().equalsIgnoreCase(feedPlanName.toString())){
-				return ok(Json.toJson(cfvm));
+			System.out.println(cfvm.getFeedPlanName());
+			if(cfvm.getFeedPlanName().equalsIgnoreCase(feedPlanName.asText())){
+				return ok("error");
 			}
 		}
-				return ok("");
+				return ok("success");
 		}
 	
 	public static Result updateandsaveKPIMaster(){

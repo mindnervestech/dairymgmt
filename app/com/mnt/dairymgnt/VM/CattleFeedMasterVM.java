@@ -18,6 +18,8 @@ public class CattleFeedMasterVM {
 	public Date lastUpdateDateTime;
 	
 	public String 	Stage;
+	
+	
 	public String  feedName;
 	public String  feedType;
 	public String  SKUId;
@@ -39,6 +41,8 @@ public class CattleFeedMasterVM {
 	
 	
 	
+
+
 
 	public Oraganization oraganization;
 	public Users users;

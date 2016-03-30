@@ -41,4 +41,3 @@ public class CattleIntakePlanVM {
 	
 	// public int quantity;
 }
-

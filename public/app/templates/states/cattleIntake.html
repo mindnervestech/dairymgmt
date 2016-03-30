@@ -142,15 +142,15 @@
 	            	 <div class="col-md-12" style="margin-top:5%;">
 		              <label class=" col-md-0">Select Feed Cattle Master </label>
 		             
-			                <select id = "feed"  data-ng-model="feedId"  class = "col-md-5 form-control"  style="    width: 100%;" ng-change="getPlanDetailsBYId(feedId)">
+			                <select id = "feed"  data-ng-model="feedId"  class = "col-md-5 form-control"  style="    width: 100%;"  ng-change="getPlanDetailsBYId(feedId)">
 			                 <option ng-repeat="f in feedcaters" value="{{f.feedId}}"   ng-selected="f.isSelect  == true">{{f.feedPlanName}}</option>
 			                </select>   
 	            	</div> 
+	            	
+	            	
 	            	</div>
 	         		<div class = "col-md-6	">
 					  <div class="col-md-12"  style="margin-top:5%;">
-										
-											
 												<div class="input-group col-md-12" >
 												<span>Date Of Birth</span>
 													 <input type="text"  ng-model="cat.dateofBirthVM"
@@ -170,7 +170,7 @@
   							<input type="text" ng-model = "cat.quantity" onkeypress="return isNumber(event)" class="form-control" id="firstname">
 						</div>-->	
 	            	
-						</div>
+					</div>
 						<!--  
 						<div class="col-md-12"  >
 						 <div class="col-md-12" ng-repeat="feed in cattleIntakefeedsPlan" style = "margin-top: 5%;">
@@ -392,7 +392,7 @@ function isNumber(evt) {
 }
 
 .modal .modal-body {
-	max-height: 500px;
+	max-height: 1000px;
 	overflow-y: auto;
 }
 
